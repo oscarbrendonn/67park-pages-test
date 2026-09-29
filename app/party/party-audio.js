@@ -182,7 +182,9 @@ export function createPartyAudio({settings, saveSettings, gameMuted, host = wind
       voice({from:750, to:1500, duration:0.18, delay:0.16, gain:0.07, pitch:p});
     },
     grab(_, p) { voice({from:440, to:280, duration:0.10, gain:0.18, pitch:p}); voice({from:660, to:520, duration:0.08, delay:0.04, gain:0.07, pitch:p}); },
-    throw(_, p) { voice({noiseBand:'bandpass', from:1400, duration:0.21, gain:0.18, pitch:p}); voice({from:330, to:760, duration:0.18, gain:0.10, pitch:p}); },
+    // A rounded toy-projectile whoosh; avoid the sharp "tif" transient that
+    // previously made every throw sound like a UI click.
+    throw(_, p) { voice({noiseBand:'bandpass', from:720, duration:0.2, gain:0.085, pitch:p}); voice({type:'triangle', from:260, to:105, duration:0.16, gain:0.11, pitch:p}); voice({type:'sine', from:420, to:610, duration:0.12, delay:0.035, gain:0.035, pitch:p}); },
     click(_, p) { voice({from:750, to:570, duration:0.045, gain:0.10, pitch:p}); },
     stars(_, p) { [880,1100,1320].forEach((f,i)=>voice({from:f,to:f*1.02,duration:0.15,delay:i*0.08,gain:0.065,pitch:p})); },
     portal() {
