@@ -16,6 +16,7 @@ export function applyTerrainBoundaries(root,patch){
   !Number.isFinite(patch.metrics.pathBowlAddedOverlap)||patch.metrics.pathBowlAddedOverlap>1e-6||
   !Number.isFinite(patch.metrics.pathGrassOverlap)||patch.metrics.pathGrassOverlap>1e-5)throw Error('Invalid terrain boundary patch');
  root.updateMatrixWorld(true);
+ const preserveParkContour=root.userData.parkEdges?.version>=3;
  const prepared=[],allocated=[],seen=new Set();
  function source(row,allowed){
   if(!allowed.has(row.name)||seen.has(row.name))throw Error('Invalid boundary target '+row.name);seen.add(row.name);
@@ -31,7 +32,9 @@ export function applyTerrainBoundaries(root,patch){
    // park-edges-v4 already supplies the finished path contour. Reapplying
    // the later rounded path rows here can bring back a visible zig-zag, so
    // keep those two authored meshes intact while retaining the other gap seals.
-   if(row.name==='8_PARK_PATIKA_UST'||row.name==='3_CIMEN')continue;
+   // Only do this when that prerequisite actually ran; fixture/standalone
+   // callers still receive the complete terrain patch.
+   if(preserveParkContour&&(row.name==='8_PARK_PATIKA_UST'||row.name==='3_CIMEN'))continue;
    if(removed.size!==row.remove.length||row.remove.some(i=>!Number.isInteger(i)||i%3||i<0||i>=g.index.count)||
     !count||!Number.isInteger(count)||row.n.length!==row.p.length||!row.p.every(Number.isFinite)||!row.n.every(Number.isFinite)||
     row.ix.length%3||row.ix.some(i=>!Number.isInteger(i)||i<0||i>=count))throw Error('Invalid boundary geometry: '+row.name);
@@ -78,5 +81,5 @@ export function applyTerrainBoundaries(root,patch){
  // shadow-only copy; native shadow casting on the updated model remains on.
  const rim=root.getObjectByName(FOUNTAIN[1]);
  for(const child of [...rim.children])if(child.name==='67D_DIK_YAN_GOLGE_'+FOUNTAIN[1]){rim.remove(child);child.geometry?.dispose();}
- return root.userData.terrainBoundaries2={...patch.metrics,version:2,triangleDelta,meshes:prepared.map(r=>r.mesh.name),materialsPreserved:true,perFrameWork:0};
+ return root.userData.terrainBoundaries2={...patch.metrics,version:2,triangleDelta,meshes:prepared.map(r=>r.mesh.name),materialsPreserved:true,preservedParkContour,perFrameWork:0};
 }

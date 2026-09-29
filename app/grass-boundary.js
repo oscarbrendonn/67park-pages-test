@@ -1,5 +1,5 @@
 import * as T from 'three';
-import {boundaryPositionCRC} from './terrain-boundaries.js?v=ground-3';
+import {boundaryPositionCRC} from './terrain-boundaries.js?v=ground-2';
 
 // One offline-baked shared contour, applied before collision/shadow sampling.
 // No color, shader, texture, light, draw-call or per-frame changes.
@@ -11,10 +11,15 @@ export function applyGrassBoundary(root,patch){
   !Number.isFinite(patch.metrics?.uncoveredArea)||patch.metrics.uncoveredArea>1e-8||
   !Number.isFinite(patch.metrics?.grassPavementOverlap)||patch.metrics.grassPavementOverlap>1e-8)throw Error('Invalid grass boundary patch');
  root.updateMatrixWorld(true);
+ const preserveParkContour=root.userData.parkEdges?.version>=3;
  try{
   for(const row of patch.meshes){
    if(!names.has(row.name)||seen.has(row.name))throw Error('Invalid grass boundary target');
    seen.add(row.name);
+   // The v4 park-edge patch owns the final path/grass contour. This later
+   // seam row was baked against the superseded rounded contour and must not
+   // reintroduce it; the independent sidewalk seam remains active.
+   if(preserveParkContour&&row.name==='3_CIMEN')continue;
    const mesh=root.getObjectByName(row.name),old=mesh?.geometry,e=row.expected;
    if(!mesh?.isMesh||Array.isArray(mesh.material)||!old?.index||old.attributes.position.count!==e?.vertices||
     old.attributes.normal?.count!==e.vertices||
@@ -43,5 +48,5 @@ export function applyGrassBoundary(root,patch){
   }
  }catch(error){for(const {next}of prepared)next.dispose();throw error;}
  for(const {mesh,next}of prepared)mesh.geometry=next;
- return root.userData.grassBoundary1={version:1,...patch.metrics,materialsPreserved:true,sites:patch.sites.map(r=>r.at)};
+ return root.userData.grassBoundary1={version:1,...patch.metrics,materialsPreserved:true,preservedParkContour:preserveParkContour,sites:patch.sites.map(r=>r.at)};
 }

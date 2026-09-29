@@ -1,5 +1,5 @@
 import * as T from 'three';
-import {boundaryPositionCRC as crc} from './terrain-boundaries.js?v=ground-3';
+import {boundaryPositionCRC as crc} from './terrain-boundaries.js?v=ground-2';
 
 const SLABS=['CENTER_WHITE71_-1_-1','CENTER_WHITE71_-1_1','CENTER_WHITE71_1_-1','CENTER_WHITE71_1_1'];
 const TARGETS=new Set(['7_KALDIRIM_TABANI','6_BORDUR','3_CIMEN','5_YOL',...SLABS]);
@@ -11,6 +11,7 @@ export function applyMapEdgeFinish(root,patch){
  if(root.userData.mapEdgeFinish1)return root.userData.mapEdgeFinish1;
  if(patch?.version!==1||!Array.isArray(patch.meshes)||patch.meshes.length!==8||patch.divider?.name!=='8_REF_AYIRICI'||patch.grassFill?.name!=='8_CIM_STUB_DOLGU'||patch.grassFill.source!=='3_CIMEN')throw Error('Invalid map-edge patch');
  root.updateMatrixWorld(true);
+ const preserveParkContour=root.userData.parkEdges?.version>=3;
  const prepared=[],allocated=[],seen=new Set();let fill,grass;
  function source(row,allowed){
   if(!allowed.has(row.name)||seen.has(row.name))throw Error('Invalid map-edge target');seen.add(row.name);
@@ -25,9 +26,11 @@ export function applyMapEdgeFinish(root,patch){
   // repainting the map or adding a shader. Its two local seam repairs below
   // retain the source positions and alter only the bounded triangle subset.
   fill=source(patch.grassFill,new Set(['8_CIM_STUB_DOLGU'])).mesh;
-  grass=source({name:patch.grassFill.source,expected:patch.grassFill.sourceExpected},new Set(['3_CIMEN'])).mesh;
-  seen.delete('3_CIMEN'); // This separately validated source is also a patch row.
+  grass=preserveParkContour?root.getObjectByName('3_CIMEN'):source({name:patch.grassFill.source,expected:patch.grassFill.sourceExpected},new Set(['3_CIMEN'])).mesh;
+  if(!grass?.isMesh)throw Error('Map edge source changed: 3_CIMEN');
+  if(!preserveParkContour)seen.delete('3_CIMEN'); // This separately validated source is also a patch row.
   for(const row of patch.meshes){
+   if(preserveParkContour&&row.name==='3_CIMEN'){seen.add(row.name);continue;}
    const {mesh,g}=source(row,TARGETS),count=row.p?.length/3,remove=new Set(row.remove||[]);
    if(row.replace!==SLABS.includes(row.name)||!Number.isInteger(count)||count<=0||row.n?.length!==row.p.length||!row.p.every(Number.isFinite)||!row.n.every(Number.isFinite)||!Array.isArray(row.ix)||!row.ix.length||row.ix.length%3||row.ix.some(i=>!Number.isInteger(i)||i<0||i>=count))throw Error('Invalid map-edge geometry');
    if(remove.size!==(row.remove||[]).length||[...remove].some(i=>!Number.isInteger(i)||i%3||i<0||i>=g.index.count)||row.replace&&remove.size)throw Error('Invalid map-edge clipping');
@@ -61,5 +64,5 @@ export function applyMapEdgeFinish(root,patch){
  const triangleDelta=prepared.reduce((sum,r)=>sum+(r.next.index.count-r.old.index.count)/3,0);
  for(const {mesh,next}of prepared)mesh.geometry=next;
  fill.material=grass.material;
- return root.userData.mapEdgeFinish1={...patch.metrics,version:1,triangleDelta,meshes:prepared.map(r=>r.mesh.name),materialsPreserved:true,grassFillMaterialMatched:true,addedDrawCalls:0,perFrameWork:0};
+ return root.userData.mapEdgeFinish1={...patch.metrics,version:1,triangleDelta,meshes:prepared.map(r=>r.mesh.name),materialsPreserved:true,preservedParkContour:preserveParkContour,grassFillMaterialMatched:true,addedDrawCalls:0,perFrameWork:0};
 }
