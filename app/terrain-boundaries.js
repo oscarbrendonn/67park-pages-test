@@ -28,6 +28,10 @@ export function applyTerrainBoundaries(root,patch){
  try{
   for(const row of patch.meshes){
    const {mesh,g}=source(row,ALLOWED),removed=new Set(row.remove),count=row.p.length/3;
+   // park-edges-v4 already supplies the finished path contour. Reapplying
+   // the later rounded path rows here can bring back a visible zig-zag, so
+   // keep those two authored meshes intact while retaining the other gap seals.
+   if(row.name==='8_PARK_PATIKA_UST'||row.name==='3_CIMEN')continue;
    if(removed.size!==row.remove.length||row.remove.some(i=>!Number.isInteger(i)||i%3||i<0||i>=g.index.count)||
     !count||!Number.isInteger(count)||row.n.length!==row.p.length||!row.p.every(Number.isFinite)||!row.n.every(Number.isFinite)||
     row.ix.length%3||row.ix.some(i=>!Number.isInteger(i)||i<0||i>=count))throw Error('Invalid boundary geometry: '+row.name);
