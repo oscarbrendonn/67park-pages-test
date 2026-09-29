@@ -41,6 +41,7 @@ const gameMuted = () => { try { return localStorage.getItem('67park-feel-lab-mut
 
 // ---------- sound (synthesized, no files) ----------
 const sfx = createPartyAudio({settings, saveSettings, gameMuted});
+window.addEventListener('candy:portal-travel', () => sfx.play('portal'));
 const buzz = pattern => { if (!settings.haptics || !isTouch) return; try { navigator.vibrate?.(pattern); } catch {} };
 
 // ---------- world access ----------
@@ -83,6 +84,17 @@ function kick(amount) { spring.v += amount; }
 function stepSpring(dt) { const a = -spring.k * spring.v - spring.c * spring.vel; spring.vel += a * dt; spring.v += spring.vel * dt; spring.v = clamp(spring.v, -0.42, 0.45); }
 let prevPunchT = 0, ballStrikeSeq = 0, wasEnabled = false, hitTumble = 0, tumbleDir = 0;
 let previousHeld = '';
+let previousMounted = null, previousSwimming = false;
+
+function vehicleAndWaterAudio(st) {
+  const mounted = window.__candy?.state?.().mounted || null;
+  if (mounted && !previousMounted) sfx.play('vehicle-start');
+  if (!mounted && previousMounted) sfx.play('vehicle-stop');
+  previousMounted = mounted;
+  const swimming = !!st?.swimming;
+  if (swimming && !previousSwimming) sfx.play('water-splash');
+  previousSwimming = swimming;
+}
 
 // ---------- hooks called by main.js ----------
 window.__partyStep = guard((body, input, dt, map) => {
@@ -95,6 +107,7 @@ window.__partyStep = guard((body, input, dt, map) => {
   features.run('vehicle-horn',()=>horn.step());
   features.run('knockback',()=>knockStep(dt));
   features.run('footsteps',()=>footsteps(state(), dt));
+  features.run('vehicle-water-audio',()=>vehicleAndWaterAudio(state()));
   const held = heldId();
   if (held && !previousHeld) sfx.play('grab');
   previousHeld = held;

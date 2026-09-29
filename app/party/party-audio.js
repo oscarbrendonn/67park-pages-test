@@ -10,7 +10,7 @@ export function createPartyAudio({settings, saveSettings, gameMuted, host = wind
   // Warm only the 97KB file while the map prepares. No AudioContext, decoding,
   // autoplay or loading-screen dependency; muted entry allocates none of it.
   if(!host.document.hidden&&!gameMuted()&&settings.sfx>0)recordings.preload();
-  const limits = {step: 90, jump: 140, double: 140, land: 100, 'skate-ollie':110, 'skate-flip':140, 'skate-land':100, horn:120, swing: 150, hit: 100, pad: 250, grab: 150, throw: 150, click: 60, stars: 350, note:80, bell:1800, 'punch-cat':600, 'punch-gorilla':600, 'punch-frog':600};
+  const limits = {step: 90, jump: 140, double: 140, land: 100, 'skate-ollie':110, 'skate-flip':140, 'skate-land':100, horn:120, swing: 150, hit: 100, pad: 250, grab: 150, throw: 150, click: 60, stars: 350, note:80, bell:1800, portal:500, 'water-splash':450, 'vehicle-start':500, 'vehicle-stop':250, 'ui-confirm':120, 'pet-call':240, 'punch-cat':600, 'punch-gorilla':600, 'punch-frog':600};
   const audible = () => ctx?.state === 'running' && !host.document.hidden && !blocked && !gameMuted() && settings.sfx > 0;
   const volume = () => {
     if (ctx && master) master.gain.setTargetAtTime(audible() ? Math.min(1, Math.max(0, Number(settings.sfx) || 0)) * 0.65 : 0, ctx.currentTime, 0.025);
@@ -184,7 +184,24 @@ export function createPartyAudio({settings, saveSettings, gameMuted, host = wind
     grab(_, p) { voice({from:440, to:280, duration:0.10, gain:0.18, pitch:p}); voice({from:660, to:520, duration:0.08, delay:0.04, gain:0.07, pitch:p}); },
     throw(_, p) { voice({noiseBand:'bandpass', from:1400, duration:0.21, gain:0.18, pitch:p}); voice({from:330, to:760, duration:0.18, gain:0.10, pitch:p}); },
     click(_, p) { voice({from:750, to:570, duration:0.045, gain:0.10, pitch:p}); },
-    stars(_, p) { [880,1100,1320].forEach((f,i)=>voice({from:f,to:f*1.02,duration:0.15,delay:i*0.08,gain:0.065,pitch:p})); }
+    stars(_, p) { [880,1100,1320].forEach((f,i)=>voice({from:f,to:f*1.02,duration:0.15,delay:i*0.08,gain:0.065,pitch:p})); },
+    portal() {
+      voice({type:'triangle',from:260,to:520,duration:.22,gain:.08});
+      voice({type:'sine',from:520,to:1040,duration:.28,delay:.08,gain:.075});
+      voice({type:'sine',from:1040,to:1560,duration:.34,delay:.17,gain:.045});
+    },
+    'water-splash'() {
+      voice({noiseBand:'lowpass',from:900,duration:.22,gain:.24});
+      voice({type:'sine',from:420,to:150,duration:.28,delay:.015,gain:.12});
+      voice({type:'triangle',from:780,to:390,duration:.2,delay:.08,gain:.055});
+    },
+    'vehicle-start'() {
+      voice({type:'sawtooth',from:62,to:118,duration:.28,gain:.08});
+      voice({type:'triangle',from:124,to:236,duration:.22,delay:.06,gain:.035});
+    },
+    'vehicle-stop'() { voice({type:'triangle',from:180,to:72,duration:.16,gain:.08}); },
+    'ui-confirm'() { voice({type:'sine',from:440,to:660,duration:.12,gain:.07}); voice({type:'sine',from:660,to:880,duration:.16,delay:.09,gain:.055}); },
+    'pet-call'() { voice({type:'triangle',from:520,to:760,duration:.10,gain:.06}); voice({type:'triangle',from:760,to:620,duration:.14,delay:.11,gain:.045}); }
   };
   function play(name, arg) {
     try {
