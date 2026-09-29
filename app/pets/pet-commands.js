@@ -22,7 +22,14 @@ export function createPetCompanion(kind,probe,{sound=()=>{}}={}) {
   const follow=createPetFollower(probe),nav=follow.state;
   const state={command:'follow',phase:'follow',pose:'idle',actionTime:0,playSide:1,happy:0,ownerAction:'',toy:null,message:'Following you',completed:0,fetches:0};
   let clock=0,age=0,phaseAge=0,idle=0,lastOwner=null,actionOrigin=null,lastCommand=-10,cycles=0;
-  function phase(value){state.phase=value;phaseAge=state.actionTime=0;}
+  function phase(value){
+    state.phase=value;phaseAge=state.actionTime=0;
+    if(value==='pounce')sound('pet-pounce');
+    else if(value==='roll')sound('pet-roll');
+    else if(value==='bat'||(value==='care'&&state.command==='paw'))sound('pet-paw');
+    else if(value==='pickup')sound('pet-pickup');
+    else if(value==='drop')sound('pet-drop');
+  }
   function finish(message='Following you',count=true) {
     if(count&&state.command!=='follow')state.completed++;state.command='follow';phase('follow');state.pose='idle';state.ownerAction='';state.toy=null;state.message=message;age=0;
     follow.hold();
