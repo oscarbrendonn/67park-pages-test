@@ -13,7 +13,7 @@ import {installSkateRailFinish} from './skate-rail-finish.js?v=flush-ends-2';
 import * as THREE from 'three';
 import {playerSettings as settings,savePlayerSettings as saveSettings} from '../player-settings.js';
 import {installPlayerSettings} from './settings-panel.js?v=recovery-graphics-1';
-import { createPartyAudio } from './party-audio.js?v=horn-hold-1&sound-pack=4';
+import { createPartyAudio } from './party-audio.js?v=horn-hold-1&sound-pack=5';
 import {createFeatureBoundary} from '../feature-boundary.js';
 import {createVehicleHorn} from './vehicle-horn.js?v=horn-hold-1';
 import {createTargetClub} from './target-club.js?v=target-club-1';
@@ -196,9 +196,10 @@ window.__partyVisual = guard((group, dt) => {
   if(punchStarted&&st?.enabled&&player.map==='city'&&world()?.lobbyCourts?.canStrike(st.heading))netHook.flag(`pk1b:${++ballStrikeSeq%100000}`);
   // Sound follows actions even when visual bounce or reduced-motion effects are off.
   if (st?.enabled && player.map === 'city') {
-    if (st.jumped === 1) sfx.play('jump');
-    else if (st.jumped === 2) sfx.play('double');
-    if (st.landed) sfx.play('land', st.landed > 9);
+    const base=document.documentElement.dataset.gameplayAvatarBase;
+    if (st.jumped === 1) { sfx.play('jump'); sfx.play('character-jump', base); }
+    else if (st.jumped === 2) { sfx.play('double'); sfx.play('character-jump', base); }
+    if (st.landed) { const hard=st.landed>9; sfx.play('land', hard); sfx.play('character-land', {hard,base}); }
     if (punchStarted) sfx.punch(document.documentElement.dataset.gameplayAvatarBase);
   }
   prevPunchT = st?.punchT || 0;

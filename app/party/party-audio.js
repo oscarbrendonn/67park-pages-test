@@ -10,7 +10,7 @@ export function createPartyAudio({settings, saveSettings, gameMuted, host = wind
   // Warm only the 97KB file while the map prepares. No AudioContext, decoding,
   // autoplay or loading-screen dependency; muted entry allocates none of it.
   if(!host.document.hidden&&!gameMuted()&&settings.sfx>0)recordings.preload();
-  const limits = {step: 90, jump: 140, double: 140, land: 100, 'skate-ollie':110, 'skate-flip':140, 'skate-land':100, horn:120, swing: 150, hit: 100, pad: 250, grab: 150, throw: 150, click: 60, stars: 350, note:80, bell:1800, portal:500, 'water-splash':450, 'vehicle-start':500, 'vehicle-stop':250, 'vehicle-engine':180, 'vehicle-brake':300, 'ui-confirm':120, 'pet-call':240, 'pet-purr':260, 'pet-happy':220, 'pet-bark':500, 'pet-fetch':450, 'pet-pounce':180, 'pet-paw':160, 'pet-pickup':260, 'pet-drop':240, 'pet-roll':220, 'punch-cat':600, 'punch-gorilla':600, 'punch-frog':600};
+  const limits = {step: 90, jump: 140, double: 140, land: 100, 'character-jump':110, 'character-land':120, 'skate-ollie':110, 'skate-flip':140, 'skate-land':100, horn:120, swing: 150, hit: 100, pad: 250, grab: 150, throw: 150, click: 60, stars: 350, note:80, bell:1800, portal:500, 'water-splash':450, 'vehicle-start':500, 'vehicle-stop':250, 'vehicle-engine':180, 'vehicle-brake':300, 'ui-confirm':120, 'pet-call':240, 'pet-purr':260, 'pet-happy':220, 'pet-bark':500, 'pet-fetch':450, 'pet-pounce':180, 'pet-paw':160, 'pet-pickup':260, 'pet-drop':240, 'pet-roll':220, 'punch-cat':600, 'punch-gorilla':600, 'punch-frog':600};
   const audible = () => ctx?.state === 'running' && !host.document.hidden && !blocked && !gameMuted() && settings.sfx > 0;
   const volume = () => {
     if (ctx && master) master.gain.setTargetAtTime(audible() ? Math.min(1, Math.max(0, Number(settings.sfx) || 0)) * 0.65 : 0, ctx.currentTime, 0.025);
@@ -176,6 +176,21 @@ export function createPartyAudio({settings, saveSettings, gameMuted, host = wind
     jump(_,p){return !!recording('takeoff',{gain:.19,pitch:1+(p-1)*.5});},
     double(_,p){return !!recording('flick',{gain:.085,pitch:1+(p-1)*.5});},
     land(hard,p){return !!recording('landing',{gain:hard?.48:.32,pitch:1+(p-1)*.5});},
+    // The recordings carry the physical action. These quiet character cues
+    // make the jump belong to the selected rig instead of sounding generic.
+    'character-jump'(base){
+      voice({noiseBand:'bandpass',from:820,duration:.11,gain:.025});
+      if(base==='goril')vocal({notes:[[0,118],[.045,150],[.15,92]],formants:[[0,360],[.06,540],[.16,210]],duration:.16,gain:.055});
+      else if(base==='frog67')vocal({notes:[[0,300],[.045,410],[.12,230]],formants:[[0,760],[.06,1280],[.15,460]],duration:.16,gain:.05});
+      else if(base==='cat67')vocal({notes:[[0,520],[.05,690],[.14,430]],formants:[[0,1100],[.08,1800],[.16,760]],duration:.16,gain:.035});
+    },
+    'character-land'({hard=false,base}={}){
+      const weight=hard?.075:.045;
+      voice({noiseBand:'lowpass',from:180,duration:hard?.15:.11,gain:weight});
+      voice({type:'triangle',from:115,to:58,duration:hard?.18:.12,delay:.012,gain:weight*.7});
+      if(hard&&base==='goril')vocal({notes:[[0,105],[.06,76]],formants:[[0,310],[.14,180]],duration:.14,gain:.045});
+      else if(hard&&base==='frog67')vocal({notes:[[0,240],[.05,185]],formants:[[0,680],[.14,390]],duration:.14,gain:.035});
+    },
     'skate-ollie'(_,p){return !!recording('ollie',{gain:.36,pitch:1+(p-1)*.5});},
     'skate-flip'(_,p){return !!recording('flick',{gain:.16,pitch:1+(p-1)*.5});},
     'skate-land'(hard,p){return !!recording('skateLanding',{gain:hard?.5:.36,pitch:1+(p-1)*.5});},
