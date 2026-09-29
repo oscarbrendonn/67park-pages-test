@@ -1,7 +1,7 @@
 import{applyParkWaterSurface}from'./park-water-surface.js?v=park-water-5-all-swim';
 const notice=document.createElement('aside');
 notice.id='github-preview-notice';notice.setAttribute('role','status');notice.textContent='Connecting…';
-const sheet=document.createElement('link');sheet.rel='stylesheet';sheet.href=new URL('./responsive-shell.css?v=mobile-29',import.meta.url).href;document.head.append(sheet);document.body.append(notice);
+const sheet=document.createElement('link');sheet.rel='stylesheet';sheet.href=new URL('./responsive-shell.css?v=mobile-30',import.meta.url).href;document.head.append(sheet);document.body.append(notice);
 const localPractice=new URLSearchParams(location.search).get('practice')==='1'&&(/\/(sports|race|rockets|balloon)\//.test(location.pathname)||new URLSearchParams(location.search).get('map')==='obstacle');
 const archivedMap=new URLSearchParams(location.search).get('legacyGames')==='1';
 if(archivedMap){const back=document.createElement('a');back.href=new URL('../archive-games.html',import.meta.url).href;back.textContent='← Prototype archive';back.style.cssText='position:fixed;z-index:10000;left:16px;top:84px;background:#fff9eb;color:#384845;border:1px solid #ded7c8;border-radius:18px;padding:12px 16px;font:700 13px system-ui;text-decoration:none';document.body.append(back);}
