@@ -1,5 +1,5 @@
 import * as T from 'three';
-import {boundaryPositionCRC} from './terrain-boundaries.js?v=ground-2';
+import {boundaryPositionCRC} from './terrain-boundaries.js?v=ground-3';
 
 // One offline-baked shared contour, applied before collision/shadow sampling.
 // No color, shader, texture, light, draw-call or per-frame changes.

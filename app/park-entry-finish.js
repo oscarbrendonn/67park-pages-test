@@ -1,5 +1,5 @@
 import * as T from 'three';
-import {boundaryPositionCRC as crc} from './terrain-boundaries.js?v=ground-2';
+import {boundaryPositionCRC as crc} from './terrain-boundaries.js?v=ground-3';
 
 const BASES=['6_BORDUR','7_KALDIRIM_TABANI'];
 const SLOTS=['7_KALDIRIM_TABANI_PARK_ENTRY57_WEST_SLOT','7_KALDIRIM_TABANI_PARK_ENTRY57_EAST_SLOT'];
