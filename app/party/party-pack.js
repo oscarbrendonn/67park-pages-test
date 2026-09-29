@@ -85,6 +85,50 @@ function stepSpring(dt) { const a = -spring.k * spring.v - spring.c * spring.vel
 let prevPunchT = 0, ballStrikeSeq = 0, wasEnabled = false, hitTumble = 0, tumbleDir = 0;
 let previousHeld = '';
 let previousMounted = null, previousSwimming = false;
+const waterDives = [];
+
+function waterDiveEffect(pos) {
+  const s = scene(); if (!s || !pos || waterDives.length >= 4) return;
+  const x = Number(pos.x), y = Number(pos.y), z = Number(pos.z);
+  if (![x, y, z].every(finite)) return;
+  const group = new THREE.Group(); group.name = 'PARTY_water-dive';
+  const ring = new THREE.Mesh(
+    new THREE.RingGeometry(0.16, 0.28, 28),
+    new THREE.MeshBasicMaterial({color:'#c9f4f1', transparent:true, opacity:0.9, depthWrite:false, side:THREE.DoubleSide})
+  );
+  ring.rotation.x = -Math.PI / 2; ring.position.y = 0.02; group.add(ring);
+  const drops = [];
+  for (let i = 0; i < 6; i++) {
+    const a = (i / 6) * Math.PI * 2 + 0.18;
+    const drop = new THREE.Mesh(
+      new THREE.SphereGeometry(0.055, 8, 6),
+      new THREE.MeshBasicMaterial({color:'#e8ffff', transparent:true, opacity:0.9, depthWrite:false})
+    );
+    drop.position.set(Math.cos(a) * 0.16, 0.12 + (i % 2) * 0.08, Math.sin(a) * 0.16);
+    group.add(drop); drops.push({mesh:drop, a, speed:0.55 + (i % 3) * 0.12});
+  }
+  group.position.set(x, y, z); s.add(group);
+  waterDives.push({group, ring, drops, t:0});
+}
+
+function stepWaterDives(dt) {
+  for (let i = waterDives.length - 1; i >= 0; i--) {
+    const fx = waterDives[i]; fx.t += dt; const k = fx.t / 0.72;
+    fx.ring.scale.setScalar(0.6 + k * 2.7);
+    fx.ring.material.opacity = Math.max(0, 0.9 * (1 - k));
+    for (const d of fx.drops) {
+      d.mesh.position.x = Math.cos(d.a) * (0.16 + k * d.speed);
+      d.mesh.position.z = Math.sin(d.a) * (0.16 + k * d.speed);
+      d.mesh.position.y = 0.12 + (1 - k) * 0.28 - k * k * 0.36;
+      d.mesh.material.opacity = Math.max(0, 0.9 * (1 - k));
+    }
+    if (k >= 1) {
+      fx.group.removeFromParent();
+      fx.group.traverse(o => { o.geometry?.dispose?.(); o.material?.dispose?.(); });
+      waterDives.splice(i, 1);
+    }
+  }
+}
 
 function vehicleAndWaterAudio(st) {
   const mounted = window.__candy?.state?.().mounted || null;
@@ -92,7 +136,11 @@ function vehicleAndWaterAudio(st) {
   if (!mounted && previousMounted) sfx.play('vehicle-stop');
   previousMounted = mounted;
   const swimming = !!st?.swimming;
-  if (swimming && !previousSwimming) sfx.play('water-splash');
+  if (swimming && !previousSwimming) {
+    sfx.play('water-splash');
+    const p = player.body?.translation?.();
+    if (p) waterDiveEffect(p);
+  }
   previousSwimming = swimming;
 }
 
@@ -108,6 +156,7 @@ window.__partyStep = guard((body, input, dt, map) => {
   features.run('knockback',()=>knockStep(dt));
   features.run('footsteps',()=>footsteps(state(), dt));
   features.run('vehicle-water-audio',()=>vehicleAndWaterAudio(state()));
+  features.run('water-dive-fx',()=>stepWaterDives(dt));
   const held = heldId();
   if (held && !previousHeld) sfx.play('grab');
   previousHeld = held;
