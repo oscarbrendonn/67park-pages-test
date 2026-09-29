@@ -13,7 +13,7 @@ import {installSkateRailFinish} from './skate-rail-finish.js?v=flush-ends-2';
 import * as THREE from 'three';
 import {playerSettings as settings,savePlayerSettings as saveSettings} from '../player-settings.js';
 import {installPlayerSettings} from './settings-panel.js?v=recovery-graphics-1';
-import { createPartyAudio } from './party-audio.js?v=horn-hold-1';
+import { createPartyAudio } from './party-audio.js?v=horn-hold-1&sound-pack=2';
 import {createFeatureBoundary} from '../feature-boundary.js';
 import {createVehicleHorn} from './vehicle-horn.js?v=horn-hold-1';
 import {createTargetClub} from './target-club.js?v=target-club-1';
