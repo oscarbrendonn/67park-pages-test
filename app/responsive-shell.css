@@ -1,5 +1,5 @@
 /* Responsive preview shell: geometry and movement remain untouched. */
-:root{--preview-top:calc(24px + env(safe-area-inset-top,0px));--park-chat-reserved-height:min(24dvh,160px);--park-hud-gap:12px}
+:root{--preview-top:calc(24px + env(safe-area-inset-top,0px));--park-chat-reserved-height:min(24dvh,160px);--park-chat-control-height:44px;--park-hud-gap:12px}
 #github-preview-notice{position:fixed;z-index:85;top:env(safe-area-inset-top,0px);left:0;right:0;min-height:24px;padding:4px max(8px,env(safe-area-inset-left));background:#fff8e7;color:#534c3c;font:11px/16px system-ui;text-align:center;pointer-events:none;box-sizing:border-box}
 body:has(#github-preview-notice) .wardrobe{top:var(--preview-top);height:calc(100dvh - var(--preview-top));bottom:0}
 .park-toolbar{max-width:calc(100vw - 24px - env(safe-area-inset-left) - env(safe-area-inset-right));box-sizing:border-box}
@@ -41,7 +41,7 @@ body:has(.claude-emote-panel,.park-inventory-panel) #preview-hit,body:has(.claud
  .park-pet-button{z-index:70;max-width:calc(100vw - 24px);white-space:nowrap}
 }
 @media(pointer:coarse) and (orientation:portrait){
- .park-pet-button{top:calc(var(--preview-top,24px) + 120px + var(--park-chat-reserved-height) + var(--park-hud-gap))!important;bottom:auto!important}
+ .park-pet-button{top:calc(var(--preview-top,24px) + 120px + var(--park-chat-reserved-height) + var(--park-chat-control-height) + var(--park-hud-gap))!important;bottom:auto!important}
 }
 @media(pointer:coarse) and (orientation:landscape){
  .park-chat{top:calc(var(--preview-top,24px) + 56px)!important;bottom:auto!important;left:max(12px,env(safe-area-inset-left))!important}
@@ -49,7 +49,7 @@ body:has(.claude-emote-panel,.park-inventory-panel) #preview-hit,body:has(.claud
 }
 @media(pointer:coarse) and (min-width:651px) and (orientation:portrait){
  .park-chat{top:calc(var(--preview-top,24px) + 112px)!important;bottom:auto!important;left:max(16px,env(safe-area-inset-left))!important}
- .park-pet-button{left:max(16px,env(safe-area-inset-left))!important;top:calc(var(--preview-top,24px) + 112px + var(--park-chat-reserved-height) + var(--park-hud-gap))!important;bottom:auto!important}
+ .park-pet-button{left:max(16px,env(safe-area-inset-left))!important;top:calc(var(--preview-top,24px) + 112px + var(--park-chat-reserved-height) + var(--park-chat-control-height) + var(--park-hud-gap))!important;bottom:auto!important}
 }
 @media(max-width:760px) and (max-height:700px) and (orientation:portrait){
  .wardrobe-boxes .wardrobe-main{grid-template-rows:128px minmax(0,1fr)}
