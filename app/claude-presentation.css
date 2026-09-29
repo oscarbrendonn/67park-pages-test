@@ -1,0 +1,27 @@
+/* Claude reference presentation only. Input hit areas and movement are unchanged. */
+.park-touch{--pt-ink:#2c3140;--pt-glass:rgba(255,255,255,.58);--pt-edge:rgba(255,255,255,.84);--pt-shadow:0 8px 20px #261e3a24,inset 0 1px #ffffffe0}
+.park-action{border:1px solid var(--pt-edge);border-radius:50%;color:var(--pt-ink);background:var(--pt-glass);box-shadow:var(--pt-shadow);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:transform 140ms ease-out}
+.park-action span{font-size:9px;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
+.park-action svg{stroke-width:1.8}
+.park-action.primary{color:#fff;background:linear-gradient(180deg,#ff8fb8,#f25b90);border-color:#ffffff99;box-shadow:0 9px 22px #f25b9040,inset 0 1px #ffffff99}
+.park-action.mint.primary{background:linear-gradient(180deg,#86e0c5,#3fb894)}
+.park-action:active{transform:scale(.97)}
+.park-action:focus-visible,.claude-emote-panel button:focus-visible{outline:3px solid #56878f;outline-offset:3px}
+.park-toolbar>button{border-radius:17px;min-height:44px;border:1px solid #fff8;box-shadow:inset 0 2px #ffffffa0,0 3px #86746d30!important}
+.park-toolbar>button:active{transform:translateY(2px) scale(.97)!important}
+.park-weather,.park-hud .park-chat>button,.online-toggle{border:1px solid #fffc!important;border-radius:999px!important;background:#ffffffa3!important;color:#2c3140!important;box-shadow:0 7px 20px #261e3a20,inset 0 1px #ffffffe0!important}
+.claude-emote-panel{background:#fff8eeed!important;border:1px solid #fff!important;border-radius:24px!important;padding:14px!important;width:min(292px,calc(100vw - 24px))!important;max-height:calc(100dvh - 190px);overflow-y:auto;overscroll-behavior:contain;box-shadow:0 12px 36px #30233929!important}
+.claude-emote-panel button{touch-action:manipulation;min-height:44px}
+.claude-emote-panel>div:first-child button{min-width:44px}
+.claude-emote-panel .grid button{min-height:72px;border-radius:15px;background:#faf7f0;transition:transform 140ms ease-out}
+.claude-emote-panel .grid button:active{transform:scale(.97)}
+.claude-emote-panel .grid button svg{display:block;width:30px;height:30px;color:#6a5f78}
+.online-dialog{border-radius:28px;background:#fff8ee;border:2px solid #fff9ef}
+.online-dialog button{border-radius:15px;min-height:44px;touch-action:manipulation;transition:transform 140ms ease-out}
+.online-dialog button:active:not(:disabled){transform:scale(.97)}
+.online-dialog .community-games button{border:1px solid #e3ded4;background:#faf7f0;box-shadow:0 3px #877b6412}
+.online-dialog .community-games button[aria-pressed=true]{background:#e2f2eb;border-color:#83bca8}
+.online-dialog .online-primary{background:#ffd23f;color:#49391d;box-shadow:0 3px #d9a812}
+@media(max-width:650px){.claude-emote-panel{bottom:244px!important;max-height:calc(100dvh - 374px)}}
+@media(max-height:500px){.claude-emote-panel{bottom:20px!important;max-height:calc(100dvh - 95px)}}
+@media(prefers-reduced-motion:reduce){.park-action,.park-toolbar>button,.claude-emote-panel button,.online-dialog button{transition:none!important}}

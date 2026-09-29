@@ -1,0 +1,137 @@
+{
+  "version": 55,
+  "variant": "kimi",
+  "mesh": "8_REF_AYIRICI",
+  "sourceVertices": 12474,
+  "sourceIndices": 30120,
+  "retainedVertices": 7474,
+  "components": [
+    {
+      "id": "small-2",
+      "axis": [
+        1,
+        0
+      ],
+      "x": -146.43784126699998,
+      "z": 84,
+      "start": 7474,
+      "count": 4034,
+      "length": 21.041278,
+      "width": 0.80755,
+      "exposedHeight": 0.026918,
+      "fit": {
+        "x": -146.43784126699998,
+        "z": 84,
+        "fail": {},
+        "plants": [],
+        "minHouse": 1.5942250867133616,
+        "minY": 9.398031234741211,
+        "maxY": 9.398031234741211,
+        "flat": 0
+      }
+    },
+    {
+      "id": "small-3",
+      "axis": [
+        1,
+        0
+      ],
+      "x": -146.43784126699998,
+      "z": 96.4,
+      "start": 11508,
+      "count": 4034,
+      "length": 21.041278,
+      "width": 0.80755,
+      "exposedHeight": 0.026918,
+      "fit": {
+        "x": -146.43784126699998,
+        "z": 96.4,
+        "fail": {},
+        "plants": [],
+        "minHouse": 1.9574246832542173,
+        "minY": 9.398031234741211,
+        "maxY": 9.398031234741211,
+        "flat": 0
+      }
+    },
+    {
+      "id": "small-4",
+      "axis": [
+        0,
+        1
+      ],
+      "x": -143,
+      "z": 139.33280245699999,
+      "start": 15542,
+      "count": 4034,
+      "length": 21.041278,
+      "width": 0.80755,
+      "exposedHeight": 0.026918,
+      "fit": {
+        "x": -143,
+        "z": 139.33280245699999,
+        "fail": {},
+        "plants": [],
+        "minHouse": 3.463725088752577,
+        "minY": 9.398031234741211,
+        "maxY": 9.398031234741211,
+        "flat": 0
+      }
+    },
+    {
+      "id": "small-5",
+      "axis": [
+        0,
+        1
+      ],
+      "x": -107.55,
+      "z": 139.33280245699999,
+      "start": 19576,
+      "count": 4034,
+      "length": 21.041278,
+      "width": 0.80755,
+      "exposedHeight": 0.026918,
+      "fit": {
+        "x": -107.55,
+        "z": 139.33280245699999,
+        "fail": {},
+        "plants": [],
+        "minHouse": 3.675224908773912,
+        "minY": 9.398031234741211,
+        "maxY": 9.398031234741211,
+        "flat": 0
+      }
+    }
+  ],
+  "attributes": {
+    "position": {
+      "size": 3,
+      "offset": 0,
+      "length": 70830
+    },
+    "normal": {
+      "size": 3,
+      "offset": 283320,
+      "length": 70830
+    },
+    "smallWall48": {
+      "size": 1,
+      "offset": 566640,
+      "length": 23610
+    }
+  },
+  "indices": {
+    "offset": 661080,
+    "length": 101016
+  },
+  "policy": {
+    "reference": "Kimi mainland x134.818117",
+    "length": 21.041278,
+    "width": 0.80755,
+    "exposedHeight": 0.026918,
+    "embed": 0.017945,
+    "upperDividerAndMainlandUnchanged": true,
+    "terrainFollowing": true,
+    "addedDrawCalls": 0
+  }
+}

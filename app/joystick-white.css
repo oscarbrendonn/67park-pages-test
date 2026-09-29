@@ -1,0 +1,18 @@
+/* White movement-joystick finish, adapted from the existing apple-controls-v26 palette.
+   Presentation only: keep hit areas, knob travel, pointer ownership and vehicle steering unchanged. */
+.park-stick:not(.park-steering){
+  border-color:#ffffffa6;
+  background:radial-gradient(circle,transparent 46%,#ffffff28 47%,#ffffff28 48%,transparent 49%),#eef2f469;
+  box-shadow:0 4px 18px #1d304322,inset 0 1px 0 #ffffffa0;
+}
+.park-stick:not(.park-steering) .park-stick-rings{border-color:#ffffff80}
+.park-stick:not(.park-steering) .park-stick-knob{
+  color:#344651;border-color:#ffffffeb;
+  background:linear-gradient(160deg,#fffffff5,#e4e9ede8);
+  box-shadow:0 3px 9px #24354335,inset 0 1px 0 #fff;
+}
+.park-stick:not(.park-steering)[data-claude-stick-active="true"]{background-color:#edf3f494;border-color:#fff}
+@media(prefers-contrast:more),(prefers-reduced-transparency:reduce){
+  .park-stick:not(.park-steering){background:#e6edf0;border-color:#334c5d}
+  .park-stick:not(.park-steering) .park-stick-knob{background:#fff;border-color:#334c5d}
+}

@@ -1,0 +1,13 @@
+/* Shared white Kimi controls. No extra action animation or input delay. */
+.park-stick{width:140px;height:140px;background:#ffffff30;border:2px solid #ffffffe0;box-shadow:inset 0 0 0 14px #ffffff16}
+.park-stick-knob{background:linear-gradient(#fff,#e5ebef)!important;border:2px solid white!important;box-shadow:0 4px 12px #35495625!important;color:#435460!important}
+.park-stick-rings{border-color:#ffffff90!important}
+.park-actions{grid-template-columns:repeat(2,72px);gap:12px;right:max(20px,env(safe-area-inset-right));bottom:max(28px,env(safe-area-inset-bottom))}
+.park-action,.park-action.primary{width:72px;height:72px;border-radius:50%;background:#ffffffb0;border:2px solid white;color:#435460;box-shadow:0 3px 8px #35495620;transition:none}
+.park-action.pink{background:#f178b2;color:white;border-color:#ffd9eb}
+.park-action span{font:700 11px system-ui;text-transform:uppercase}
+.park-action svg{width:30px;height:30px}
+.park-action:active{transform:none!important;background:#eef1f4}
+.park-action.pink:active{background:#e4569b}
+.pause-button{background:#ffffffb0!important;border:2px solid white!important;color:#435460!important}
+@media(max-height:540px) and (orientation:landscape){.park-stick{width:104px;height:104px;bottom:16px}.park-action,.park-action.primary{width:62px;height:62px}.park-actions{grid-template-columns:repeat(2,62px);bottom:16px}}

@@ -1,0 +1,35 @@
+@import url('./studio-panel.css?v=character-select-2');
+/* Keep the existing shelf and confirmation reachable on short landscape screens. */
+@media(max-height:520px) and (orientation:landscape){
+ .wardrobe.wardrobe-shelf .wardrobe-panel{overflow:hidden;min-height:0;gap:4px}
+ .wardrobe.wardrobe-shelf .wardrobe-options{flex:1 1 0;min-height:0;overflow-y:auto;overscroll-behavior:contain}
+ .wardrobe.wardrobe-shelf .wardrobe-bottom{flex:none;padding-top:4px;gap:4px}
+ .wardrobe.wardrobe-shelf .wardrobe-pager{flex:none}
+}
+.wardrobe-profile .wardrobe-display-box,.wardrobe-profile .wardrobe-character-title,.wardrobe-profile .wardrobe-demo{display:none!important}
+.wardrobe-profile .wardrobe-stage{background:linear-gradient(180deg,#ead4d4,#f3e2e2 55%,#fff2f2)!important;border-radius:28px;overflow:hidden}
+.wardrobe-profile .wardrobe-header nav button:first-child{display:none}
+.wardrobe-profile .wardrobe-person>button{display:none}
+.wardrobe-profile .wardrobe-header>img{height:36px!important;max-height:none!important;width:130px!important;object-fit:contain}
+.wardrobe-profile .wardrobe-stage canvas{background:transparent!important}
+.wardrobe-returning .wardrobe-main,.wardrobe-returning .wardrobe-header nav{display:none!important}
+.wardrobe-returning{justify-content:center}
+/* Real progress and recovery live in the returning-entry component. */
+.wardrobe-returning .wardrobe-close{display:none}
+.wardrobe.wardrobe-returning{display:flex!important;flex-direction:column;align-items:center;justify-content:center;padding:24px 18px;box-sizing:border-box;overflow-y:auto;outline:none}
+.wardrobe-returning>.wardrobe-header,.wardrobe-returning>.return-entry{flex-shrink:0}
+.wardrobe.wardrobe-returning>.wardrobe-header{display:none!important}
+.return-entry{box-sizing:border-box;width:min(100%,480px);padding:30px 24px;text-align:center;border:1px solid #fffaf2;border-radius:30px;background:#fffaf0;box-shadow:0 12px 38px #6e5d4720;color:#514952;font-family:system-ui,sans-serif}
+.return-entry>.return-entry-logo{display:block;margin:0 auto 24px;width:148px;height:48px;max-height:none;object-fit:contain;position:static;transform:none}
+.return-entry h1{font-size:24px;line-height:1.2;margin:0 0 12px}
+.return-entry-stage{min-height:44px;margin:0 0 18px;font-size:16px;line-height:1.4}
+.return-entry progress{display:block;appearance:none;width:100%;height:12px;border:0;border-radius:99px;overflow:hidden;background:#ede8df;accent-color:#90ca9e}
+.return-entry progress::-webkit-progress-bar{background:#ede8df;border-radius:99px}
+.return-entry progress::-webkit-progress-value{background:#90ca9e;border-radius:99px}
+.return-entry progress::-moz-progress-bar{background:#90ca9e;border-radius:99px}
+.return-entry-detail,.return-entry-hint{font-size:13px;line-height:1.5;color:#746d70}
+.return-entry-actions{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:22px}
+.return-entry-actions button{min-height:46px;padding:10px 18px;border:1px solid #fff;border-radius:18px;background:#b8dfc0;color:#3b5141;font:600 15px system-ui;cursor:pointer}
+.return-entry-actions .return-entry-secondary{background:#f0ece5;color:#625a61}
+.return-entry-actions button:focus-visible{outline:3px solid #709bcb;outline-offset:3px}
+@media(max-height:520px){.wardrobe.wardrobe-returning{justify-content:flex-start}.return-entry{padding:18px}.return-entry>.return-entry-logo{height:30px;margin-bottom:12px}}

@@ -1,0 +1,42 @@
+/* Small native controls; the joystick remains immediate, never spring-delayed. */
+#hareketJoystick{
+  border:1px solid #ffffffa6;
+  background:radial-gradient(circle,transparent 46%,#ffffff28 47%,#ffffff28 48%,transparent 49%),#eef2f469;
+  box-shadow:0 4px 18px #1d304322,inset 0 1px 0 #ffffffa0;
+}
+#hareketJoystick[data-active="true"]{background-color:#edf3f494;border-color:#fff}
+#hareketJoystick .joystickTop{border:1px solid #ffffffeb;background:linear-gradient(160deg,#fffffff5,#e4e9ede8);box-shadow:0 3px 9px #24354335,inset 0 1px 0 #fff}
+#hareketJoystick .joystickEtiket{color:#344651;text-shadow:0 1px 2px #ffffffa0;font-weight:600;letter-spacing:.06em}
+#hareketKontrolleri{align-items:flex-end;bottom:calc(40px + env(safe-area-inset-bottom));gap:12px}
+#hareketKontrolleri button{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+  width:68px;height:68px;padding:0;border:1px solid #ffffffb3;border-radius:50%;
+  background:#f3f6f8cf;color:#304451;box-shadow:0 4px 16px #1d304325,inset 0 1px 0 #ffffffe6;
+  font:600 11px/1.1 -apple-system,BlinkMacSystemFont,system-ui,sans-serif;letter-spacing:-.01em;
+  user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;cursor:pointer;
+}
+#hareketKontrolleri button.parkJump{width:78px;height:78px;background:#e6f4dded;color:#344c37}
+#hareketKontrolleri button svg{width:25px;height:25px;pointer-events:none}
+#hareketKontrolleri button span{pointer-events:none}
+#hareketKontrolleri button:active,#hareketKontrolleri button[data-held="true"],#hareketKontrolleri button[aria-pressed="true"]{
+  background:#d2e5ce;color:#263e2b;box-shadow:0 2px 5px #1d304328,inset 0 1px 3px #47654318;
+}
+#hareketKontrolleri button:focus-visible,#hareketJoystick:focus-visible{outline:3px solid #326cb1;outline-offset:4px}
+@supports (backdrop-filter:blur(6px)){
+  #hareketJoystick,#hareketKontrolleri button{backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+}
+@media(max-width:380px){
+  #gorunumKontrolleri button{min-width:0;padding:0 5px;font-size:10px}
+  #gorunumKontrolleri #tamEggyOyun{min-width:0;padding:0 5px;font-size:9px}
+  #hareketKontrolleri{right:calc(16px + env(safe-area-inset-right));gap:8px}
+  #hareketKontrolleri button{width:60px;height:60px}
+  #hareketKontrolleri button.parkJump{width:64px;height:64px}
+}
+@media(max-height:460px){#hareketKontrolleri{bottom:calc(28px + env(safe-area-inset-bottom))}}
+@media(prefers-contrast:more),(prefers-reduced-transparency:reduce){
+  #hareketJoystick,#hareketJoystick[data-active="true"],#hareketKontrolleri button,#hareketKontrolleri button.parkJump{
+    background:#e6edf0;border-color:#334c5d;backdrop-filter:none;-webkit-backdrop-filter:none;
+  }
+  #hareketJoystick .joystickTop{background:#fff;border-color:#334c5d}
+}
+@media(prefers-reduced-motion:reduce){#hareketKontrolleri button,#hareketJoystick{transition:none;animation:none}}

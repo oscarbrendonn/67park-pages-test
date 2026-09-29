@@ -1,0 +1,56 @@
+/* Native rotation: reflow controls, never scale the page or shrink the canvas.
+   Saved button size still applies, with a 44px minimum actual touch target. */
+/* Outside landscape, the utility buttons keep their existing fixed anchors. */
+#park-utilities{display:contents}
+/* An old inline renderer width must not enlarge the layout viewport when a
+   phone rotates back or a split-screen window gets narrower (Pocket Rally). */
+@media(pointer:coarse){
+ body:has(.rr-controls)>canvas{position:fixed;inset:0;width:100%!important;height:100%!important}
+}
+@media(pointer:coarse) and (orientation:landscape){
+ :root{--landscape-action:max(44px,calc(50px * var(--park-button-scale,1)));--landscape-edge:max(14px,env(safe-area-inset-right));--landscape-bottom:max(16px,env(safe-area-inset-bottom))}
+ body .park-actions{transform:none!important;scale:1!important;grid-template-columns:repeat(3,var(--landscape-action))!important;gap:8px!important;right:var(--landscape-edge)!important;bottom:var(--landscape-bottom)!important}
+ body .park-actions:has([data-party-icon=brake]){grid-template-columns:repeat(2,var(--landscape-action))!important}
+ body .park-actions .park-action,body #touch-buttons .park-action{width:var(--landscape-action)!important;height:var(--landscape-action)!important;min-width:44px!important;min-height:44px!important;padding:0!important}
+ body .park-action .party-icon{width:26px!important;height:26px!important}
+ body .park-action span{font-size:8px!important}
+ body .park-stick{width:96px!important;height:96px!important;left:max(16px,env(safe-area-inset-left))!important;bottom:var(--landscape-bottom)!important}
+ body .park-stick:not(.park-steering) .park-stick-knob{left:calc(50% - 22px)!important;top:calc(50% - 22px)!important;width:44px!important;height:44px!important;margin:0!important}
+ body .park-steering .park-stick-knob{inset:7px!important;width:78px!important;height:78px!important}
+ body .park-steering .park-stick-knob svg{width:64px!important;height:64px!important}
+ body.park-unified-ui button:is(#preview-hit,#party-throw),body button#punch{
+  width:var(--landscape-action)!important;height:var(--landscape-action)!important;scale:1!important;bottom:var(--landscape-bottom)!important;right:calc(var(--landscape-edge) + 3 * var(--landscape-action) + 28px)!important
+ }
+ body.park-unified-ui button#party-throw{right:calc(var(--landscape-edge) + 4 * var(--landscape-action) + 38px)!important}
+ body :is(#preview-hit,#party-throw,#punch) .party-icon{width:26px!important;height:26px!important}
+ body #vehicle-horn-button{left:max(16px,env(safe-area-inset-left))!important;bottom:calc(var(--landscape-bottom) + 108px)!important;min-width:64px;min-height:44px;padding:8px 12px;font-size:11px}
+ /* Keep navigation around the edges instead of filling the driving sightline. */
+ body.park-unified-ui .park-toolbar{width:max-content!important;max-width:calc(100vw - 240px - env(safe-area-inset-left) - env(safe-area-inset-right));top:calc(var(--preview-top,24px) + 4px)!important;bottom:auto!important;left:50%!important;right:auto!important;transform:translateX(-50%)!important;padding:4px 6px!important;gap:4px!important}
+ body.park-unified-ui .park-toolbar>span,body.park-unified-ui .park-toolbar>button span{display:none!important}
+ body.park-unified-ui .park-toolbar>button{width:44px!important;min-width:44px!important;height:44px;min-height:44px;padding:8px!important;font-size:0!important}
+ body.park-unified-ui .park-toolbar>button svg{width:22px;height:22px}
+ body.park-unified-ui .park-weather,body.park-unified-ui .park-hud>div.absolute.right-4.top-4{top:calc(var(--preview-top,24px) + 4px)!important}
+ body.park-unified-ui .park-chat,body.park-unified-ui .online-toggle{top:calc(var(--preview-top,24px) + 52px)!important;bottom:auto!important}
+ body.park-unified-ui .online-toggle{min-height:44px;padding:6px 10px;font-size:11px}
+ /* One row owns both targets: neither a notch nor a longer Homes label can
+    move Homes over Settings. The empty gap never intercepts the camera. */
+ body.park-unified-ui #park-utilities{display:flex;align-items:center;gap:8px;position:fixed;z-index:60;top:calc(var(--preview-top,24px) + 100px);right:var(--landscape-edge);max-width:calc(100vw - 32px - env(safe-area-inset-left) - env(safe-area-inset-right));pointer-events:none}
+ body.park-unified-ui #park-utilities>button{position:static!important;inset:auto!important;box-sizing:border-box;min-width:44px;min-height:44px;padding:6px 10px;font-size:11px;pointer-events:auto}
+ body.park-unified-ui #park-utilities>#party-settings-btn{flex:none;white-space:nowrap}
+ body.park-unified-ui #park-utilities>#park-home-button{flex:0 1 auto;max-width:min(180px,36vw);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+ /* Standalone mini-games share the compact target sizes, not a CSS zoom. */
+ body #touch-buttons{grid-template-columns:repeat(2,var(--landscape-action))!important;gap:8px!important;right:var(--landscape-edge)!important;bottom:var(--landscape-bottom)!important}
+ body #stick-base,body .cr-pad,body #rr-wheel{width:96px!important;height:96px!important}
+ body #stick-knob,body .cr-pad span,body #rr-wheel span{width:44px!important;height:44px!important;left:24px!important;top:24px!important}
+ body :is(.cr-jump,.cr-sprint).party-eggy{width:var(--landscape-action)!important;height:var(--landscape-action)!important;scale:1!important;bottom:calc(var(--landscape-bottom) + 108px)!important;right:20px!important}
+ body .cr-sprint.party-eggy{right:calc(28px + var(--landscape-action))!important}
+ body:has(.cr-pad) #running-camera-settings{top:calc(82px + env(safe-area-inset-top))!important;right:20px!important;padding:8px 12px;font-size:11px}
+ body .cr-view{top:calc(82px + env(safe-area-inset-top))!important;min-height:44px}
+ body .cr-tools{left:50%!important;bottom:var(--landscape-bottom)!important;transform:translateX(-50%)!important;width:min(320px,calc(100vw - 264px))!important;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+ body .cr-tools .cr-weapons{grid-column:1 / 3;grid-row:1}
+ body .cr-tools .cr-elements{grid-column:1 / -1;grid-row:2}
+ body .cr-tools #skill{grid-column:3;grid-row:1}
+ body .cr-tools button{min-width:44px;min-height:44px;padding:5px;font-size:10px}
+ body .cr-bottom{left:20px;bottom:calc(var(--landscape-bottom) + 108px);transform:none;min-width:0;width:120px;padding:6px}
+ body .rr-controls .rr-pedals button{width:var(--landscape-action)!important;height:var(--landscape-action)!important;min-height:44px!important;padding:0!important}
+}

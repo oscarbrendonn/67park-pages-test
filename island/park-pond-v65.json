@@ -1,0 +1,1016 @@
+{
+  "version": 65,
+  "revision": "P8",
+  "variant": "kimi",
+  "patchId": "park-pond65-P8-kimi-dd84fd1b80ab",
+  "byteLength": 8570984,
+  "bufferHash": "1760930a",
+  "sha256": "dd84fd1b80aba6e523701d0c63004a3a2cbc32b703d6a28a6e3f071c0fc4c23b",
+  "sourceState": "post-road-seal64",
+  "sourceFiles": [
+    {
+      "name": "calisma.html",
+      "sha256": "669d7309fb1399ad8060824146ee7c2c9a44cb8351fcd8d768e8e2c21469b0e7"
+    },
+    {
+      "name": "karakter-deneme.html",
+      "sha256": "db4234e97833306b38f7f130222dfd3a781b8d41af822fd35557dd0d0a0a8ee8"
+    },
+    {
+      "name": "ada_calisma.glb",
+      "sha256": "f5450f195d65aa34137db1802cfb5b16cbc1f1c048b05961a01cb6498f9471d6"
+    },
+    {
+      "name": "park-terrain-v57.js",
+      "sha256": "fc57fd0c759eedb7628e857ae13432b60796f19e25f986f2fdd316c81f65d306"
+    },
+    {
+      "name": "park-terrain-v57.json",
+      "sha256": "84dc49e1965b93070c138075d206e3f9341adecc877d836f271bd8c4ec727e53"
+    },
+    {
+      "name": "park-terrain-v57.bin",
+      "sha256": "551050705ef6a60105201f342ac0704c6f95b01489a950d43d9fadc2acd5f66c"
+    },
+    {
+      "name": "park-path-polish57.js",
+      "sha256": "278345d90fcdc806ba7b13668d3b12acc0f17d3ac864bb88b83fbef713973c16"
+    },
+    {
+      "name": "park-path-polish57.json",
+      "sha256": "0fc9c1a8626afb8e99b3fd43d28d4e506e67ac93580e51de440e3a8c162885f7"
+    },
+    {
+      "name": "park-path-polish57.bin",
+      "sha256": "b3e1adec86ba9022bbe356a5c0bf9aad789549a5620d9c406f8c07a2842bf410"
+    },
+    {
+      "name": "park-entry-caps57.js",
+      "sha256": "680788ac9fe1e16e5c71052f7699831b8c2bc76bbc0d00b5aee7d0526e83a544"
+    },
+    {
+      "name": "park-entry-caps57.json",
+      "sha256": "da67b5a6782bde66baa86c9dec096128feedcb859b012bd48b8fd66bd397a115"
+    },
+    {
+      "name": "park-ring-v63.js",
+      "sha256": "5350f90c723cd1b47402265f5e64d9813c310caae9b2394824d2c33563e8bddf"
+    },
+    {
+      "name": "park-ring-v63.json",
+      "sha256": "18a206c83e35d921cb501c7a243e892ad8aeb31ac539072dd161d9979f810eae"
+    },
+    {
+      "name": "park-ring-v63.bin",
+      "sha256": "38fa1de1bd912adaa2fd15991f11f578edce17a70cef3b97f14f2ccdd686127a"
+    },
+    {
+      "name": "road-seal-v64.js",
+      "sha256": "f8edb372b00eb8b2195c1bc8ef8c6f827447d260db7cbde76c30dcced23c1084"
+    },
+    {
+      "name": "road-seal-v64.json",
+      "sha256": "9c8a4221aff66856dbd5f3baceaa6bb7d131cc3eb178f5bdb6e2dbbd023161e9"
+    },
+    {
+      "name": "road-seal-v64.bin",
+      "sha256": "24cb5001dde8ae02580f8a145b118889a6ddd5d9ccae503ca7ea7201033933ee"
+    },
+    {
+      "name": "park-props-v63.js",
+      "sha256": "1737ac01b4386ef5ca43e81505bc6dcd6fa3303b908049952e43b3ca97b884d7"
+    },
+    {
+      "name": "park-layout-v57.json",
+      "sha256": "b4bf108f630672c363d817593bbb2908fdb72c769d9fc616371a96ee8bc39f42"
+    }
+  ],
+  "pathOperationsSHA256": "40661669961345fa4f9387e95ab253b4b17bffd732983376c13a01e08d69c034",
+  "pathPlanSHA256": "56a82332b09c90dbbfb947d41924b9f9e6d3e19ffc072a7e6dbdad1f95210650",
+  "shoulderBuilderSHA256": "51928ab6ea167d92e1f60dd06cfcc666b9d2342622a367029f2a163362e196f4",
+  "shoulderManifestSHA256": "e382f82908654ff72a7f1a1957d932a91b8ec3939876a2e48984a373ed27ed85",
+  "upperRimBuilderSHA256": "c947fffcba8d8bf3d13cfcf4b2353163f0d9034c96c07b1c450fa713ab6e6005",
+  "upperRimManifestSHA256": "a1cc13a09cc54ba8cfab31a077b1b1ac148148097f44a1c0873c432f0d95aa5c",
+  "lowerNeckRoadBuilderSHA256": "5a09d52bfa21db49c9195ffa0c931f26be9b2ca90e8f49dd2825aeb2b1c59c24",
+  "lowerNeckManifestSHA256": "142346815251824a1ffa2c3714cc35ecc0bf9147e7f2bc874622290a39bad164",
+  "lowerNeckIndependentManifestSHA256": "2a5a0cd4b38dd736d4cb8baf1d9b10180bde39f0e53ff543dda0158d830ddabb",
+  "curbSmoothingBuilderSHA256": "c123631450892a22cc71bbf7bb1211669585eb912732ef5d6acf2f75ba4a4ba0",
+  "lowerNeckCurbSmoothingBuilderSHA256": "12f5a94b4fcb38482d80df8ca03f01fdf6e14600379a08234b65c08139959422",
+  "seamBuilderSHA256": "f0602f78ee30b0344a9cbfc30dc3d95f43a1873932ae5f866c895a5cfd8ab7d2",
+  "seamManifestSHA256": "f6e2f9f33536308e14f8ae17614702c59b1c59448915397344d44295d16136ab",
+  "roadOperationsSHA256": "6d7b32c12e31b9df98889816ffced241b72b40726a00b19512894fbecb962d05",
+  "roadSourceSHA256": "c0088777e41339a1265d89e3d9998f94021240a977367ec828ba1d59fab673de",
+  "meshes": [
+    {
+      "name": "8_PARK_PATIKA_UST",
+      "role": "path-with-upper-pond-closed-shoulder-wedge",
+      "sourceHash": "936d551b",
+      "sourceVertices": 70693,
+      "sourceIndexCount": 79632,
+      "matrixWorld": [
+        179.45658377779,
+        0,
+        0,
+        0,
+        0,
+        179.45658377779,
+        0,
+        0,
+        0,
+        0,
+        179.45658377779,
+        0,
+        8.131652123901338,
+        9.4787867633086,
+        -2.1953011248415946,
+        1
+      ],
+      "vertices": 73027,
+      "positions": {
+        "byteOffset": 0,
+        "count": 219081
+      },
+      "normals": {
+        "byteOffset": 876324,
+        "count": 219081
+      },
+      "index": {
+        "byteOffset": 1752648,
+        "count": 69828
+      },
+      "removedFaceStarts": {
+        "byteOffset": 2031960,
+        "count": 4068
+      },
+      "removedPathCurbWallFaceStarts": {
+        "byteOffset": 2048232,
+        "count": 70
+      },
+      "retainedIndexCount": 67428,
+      "outputHash": "7f4b62fe",
+      "shoulderManifestSHA256": "e382f82908654ff72a7f1a1957d932a91b8ec3939876a2e48984a373ed27ed85",
+      "shoulderSourceContractSHA256": "58c5c00ec018a60354e93ae4acd360e73e861bde6b4f7eceecf0efda05e523f8",
+      "shoulder": {
+        "sourceVertices": 72877,
+        "sourceTriangles": 23204,
+        "removedPathWallTriangles": 70,
+        "addedShoulderVertices": 72,
+        "addedShoulderTriangles": 70,
+        "addedHiddenClosureVertices": 72,
+        "addedHiddenClosureTriangles": 70,
+        "addedEndpointCapVertices": 6,
+        "addedEndpointCapTriangles": 2,
+        "totalAddedVertices": 150,
+        "totalAddedTriangles": 142,
+        "resultVertices": 73027,
+        "resultTriangles": 23276,
+        "shoulderProjectedAreaSquareMetres": 0.35867064253323233,
+        "shoulderProjectedOverlapSquareMetres": -1.1102230246251565e-16,
+        "minimumGeneratedTriangleAltitudeMetres": 0.06053962462069602,
+        "minimumGeneratedTriangleCrossY": 0.005462950592854812,
+        "generatedWrongWindingTriangles": 0,
+        "minimumGeneratedNormalDot": 0.016388851778564438,
+        "duplicateTriangles": 0,
+        "closedWedge": true,
+        "weldDecimals": 6,
+        "openBoundaryEdges": 0,
+        "nonmanifoldEdges": 0,
+        "orientationConflictEdges": 0,
+        "degenerateTriangles": 0,
+        "maximumRingRoundTripErrorMetres": 0,
+        "opposedPathCurbWallPairsRemaining": 0,
+        "maximumHiddenLowerClosureSeparationMetres": 0.0005515,
+        "externalWaterFacingCurbGeometryAndNormalsUnchanged": true,
+        "sameMeshMaterialMatrixTerrainReference": true,
+        "addedMeshes": 0,
+        "addedMaterials": 0,
+        "addedDrawCalls": 0
+      },
+      "stats": {
+        "sourceVertices": 70693,
+        "sourceTriangles": 26544,
+        "selectedSourceTriangles": 26544,
+        "unselectedTrianglesPreserved": 0,
+        "selectedTrianglesPreservedExact": 22476,
+        "newTriangles": 728,
+        "outputVertices": 73027,
+        "outputTriangles": 23276,
+        "originalPrefixUnchanged": true,
+        "resultNonmanifoldEdges": 0,
+        "resultOpposedEdges": 0,
+        "removedDegenerateTriangles": 0,
+        "removedDuplicateTriangles": 0,
+        "elapsedSeconds": 1.7913132079993375,
+        "collinearSeamRepairs": 0,
+        "removedSourceTriangles": 4068,
+        "retainedSourceTriangles": 22476,
+        "postP2PathWallTrianglesRemoved": 70,
+        "postP2ClosedWedgeTrianglesAdded": 142,
+        "addedTriangles": -3268
+      }
+    },
+    {
+      "name": "5_YOL",
+      "role": "road-solid-clipped-beneath-bridge-decks-with-upper-pond-and-lower-neck-closed-shoulder-wedges",
+      "sourceHash": "fbccb9d5",
+      "sourceVertices": 58981,
+      "sourceIndexCount": 99204,
+      "matrixWorld": [
+        179.45658377779,
+        0,
+        0,
+        0,
+        0,
+        179.45658377779,
+        0,
+        0,
+        0,
+        0,
+        179.45658377779,
+        0,
+        8.131652123901338,
+        9.227547471411985,
+        -2.1953011248415946,
+        1
+      ],
+      "sameMesh": true,
+      "sameMaterial": true,
+      "sameMatrix": true,
+      "sameTerrainSamplerReference": true,
+      "renderOnly": false,
+      "collision": true,
+      "vertices": 60095,
+      "triangles": 32306,
+      "positions": {
+        "byteOffset": 2048512,
+        "count": 180285
+      },
+      "normals": {
+        "byteOffset": 2769652,
+        "count": 180285
+      },
+      "index": {
+        "byteOffset": 3490792,
+        "count": 96918
+      },
+      "removedFaceStarts": {
+        "byteOffset": 3878464,
+        "count": 1194
+      },
+      "removedUpperRimWallFaceStarts": {
+        "byteOffset": 3883240,
+        "count": 178
+      },
+      "removedLowerNeckWallFaceStarts": {
+        "byteOffset": 3883952,
+        "count": 12
+      },
+      "retainedIndexCount": 95622,
+      "p4OutputHash": "d6c19f65",
+      "operationsSHA256": "6d7b32c12e31b9df98889816ffced241b72b40726a00b19512894fbecb962d05",
+      "sourceContractSHA256": "c0088777e41339a1265d89e3d9998f94021240a977367ec828ba1d59fab673de",
+      "upperRimSourceContractSHA256": "b32171ffeee34deb4d719d749de534af337de2e4c1206dd971fedf71b80ce563",
+      "upperRimManifestSHA256": "a1cc13a09cc54ba8cfab31a077b1b1ac148148097f44a1c0873c432f0d95aa5c",
+      "lowerNeckSourceContractSHA256": "28a298417b6053c760b5c4fc96d6269bac2d1f7cb3a4b9660ad59d75f4e507ed",
+      "lowerNeckManifestSHA256": "142346815251824a1ffa2c3714cc35ecc0bf9147e7f2bc874622290a39bad164",
+      "analysisSHA256": "2b7658a1546f774341bebe1503fe0359352b75e69f6b9d90f51084ea2e16486c",
+      "axialInsetMetres": 0.03,
+      "cutterOverlapMetres": 0.0001,
+      "sideClearanceMetres": {
+        "upper-bridge": 0.9,
+        "lower-bridge": 0.15
+      },
+      "nominalTopAreaRemovedSquareMetres": 21.53622180323666,
+      "upperRim": {
+        "sourceOutputHash": "d6c19f65",
+        "sourceVertices": 59695,
+        "sourceTriangles": 32112,
+        "removedRoadWallTriangles": 178,
+        "addedShoulderVertices": 180,
+        "addedShoulderTriangles": 178,
+        "addedHiddenClosureVertices": 180,
+        "addedHiddenClosureTriangles": 178,
+        "addedEndpointCapVertices": 6,
+        "addedEndpointCapTriangles": 2,
+        "totalAddedVertices": 366,
+        "totalAddedTriangles": 358,
+        "netTriangleDelta": 180,
+        "resultVertices": 60061,
+        "resultTriangles": 32292,
+        "minimumGeneratedTriangleAltitudeMetres": 0.04446726650052734,
+        "minimumVisibleShoulderCrossY": 0.010682106670768292,
+        "visibleShoulderProjectedAreaSquareMetres": 0.9613100445700813,
+        "visibleShoulderProjectedOverlapSquareMetres": -7.993605777301127e-15,
+        "maximumPackedWorldRoundTripMetres": 8.356598257819314e-8,
+        "p5CoveredTailSegmentsPreserved": 35,
+        "closedWedge": true,
+        "sameMeshMaterialMatrixTerrainReference": true,
+        "addedDrawCalls": 0,
+        "weldDecimals": 6,
+        "openBoundaryEdges": 0,
+        "nonmanifoldEdges": 0,
+        "orientationConflictEdges": 0,
+        "duplicateTriangles": 0,
+        "degenerateTriangles": 0,
+        "fineTopology": {
+          "weldDecimals": 7,
+          "openBoundaryEdges": 0,
+          "nonmanifoldEdges": 0,
+          "orientationConflictEdges": 0,
+          "duplicateTriangles": 0,
+          "degenerateTriangles": 0
+        }
+      },
+      "lowerNeck": {
+        "sourceOutputHash": "0f58d29d",
+        "sourceVertices": 60061,
+        "sourceTriangles": 32292,
+        "repairedSegments": 6,
+        "removedRoadWallTriangles": 12,
+        "addedShoulderVertices": 14,
+        "addedShoulderTriangles": 12,
+        "addedHiddenClosureVertices": 14,
+        "addedHiddenClosureTriangles": 12,
+        "addedEndpointCapVertices": 6,
+        "addedEndpointCapTriangles": 2,
+        "pastelBiasedHiddenClosureVertices": 14,
+        "pastelBiasedEndpointCapVertices": 6,
+        "pastelMinimumNormalY": 0.96,
+        "pastelNormalOnlyGeometryUnchanged": true,
+        "totalAddedVertices": 34,
+        "totalAddedTriangles": 26,
+        "netTriangleDelta": 14,
+        "resultVertices": 60095,
+        "resultTriangles": 32306,
+        "minimumGeneratedTriangleAltitudeMetres": 0.00046100440676598666,
+        "minimumVisibleShoulderCrossY": 0.00011147877988892073,
+        "visibleShoulderProjectedAreaSquareMetres": 0.011365234013204776,
+        "visibleShoulderProjectedOverlapSquareMetres": -1.734723475976807e-18,
+        "maximumPackedWorldRoundTripMetres": 2.0789165944279375e-9,
+        "minimumCurbTopRingOffsetMetres": 0.0006237046165490641,
+        "maximumCurbTopRingOffsetMetres": 0.015545803988699853,
+        "closedWedge": true,
+        "sameMeshMaterialMatrixTerrainReference": true,
+        "addedDrawCalls": 0,
+        "weldDecimals": 6,
+        "openBoundaryEdges": 0,
+        "nonmanifoldEdges": 0,
+        "orientationConflictEdges": 0,
+        "duplicateTriangles": 0,
+        "degenerateTriangles": 0,
+        "fineTopology": {
+          "weldDecimals": 7,
+          "openBoundaryEdges": 0,
+          "nonmanifoldEdges": 0,
+          "orientationConflictEdges": 0,
+          "duplicateTriangles": 0,
+          "degenerateTriangles": 0
+        }
+      },
+      "outputHash": "126008ea",
+      "stats": {
+        "sourceVertices": 58981,
+        "sourceTriangles": 33068,
+        "selectedSourceTriangles": 33068,
+        "unselectedTrianglesPreserved": 0,
+        "selectedTrianglesPreservedExact": 31874,
+        "newTriangles": 238,
+        "outputVertices": 59695,
+        "outputTriangles": 32112,
+        "originalPrefixUnchanged": true,
+        "resultNonmanifoldEdges": 0,
+        "resultOpposedEdges": 0,
+        "removedDegenerateTriangles": 0,
+        "removedDuplicateTriangles": 0,
+        "elapsedSeconds": 1.8824490420010989,
+        "collinearSeamRepairs": 0,
+        "p4RemovedSourceTriangles": 1194,
+        "removedSourceTriangles": 1384,
+        "retainedSourceTriangles": 31684,
+        "p4AddedTriangles": 238,
+        "postP4RoadWallTrianglesRemoved": 178,
+        "postP4ClosedWedgeTrianglesAdded": 358,
+        "postP6RoadWallTrianglesRemoved": 12,
+        "postP6ClosedWedgeTrianglesAdded": 26,
+        "addedTriangles": 622,
+        "netTrianglesVsOriginal": -762
+      }
+    },
+    {
+      "name": "6_BORDUR",
+      "role": "curb-with-integrated-seam-cap-and-pastel-upper-and-lower-neck-water-profiles",
+      "sourceHash": "5c959641",
+      "sourceVertices": 55057,
+      "sourceIndexCount": 173958,
+      "matrixWorld": [
+        179.45658377779,
+        0,
+        0,
+        0,
+        0,
+        179.45658377779,
+        0,
+        0,
+        0,
+        0,
+        179.45658377779,
+        0,
+        8.131652123901338,
+        9.380085642765637,
+        -2.1953011248415946,
+        1
+      ],
+      "vertices": 56468,
+      "positions": {
+        "byteOffset": 3884000,
+        "count": 169404
+      },
+      "normals": {
+        "byteOffset": 4561616,
+        "count": 169404
+      },
+      "index": {
+        "byteOffset": 5239232,
+        "count": 174006
+      },
+      "removedFaceStarts": {
+        "byteOffset": 5935256,
+        "count": 36
+      },
+      "outputHash": "5dff4ae7",
+      "stats": {
+        "sourceVertices": 55057,
+        "sourceTriangles": 57986,
+        "removedInternalWallTriangles": 36,
+        "addedCapVertices": 57,
+        "addedCapTriangles": 52,
+        "upperPondWaterWallSmoothing": {
+          "waterFacingFaces": 1048,
+          "duplicatedVertices": 800,
+          "adjustedNormals": 667,
+          "minimumNormalY": 0.96,
+          "positionsChanged": false,
+          "triangleCoverageChanged": false,
+          "materialChanged": false,
+          "collisionChanged": false,
+          "sourceVertices": 55114,
+          "sourceTriangles": 58002,
+          "resultVertices": 55914,
+          "resultTriangles": 58002,
+          "remappedIndexCorners": 3144,
+          "sameTrianglePositions": true,
+          "sameWeldedTopology": true,
+          "beforeTopology": {
+            "weldDecimals": 6,
+            "openBoundaryEdges": 79,
+            "nonmanifoldEdges": 17,
+            "orientationConflictEdges": 0,
+            "duplicateTriangles": 0,
+            "degenerateTriangles": 66
+          },
+          "afterTopology": {
+            "weldDecimals": 6,
+            "openBoundaryEdges": 79,
+            "nonmanifoldEdges": 17,
+            "orientationConflictEdges": 0,
+            "duplicateTriangles": 0,
+            "degenerateTriangles": 66
+          },
+          "fineBeforeTopology": {
+            "weldDecimals": 7,
+            "openBoundaryEdges": 79,
+            "nonmanifoldEdges": 17,
+            "orientationConflictEdges": 0,
+            "duplicateTriangles": 0,
+            "degenerateTriangles": 56
+          },
+          "fineTopology": {
+            "weldDecimals": 7,
+            "openBoundaryEdges": 79,
+            "nonmanifoldEdges": 17,
+            "orientationConflictEdges": 0,
+            "duplicateTriangles": 0,
+            "degenerateTriangles": 56
+          },
+          "sameMeshMaterialMatrixTerrainReference": true,
+          "addedDrawCalls": 0
+        },
+        "resultVertices": 56468,
+        "resultTriangles": 58002,
+        "postSeamVertices": 55114,
+        "postSeamTriangles": 58002,
+        "postUpperPondSmoothingVertices": 55914,
+        "lowerNeckWaterWallSmoothing": {
+          "sourceOutputHash": "a38c5a5e",
+          "sourceVertices": 55914,
+          "sourceTriangles": 58002,
+          "endpointSmoothedFaces": 198,
+          "endpointDuplicatedVertices": 554,
+          "endpointAdjustedNormals": 537,
+          "endpointRemappedIndexCorners": 594,
+          "endpointWorldBoundsXZ": [
+            194.61175762027327,
+            77.93168440711214,
+            195.13160489240713,
+            80.69999948857611
+          ],
+          "resultVertices": 56468,
+          "resultTriangles": 58002,
+          "sameTrianglePositions": true,
+          "sameWeldedTopology": true,
+          "beforeTopology": {
+            "weldDecimals": 6,
+            "openBoundaryEdges": 79,
+            "nonmanifoldEdges": 17,
+            "orientationConflictEdges": 0,
+            "duplicateTriangles": 0,
+            "degenerateTriangles": 66
+          },
+          "afterTopology": {
+            "weldDecimals": 6,
+            "openBoundaryEdges": 79,
+            "nonmanifoldEdges": 17,
+            "orientationConflictEdges": 0,
+            "duplicateTriangles": 0,
+            "degenerateTriangles": 66
+          },
+          "fineBeforeTopology": {
+            "weldDecimals": 7,
+            "openBoundaryEdges": 79,
+            "nonmanifoldEdges": 17,
+            "orientationConflictEdges": 0,
+            "duplicateTriangles": 0,
+            "degenerateTriangles": 56
+          },
+          "fineTopology": {
+            "weldDecimals": 7,
+            "openBoundaryEdges": 79,
+            "nonmanifoldEdges": 17,
+            "orientationConflictEdges": 0,
+            "duplicateTriangles": 0,
+            "degenerateTriangles": 56
+          },
+          "sameMeshMaterialMatrixTerrainReference": true,
+          "addedDrawCalls": 0,
+          "cumulativePastelSmoothing": {
+            "waterFacingFaces": 1246,
+            "duplicatedVertices": 1354,
+            "adjustedNormals": 1204,
+            "minimumNormalY": 0.96,
+            "positionsChanged": false,
+            "triangleCoverageChanged": false,
+            "materialChanged": false,
+            "collisionChanged": false
+          }
+        },
+        "cumulativePastelSmoothing": {
+          "waterFacingFaces": 1246,
+          "duplicatedVertices": 1354,
+          "adjustedNormals": 1204,
+          "minimumNormalY": 0.96,
+          "positionsChanged": false,
+          "triangleCoverageChanged": false,
+          "materialChanged": false,
+          "collisionChanged": false
+        }
+      },
+      "smoothedLowerNeckFaceStarts": {
+        "byteOffset": 5935400,
+        "count": 198
+      },
+      "curbSmoothingSourceContractSHA256": "5bd25f39338a53b5f6572f8f50f1256f7eddd0c77cb36b5baa2a4e282c5ea32f",
+      "lowerNeckCurbSmoothingSourceContractSHA256": "6bc6ded4fb816e8b2f2710f2ecbc1233be1a502bae4c68bebdc3ad4d0031ed65"
+    },
+    {
+      "name": "7_KALDIRIM_TABANI",
+      "role": "pavement-internal-wall-cleanup",
+      "sourceHash": "cb44aaff",
+      "sourceVertices": 51437,
+      "sourceIndexCount": 210774,
+      "matrixWorld": [
+        179.45658377779,
+        0,
+        0,
+        0,
+        0,
+        179.45658377779,
+        0,
+        0,
+        0,
+        0,
+        179.45658377779,
+        0,
+        8.131652123901338,
+        9.380085642765637,
+        -2.1953011248415946,
+        1
+      ],
+      "vertices": 51437,
+      "positions": {
+        "byteOffset": 5936192,
+        "count": 154311
+      },
+      "normals": {
+        "byteOffset": 6553436,
+        "count": 154311
+      },
+      "index": {
+        "byteOffset": 7170680,
+        "count": 210660
+      },
+      "removedFaceStarts": {
+        "byteOffset": 8013320,
+        "count": 38
+      },
+      "outputHash": "4154f526",
+      "stats": {
+        "sourceVertices": 51437,
+        "sourceTriangles": 70258,
+        "removedInternalWallTriangles": 38,
+        "addedCapVertices": 0,
+        "addedCapTriangles": 0,
+        "upperPondWaterWallSmoothing": null,
+        "resultVertices": 51437,
+        "resultTriangles": 70220
+      }
+    },
+    {
+      "name": "4_KURU_IC_ZEMIN_KIYI_EGIMI",
+      "role": "dry-shore-visual-and-collision-replacement",
+      "sourceHash": "38aeb06d",
+      "sourceVertices": 10602,
+      "sourceIndexCount": 47562,
+      "matrixWorld": [
+        179.45658377779,
+        0,
+        0,
+        0,
+        0,
+        179.45658377779,
+        0,
+        0,
+        0,
+        0,
+        179.45658377779,
+        0,
+        8.131652123901338,
+        6.822829322595075,
+        -2.1953011248415946,
+        1
+      ],
+      "sourceContractSHA256": "8e901e30d4483ade69017e3075ce9db2f9c78e221d0f4997f5dd6800811ba119",
+      "sameMesh": true,
+      "sameMaterial": true,
+      "sameMatrix": true,
+      "sameTerrainSamplerReference": true,
+      "renderOnly": false,
+      "collision": true,
+      "clipClearanceMetres": 0.0001,
+      "visiblePlanOverlapBefore": 85.69920010153038,
+      "visiblePlanOverlapAfter": 0,
+      "collisionPlanOverlapBefore": 85.69920010153038,
+      "collisionPlanOverlapAfter": 0,
+      "vertices": 14340,
+      "triangles": 16444,
+      "positions": {
+        "byteOffset": 8024968,
+        "count": 43020
+      },
+      "normals": {
+        "byteOffset": 8197048,
+        "count": 43020
+      },
+      "index": {
+        "byteOffset": 8369128,
+        "count": 49332
+      },
+      "removedFaceStarts": {
+        "byteOffset": 8566456,
+        "count": 1132
+      },
+      "outputHash": "96b1ff87",
+      "qa": {
+        "sourceTriangles": 15854,
+        "untouchedSourceTriangles": 14722,
+        "fullyRemovedSourceTriangles": 219,
+        "partiallyClippedSourceTriangles": 913,
+        "replacementTriangles": 1816,
+        "filteredGeneratedSkinnyTriangles": 94,
+        "rewoundGeneratedTriangles": 2,
+        "generatedMinimumAltitudeMetres": 0.000005,
+        "repairedUnreferencedZeroNormals": 2,
+        "projectedDegenerateSourceTriangles": 0,
+        "clippedSourceFaceCount": 1132,
+        "visiblePlanOverlapBefore": 85.69920010153038,
+        "visiblePlanOverlapAfter": 0,
+        "collisionPlanOverlapBefore": 85.69920010153038,
+        "collisionPlanOverlapAfter": 0,
+        "dryPlanAreaBefore": 156152.23497024315,
+        "dryPlanAreaAfter": 156152.21344961147,
+        "dryPlanAreaDelta": -0.021520631678868085,
+        "targetSymmetricDifferenceArea": 0.021543434911801714
+      },
+      "policy": {
+        "sourceGeometry": "guarded replacement with rollback",
+        "sourceMatrixWorld": "unchanged",
+        "sourceRaycastAndCollision": "same mesh/reference, clipped replacement geometry",
+        "sourceMaterial": "unchanged",
+        "zeminlerReference": "unchanged and now samples clipped replacement",
+        "addedMeshes": 0,
+        "addedDrawCalls": 0
+      }
+    }
+  ],
+  "water": {
+    "name": "67D_PARK_WATER_UNIFIED_V65",
+    "materialSource": "67D_REF_MAIN_WATER_CAP",
+    "renderOnly": true,
+    "collision": false,
+    "worldY": 8.918882303963635,
+    "area": 1434.5487157659745,
+    "bounds": [
+      147.8002381229421,
+      53.53519309541737,
+      200.42172476246267,
+      109.93831192500953
+    ],
+    "baseOnlySliverAreaExcluded": 10.508383648806943,
+    "triangles": 318,
+    "vertices": 320,
+    "positions": {
+      "byteOffset": 8013472,
+      "count": 960
+    },
+    "normals": {
+      "byteOffset": 8017312,
+      "count": 960
+    },
+    "index": {
+      "byteOffset": 8021152,
+      "count": 954
+    },
+    "sources": [
+      {
+        "name": "9_GOLET_SU",
+        "sourceHash": "091b4e30",
+        "sourceVertices": 2568,
+        "sourceIndexCount": 5124,
+        "matrixWorld": [
+          179.45658377779,
+          0,
+          0,
+          0,
+          0,
+          179.45658377779,
+          0,
+          0,
+          0,
+          0,
+          179.45658377779,
+          0,
+          8.131652123901338,
+          8.85068878426501,
+          -2.1953011248415946,
+          1
+        ]
+      },
+      {
+        "name": "67D_REF_MAIN_WATER_CAP",
+        "sourceHash": "4cb6fe64",
+        "sourceVertices": 8234,
+        "sourceIndexCount": 10230,
+        "matrixWorld": [
+          179.45658377779,
+          0,
+          0,
+          0,
+          0,
+          179.45658377779,
+          0,
+          0,
+          0,
+          0,
+          179.45658377779,
+          0,
+          8.131652123901338,
+          6.822829322595075,
+          -2.1953011248415946,
+          1
+        ]
+      },
+      {
+        "name": "67D_REF_MAIN_WATER_NECK_CAP",
+        "sourceHash": "404a2dd3",
+        "sourceVertices": 81,
+        "sourceIndexCount": 72,
+        "matrixWorld": [
+          179.45658377779,
+          0,
+          0,
+          0,
+          0,
+          179.45658377779,
+          0,
+          0,
+          0,
+          0,
+          179.45658377779,
+          0,
+          8.131652123901338,
+          6.822829322595075,
+          -2.1953011248415946,
+          1
+        ]
+      }
+    ]
+  },
+  "seam": {
+    "integratedInto": "6_BORDUR",
+    "worldY": 9.380085642765637,
+    "halfWidthMetres": 0.06,
+    "areaSquareMetres": 0.41577090464306754,
+    "vertices": 57,
+    "triangles": 52,
+    "addedDrawCalls": 0,
+    "renderAndCollisionSurface": true,
+    "sharedBoundaryLengthMetres": 4.043323981368514,
+    "targetCorridorAreaSquareMetres": 0.48519378820257486,
+    "packedCorridorCoverageResidualAreaSquareMetres": 0.000004253884886608039,
+    "packedCapCoplanarOverlapAreaSquareMetres": 0.000004188417133162022,
+    "removedInternalWallTriangles": {
+      "6_BORDUR": 36,
+      "7_KALDIRIM_TABANI": 38
+    },
+    "internalWallFacesRemaining": 0,
+    "externalWaterFacingCurbGeometryPreserved": true,
+    "externalWaterFacingCurbNormalsPreserved": false,
+    "externalWaterFacingCurbNormalsPastelSmoothed": true,
+    "externalWaterFacingCurbSmoothedFaces": 1246,
+    "externalWaterFacingCurbAdjustedNormals": 1204,
+    "lowerNeckWaterFacingCurbSmoothedFaces": 198,
+    "lowerNeckWaterFacingCurbAdjustedNormals": 537,
+    "externalWaterFacingCurbMinimumNormalY": 0.96
+  },
+  "policy": {
+    "scope": {
+      "type": "Polygon",
+      "coordinates": [
+        [
+          [
+            210,
+            50
+          ],
+          [
+            210,
+            116
+          ],
+          [
+            135,
+            116
+          ],
+          [
+            135,
+            50
+          ],
+          [
+            210,
+            50
+          ]
+        ]
+      ]
+    },
+    "scopeBounds": [
+      135,
+      50,
+      210,
+      116
+    ],
+    "walkWidth": 4.5,
+    "westGapBefore": 1.7487654553336787,
+    "westGapAfter": 0,
+    "orphanAreaBefore": 4.306971222826137,
+    "orphanSliverRemoved": true,
+    "isolatedBridgeFragmentsRemoved": 2,
+    "upperBridgeHasNoPathUnderDeck": true,
+    "lowerBridgeHasNoPathUnderDeck": true,
+    "bridgeSideClearance": {
+      "upper-bridge": 0.9,
+      "lower-bridge": 0.15
+    },
+    "bridgeAxialHiddenOverlap": 0.03,
+    "bridgeApproachesMeetDeckEndsWithoutVisibleGap": true,
+    "newPathPhysicallyCoversGrass": true,
+    "outsideSourceFacesPreserved": true,
+    "waterSkinRenderOnly": true,
+    "geometryScope": "path and upper-pond closed shoulder, same-mesh 5_YOL bridge clipping plus closed upper-rim and lower-neck shoulders, upper-pond internal curb/pavement seam, targeted pastel curb profiles, canonical water, same-mesh visual/collision dry-shore geometry replacement",
+    "unchangedOriginalPathAttributePrefix": true,
+    "pathAddedDrawCalls": 0,
+    "pathMaterialMutation": false,
+    "upperPondPathCurbShoulder": true,
+    "upperPondPathWallTrianglesRemoved": 70,
+    "upperPondShoulderTriangles": 70,
+    "upperPondShoulderCollision": true,
+    "upperPondShoulderSamePathMesh": true,
+    "upperPondShoulderAddedDrawCalls": 0,
+    "upperPondHiddenClosureTriangles": 70,
+    "upperPondEndpointCapTriangles": 2,
+    "upperPondShoulderClosedWedge": true,
+    "upperPondShoulderOpenBoundaryEdges": 0,
+    "upperPondShoulderNonmanifoldEdges": 0,
+    "upperPondShoulderOrientationConflictEdges": 0,
+    "upperPondOpposedPathCurbWallPairsRemaining": 0,
+    "upperPondShoulderMaximumHiddenClosureGapMetres": 0.0005515,
+    "roadUnderBothBridgeDecksRemoved": true,
+    "roadBridgeClipSameMesh": true,
+    "roadBridgeClipMaterialMutation": false,
+    "roadBridgeClipMatrixMutation": false,
+    "roadBridgeClipTerrainReferencePreserved": true,
+    "roadBridgeClipAddedDrawCalls": 0,
+    "roadBridgeAxialHiddenOverlap": 0.03,
+    "roadBridgeSideClearance": {
+      "upper-bridge": 0.9,
+      "lower-bridge": 0.15
+    },
+    "upperPondRoadCurbShoulder": true,
+    "upperPondRoadWallTrianglesRemoved": 178,
+    "upperPondRoadShoulderTriangles": 178,
+    "upperPondRoadHiddenClosureTriangles": 178,
+    "upperPondRoadEndpointCapTriangles": 2,
+    "upperPondRoadShoulderCollision": true,
+    "upperPondRoadShoulderSameRoadMesh": true,
+    "upperPondRoadShoulderAddedDrawCalls": 0,
+    "upperPondRoadShoulderClosedWedge": true,
+    "upperPondRoadShoulderOpenBoundaryEdges": 0,
+    "upperPondRoadShoulderNonmanifoldEdges": 0,
+    "upperPondRoadShoulderOrientationConflictEdges": 0,
+    "upperPondRoadCurbPairedSegmentsRepaired": 89,
+    "upperPondRoadCurbTailSegmentsCoveredByPathShoulder": 35,
+    "upperPondCurbGeometryMutationForRoadShoulder": false,
+    "lowerNeckRoadCurbShoulder": true,
+    "lowerNeckRoadWallTrianglesRemoved": 12,
+    "lowerNeckRoadShoulderTriangles": 12,
+    "lowerNeckRoadHiddenClosureTriangles": 12,
+    "lowerNeckRoadEndpointCapTriangles": 2,
+    "lowerNeckRoadShoulderCollision": true,
+    "lowerNeckRoadShoulderSameRoadMesh": true,
+    "lowerNeckRoadShoulderAddedDrawCalls": 0,
+    "lowerNeckRoadShoulderClosedWedge": true,
+    "lowerNeckRoadShoulderOpenBoundaryEdges": 0,
+    "lowerNeckRoadShoulderNonmanifoldEdges": 0,
+    "lowerNeckRoadShoulderOrientationConflictEdges": 0,
+    "lowerNeckRoadCurbPairedSegmentsRepaired": 6,
+    "lowerNeckClosureAndCapNormalsPastelSmoothed": true,
+    "lowerNeckPastelHiddenClosureVertices": 14,
+    "lowerNeckPastelEndpointCapVertices": 6,
+    "lowerNeckPastelMinimumNormalY": 0.96,
+    "lowerNeckPastelNormalOnlyGeometryUnchanged": true,
+    "upperPondInternalWallsRemoved": true,
+    "upperPondSeamCapIntegratedIntoCurb": true,
+    "upperPondSeamCapCollision": true,
+    "upperPondSeamAddedDrawCalls": 0,
+    "externalWaterFacingCurbGeometryPreserved": true,
+    "externalWaterFacingCurbNormalsPreserved": false,
+    "upperPondWaterFacingCurbNormalsPastelSmoothed": true,
+    "upperPondWaterFacingCurbSmoothedFaces": 1048,
+    "upperPondWaterFacingCurbAdjustedNormals": 667,
+    "lowerNeckWaterFacingCurbNormalsPastelSmoothed": true,
+    "lowerNeckWaterFacingCurbSmoothedFaces": 198,
+    "lowerNeckWaterFacingCurbAdjustedNormals": 537,
+    "cumulativeWaterFacingCurbSmoothedFaces": 1246,
+    "cumulativeWaterFacingCurbAdjustedNormals": 1204,
+    "upperPondWaterFacingCurbMinimumNormalY": 0.96,
+    "upperPondWaterFacingCurbTriangleCoverageChanged": false,
+    "upperPondWaterFacingCurbCollisionChanged": false,
+    "legacyWaterMaterialsClonedThenHidden": true,
+    "waterCollision": false,
+    "dryShoreSameMeshGeometryReplacement": true,
+    "dryShoreMaterialMutation": false,
+    "dryShoreMatrixMutation": false,
+    "dryShoreAddedDrawCalls": 0,
+    "dryShoreVisualWaterOverlapAfter": 0,
+    "dryShoreCollisionWaterOverlapAfter": 0,
+    "collisionTransformMutation": false,
+    "visibleWaterSurfaceCount": 1,
+    "totalAddedDrawCalls": 1,
+    "applyAfter": "park-ring-v63 and road-seal-v64",
+    "sampler": "existing createTerrainSampler reads replaced path with integrated upper-pond shoulder, integrated curb cap and clipped dry-shore geometry on the same zeminler meshes; render-only water is not appended to zeminler"
+  },
+  "metrics": {
+    "pathAreaBefore": 1855.805976504908,
+    "pathAreaAfter": 1841.4413243909476,
+    "westGapBefore": 1.7487654553336787,
+    "westGapAfter": 0,
+    "connectorNominalWidth": 4.5,
+    "connectorAddedArea": 16.17080151429528,
+    "orphanAreaBefore": 4.306971222826137,
+    "orphanResidualArea": 0,
+    "isolatedBridgeFragmentAreaBefore": 0.06803156545881765,
+    "isolatedBridgeFragmentResidualArea": 0,
+    "bridgePathOverlapAfter": {
+      "upper-bridge": 3.195029739068365e-15,
+      "lower-bridge": 0
+    },
+    "pathComponentsBefore": 5,
+    "pathComponentsAfter": 3
+  }
+}

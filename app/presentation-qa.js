@@ -1,0 +1,9 @@
+// Local-only visual evidence: capture actual canvas frames, not simulated poses.
+import {emoteFxBus} from './emote-motion.js';
+const gate=document.createElement('button');gate.textContent='Record next emote';gate.style.cssText='position:fixed;right:12px;top:160px;z-index:10002;padding:10px;background:#fff8ee;border:1px solid #aaa;border-radius:12px';document.body.append(gate);
+let armed=false;gate.onclick=()=>{armed=true;gate.textContent='Choose Heart or Six Seven';};
+document.addEventListener('click',event=>{const button=event.target.closest?.('.claude-emote-panel button');if(!armed||!button||!['Heart','Six Seven'].includes(button.textContent))return;armed=false;gate.textContent='Recording…';const label=button.textContent;
+ const sheet=document.createElement('div');sheet.setAttribute('aria-label','Recorded presentation frames');sheet.style.cssText='position:fixed;inset:5px;z-index:10003;background:#fff8ee;padding:45px 8px 8px;display:none;gap:8px;overflow:auto';const close=document.createElement('button');close.textContent='Close recorded frames';close.style.cssText='position:absolute;top:8px;right:8px';close.onclick=()=>sheet.remove();sheet.append(close);document.body.append(sheet);
+ for(const ms of [800,1600,2400])setTimeout(()=>{const w=window.__islandWorld;if(w)w.renderer.render(w.scene,w.camera);const canvas=document.querySelector('#root canvas');if(!canvas)return;const fig=document.createElement('figure');fig.style.cssText='margin:0;width:32%';const img=document.createElement('img');img.src=canvas.toDataURL('image/png');img.style.width='100%';const cap=document.createElement('figcaption');cap.textContent=label+' '+ms+'ms · '+emoteFxBus.anchors.size+' anchors · '+emoteFxBus.events.length+' queued';fig.append(img,cap);sheet.append(fig);},ms);
+ setTimeout(()=>{sheet.style.display='flex';gate.textContent='Record next emote';},2700);
+});

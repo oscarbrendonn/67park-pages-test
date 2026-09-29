@@ -1,0 +1,1 @@
+import{c as a}from"./chunk-WQZNX5T4.js";a();var e=new URLSearchParams(location.search);e.get("practice")==="1"?await import("./balloon-practice-SEBFDQKL.js?v=recovery-graphics-1"):e.has("match")?await import("./online-match-3GT2AEG7.js?v=spawn-facing-1"):location.replace("/67park-pages-test/?online=1");

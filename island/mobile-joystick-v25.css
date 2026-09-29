@@ -1,0 +1,31 @@
+#hareketJoystick{
+  position:fixed;z-index:8;left:calc(20px + env(safe-area-inset-left));bottom:calc(42px + env(safe-area-inset-bottom));
+  width:128px;height:128px;box-sizing:border-box;border:2px solid #e4eaf1c9;border-radius:50%;
+  background:radial-gradient(circle,transparent 46%,#f4ead322 47%,#f4ead322 49%,transparent 50%),#22364e80;
+  box-shadow:0 4px 14px #10203430,inset 0 0 0 5px #ffffff12;
+  touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;
+  cursor:grab;outline-offset:5px;color:#fff;
+}
+#hareketJoystick[hidden]{display:none}
+#hareketJoystick:focus-visible{outline:3px solid #eddbc3}
+#hareketJoystick[data-active="true"]{background-color:#22364eb3;border-color:#f5e5cd;cursor:grabbing}
+#hareketJoystick .joystickTop{
+  position:absolute;left:calc(50% - 26px);top:calc(50% - 26px);width:52px;height:52px;box-sizing:border-box;
+  border:2px solid #fff5e8;border-radius:50%;background:#eddbc3ed;box-shadow:0 3px 8px #10203440;
+  transform:translate3d(0,0,0);
+}
+#hareketJoystick .joystickEtiket{position:absolute;top:calc(100% + 8px);left:0;right:0;text-align:center;font:700 10px system-ui;letter-spacing:.08em;text-shadow:0 1px 3px #102034}
+.joystickYardim{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+@media(max-width:380px){
+  #hareketJoystick{left:calc(16px + env(safe-area-inset-left));width:112px;height:112px}
+  #hareketJoystick .joystickTop{width:46px;height:46px;left:calc(50% - 23px);top:calc(50% - 23px)}
+  #hareketKontrolleri{right:calc(16px + env(safe-area-inset-right));gap:8px}
+  #hareketKontrolleri button{width:60px;height:60px}
+}
+@media(max-height:460px){#hareketJoystick{bottom:calc(30px + env(safe-area-inset-bottom));width:112px;height:112px}}
+@media(prefers-contrast:more),(prefers-reduced-transparency:reduce){
+  #hareketJoystick{background-color:#22364e;border-color:#fff}
+  #hareketJoystick .joystickTop{background:#eddbc3}
+}
+/* No trailing/bounce animation: drag tracks the finger 1:1, including with
+   reduced motion, and release clears movement on the same event. */

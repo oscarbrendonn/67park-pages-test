@@ -1,0 +1,112 @@
+/* Six Seven Park's cream/pink/sky/mint vocabulary, with readable sizing and
+   immediate native pointer feedback. No new terrain/material style. */
+.parkShell51{--park-ink:#4b4546;--park-muted:#85796c;--park-cream:#fff8ec;--park-pink:#ffd9e8;--park-sky:#d8ebff;--park-mint:#a9df9f;--park-line:#e8ddcc;--park-ease:cubic-bezier(.23,1,.32,1);font-family:-apple-system,BlinkMacSystemFont,system-ui,sans-serif}
+.parkShell51 #gorunumKontrolleri{display:none!important}
+.parkShell51 #bilgi{display:none}
+.parkShell51 #hata{z-index:90;font-size:12px;padding:8px;border-radius:8px;background:#301c1ceb}
+.parkShell51 #hata:empty{display:none}
+#parkNav51{position:fixed;z-index:12;top:calc(14px + env(safe-area-inset-top));left:calc(16px + env(safe-area-inset-left));right:calc(16px + env(safe-area-inset-right));display:flex;justify-content:space-between;align-items:flex-start;gap:12px;pointer-events:none;color:var(--park-ink)}
+.parkBrand51,.parkNavActions51{display:flex;align-items:center;gap:8px;padding:7px;border:1px solid #fff8;border-radius:21px;background:#fff8ecdc;box-shadow:0 4px 18px #43392b16,inset 0 1px #fff;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);pointer-events:auto}
+.parkBrand51{padding:8px 14px 8px 10px;min-height:40px}
+.parkBrand51 img{width:45px;height:36px;object-fit:contain}
+.parkBrand51 strong{display:block;font-size:13px;letter-spacing:-.025em}
+.parkBrand51 small{display:block;margin-top:3px;font-size:10px;letter-spacing:.01em;color:#756953}
+.parkNavActions51{gap:3px}
+#parkNav51 button,.parkMapReturn51{border:0;border-radius:15px;min-width:48px;min-height:44px;padding:6px 11px;background:transparent;color:#514b4b;display:flex;flex-direction:column;align-items:center;gap:4px;font:600 10px/1.1 -apple-system,system-ui,sans-serif;cursor:pointer;touch-action:manipulation}
+#parkNav51 button:first-child{background:#ffdbeb}
+#parkNav51 button svg{width:19px;height:19px}
+#parkNav51 button:active{background:#e8d8c2}
+#parkNav51 button:disabled{opacity:.45;cursor:default}
+.parkMapReturn51{position:fixed;z-index:12;top:calc(84px + env(safe-area-inset-top));left:50%;transform:translateX(-50%);flex-direction:row;gap:9px;background:#fff8eced;border:1px solid #fff9;box-shadow:0 4px 16px #43392b22;font-size:12px;padding:8px 18px}
+.parkMapReturn51[hidden]{display:none}
+.parkMapReturn51 svg{width:17px;height:17px}
+.parkDialog51{box-sizing:border-box;width:min(780px,calc(100vw - 32px));max-height:calc(100dvh - 36px);margin:auto;padding:24px;border:1px solid var(--park-line);border-radius:30px;background:var(--park-cream);color:var(--park-ink);box-shadow:0 28px 80px #5b455331,0 3px 12px #624c2415;font:14px/1.5 -apple-system,BlinkMacSystemFont,system-ui,sans-serif;touch-action:pan-y;overscroll-behavior:contain;overflow:hidden}
+.parkDialog51[open]{display:flex;flex-direction:column}
+.parkDialog51::backdrop{background:linear-gradient(155deg,#ffd9e8,#fcedf3 46%,#d8ebff)}
+.parkDialog51:not([data-panel="character"])::backdrop{background:#39333c4d;backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px)}
+.parkDialog51:not([data-panel="character"]){width:min(540px,calc(100vw - 32px))}
+.parkDialogHead51{display:flex;flex:0 0 auto;align-items:center;justify-content:space-between;gap:12px;margin-bottom:20px}
+.parkDialogHead51 small{font-size:9px;letter-spacing:.18em;font-weight:700;color:#917d5a}
+.parkDialog51 h1{margin:4px 0 0;font-size:26px;line-height:1.12;letter-spacing:-.045em;font-weight:740}
+.parkDialog51 h2{margin:0;font-size:15px;line-height:1.3;letter-spacing:-.025em}
+.parkDialog51 button{min-width:44px;min-height:44px;border:1px solid var(--park-line);border-radius:13px;background:#fffdf8;color:var(--park-ink);font:600 12px/1.3 -apple-system,BlinkMacSystemFont,system-ui,sans-serif;cursor:pointer;touch-action:manipulation}
+.parkDialog51 button:disabled{opacity:.45;cursor:default}
+.parkDialog51 button:not(:disabled):active{background:#ede6dc}
+.parkDialog51 button:focus-visible,#parkNav51 button:focus-visible,.parkMapReturn51:focus-visible{outline:3px solid #528cc1;outline-offset:3px}
+.parkDialog51 button svg{width:18px;height:18px;pointer-events:none}
+.parkDialog51 .parkClose51{display:grid;place-items:center;flex-shrink:0;border-radius:50%;border:0;background:#ede4d6}
+.parkDialog51>.parkPanel51{flex:1 1 auto;min-height:0;overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;touch-action:pan-y;scroll-padding-block:8px}
+.parkPanel51[hidden]{display:none}
+.parkCharacterGrid51{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.02fr);gap:26px}
+.parkCharacterVisual51{min-width:0}
+.parkCharacterName51{display:flex;gap:8px;align-items:flex-start;justify-content:space-between;min-height:46px}
+.parkCharacterName51 h2{font-size:17px}
+.parkCharacterName51 p{margin:3px 0 0;font-size:11px;color:#8b795e}
+.parkRarity51{font-size:8px;line-height:1.3;font-weight:800;padding:6px 8px;border-radius:20px;white-space:nowrap}
+.parkStage51{position:relative;height:260px;overflow:hidden;border:1px solid #efdfdf;border-radius:22px;background:#fbeaf3;touch-action:pan-y}
+.parkStage51 canvas{display:block;width:100%;height:100%;touch-action:none}
+.parkStageHint51{margin:6px 0 14px;text-align:center;font-size:10px;color:#8c7c74}
+.parkNameField51{display:flex;flex-direction:column;gap:5px;font-size:10px;color:#83705b;font-weight:650;letter-spacing:.02em}
+.parkNameField51 input{box-sizing:border-box;width:100%;min-height:44px;padding:10px 13px;border:1px solid #e8ddcc;border-radius:13px;background:#fffdfa;font:600 14px -apple-system,system-ui,sans-serif;color:#51474b;outline-offset:3px}
+.parkNameField51 input::placeholder{color:#a89885;font-weight:450}
+.parkCharacterNote51{margin:12px 0 0;font-size:10px;line-height:1.5;color:#8c7c6c}
+.parkTraitsHeading51{display:flex;align-items:center;justify-content:space-between;gap:5px;margin-bottom:12px}
+.parkTraitsHeading51>span{font-size:9px;color:#9a8870}
+.parkSlots51{display:grid;gap:5px}
+.parkSlot51{display:grid;grid-template-columns:44px 44px minmax(0,1fr) 44px;align-items:center;gap:4px;min-height:44px;padding:0 5px 0 9px;border:1px solid #ebe1d6;border-radius:13px;background:#fffdf8}
+.parkSlotLabel51{font-size:9px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#8a785f}
+.parkSlotValue51{min-width:0;font-size:10px;font-weight:650;line-height:1.25;text-align:center;overflow-wrap:anywhere}
+.parkDialog51 .parkSlot51 button{min-width:44px;width:44px;min-height:44px;border:0;background:transparent;padding:0;display:grid;place-items:center;color:#608bb2}
+.parkDialog51 .parkSlot51 button:active{background:#dfedfa}
+.parkSlot51 button svg{width:14px;height:14px}
+.parkDialogFoot51{flex:0 0 auto;margin-top:18px;border-top:1px solid #ede2d3;padding-top:12px}
+.parkStatus51{min-height:17px;margin:7px 0;font-size:11px;line-height:1.4;color:#84735e}
+.parkStatus51[data-error="true"]{color:#a54548}
+.parkFooterActions51{display:flex;gap:10px}
+.parkFooterActions51 button{flex:1;min-height:48px;font-size:12px;font-weight:750;box-shadow:0 3px 0 #0000000d;transition:transform 160ms var(--park-ease)}
+.parkFooterActions51 button:not(:disabled):active{transform:translateY(1px)}
+.parkDialog51 .parkRandom51{background:#ffdd77;border-color:#e9c669;color:#70551f}
+.parkDialog51 .parkEnter51{background:#abe0a2;border-color:#8bc782;color:#31562b}
+.parkFooterActions51 button[hidden]{display:none}
+.parkDialog51 .parkHelpButton51{display:flex;align-items:center;gap:7px;min-height:44px;padding:0;border:0;background:transparent;font-size:10px;color:#8a785f}
+.parkHelpButton51[hidden]{display:none!important}
+.parkHelpButton51 svg{width:14px!important;height:14px!important}
+.parkIntro51{font-size:12px;line-height:1.65;color:#8b7968;margin:0 0 18px}
+.parkBoards51,.parkMaps51{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:22px}
+.parkDialog51 .parkBoardCard51,.parkDialog51 .parkMapCard51{display:flex;flex-direction:column;align-items:flex-start;gap:8px;padding:18px;min-height:125px;text-align:left}
+.parkBoardCard51 svg{width:40px!important;height:30px!important;color:#746259;background:var(--board-color);padding:10px;border-radius:13px}
+.parkBoardCard51 small,.parkMapCard51 small{font-size:10px;line-height:1.45;color:#9b8870;font-weight:500}
+.parkBoardCard51[aria-pressed="true"],.parkMapCard51[aria-current="location"]{border-color:#9bc997!important;background:#edf6e8!important}
+.parkMapCard51 svg{color:#688aa5;width:28px!important;height:28px!important}
+.parkMapViews51{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:12px}
+.parkMapViews51 button:last-child{grid-column:1/-1}
+.parkLoadout51,.parkHelp51{display:grid;grid-template-columns:90px 1fr;gap:9px;font-size:12px;margin:14px 0 0}
+.parkLoadout51 dt,.parkHelp51 dt{color:#94816a}
+.parkLoadout51 dd,.parkHelp51 dd{margin:0;font-weight:600;overflow-wrap:anywhere}
+.parkServiceNote51{margin:22px 0 0;padding:15px;border-radius:15px;background:#f0e9df;color:#83705c;font-size:11px;line-height:1.7}
+.parkEmotes51{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.parkDialog51 .parkEmoteCard51{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:14px 6px}
+.parkEmoteSymbol51{font-size:28px}
+.parkBoot51{display:flex;align-items:center;flex-direction:column;gap:12px;color:#7b6953}
+.parkBoot51 img{width:130px;max-height:110px;object-fit:contain}.parkBoot51 p{font-size:12px;margin:0}
+.parkShell51 #bas{background:#fff8ec}
+.parkShell51 #hareketKontrolleri button{background:#fff8ecd9;color:#63574f;border:1px solid #fff9;box-shadow:0 3px 0 #765e3820,0 5px 18px #5b492119}
+.parkShell51 #hareketKontrolleri .parkJump{background:#a8dfa1e8;color:#31592f}
+.parkShell51 #hareketKontrolleri .parkPower{background:#ffdc86e8;color:#7f622a}
+.parkShell51 #hareketKontrolleri .parkBoard[aria-pressed="true"]{background:#d9ddf2e8;color:#625581}
+.parkShell51 #hareketJoystick{background:radial-gradient(circle,transparent 45%,#fff5 46%,#fff5 47%,transparent 48%),#fff8ec6e;box-shadow:0 3px 0 #765e381c,0 5px 18px #5b492119;border-color:#fff9}
+.parkShell51 #hareketJoystick .joystickTop{background:#fff9ec;border-color:#fff}
+.parkShell51 #hareketJoystick .joystickEtiket{color:#746350;font-size:9px;letter-spacing:.12em}
+@media(hover:hover) and (pointer:fine){.parkDialog51 button:not(:disabled):hover,#parkNav51 button:not(:disabled):hover{filter:brightness(.975)}}
+@media(max-width:700px){
+  .parkBrand51>div{display:none}.parkBrand51{padding:6px;min-height:40px}.parkBrand51 img{width:42px;height:35px}
+  #parkNav51{left:10px;right:10px;top:calc(10px + env(safe-area-inset-top));gap:8px}.parkNavActions51{padding:5px;border-radius:18px}#parkNav51 button{padding:6px 10px;min-width:44px;font-size:9px}
+  .parkDialog51{width:min(430px,calc(100vw - 20px));padding:18px;max-height:calc(100dvh - 20px);border-radius:25px}.parkDialog51 h1{font-size:23px}.parkDialogHead51{margin-bottom:15px}
+  .parkCharacterGrid51{grid-template-columns:1fr;gap:20px}.parkStage51{height:220px}.parkCharacterName51{min-height:43px}.parkCharacterNote51{display:none}.parkStageHint51{margin-bottom:10px}
+  .parkSlot51{grid-template-columns:52px 44px minmax(0,1fr) 44px}.parkDialog51 .parkSlot51 button{min-width:44px;width:44px}.parkSlotValue51{font-size:11px}
+  .parkFooterActions51{background:#fff8ecf5;padding:9px 0 4px}.parkFooterActions51 button{min-height:48px;font-size:11px}
+}
+@media(max-width:370px){#parkNav51 button{min-width:44px;padding:6px 7px}.parkNavActions51{gap:0}.parkBrand51 img{width:34px}.parkBrand51{padding:5px}.parkDialog51{padding:15px}.parkStage51{height:200px}.parkSlot51{grid-template-columns:44px 44px minmax(0,1fr) 44px}}
+@media(max-height:480px) and (min-width:600px){.parkDialog51{max-height:calc(100dvh - 12px);padding:16px}.parkCharacterGrid51{grid-template-columns:1fr 1fr;gap:20px}.parkStage51{height:180px}.parkDialogHead51{margin-bottom:12px}.parkDialog51 h1{font-size:21px}.parkDialog51[data-panel="character"]{width:min(760px,calc(100vw - 24px))}}
+@media(prefers-reduced-motion:reduce){.parkShell51 button{transition:none!important;animation:none!important}.parkFooterActions51 button:active{transform:none!important}}
+@media(prefers-reduced-transparency:reduce),(prefers-contrast:more){.parkBrand51,.parkNavActions51,.parkMapReturn51{background:#fff8ec;backdrop-filter:none;-webkit-backdrop-filter:none;border-color:#817264}.parkDialog51::backdrop{background:#f5e8ed}.parkShell51 #hareketJoystick,.parkShell51 #hareketKontrolleri button{background:#fff8ec;border-color:#77685b;backdrop-filter:none;-webkit-backdrop-filter:none}.parkSlotLabel51,.parkIntro51,.parkStatus51{color:#635440}}

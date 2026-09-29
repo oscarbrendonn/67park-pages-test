@@ -1,0 +1,48 @@
+/* Shared Kimi control surfaces; gameplay-specific actions keep their own labels. */
+#rr-wheel{width:128px;height:128px;border:2px solid #ffffffe0;border-radius:50%;background:#ffffff30;box-shadow:inset 0 0 0 14px #ffffff16;position:relative;touch-action:none;user-select:none;cursor:grab}
+#rr-wheel:active{cursor:grabbing}
+#rr-wheel span{position:absolute;left:35px;top:35px;width:54px;height:54px;display:grid;place-items:center;background:linear-gradient(#fff,#e5ebef);border:2px solid white;border-radius:50%;box-shadow:0 4px 12px #35495625;color:#435460;font-size:28px;pointer-events:none}
+#rr-wheel:focus-visible{outline:3px solid #ec87b2;outline-offset:4px}
+.rr-steer>button{display:none}
+.rr-controls{align-items:end;pointer-events:none}
+.rr-controls>*{pointer-events:auto}
+.rr-pedals button{border-radius:50%;background:#ffffffb0;color:#435460;border:2px solid #fff;box-shadow:0 3px 8px #35495620}
+.rr-pedals #rr-gas{background:#f178b2;color:white;border-color:#ffd9eb}
+.rr-keyboard{pointer-events:none}
+#stick-base,.cr-pad{background:#ffffff30;border:2px solid #ffffffe0;box-shadow:inset 0 0 0 12px #ffffff16;touch-action:none;-webkit-user-select:none;user-select:none}
+#stick-knob,.cr-pad span{background:linear-gradient(#fff,#e5ebef);border:2px solid white;box-shadow:0 4px 12px #35495625}
+.cr-jump,#btn-jump{background:#f178b2;border:2px solid #ffd9eb;color:white;border-radius:50%;box-shadow:0 3px 8px #35495620;touch-action:none}
+.cr-jump{width:72px;height:72px;padding:0;display:grid;place-content:center;font:700 11px system-ui;text-transform:uppercase}
+.cr-jump b{display:block;font-size:30px;line-height:34px;font-weight:400}
+.cr-jump.held,#btn-jump.held{background:#e4569b;box-shadow:inset 0 2px 4px #76345130}
+#btn-board{display:none!important}
+#btn-grab{display:flex!important;position:static!important;align-items:center;justify-content:center;width:68px;height:68px;border-radius:50%;background:#ffffffb0!important;border:2px solid white!important;color:#435460;font:700 11px system-ui}
+#btn-jump svg{stroke:white}
+#touch-buttons{display:grid!important;grid-template-columns:68px 72px;gap:12px;align-items:end}
+#btn-sprint{width:68px;height:68px;margin:0;grid-column:1}
+#btn-jump{grid-column:2;grid-row:1 / span 2;align-self:end}
+#btn-grab{grid-column:1;grid-row:1}
+.om-touch-dash{display:none!important}
+body:not(.touch) #touch-ui{display:block;pointer-events:none}
+body:not(.touch) #stick-base{display:none}
+body:not(.touch) #touch-buttons{pointer-events:auto;bottom:28px;right:24px}
+@media(max-width:700px),(pointer:coarse){
+ .rr-controls{bottom:calc(42px + env(safe-area-inset-bottom));left:16px;right:16px}
+ .rr-controls .rr-pedals button{width:64px;height:72px;border-radius:36px}
+ .rr-minimap,.rr-speed{bottom:calc(189px + env(safe-area-inset-bottom))}
+ .cr-jump{bottom:calc(148px + env(safe-area-inset-bottom));right:20px}
+ .cr-tools{bottom:calc(237px + env(safe-area-inset-bottom));width:min(270px,calc(100vw - 32px))}
+ #touch-buttons{right:16px;bottom:calc(28px + env(safe-area-inset-bottom))}
+ #stick-base{left:20px;bottom:calc(28px + env(safe-area-inset-bottom));width:120px;height:120px}
+ .cr-instructions{display:none!important}
+ .balloon-mode .bb-ability{bottom:205px!important;left:50%!important;right:auto!important;width:190px!important;transform:translateX(-50%)!important}
+ .balloon-mode .bb-tutorial{bottom:278px!important}
+}
+@media(max-height:540px) and (orientation:landscape){
+ #rr-wheel{width:100px;height:100px}#rr-wheel span{left:21px;top:21px}
+ .rr-controls{bottom:20px}.rr-speed{bottom:110px}.rr-foot{display:none}
+ .cr-tools{bottom:20px;width:230px}.cr-tools button{padding:7px;font-size:10px}
+ .cr-jump{bottom:152px;right:22px;width:62px;height:62px}
+ .cr-bottom{bottom:145px;left:84px}.cr-score,.cr-radar{display:none}
+ #touch-buttons{bottom:16px}.cr-view{top:95px}
+}

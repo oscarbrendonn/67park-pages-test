@@ -1,0 +1,1971 @@
+{
+  "characters": [
+    {
+      "id": "friendsie_2",
+      "name": "Buddy #2",
+      "file": "friendsie_2.glb",
+      "thumbnail": "/67park-pages-test/models/friends/friendsie_2.png",
+      "no": 21,
+      "rarity": "Common",
+      "rarityNote": "a new park friend",
+      "traits": [
+        {
+          "cat": "Head",
+          "icon": "🙂",
+          "value": "Golden Mask"
+        },
+        {
+          "cat": "Sprout",
+          "icon": "🌱",
+          "value": "Golden Crest"
+        },
+        {
+          "cat": "Body",
+          "icon": "👕",
+          "value": "Rainbow Suit"
+        },
+        {
+          "cat": "Held",
+          "icon": "✋",
+          "value": "Golden Gauntlet"
+        },
+        {
+          "cat": "Back",
+          "icon": "🎒",
+          "value": "Buddy #2 Back Accessory"
+        },
+        {
+          "cat": "Kicks",
+          "icon": "👟",
+          "value": "Buddy #2 Shoes"
+        }
+      ]
+    },
+    {
+      "id": "friendsie_3",
+      "name": "Buddy #3",
+      "file": "friendsie_3.glb",
+      "thumbnail": "/67park-pages-test/models/friends/friendsie_3.png",
+      "no": 22,
+      "rarity": "Common",
+      "rarityNote": "a new park friend",
+      "traits": [
+        {
+          "cat": "Head",
+          "icon": "🙂",
+          "value": "Storm Cloud"
+        },
+        {
+          "cat": "Body",
+          "icon": "👕",
+          "value": "Black Suit"
+        },
+        {
+          "cat": "Held",
+          "icon": "✋",
+          "value": "Golden Gauntlet"
+        },
+        {
+          "cat": "Back",
+          "icon": "🎒",
+          "value": "Buddy #3 Back Accessory"
+        },
+        {
+          "cat": "Kicks",
+          "icon": "👟",
+          "value": "Buddy #3 Shoes"
+        }
+      ]
+    },
+    {
+      "id": "friendsie_6",
+      "name": "Buddy #6",
+      "file": "friendsie_6.glb",
+      "thumbnail": "/67park-pages-test/models/friends/friendsie_6.png",
+      "no": 23,
+      "rarity": "Common",
+      "rarityNote": "a new park friend",
+      "traits": [
+        {
+          "cat": "Head",
+          "icon": "🙂",
+          "value": "Monochrome Folds"
+        },
+        {
+          "cat": "Sprout",
+          "icon": "🌱",
+          "value": "Black Tuft"
+        },
+        {
+          "cat": "Body",
+          "icon": "👕",
+          "value": "Monochrome Suit"
+        },
+        {
+          "cat": "Held",
+          "icon": "✋",
+          "value": "Dark Accessory"
+        },
+        {
+          "cat": "Back",
+          "icon": "🎒",
+          "value": "Buddy #6 Back Accessory"
+        },
+        {
+          "cat": "Kicks",
+          "icon": "👟",
+          "value": "Buddy #6 Shoes"
+        }
+      ]
+    },
+    {
+      "id": "friendsie_7",
+      "name": "Buddy #7",
+      "file": "friendsie_7.glb",
+      "thumbnail": "/67park-pages-test/models/friends/friendsie_7.png",
+      "no": 24,
+      "rarity": "Common",
+      "rarityNote": "a new park friend",
+      "traits": [
+        {
+          "cat": "Head",
+          "icon": "🙂",
+          "value": "Golden Cloud"
+        },
+        {
+          "cat": "Body",
+          "icon": "👕",
+          "value": "Golden Suit"
+        },
+        {
+          "cat": "Held",
+          "icon": "✋",
+          "value": "Star Wand"
+        },
+        {
+          "cat": "Back",
+          "icon": "🎒",
+          "value": "Buddy #7 Back Accessory"
+        }
+      ]
+    },
+    {
+      "id": "friendsie_8",
+      "name": "Buddy #8",
+      "file": "friendsie_8.glb",
+      "thumbnail": "/67park-pages-test/models/friends/friendsie_8.png",
+      "no": 25,
+      "rarity": "Common",
+      "rarityNote": "a new park friend",
+      "traits": [
+        {
+          "cat": "Head",
+          "icon": "🙂",
+          "value": "Propeller Bear"
+        },
+        {
+          "cat": "Body",
+          "icon": "👕",
+          "value": "Color Block Suit"
+        },
+        {
+          "cat": "Held",
+          "icon": "✋",
+          "value": "Microphone"
+        },
+        {
+          "cat": "Back",
+          "icon": "🎒",
+          "value": "Buddy #8 Back Accessory"
+        },
+        {
+          "cat": "Kicks",
+          "icon": "👟",
+          "value": "Buddy #8 Shoes"
+        }
+      ]
+    },
+    {
+      "id": "friendsie_9",
+      "name": "Buddy #9",
+      "file": "friendsie_9.glb",
+      "thumbnail": "/67park-pages-test/models/friends/friendsie_9.png",
+      "no": 26,
+      "rarity": "Common",
+      "rarityNote": "a new park friend",
+      "traits": [
+        {
+          "cat": "Head",
+          "icon": "🙂",
+          "value": "Blue Explorer"
+        },
+        {
+          "cat": "Body",
+          "icon": "👕",
+          "value": "Blue & Gold Suit"
+        },
+        {
+          "cat": "Held",
+          "icon": "✋",
+          "value": "Golden Branch"
+        },
+        {
+          "cat": "Back",
+          "icon": "🎒",
+          "value": "Buddy #9 Back Accessory"
+        },
+        {
+          "cat": "Kicks",
+          "icon": "👟",
+          "value": "Buddy #9 Shoes"
+        }
+      ]
+    },
+    {
+      "id": "friendsie_16",
+      "name": "Buddy #16",
+      "file": "friendsie_16.glb",
+      "thumbnail": "/67park-pages-test/models/friends/friendsie_16.png",
+      "no": 27,
+      "rarity": "Common",
+      "rarityNote": "a new park friend",
+      "traits": [
+        {
+          "cat": "Head",
+          "icon": "🙂",
+          "value": "Golden Koala"
+        },
+        {
+          "cat": "Body",
+          "icon": "👕",
+          "value": "Golden Suit"
+        },
+        {
+          "cat": "Held",
+          "icon": "✋",
+          "value": "Golden Branch"
+        },
+        {
+          "cat": "Back",
+          "icon": "🎒",
+          "value": "Buddy #16 Back Accessory"
+        },
+        {
+          "cat": "Kicks",
+          "icon": "👟",
+          "value": "Buddy #16 Shoes"
+        }
+      ]
+    },
+    {
+      "id": "friendsie_17",
+      "name": "Buddy #17",
+      "file": "friendsie_17.glb",
+      "thumbnail": "/67park-pages-test/models/friends/friendsie_17.png",
+      "no": 28,
+      "rarity": "Common",
+      "rarityNote": "a new park friend",
+      "traits": [
+        {
+          "cat": "Head",
+          "icon": "🙂",
+          "value": "Little Skull"
+        },
+        {
+          "cat": "Sprout",
+          "icon": "🌱",
+          "value": "Tiny Skull"
+        },
+        {
+          "cat": "Body",
+          "icon": "👕",
+          "value": "Rainbow Suit"
+        },
+        {
+          "cat": "Held",
+          "icon": "✋",
+          "value": "Rainbow Baton"
+        },
+        {
+          "cat": "Back",
+          "icon": "🎒",
+          "value": "Buddy #17 Back Accessory"
+        },
+        {
+          "cat": "Kicks",
+          "icon": "👟",
+          "value": "Buddy #17 Shoes"
+        }
+      ]
+    },
+    {
+      "id": "friendsie_18",
+      "name": "Buddy #18",
+      "file": "friendsie_18.glb",
+      "thumbnail": "/67park-pages-test/models/friends/friendsie_18.png",
+      "no": 29,
+      "rarity": "Common",
+      "rarityNote": "a new park friend",
+      "traits": [
+        {
+          "cat": "Head",
+          "icon": "🙂",
+          "value": "Red & Blue Folds"
+        },
+        {
+          "cat": "Sprout",
+          "icon": "🌱",
+          "value": "Red Horns"
+        },
+        {
+          "cat": "Body",
+          "icon": "👕",
+          "value": "Red & Blue Suit"
+        },
+        {
+          "cat": "Held",
+          "icon": "✋",
+          "value": "Red Trident"
+        },
+        {
+          "cat": "Back",
+          "icon": "🎒",
+          "value": "Buddy #18 Back Accessory"
+        }
+      ]
+    },
+    {
+      "id": "friendsie_19",
+      "name": "Buddy #19",
+      "file": "friendsie_19.glb",
+      "thumbnail": "/67park-pages-test/models/friends/friendsie_19.png",
+      "no": 30,
+      "rarity": "Common",
+      "rarityNote": "a new park friend",
+      "traits": [
+        {
+          "cat": "Head",
+          "icon": "🙂",
+          "value": "Golden Fish"
+        },
+        {
+          "cat": "Body",
+          "icon": "👕",
+          "value": "Golden Suit"
+        },
+        {
+          "cat": "Held",
+          "icon": "✋",
+          "value": "Blue Baton"
+        },
+        {
+          "cat": "Back",
+          "icon": "🎒",
+          "value": "Buddy #19 Back Accessory"
+        },
+        {
+          "cat": "Kicks",
+          "icon": "👟",
+          "value": "Buddy #19 Shoes"
+        }
+      ]
+    },
+    {
+      "id": "friendsie_20",
+      "name": "Buddy #20",
+      "file": "friendsie_20.glb",
+      "thumbnail": "/67park-pages-test/models/friends/friendsie_20.png",
+      "no": 31,
+      "rarity": "Common",
+      "rarityNote": "a new park friend",
+      "traits": [
+        {
+          "cat": "Head",
+          "icon": "🙂",
+          "value": "Golden Fringe"
+        },
+        {
+          "cat": "Body",
+          "icon": "👕",
+          "value": "White Suit"
+        },
+        {
+          "cat": "Back",
+          "icon": "🎒",
+          "value": "Buddy #20 Back Accessory"
+        },
+        {
+          "cat": "Kicks",
+          "icon": "👟",
+          "value": "Buddy #20 Shoes"
+        }
+      ]
+    },
+    {
+      "id": "friendsie_21",
+      "name": "Buddy #21",
+      "file": "friendsie_21.glb",
+      "thumbnail": "/67park-pages-test/models/friends/friendsie_21.png",
+      "no": 32,
+      "rarity": "Common",
+      "rarityNote": "a new park friend",
+      "traits": [
+        {
+          "cat": "Head",
+          "icon": "🙂",
+          "value": "Green Spots"
+        },
+        {
+          "cat": "Body",
+          "icon": "👕",
+          "value": "Green & White Suit"
+        }
+      ]
+    },
+    {
+      "id": "friendsie_22",
+      "name": "Buddy #22",
+      "file": "friendsie_22.glb",
+      "thumbnail": "/67park-pages-test/models/friends/friendsie_22.png",
+      "no": 33,
+      "rarity": "Common",
+      "rarityNote": "a new park friend",
+      "traits": [
+        {
+          "cat": "Head",
+          "icon": "🙂",
+          "value": "Little Skull"
+        },
+        {
+          "cat": "Sprout",
+          "icon": "🌱",
+          "value": "Black Pyramid"
+        },
+        {
+          "cat": "Body",
+          "icon": "👕",
+          "value": "Skeleton Suit"
+        },
+        {
+          "cat": "Held",
+          "icon": "✋",
+          "value": "Orange Accessory"
+        },
+        {
+          "cat": "Back",
+          "icon": "🎒",
+          "value": "Buddy #22 Back Accessory"
+        },
+        {
+          "cat": "Kicks",
+          "icon": "👟",
+          "value": "Buddy #22 Shoes"
+        }
+      ]
+    },
+    {
+      "id": "friendsie_23",
+      "name": "Buddy #23",
+      "file": "friendsie_23.glb",
+      "thumbnail": "/67park-pages-test/models/friends/friendsie_23.png",
+      "no": 34,
+      "rarity": "Common",
+      "rarityNote": "a new park friend",
+      "traits": [
+        {
+          "cat": "Head",
+          "icon": "🙂",
+          "value": "Golden Fringe"
+        },
+        {
+          "cat": "Sprout",
+          "icon": "🌱",
+          "value": "Golden Cloud Top"
+        },
+        {
+          "cat": "Body",
+          "icon": "👕",
+          "value": "Golden Suit"
+        },
+        {
+          "cat": "Held",
+          "icon": "✋",
+          "value": "Golden Twig"
+        },
+        {
+          "cat": "Back",
+          "icon": "🎒",
+          "value": "Buddy #23 Back Accessory"
+        },
+        {
+          "cat": "Kicks",
+          "icon": "👟",
+          "value": "Buddy #23 Shoes"
+        }
+      ]
+    },
+    {
+      "id": "friendsie_25",
+      "name": "Buddy #25",
+      "file": "friendsie_25.glb",
+      "thumbnail": "/67park-pages-test/models/friends/friendsie_25.png",
+      "no": 35,
+      "rarity": "Common",
+      "rarityNote": "a new park friend",
+      "traits": [
+        {
+          "cat": "Head",
+          "icon": "🙂",
+          "value": "Little Cloud"
+        },
+        {
+          "cat": "Body",
+          "icon": "👕",
+          "value": "Green Suit"
+        },
+        {
+          "cat": "Held",
+          "icon": "✋",
+          "value": "Colorful Accessory"
+        },
+        {
+          "cat": "Back",
+          "icon": "🎒",
+          "value": "Buddy #25 Back Accessory"
+        },
+        {
+          "cat": "Kicks",
+          "icon": "👟",
+          "value": "Buddy #25 Shoes"
+        }
+      ]
+    },
+    {
+      "id": "friendsie_26",
+      "name": "Buddy #26",
+      "file": "friendsie_26.glb",
+      "thumbnail": "/67park-pages-test/models/friends/friendsie_26.png",
+      "no": 36,
+      "rarity": "Common",
+      "rarityNote": "a new park friend",
+      "traits": [
+        {
+          "cat": "Head",
+          "icon": "🙂",
+          "value": "Round Glasses Bear"
+        },
+        {
+          "cat": "Body",
+          "icon": "👕",
+          "value": "Turquoise Suit"
+        },
+        {
+          "cat": "Held",
+          "icon": "✋",
+          "value": "Swirl Lollipop"
+        },
+        {
+          "cat": "Back",
+          "icon": "🎒",
+          "value": "Buddy #26 Back Accessory"
+        },
+        {
+          "cat": "Kicks",
+          "icon": "👟",
+          "value": "Buddy #26 Shoes"
+        }
+      ]
+    },
+    {
+      "id": "friendsie_32",
+      "name": "Buddy #32",
+      "file": "friendsie_32.glb",
+      "thumbnail": "/67park-pages-test/models/friends/friendsie_32.png",
+      "no": 37,
+      "rarity": "Common",
+      "rarityNote": "a new park friend",
+      "traits": [
+        {
+          "cat": "Head",
+          "icon": "🙂",
+          "value": "Flower Cactus"
+        },
+        {
+          "cat": "Sprout",
+          "icon": "🌱",
+          "value": "Flower Crown"
+        },
+        {
+          "cat": "Body",
+          "icon": "👕",
+          "value": "Bright Western Suit"
+        },
+        {
+          "cat": "Held",
+          "icon": "✋",
+          "value": "Dark Accessory"
+        },
+        {
+          "cat": "Back",
+          "icon": "🎒",
+          "value": "Buddy #32 Back Accessory"
+        },
+        {
+          "cat": "Kicks",
+          "icon": "👟",
+          "value": "Buddy #32 Shoes"
+        }
+      ]
+    },
+    {
+      "id": "friendsie_40",
+      "name": "Buddy #40",
+      "file": "friendsie_40.glb",
+      "thumbnail": "/67park-pages-test/models/friends/friendsie_40.png",
+      "no": 38,
+      "rarity": "Common",
+      "rarityNote": "a new park friend",
+      "traits": [
+        {
+          "cat": "Head",
+          "icon": "🙂",
+          "value": "Blue Beach Buddy"
+        },
+        {
+          "cat": "Sprout",
+          "icon": "🌱",
+          "value": "Beach Headwear"
+        },
+        {
+          "cat": "Body",
+          "icon": "👕",
+          "value": "Buddy #40 Outfit"
+        },
+        {
+          "cat": "Held",
+          "icon": "✋",
+          "value": "Buddy #40 Hand Accessory"
+        },
+        {
+          "cat": "Back",
+          "icon": "🎒",
+          "value": "Buddy #40 Back Accessory"
+        },
+        {
+          "cat": "Kicks",
+          "icon": "👟",
+          "value": "Buddy #40 Shoes"
+        }
+      ]
+    },
+    {
+      "id": "friendsie_46",
+      "name": "Buddy #46",
+      "file": "friendsie_46.glb",
+      "thumbnail": "/67park-pages-test/models/friends/friendsie_46.png",
+      "no": 39,
+      "rarity": "Common",
+      "rarityNote": "a new park friend",
+      "traits": [
+        {
+          "cat": "Head",
+          "icon": "🙂",
+          "value": "Golden Apple"
+        },
+        {
+          "cat": "Sprout",
+          "icon": "🌱",
+          "value": "Golden Cloud Top"
+        },
+        {
+          "cat": "Body",
+          "icon": "👕",
+          "value": "Buddy #46 Outfit"
+        },
+        {
+          "cat": "Held",
+          "icon": "✋",
+          "value": "Buddy #46 Hand Accessory"
+        },
+        {
+          "cat": "Back",
+          "icon": "🎒",
+          "value": "Buddy #46 Back Accessory"
+        },
+        {
+          "cat": "Kicks",
+          "icon": "👟",
+          "value": "Buddy #46 Shoes"
+        }
+      ]
+    },
+    {
+      "id": "friendsie_49",
+      "name": "Buddy #49",
+      "file": "friendsie_49.glb",
+      "thumbnail": "/67park-pages-test/models/friends/friendsie_49.png",
+      "no": 40,
+      "rarity": "Common",
+      "rarityNote": "a new park friend",
+      "traits": [
+        {
+          "cat": "Head",
+          "icon": "🙂",
+          "value": "Rainbow Cloud"
+        },
+        {
+          "cat": "Sprout",
+          "icon": "🌱",
+          "value": "Little Cloud Top"
+        },
+        {
+          "cat": "Body",
+          "icon": "👕",
+          "value": "Buddy #49 Outfit"
+        },
+        {
+          "cat": "Held",
+          "icon": "✋",
+          "value": "Buddy #49 Hand Accessory"
+        },
+        {
+          "cat": "Back",
+          "icon": "🎒",
+          "value": "Buddy #49 Back Accessory"
+        },
+        {
+          "cat": "Kicks",
+          "icon": "👟",
+          "value": "Buddy #49 Shoes"
+        }
+      ]
+    },
+    {
+      "id": "friendsie_51",
+      "name": "Buddy #51",
+      "file": "friendsie_51.glb",
+      "thumbnail": "/67park-pages-test/models/friends/friendsie_51.png",
+      "no": 41,
+      "rarity": "Common",
+      "rarityNote": "a new park friend",
+      "traits": [
+        {
+          "cat": "Head",
+          "icon": "🙂",
+          "value": "Rainbow Robot"
+        },
+        {
+          "cat": "Sprout",
+          "icon": "🌱",
+          "value": "Rainbow Horns"
+        },
+        {
+          "cat": "Body",
+          "icon": "👕",
+          "value": "Buddy #51 Outfit"
+        },
+        {
+          "cat": "Held",
+          "icon": "✋",
+          "value": "Buddy #51 Hand Accessory"
+        },
+        {
+          "cat": "Back",
+          "icon": "🎒",
+          "value": "Buddy #51 Back Accessory"
+        },
+        {
+          "cat": "Kicks",
+          "icon": "👟",
+          "value": "Buddy #51 Shoes"
+        }
+      ]
+    },
+    {
+      "id": "friendsie_52",
+      "name": "Buddy #52",
+      "file": "friendsie_52.glb",
+      "thumbnail": "/67park-pages-test/models/friends/friendsie_52.png",
+      "no": 42,
+      "rarity": "Common",
+      "rarityNote": "a new park friend",
+      "traits": [
+        {
+          "cat": "Head",
+          "icon": "🙂",
+          "value": "Bubble Trio"
+        },
+        {
+          "cat": "Body",
+          "icon": "👕",
+          "value": "Buddy #52 Outfit"
+        },
+        {
+          "cat": "Held",
+          "icon": "✋",
+          "value": "Buddy #52 Hand Accessory"
+        },
+        {
+          "cat": "Back",
+          "icon": "🎒",
+          "value": "Buddy #52 Back Accessory"
+        },
+        {
+          "cat": "Kicks",
+          "icon": "👟",
+          "value": "Buddy #52 Shoes"
+        }
+      ]
+    },
+    {
+      "id": "friendsie_54",
+      "name": "Buddy #54",
+      "file": "friendsie_54.glb",
+      "thumbnail": "/67park-pages-test/models/friends/friendsie_54.png",
+      "no": 43,
+      "rarity": "Common",
+      "rarityNote": "a new park friend",
+      "traits": [
+        {
+          "cat": "Head",
+          "icon": "🙂",
+          "value": "Golden Koala"
+        },
+        {
+          "cat": "Sprout",
+          "icon": "🌱",
+          "value": "Golden Crown"
+        },
+        {
+          "cat": "Body",
+          "icon": "👕",
+          "value": "Buddy #54 Outfit"
+        },
+        {
+          "cat": "Held",
+          "icon": "✋",
+          "value": "Buddy #54 Hand Accessory"
+        },
+        {
+          "cat": "Back",
+          "icon": "🎒",
+          "value": "Buddy #54 Back Accessory"
+        },
+        {
+          "cat": "Kicks",
+          "icon": "👟",
+          "value": "Buddy #54 Shoes"
+        }
+      ]
+    },
+    {
+      "id": "friendsie_58",
+      "name": "Buddy #58",
+      "file": "friendsie_58.glb",
+      "thumbnail": "/67park-pages-test/models/friends/friendsie_58.png",
+      "no": 44,
+      "rarity": "Common",
+      "rarityNote": "a new park friend",
+      "traits": [
+        {
+          "cat": "Head",
+          "icon": "🙂",
+          "value": "Blue Pirate"
+        },
+        {
+          "cat": "Sprout",
+          "icon": "🌱",
+          "value": "Pirate Headwear"
+        },
+        {
+          "cat": "Body",
+          "icon": "👕",
+          "value": "Buddy #58 Outfit"
+        },
+        {
+          "cat": "Held",
+          "icon": "✋",
+          "value": "Buddy #58 Hand Accessory"
+        },
+        {
+          "cat": "Back",
+          "icon": "🎒",
+          "value": "Buddy #58 Back Accessory"
+        },
+        {
+          "cat": "Kicks",
+          "icon": "👟",
+          "value": "Buddy #58 Shoes"
+        }
+      ]
+    }
+  ],
+  "catalog": {
+    "friendsie_2": [
+      {
+        "ord": 0,
+        "slot": "head",
+        "prims": [
+          9573
+        ]
+      },
+      {
+        "ord": 1,
+        "slot": "sprout",
+        "prims": [
+          3043
+        ]
+      },
+      {
+        "ord": 2,
+        "slot": "body",
+        "prims": [
+          2800
+        ]
+      },
+      {
+        "ord": 3,
+        "slot": "held",
+        "prims": [
+          5438
+        ]
+      },
+      {
+        "ord": 4,
+        "slot": "back",
+        "prims": [
+          4152
+        ]
+      },
+      {
+        "ord": 5,
+        "slot": "kicks",
+        "prims": [
+          4176
+        ]
+      }
+    ],
+    "friendsie_3": [
+      {
+        "ord": 0,
+        "slot": "head",
+        "prims": [
+          8971
+        ]
+      },
+      {
+        "ord": 1,
+        "slot": "body",
+        "prims": [
+          2800
+        ]
+      },
+      {
+        "ord": 2,
+        "slot": "held",
+        "prims": [
+          5438
+        ]
+      },
+      {
+        "ord": 3,
+        "slot": "back",
+        "prims": [
+          2853
+        ]
+      },
+      {
+        "ord": 4,
+        "slot": "kicks",
+        "prims": [
+          7004
+        ]
+      }
+    ],
+    "friendsie_6": [
+      {
+        "ord": 0,
+        "slot": "head",
+        "prims": [
+          4932
+        ]
+      },
+      {
+        "ord": 1,
+        "slot": "sprout",
+        "prims": [
+          1225
+        ]
+      },
+      {
+        "ord": 2,
+        "slot": "body",
+        "prims": [
+          2800
+        ]
+      },
+      {
+        "ord": 3,
+        "slot": "held",
+        "prims": [
+          1065
+        ]
+      },
+      {
+        "ord": 4,
+        "slot": "back",
+        "prims": [
+          1574
+        ]
+      },
+      {
+        "ord": 5,
+        "slot": "kicks",
+        "prims": [
+          2143
+        ]
+      }
+    ],
+    "friendsie_7": [
+      {
+        "ord": 0,
+        "slot": "head",
+        "prims": [
+          7623
+        ]
+      },
+      {
+        "ord": 1,
+        "slot": "body",
+        "prims": [
+          2800
+        ]
+      },
+      {
+        "ord": 2,
+        "slot": "held",
+        "prims": [
+          3789
+        ]
+      },
+      {
+        "ord": 3,
+        "slot": "back",
+        "prims": [
+          2853
+        ]
+      }
+    ],
+    "friendsie_8": [
+      {
+        "ord": 0,
+        "slot": "head",
+        "prims": [
+          20897
+        ]
+      },
+      {
+        "ord": 1,
+        "slot": "body",
+        "prims": [
+          2800
+        ]
+      },
+      {
+        "ord": 2,
+        "slot": "held",
+        "prims": [
+          2493
+        ]
+      },
+      {
+        "ord": 3,
+        "slot": "back",
+        "prims": [
+          2853
+        ]
+      },
+      {
+        "ord": 4,
+        "slot": "kicks",
+        "prims": [
+          1773
+        ]
+      }
+    ],
+    "friendsie_9": [
+      {
+        "ord": 0,
+        "slot": "head",
+        "prims": [
+          36257
+        ]
+      },
+      {
+        "ord": 1,
+        "slot": "body",
+        "prims": [
+          2800
+        ]
+      },
+      {
+        "ord": 2,
+        "slot": "held",
+        "prims": [
+          7959
+        ]
+      },
+      {
+        "ord": 3,
+        "slot": "back",
+        "prims": [
+          1232
+        ]
+      },
+      {
+        "ord": 4,
+        "slot": "kicks",
+        "prims": [
+          1104
+        ]
+      }
+    ],
+    "friendsie_16": [
+      {
+        "ord": 0,
+        "slot": "head",
+        "prims": [
+          9039
+        ]
+      },
+      {
+        "ord": 1,
+        "slot": "body",
+        "prims": [
+          2800
+        ]
+      },
+      {
+        "ord": 2,
+        "slot": "held",
+        "prims": [
+          7959
+        ]
+      },
+      {
+        "ord": 3,
+        "slot": "back",
+        "prims": [
+          2021
+        ]
+      },
+      {
+        "ord": 4,
+        "slot": "kicks",
+        "prims": [
+          5833
+        ]
+      }
+    ],
+    "friendsie_17": [
+      {
+        "ord": 0,
+        "slot": "head",
+        "prims": [
+          11049
+        ]
+      },
+      {
+        "ord": 1,
+        "slot": "sprout",
+        "prims": [
+          1648
+        ]
+      },
+      {
+        "ord": 2,
+        "slot": "body",
+        "prims": [
+          2800
+        ]
+      },
+      {
+        "ord": 3,
+        "slot": "held",
+        "prims": [
+          2162
+        ]
+      },
+      {
+        "ord": 4,
+        "slot": "back",
+        "prims": [
+          4556
+        ]
+      },
+      {
+        "ord": 5,
+        "slot": "kicks",
+        "prims": [
+          1746
+        ]
+      }
+    ],
+    "friendsie_18": [
+      {
+        "ord": 0,
+        "slot": "head",
+        "prims": [
+          4932
+        ]
+      },
+      {
+        "ord": 1,
+        "slot": "sprout",
+        "prims": [
+          1470
+        ]
+      },
+      {
+        "ord": 2,
+        "slot": "body",
+        "prims": [
+          2800
+        ]
+      },
+      {
+        "ord": 3,
+        "slot": "held",
+        "prims": [
+          1039
+        ]
+      },
+      {
+        "ord": 4,
+        "slot": "back",
+        "prims": [
+          1345
+        ]
+      }
+    ],
+    "friendsie_19": [
+      {
+        "ord": 0,
+        "slot": "head",
+        "prims": [
+          9139
+        ]
+      },
+      {
+        "ord": 1,
+        "slot": "body",
+        "prims": [
+          2800
+        ]
+      },
+      {
+        "ord": 2,
+        "slot": "held",
+        "prims": [
+          2162
+        ]
+      },
+      {
+        "ord": 3,
+        "slot": "back",
+        "prims": [
+          9136
+        ]
+      },
+      {
+        "ord": 4,
+        "slot": "kicks",
+        "prims": [
+          1359
+        ]
+      }
+    ],
+    "friendsie_20": [
+      {
+        "ord": 0,
+        "slot": "head",
+        "prims": [
+          13226
+        ]
+      },
+      {
+        "ord": 1,
+        "slot": "body",
+        "prims": [
+          2800
+        ]
+      },
+      {
+        "ord": 2,
+        "slot": "back",
+        "prims": [
+          4728
+        ]
+      },
+      {
+        "ord": 3,
+        "slot": "kicks",
+        "prims": [
+          1104
+        ]
+      }
+    ],
+    "friendsie_21": [
+      {
+        "ord": 0,
+        "slot": "head",
+        "prims": [
+          4160
+        ]
+      },
+      {
+        "ord": 1,
+        "slot": "body",
+        "prims": [
+          2800
+        ]
+      }
+    ],
+    "friendsie_22": [
+      {
+        "ord": 0,
+        "slot": "head",
+        "prims": [
+          11049
+        ]
+      },
+      {
+        "ord": 1,
+        "slot": "sprout",
+        "prims": [
+          156
+        ]
+      },
+      {
+        "ord": 2,
+        "slot": "body",
+        "prims": [
+          2800
+        ]
+      },
+      {
+        "ord": 3,
+        "slot": "held",
+        "prims": [
+          1952
+        ]
+      },
+      {
+        "ord": 4,
+        "slot": "back",
+        "prims": [
+          1384
+        ]
+      },
+      {
+        "ord": 5,
+        "slot": "kicks",
+        "prims": [
+          1773
+        ]
+      }
+    ],
+    "friendsie_23": [
+      {
+        "ord": 0,
+        "slot": "head",
+        "prims": [
+          13226
+        ]
+      },
+      {
+        "ord": 1,
+        "slot": "sprout",
+        "prims": [
+          8096
+        ]
+      },
+      {
+        "ord": 2,
+        "slot": "body",
+        "prims": [
+          2800
+        ]
+      },
+      {
+        "ord": 3,
+        "slot": "held",
+        "prims": [
+          477
+        ]
+      },
+      {
+        "ord": 4,
+        "slot": "back",
+        "prims": [
+          4556
+        ]
+      },
+      {
+        "ord": 5,
+        "slot": "kicks",
+        "prims": [
+          836
+        ]
+      }
+    ],
+    "friendsie_25": [
+      {
+        "ord": 0,
+        "slot": "head",
+        "prims": [
+          17479
+        ]
+      },
+      {
+        "ord": 1,
+        "slot": "body",
+        "prims": [
+          2800
+        ]
+      },
+      {
+        "ord": 2,
+        "slot": "held",
+        "prims": [
+          1949
+        ]
+      },
+      {
+        "ord": 3,
+        "slot": "back",
+        "prims": [
+          740
+        ]
+      },
+      {
+        "ord": 4,
+        "slot": "kicks",
+        "prims": [
+          1359
+        ]
+      }
+    ],
+    "friendsie_26": [
+      {
+        "ord": 0,
+        "slot": "head",
+        "prims": [
+          4994
+        ]
+      },
+      {
+        "ord": 1,
+        "slot": "body",
+        "prims": [
+          2800
+        ]
+      },
+      {
+        "ord": 2,
+        "slot": "held",
+        "prims": [
+          1886
+        ]
+      },
+      {
+        "ord": 3,
+        "slot": "back",
+        "prims": [
+          1902
+        ]
+      },
+      {
+        "ord": 4,
+        "slot": "kicks",
+        "prims": [
+          2143
+        ]
+      }
+    ],
+    "friendsie_32": [
+      {
+        "ord": 0,
+        "slot": "head",
+        "prims": [
+          28498
+        ]
+      },
+      {
+        "ord": 1,
+        "slot": "sprout",
+        "prims": [
+          8377
+        ]
+      },
+      {
+        "ord": 2,
+        "slot": "body",
+        "prims": [
+          2800
+        ]
+      },
+      {
+        "ord": 3,
+        "slot": "held",
+        "prims": [
+          1065
+        ]
+      },
+      {
+        "ord": 4,
+        "slot": "back",
+        "prims": [
+          11730
+        ]
+      },
+      {
+        "ord": 5,
+        "slot": "kicks",
+        "prims": [
+          1100
+        ]
+      }
+    ],
+    "friendsie_40": [
+      {
+        "ord": 0,
+        "slot": "head",
+        "prims": [
+          4072
+        ]
+      },
+      {
+        "ord": 1,
+        "slot": "sprout",
+        "prims": [
+          2998
+        ]
+      },
+      {
+        "ord": 2,
+        "slot": "body",
+        "prims": [
+          2800
+        ]
+      },
+      {
+        "ord": 3,
+        "slot": "held",
+        "prims": [
+          1523
+        ]
+      },
+      {
+        "ord": 4,
+        "slot": "back",
+        "prims": [
+          2294
+        ]
+      },
+      {
+        "ord": 5,
+        "slot": "kicks",
+        "prims": [
+          1588
+        ]
+      }
+    ],
+    "friendsie_46": [
+      {
+        "ord": 0,
+        "slot": "head",
+        "prims": [
+          4806
+        ]
+      },
+      {
+        "ord": 1,
+        "slot": "sprout",
+        "prims": [
+          8096
+        ]
+      },
+      {
+        "ord": 2,
+        "slot": "body",
+        "prims": [
+          2800
+        ]
+      },
+      {
+        "ord": 3,
+        "slot": "held",
+        "prims": [
+          3789
+        ]
+      },
+      {
+        "ord": 4,
+        "slot": "back",
+        "prims": [
+          5587
+        ]
+      },
+      {
+        "ord": 5,
+        "slot": "kicks",
+        "prims": [
+          4296
+        ]
+      }
+    ],
+    "friendsie_49": [
+      {
+        "ord": 0,
+        "slot": "head",
+        "prims": [
+          1789
+        ]
+      },
+      {
+        "ord": 1,
+        "slot": "sprout",
+        "prims": [
+          8096
+        ]
+      },
+      {
+        "ord": 2,
+        "slot": "body",
+        "prims": [
+          2800
+        ]
+      },
+      {
+        "ord": 3,
+        "slot": "held",
+        "prims": [
+          418
+        ]
+      },
+      {
+        "ord": 4,
+        "slot": "back",
+        "prims": [
+          4152
+        ]
+      },
+      {
+        "ord": 5,
+        "slot": "kicks",
+        "prims": [
+          1588
+        ]
+      }
+    ],
+    "friendsie_51": [
+      {
+        "ord": 0,
+        "slot": "head",
+        "prims": [
+          7719
+        ]
+      },
+      {
+        "ord": 1,
+        "slot": "sprout",
+        "prims": [
+          3279
+        ]
+      },
+      {
+        "ord": 2,
+        "slot": "body",
+        "prims": [
+          2800
+        ]
+      },
+      {
+        "ord": 3,
+        "slot": "held",
+        "prims": [
+          274
+        ]
+      },
+      {
+        "ord": 4,
+        "slot": "back",
+        "prims": [
+          2853
+        ]
+      },
+      {
+        "ord": 5,
+        "slot": "kicks",
+        "prims": [
+          1588
+        ]
+      }
+    ],
+    "friendsie_52": [
+      {
+        "ord": 0,
+        "slot": "head",
+        "prims": [
+          2886
+        ]
+      },
+      {
+        "ord": 1,
+        "slot": "body",
+        "prims": [
+          2800
+        ]
+      },
+      {
+        "ord": 2,
+        "slot": "held",
+        "prims": [
+          9620
+        ]
+      },
+      {
+        "ord": 3,
+        "slot": "back",
+        "prims": [
+          2853
+        ]
+      },
+      {
+        "ord": 4,
+        "slot": "kicks",
+        "prims": [
+          6556
+        ]
+      }
+    ],
+    "friendsie_54": [
+      {
+        "ord": 0,
+        "slot": "head",
+        "prims": [
+          9039
+        ]
+      },
+      {
+        "ord": 1,
+        "slot": "sprout",
+        "prims": [
+          1922
+        ]
+      },
+      {
+        "ord": 2,
+        "slot": "body",
+        "prims": [
+          2800
+        ]
+      },
+      {
+        "ord": 3,
+        "slot": "held",
+        "prims": [
+          1950
+        ]
+      },
+      {
+        "ord": 4,
+        "slot": "back",
+        "prims": [
+          1232
+        ]
+      },
+      {
+        "ord": 5,
+        "slot": "kicks",
+        "prims": [
+          836
+        ]
+      }
+    ],
+    "friendsie_58": [
+      {
+        "ord": 0,
+        "slot": "head",
+        "prims": [
+          4072
+        ]
+      },
+      {
+        "ord": 1,
+        "slot": "sprout",
+        "prims": [
+          646
+        ]
+      },
+      {
+        "ord": 2,
+        "slot": "body",
+        "prims": [
+          2800
+        ]
+      },
+      {
+        "ord": 3,
+        "slot": "held",
+        "prims": [
+          274
+        ]
+      },
+      {
+        "ord": 4,
+        "slot": "back",
+        "prims": [
+          2021
+        ]
+      },
+      {
+        "ord": 5,
+        "slot": "kicks",
+        "prims": [
+          4126
+        ]
+      }
+    ]
+  },
+  "names": {
+    "friendsie_2:0": "Golden Mask",
+    "friendsie_2:1": "Golden Crest",
+    "friendsie_2:2": "Rainbow Suit",
+    "friendsie_2:3": "Golden Gauntlet",
+    "friendsie_2:4": "Buddy #2 Back Accessory",
+    "friendsie_2:5": "Buddy #2 Shoes",
+    "friendsie_3:0": "Storm Cloud",
+    "friendsie_3:1": "Black Suit",
+    "friendsie_3:2": "Golden Gauntlet",
+    "friendsie_3:3": "Buddy #3 Back Accessory",
+    "friendsie_3:4": "Buddy #3 Shoes",
+    "friendsie_6:0": "Monochrome Folds",
+    "friendsie_6:1": "Black Tuft",
+    "friendsie_6:2": "Monochrome Suit",
+    "friendsie_6:3": "Dark Accessory",
+    "friendsie_6:4": "Buddy #6 Back Accessory",
+    "friendsie_6:5": "Buddy #6 Shoes",
+    "friendsie_7:0": "Golden Cloud",
+    "friendsie_7:1": "Golden Suit",
+    "friendsie_7:2": "Star Wand",
+    "friendsie_7:3": "Buddy #7 Back Accessory",
+    "friendsie_8:0": "Propeller Bear",
+    "friendsie_8:1": "Color Block Suit",
+    "friendsie_8:2": "Microphone",
+    "friendsie_8:3": "Buddy #8 Back Accessory",
+    "friendsie_8:4": "Buddy #8 Shoes",
+    "friendsie_9:0": "Blue Explorer",
+    "friendsie_9:1": "Blue & Gold Suit",
+    "friendsie_9:2": "Golden Branch",
+    "friendsie_9:3": "Buddy #9 Back Accessory",
+    "friendsie_9:4": "Buddy #9 Shoes",
+    "friendsie_16:0": "Golden Koala",
+    "friendsie_16:1": "Golden Suit",
+    "friendsie_16:2": "Golden Branch",
+    "friendsie_16:3": "Buddy #16 Back Accessory",
+    "friendsie_16:4": "Buddy #16 Shoes",
+    "friendsie_17:0": "Little Skull",
+    "friendsie_17:1": "Tiny Skull",
+    "friendsie_17:2": "Rainbow Suit",
+    "friendsie_17:3": "Rainbow Baton",
+    "friendsie_17:4": "Buddy #17 Back Accessory",
+    "friendsie_17:5": "Buddy #17 Shoes",
+    "friendsie_18:0": "Red & Blue Folds",
+    "friendsie_18:1": "Red Horns",
+    "friendsie_18:2": "Red & Blue Suit",
+    "friendsie_18:3": "Red Trident",
+    "friendsie_18:4": "Buddy #18 Back Accessory",
+    "friendsie_19:0": "Golden Fish",
+    "friendsie_19:1": "Golden Suit",
+    "friendsie_19:2": "Blue Baton",
+    "friendsie_19:3": "Buddy #19 Back Accessory",
+    "friendsie_19:4": "Buddy #19 Shoes",
+    "friendsie_20:0": "Golden Fringe",
+    "friendsie_20:1": "White Suit",
+    "friendsie_20:2": "Buddy #20 Back Accessory",
+    "friendsie_20:3": "Buddy #20 Shoes",
+    "friendsie_21:0": "Green Spots",
+    "friendsie_21:1": "Green & White Suit",
+    "friendsie_22:0": "Little Skull",
+    "friendsie_22:1": "Black Pyramid",
+    "friendsie_22:2": "Skeleton Suit",
+    "friendsie_22:3": "Orange Accessory",
+    "friendsie_22:4": "Buddy #22 Back Accessory",
+    "friendsie_22:5": "Buddy #22 Shoes",
+    "friendsie_23:0": "Golden Fringe",
+    "friendsie_23:1": "Golden Cloud Top",
+    "friendsie_23:2": "Golden Suit",
+    "friendsie_23:3": "Golden Twig",
+    "friendsie_23:4": "Buddy #23 Back Accessory",
+    "friendsie_23:5": "Buddy #23 Shoes",
+    "friendsie_25:0": "Little Cloud",
+    "friendsie_25:1": "Green Suit",
+    "friendsie_25:2": "Colorful Accessory",
+    "friendsie_25:3": "Buddy #25 Back Accessory",
+    "friendsie_25:4": "Buddy #25 Shoes",
+    "friendsie_26:0": "Round Glasses Bear",
+    "friendsie_26:1": "Turquoise Suit",
+    "friendsie_26:2": "Swirl Lollipop",
+    "friendsie_26:3": "Buddy #26 Back Accessory",
+    "friendsie_26:4": "Buddy #26 Shoes",
+    "friendsie_32:0": "Flower Cactus",
+    "friendsie_32:1": "Flower Crown",
+    "friendsie_32:2": "Bright Western Suit",
+    "friendsie_32:3": "Dark Accessory",
+    "friendsie_32:4": "Buddy #32 Back Accessory",
+    "friendsie_32:5": "Buddy #32 Shoes",
+    "friendsie_40:0": "Blue Beach Buddy",
+    "friendsie_40:1": "Beach Headwear",
+    "friendsie_40:2": "Buddy #40 Outfit",
+    "friendsie_40:3": "Buddy #40 Hand Accessory",
+    "friendsie_40:4": "Buddy #40 Back Accessory",
+    "friendsie_40:5": "Buddy #40 Shoes",
+    "friendsie_46:0": "Golden Apple",
+    "friendsie_46:1": "Golden Cloud Top",
+    "friendsie_46:2": "Buddy #46 Outfit",
+    "friendsie_46:3": "Buddy #46 Hand Accessory",
+    "friendsie_46:4": "Buddy #46 Back Accessory",
+    "friendsie_46:5": "Buddy #46 Shoes",
+    "friendsie_49:0": "Rainbow Cloud",
+    "friendsie_49:1": "Little Cloud Top",
+    "friendsie_49:2": "Buddy #49 Outfit",
+    "friendsie_49:3": "Buddy #49 Hand Accessory",
+    "friendsie_49:4": "Buddy #49 Back Accessory",
+    "friendsie_49:5": "Buddy #49 Shoes",
+    "friendsie_51:0": "Rainbow Robot",
+    "friendsie_51:1": "Rainbow Horns",
+    "friendsie_51:2": "Buddy #51 Outfit",
+    "friendsie_51:3": "Buddy #51 Hand Accessory",
+    "friendsie_51:4": "Buddy #51 Back Accessory",
+    "friendsie_51:5": "Buddy #51 Shoes",
+    "friendsie_52:0": "Bubble Trio",
+    "friendsie_52:1": "Buddy #52 Outfit",
+    "friendsie_52:2": "Buddy #52 Hand Accessory",
+    "friendsie_52:3": "Buddy #52 Back Accessory",
+    "friendsie_52:4": "Buddy #52 Shoes",
+    "friendsie_54:0": "Golden Koala",
+    "friendsie_54:1": "Golden Crown",
+    "friendsie_54:2": "Buddy #54 Outfit",
+    "friendsie_54:3": "Buddy #54 Hand Accessory",
+    "friendsie_54:4": "Buddy #54 Back Accessory",
+    "friendsie_54:5": "Buddy #54 Shoes",
+    "friendsie_58:0": "Blue Pirate",
+    "friendsie_58:1": "Pirate Headwear",
+    "friendsie_58:2": "Buddy #58 Outfit",
+    "friendsie_58:3": "Buddy #58 Hand Accessory",
+    "friendsie_58:4": "Buddy #58 Back Accessory",
+    "friendsie_58:5": "Buddy #58 Shoes"
+  }
+}

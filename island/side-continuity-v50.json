@@ -1,0 +1,739 @@
+{
+  "version": 50,
+  "variant": "kimi",
+  "patchId": "side50-7f050e82076b2975",
+  "sha256": "7f050e82076b2975f598ac2ee4cd7c46b618c338da5266d7c620d71aef7788bb",
+  "byteLength": 5682616,
+  "method": "Connected edge-only vertical side fans, triangle-corner-angle weighted normals; caps/slopes retain original normals; same indexed geometry",
+  "meshes": [
+    {
+      "name": "5_YOL",
+      "sourceHash": "e1eef190",
+      "sourceVertices": 58981,
+      "sourceIndexCount": 99204,
+      "vertices": 58981,
+      "sideTriangles": 16066,
+      "smoothEdges": 15939,
+      "hardEdges": 135,
+      "nonmanifoldEdges": 0,
+      "protectedFans": 0,
+      "changedCorners": 47005,
+      "changedSourceNormals": 38170,
+      "minChangedFaceDot": 0.9074804186820984,
+      "duplicateSources": {
+        "byteOffset": 0,
+        "count": 0
+      },
+      "normals": {
+        "byteOffset": 0,
+        "count": 176943
+      },
+      "index": {
+        "byteOffset": 707772,
+        "count": 99204
+      }
+    },
+    {
+      "name": "3_CIMEN",
+      "sourceHash": "ff552312",
+      "sourceVertices": 52771,
+      "sourceIndexCount": 91956,
+      "vertices": 52771,
+      "sideTriangles": 15366,
+      "smoothEdges": 15336,
+      "hardEdges": 30,
+      "nonmanifoldEdges": 0,
+      "protectedFans": 0,
+      "changedCorners": 46007,
+      "changedSourceNormals": 37325,
+      "minChangedFaceDot": 0.9208273231192334,
+      "duplicateSources": {
+        "byteOffset": 1104588,
+        "count": 0
+      },
+      "normals": {
+        "byteOffset": 1104588,
+        "count": 158313
+      },
+      "index": {
+        "byteOffset": 1737840,
+        "count": 91956
+      }
+    },
+    {
+      "name": "3_CIMEN_KOYU",
+      "sourceHash": "c96b9955",
+      "sourceVertices": 2376,
+      "sourceIndexCount": 4728,
+      "vertices": 2376,
+      "sideTriangles": 792,
+      "smoothEdges": 788,
+      "hardEdges": 4,
+      "nonmanifoldEdges": 0,
+      "protectedFans": 0,
+      "changedCorners": 2367,
+      "changedSourceNormals": 1578,
+      "minChangedFaceDot": 0.9510490240409593,
+      "duplicateSources": {
+        "byteOffset": 2105664,
+        "count": 0
+      },
+      "normals": {
+        "byteOffset": 2105664,
+        "count": 7128
+      },
+      "index": {
+        "byteOffset": 2134176,
+        "count": 4728
+      }
+    },
+    {
+      "name": "5_PARSEL_ZEMIN",
+      "sourceHash": "256d83b5",
+      "sourceVertices": 25308,
+      "sourceIndexCount": 43392,
+      "vertices": 25308,
+      "sideTriangles": 6924,
+      "smoothEdges": 6855,
+      "hardEdges": 81,
+      "nonmanifoldEdges": 0,
+      "protectedFans": 0,
+      "changedCorners": 20268,
+      "changedSourceNormals": 13710,
+      "minChangedFaceDot": 0.9063422083854675,
+      "duplicateSources": {
+        "byteOffset": 2153088,
+        "count": 0
+      },
+      "normals": {
+        "byteOffset": 2153088,
+        "count": 75924
+      },
+      "index": {
+        "byteOffset": 2456784,
+        "count": 43392
+      }
+    },
+    {
+      "name": "8_PARK_PATIKA_UST",
+      "sourceHash": "7ed997c9",
+      "sourceVertices": 35392,
+      "sourceIndexCount": 63144,
+      "vertices": 35392,
+      "sideTriangles": 10514,
+      "smoothEdges": 10500,
+      "hardEdges": 14,
+      "nonmanifoldEdges": 0,
+      "protectedFans": 0,
+      "changedCorners": 29807,
+      "changedSourceNormals": 24146,
+      "minChangedFaceDot": 0.9226620986311503,
+      "duplicateSources": {
+        "byteOffset": 2630352,
+        "count": 0
+      },
+      "normals": {
+        "byteOffset": 2630352,
+        "count": 106176
+      },
+      "index": {
+        "byteOffset": 3055056,
+        "count": 63144
+      }
+    },
+    {
+      "name": "4_KIYI_TOPRAK_TABANI",
+      "sourceHash": "e6d88d47",
+      "sourceVertices": 9688,
+      "sourceIndexCount": 28812,
+      "vertices": 9852,
+      "sideTriangles": 4824,
+      "smoothEdges": 4743,
+      "hardEdges": 81,
+      "nonmanifoldEdges": 0,
+      "protectedFans": 0,
+      "changedCorners": 14424,
+      "changedSourceNormals": 4806,
+      "minChangedFaceDot": 0.9087221142396463,
+      "duplicateSources": {
+        "byteOffset": 3307632,
+        "count": 164
+      },
+      "normals": {
+        "byteOffset": 3308288,
+        "count": 29556
+      },
+      "index": {
+        "byteOffset": 3426512,
+        "count": 28812
+      }
+    },
+    {
+      "name": "3_MERKEZ_CIMEN",
+      "sourceHash": "d2463c64",
+      "sourceVertices": 18624,
+      "sourceIndexCount": 37104,
+      "vertices": 18624,
+      "sideTriangles": 6208,
+      "smoothEdges": 6208,
+      "hardEdges": 0,
+      "nonmanifoldEdges": 0,
+      "protectedFans": 0,
+      "changedCorners": 18624,
+      "changedSourceNormals": 12416,
+      "minChangedFaceDot": 0.9999234174458217,
+      "duplicateSources": {
+        "byteOffset": 3541760,
+        "count": 0
+      },
+      "normals": {
+        "byteOffset": 3541760,
+        "count": 55872
+      },
+      "index": {
+        "byteOffset": 3765248,
+        "count": 37104
+      }
+    },
+    {
+      "name": "5_SAHIL_GRI_ZEMIN",
+      "sourceHash": "da6c076a",
+      "sourceVertices": 1548,
+      "sourceIndexCount": 3084,
+      "vertices": 1548,
+      "sideTriangles": 516,
+      "smoothEdges": 516,
+      "hardEdges": 0,
+      "nonmanifoldEdges": 0,
+      "protectedFans": 0,
+      "changedCorners": 1548,
+      "changedSourceNormals": 1032,
+      "minChangedFaceDot": 0.9999242280374682,
+      "duplicateSources": {
+        "byteOffset": 3913664,
+        "count": 0
+      },
+      "normals": {
+        "byteOffset": 3913664,
+        "count": 4644
+      },
+      "index": {
+        "byteOffset": 3932240,
+        "count": 3084
+      }
+    },
+    {
+      "name": "5_DOGU_SAHIL_MEYDAN_ZEMIN",
+      "sourceHash": "0bdb34bd",
+      "sourceVertices": 1573,
+      "sourceIndexCount": 3108,
+      "vertices": 1573,
+      "sideTriangles": 520,
+      "smoothEdges": 520,
+      "hardEdges": 0,
+      "nonmanifoldEdges": 0,
+      "protectedFans": 0,
+      "changedCorners": 1560,
+      "changedSourceNormals": 1040,
+      "minChangedFaceDot": 0.9999227182727632,
+      "duplicateSources": {
+        "byteOffset": 3944576,
+        "count": 0
+      },
+      "normals": {
+        "byteOffset": 3944576,
+        "count": 4719
+      },
+      "index": {
+        "byteOffset": 3963452,
+        "count": 3108
+      }
+    },
+    {
+      "name": "3_DOGU_SAHIL_KAVSAK_CIMEN",
+      "sourceHash": "d747af85",
+      "sourceVertices": 6036,
+      "sourceIndexCount": 12024,
+      "vertices": 6036,
+      "sideTriangles": 2012,
+      "smoothEdges": 2012,
+      "hardEdges": 0,
+      "nonmanifoldEdges": 0,
+      "protectedFans": 0,
+      "changedCorners": 6036,
+      "changedSourceNormals": 4024,
+      "minChangedFaceDot": 0.9604301247525067,
+      "duplicateSources": {
+        "byteOffset": 3975884,
+        "count": 0
+      },
+      "normals": {
+        "byteOffset": 3975884,
+        "count": 18108
+      },
+      "index": {
+        "byteOffset": 4048316,
+        "count": 12024
+      }
+    },
+    {
+      "name": "3_DOGU_SAHIL_HALKASI",
+      "sourceHash": "00c53940",
+      "sourceVertices": 2748,
+      "sourceIndexCount": 5484,
+      "vertices": 2748,
+      "sideTriangles": 916,
+      "smoothEdges": 912,
+      "hardEdges": 4,
+      "nonmanifoldEdges": 0,
+      "protectedFans": 0,
+      "changedCorners": 2748,
+      "changedSourceNormals": 1832,
+      "minChangedFaceDot": 0.9999237675683204,
+      "duplicateSources": {
+        "byteOffset": 4096412,
+        "count": 0
+      },
+      "normals": {
+        "byteOffset": 4096412,
+        "count": 8244
+      },
+      "index": {
+        "byteOffset": 4129388,
+        "count": 5484
+      }
+    },
+    {
+      "name": "8_DOGU_SAHIL_MERKEZ_DISK",
+      "sourceHash": "10856e20",
+      "sourceVertices": 1536,
+      "sourceIndexCount": 3060,
+      "vertices": 1536,
+      "sideTriangles": 512,
+      "smoothEdges": 512,
+      "hardEdges": 0,
+      "nonmanifoldEdges": 0,
+      "protectedFans": 0,
+      "changedCorners": 1536,
+      "changedSourceNormals": 1024,
+      "minChangedFaceDot": 0.99992372677972,
+      "duplicateSources": {
+        "byteOffset": 4151324,
+        "count": 0
+      },
+      "normals": {
+        "byteOffset": 4151324,
+        "count": 4608
+      },
+      "index": {
+        "byteOffset": 4169756,
+        "count": 3060
+      }
+    },
+    {
+      "name": "8_DOGU_SAHIL_BANKLAR",
+      "sourceHash": "ae08b443",
+      "sourceVertices": 1596,
+      "sourceIndexCount": 3108,
+      "vertices": 1596,
+      "sideTriangles": 532,
+      "smoothEdges": 504,
+      "hardEdges": 28,
+      "nonmanifoldEdges": 0,
+      "protectedFans": 0,
+      "changedCorners": 1596,
+      "changedSourceNormals": 1064,
+      "minChangedFaceDot": 0.9999317946376457,
+      "duplicateSources": {
+        "byteOffset": 4181996,
+        "count": 0
+      },
+      "normals": {
+        "byteOffset": 4181996,
+        "count": 4788
+      },
+      "index": {
+        "byteOffset": 4201148,
+        "count": 3108
+      }
+    },
+    {
+      "name": "8_DOGU_SAHIL_GIRIS",
+      "sourceHash": "92df5832",
+      "sourceVertices": 1606,
+      "sourceIndexCount": 3084,
+      "vertices": 1606,
+      "sideTriangles": 516,
+      "smoothEdges": 516,
+      "hardEdges": 0,
+      "nonmanifoldEdges": 0,
+      "protectedFans": 0,
+      "changedCorners": 1548,
+      "changedSourceNormals": 1032,
+      "minChangedFaceDot": 0.9999199915590864,
+      "duplicateSources": {
+        "byteOffset": 4213580,
+        "count": 0
+      },
+      "normals": {
+        "byteOffset": 4213580,
+        "count": 4818
+      },
+      "index": {
+        "byteOffset": 4232852,
+        "count": 3084
+      }
+    },
+    {
+      "name": "8_DOGU_SAHIL_ISKELE_UST",
+      "sourceHash": "18de29f0",
+      "sourceVertices": 5102,
+      "sourceIndexCount": 9324,
+      "vertices": 5102,
+      "sideTriangles": 1560,
+      "smoothEdges": 1560,
+      "hardEdges": 0,
+      "nonmanifoldEdges": 0,
+      "protectedFans": 0,
+      "changedCorners": 4680,
+      "changedSourceNormals": 3120,
+      "minChangedFaceDot": 0.9999040128095947,
+      "duplicateSources": {
+        "byteOffset": 4245188,
+        "count": 0
+      },
+      "normals": {
+        "byteOffset": 4245188,
+        "count": 15306
+      },
+      "index": {
+        "byteOffset": 4306412,
+        "count": 9324
+      }
+    },
+    {
+      "name": "5_KB_SPOR_ZEMIN",
+      "sourceHash": "ad120014",
+      "sourceVertices": 5754,
+      "sourceIndexCount": 11460,
+      "vertices": 5754,
+      "sideTriangles": 1918,
+      "smoothEdges": 1916,
+      "hardEdges": 2,
+      "nonmanifoldEdges": 0,
+      "protectedFans": 0,
+      "changedCorners": 5742,
+      "changedSourceNormals": 3828,
+      "minChangedFaceDot": 0.9861592054367065,
+      "duplicateSources": {
+        "byteOffset": 4343708,
+        "count": 0
+      },
+      "normals": {
+        "byteOffset": 4343708,
+        "count": 17262
+      },
+      "index": {
+        "byteOffset": 4412756,
+        "count": 11460
+      }
+    },
+    {
+      "name": "7_KB_SPOR_CIM_TASIYICI",
+      "sourceHash": "5a608cfc",
+      "sourceVertices": 11712,
+      "sourceIndexCount": 23400,
+      "vertices": 11712,
+      "sideTriangles": 3904,
+      "smoothEdges": 3900,
+      "hardEdges": 4,
+      "nonmanifoldEdges": 0,
+      "protectedFans": 0,
+      "changedCorners": 11703,
+      "changedSourceNormals": 7802,
+      "minChangedFaceDot": 0.9585545063018799,
+      "duplicateSources": {
+        "byteOffset": 4458596,
+        "count": 0
+      },
+      "normals": {
+        "byteOffset": 4458596,
+        "count": 35136
+      },
+      "index": {
+        "byteOffset": 4599140,
+        "count": 23400
+      }
+    },
+    {
+      "name": "3_KB_SPOR_CIMEN",
+      "sourceHash": "44cbbe09",
+      "sourceVertices": 3132,
+      "sourceIndexCount": 6240,
+      "vertices": 3132,
+      "sideTriangles": 1044,
+      "smoothEdges": 1042,
+      "hardEdges": 2,
+      "nonmanifoldEdges": 0,
+      "protectedFans": 0,
+      "changedCorners": 3123,
+      "changedSourceNormals": 2082,
+      "minChangedFaceDot": 0.999923581963276,
+      "duplicateSources": {
+        "byteOffset": 4692740,
+        "count": 0
+      },
+      "normals": {
+        "byteOffset": 4692740,
+        "count": 9396
+      },
+      "index": {
+        "byteOffset": 4730324,
+        "count": 6240
+      }
+    },
+    {
+      "name": "8_KB_ATLETIZM_ZEMIN",
+      "sourceHash": "ea9b5b61",
+      "sourceVertices": 3096,
+      "sourceIndexCount": 6192,
+      "vertices": 3096,
+      "sideTriangles": 1032,
+      "smoothEdges": 1032,
+      "hardEdges": 0,
+      "nonmanifoldEdges": 0,
+      "protectedFans": 0,
+      "changedCorners": 3096,
+      "changedSourceNormals": 2064,
+      "minChangedFaceDot": 0.9999242053026638,
+      "duplicateSources": {
+        "byteOffset": 4755284,
+        "count": 0
+      },
+      "normals": {
+        "byteOffset": 4755284,
+        "count": 9288
+      },
+      "index": {
+        "byteOffset": 4792436,
+        "count": 6192
+      }
+    },
+    {
+      "name": "8_KB_BEYZBOL_KIL_ZEMIN",
+      "sourceHash": "a7adf6ef",
+      "sourceVertices": 804,
+      "sourceIndexCount": 1596,
+      "vertices": 804,
+      "sideTriangles": 268,
+      "smoothEdges": 266,
+      "hardEdges": 2,
+      "nonmanifoldEdges": 0,
+      "protectedFans": 0,
+      "changedCorners": 795,
+      "changedSourceNormals": 530,
+      "minChangedFaceDot": 0.9999236155723803,
+      "duplicateSources": {
+        "byteOffset": 4817204,
+        "count": 0
+      },
+      "normals": {
+        "byteOffset": 4817204,
+        "count": 2412
+      },
+      "index": {
+        "byteOffset": 4826852,
+        "count": 1596
+      }
+    },
+    {
+      "name": "4_DOGU_SAHIL_UST_TOPRAK",
+      "sourceHash": "ff07a9b4",
+      "sourceVertices": 692,
+      "sourceIndexCount": 1188,
+      "vertices": 692,
+      "sideTriangles": 200,
+      "smoothEdges": 198,
+      "hardEdges": 2,
+      "nonmanifoldEdges": 0,
+      "protectedFans": 0,
+      "changedCorners": 582,
+      "changedSourceNormals": 478,
+      "minChangedFaceDot": 0.9163463711738586,
+      "duplicateSources": {
+        "byteOffset": 4833236,
+        "count": 0
+      },
+      "normals": {
+        "byteOffset": 4833236,
+        "count": 2076
+      },
+      "index": {
+        "byteOffset": 4841540,
+        "count": 1188
+      }
+    },
+    {
+      "name": "3_DOGU_SAHIL_UST_CIMEN",
+      "sourceHash": "e343f1a3",
+      "sourceVertices": 312,
+      "sourceIndexCount": 612,
+      "vertices": 312,
+      "sideTriangles": 104,
+      "smoothEdges": 102,
+      "hardEdges": 2,
+      "nonmanifoldEdges": 0,
+      "protectedFans": 0,
+      "changedCorners": 306,
+      "changedSourceNormals": 204,
+      "minChangedFaceDot": 0.9225909958468295,
+      "duplicateSources": {
+        "byteOffset": 4846292,
+        "count": 0
+      },
+      "normals": {
+        "byteOffset": 4846292,
+        "count": 936
+      },
+      "index": {
+        "byteOffset": 4850036,
+        "count": 612
+      }
+    },
+    {
+      "name": "67D_SKATEPARK_BASE",
+      "sourceHash": "6582f232",
+      "sourceVertices": 2020,
+      "sourceIndexCount": 4422,
+      "vertices": 2020,
+      "sideTriangles": 737,
+      "smoothEdges": 737,
+      "hardEdges": 0,
+      "nonmanifoldEdges": 0,
+      "protectedFans": 0,
+      "changedCorners": 2172,
+      "changedSourceNormals": 1266,
+      "minChangedFaceDot": 0.9981970377952412,
+      "duplicateSources": {
+        "byteOffset": 4852484,
+        "count": 0
+      },
+      "normals": {
+        "byteOffset": 4852484,
+        "count": 6060
+      },
+      "index": {
+        "byteOffset": 4876724,
+        "count": 4422
+      }
+    },
+    {
+      "name": "67D_SKATEPARK_INNER_OUTER_SURFACE",
+      "sourceHash": "e501dc50",
+      "sourceVertices": 13315,
+      "sourceIndexCount": 76488,
+      "vertices": 13881,
+      "sideTriangles": 1112,
+      "smoothEdges": 1107,
+      "hardEdges": 5,
+      "nonmanifoldEdges": 0,
+      "protectedFans": 0,
+      "changedCorners": 3273,
+      "changedSourceNormals": 535,
+      "minChangedFaceDot": 0.9610444749873852,
+      "duplicateSources": {
+        "byteOffset": 4894412,
+        "count": 566
+      },
+      "normals": {
+        "byteOffset": 4896676,
+        "count": 41643
+      },
+      "index": {
+        "byteOffset": 5063248,
+        "count": 76488
+      }
+    },
+    {
+      "name": "67D_SKATEPARK_LOWER_C_SURFACE",
+      "sourceHash": "787a983d",
+      "sourceVertices": 3790,
+      "sourceIndexCount": 21588,
+      "vertices": 3988,
+      "sideTriangles": 380,
+      "smoothEdges": 376,
+      "hardEdges": 4,
+      "nonmanifoldEdges": 0,
+      "protectedFans": 0,
+      "changedCorners": 1056,
+      "changedSourceNormals": 162,
+      "minChangedFaceDot": 0.9894125270703062,
+      "duplicateSources": {
+        "byteOffset": 5369200,
+        "count": 198
+      },
+      "normals": {
+        "byteOffset": 5369992,
+        "count": 11964
+      },
+      "index": {
+        "byteOffset": 5417848,
+        "count": 21588
+      }
+    },
+    {
+      "name": "67D_SKATEPARK_QUARTER_C_SURFACE",
+      "sourceHash": "a82ed984",
+      "sourceVertices": 2746,
+      "sourceIndexCount": 15288,
+      "vertices": 2950,
+      "sideTriangles": 392,
+      "smoothEdges": 388,
+      "hardEdges": 4,
+      "nonmanifoldEdges": 0,
+      "protectedFans": 0,
+      "changedCorners": 780,
+      "changedSourceNormals": 64,
+      "minChangedFaceDot": 0.9996288562488189,
+      "duplicateSources": {
+        "byteOffset": 5504200,
+        "count": 204
+      },
+      "normals": {
+        "byteOffset": 5505016,
+        "count": 8850
+      },
+      "index": {
+        "byteOffset": 5540416,
+        "count": 15288
+      }
+    },
+    {
+      "name": "67D_SKATEPARK_LOWER_RETURN_SURFACE",
+      "sourceHash": "0b320041",
+      "sourceVertices": 2290,
+      "sourceIndexCount": 12624,
+      "vertices": 2482,
+      "sideTriangles": 368,
+      "smoothEdges": 364,
+      "hardEdges": 4,
+      "nonmanifoldEdges": 0,
+      "protectedFans": 0,
+      "changedCorners": 756,
+      "changedSourceNormals": 68,
+      "minChangedFaceDot": 0.9996359383885365,
+      "duplicateSources": {
+        "byteOffset": 5601568,
+        "count": 192
+      },
+      "normals": {
+        "byteOffset": 5602336,
+        "count": 7446
+      },
+      "index": {
+        "byteOffset": 5632120,
+        "count": 12624
+      }
+    }
+  ]
+}

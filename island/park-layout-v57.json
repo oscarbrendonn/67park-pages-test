@@ -1,0 +1,907 @@
+{
+  "version": 57,
+  "scope": "Four facing park animals; approved foliage and other placements unchanged",
+  "animalDisplayRevision": 1,
+  "props": [
+    {
+      "id": "platform",
+      "asset": "sculpture-plinth-warm-blush",
+      "x": 140.705,
+      "z": 47.002,
+      "scale": 1,
+      "yaw": 0,
+      "zone": "plinth",
+      "footprint": [
+        26.96,
+        26.96
+      ]
+    },
+    {
+      "id": "bull-north",
+      "asset": "toy-bull-orange",
+      "x": 135.505,
+      "z": 43.202,
+      "scale": 1.95,
+      "yaw": 0,
+      "zone": "sculpture",
+      "footprint": [
+        3.4,
+        1.9
+      ]
+    },
+    {
+      "id": "bull-west",
+      "asset": "toy-bull-orange",
+      "x": 135.505,
+      "z": 50.802,
+      "scale": 1.95,
+      "yaw": 0,
+      "zone": "sculpture",
+      "footprint": [
+        3.4,
+        1.9
+      ]
+    },
+    {
+      "id": "elephant-yellow",
+      "asset": "toy-elephant-yellow",
+      "x": 146.34,
+      "z": 43.202,
+      "scale": 2.04,
+      "yaw": 3.141592653589793,
+      "zone": "sculpture",
+      "footprint": [
+        1.96,
+        0.867
+      ]
+    },
+    {
+      "id": "elephant-pink",
+      "asset": "toy-elephant-pink",
+      "x": 146.34,
+      "z": 50.802,
+      "scale": 2.04,
+      "yaw": 3.141592653589793,
+      "zone": "sculpture",
+      "footprint": [
+        1.96,
+        0.867
+      ]
+    },
+    {
+      "id": "picnic-a",
+      "asset": "picnic-table",
+      "x": 165.8,
+      "z": 40.6,
+      "scale": 1.7,
+      "yaw": -0.4,
+      "zone": "grass",
+      "footprint": [
+        2.65,
+        2.303
+      ]
+    },
+    {
+      "id": "picnic-b",
+      "asset": "picnic-table",
+      "x": 173.2,
+      "z": 40.8,
+      "scale": 1.7,
+      "yaw": 0.5,
+      "zone": "grass",
+      "footprint": [
+        2.65,
+        2.303
+      ]
+    },
+    {
+      "id": "picnic-c",
+      "asset": "picnic-table",
+      "x": 173.6,
+      "z": 50.1,
+      "scale": 1.7,
+      "yaw": 0.25,
+      "zone": "grass",
+      "footprint": [
+        2.65,
+        2.303
+      ]
+    },
+    {
+      "id": "bowl-seat",
+      "asset": "bench",
+      "x": 154.9,
+      "z": 74.2,
+      "scale": 1.85,
+      "yaw": 0.25,
+      "zone": "grass",
+      "footprint": [
+        2.65,
+        0.775
+      ]
+    },
+    {
+      "id": "west-seat",
+      "asset": "bench",
+      "x": 123.6,
+      "z": 99.7,
+      "scale": 1.85,
+      "yaw": 0,
+      "zone": "grass",
+      "footprint": [
+        2.65,
+        0.775
+      ]
+    },
+    {
+      "id": "east-seat",
+      "asset": "bench",
+      "x": 214.3,
+      "z": 60.0,
+      "scale": 1.85,
+      "yaw": 1.5707963267948966,
+      "zone": "grass",
+      "footprint": [
+        2.65,
+        0.775
+      ]
+    },
+    {
+      "id": "west-bin",
+      "asset": "trash-bin",
+      "x": 124.7,
+      "z": 104.1,
+      "scale": 1.1,
+      "yaw": 0,
+      "zone": "grass",
+      "footprint": [
+        1.03,
+        1.03
+      ]
+    },
+    {
+      "id": "picnic-bin",
+      "asset": "trash-bin",
+      "x": 177.2,
+      "z": 52.8,
+      "scale": 1.1,
+      "yaw": 0,
+      "zone": "grass",
+      "footprint": [
+        1.03,
+        1.03
+      ]
+    },
+    {
+      "id": "bowl-lamp",
+      "asset": "globe-lamp",
+      "x": 161.2,
+      "z": 74.5,
+      "scale": 1.5,
+      "yaw": 0,
+      "zone": "grass",
+      "footprint": [
+        0.63,
+        0.63
+      ]
+    },
+    {
+      "id": "entry-lamp",
+      "asset": "globe-lamp",
+      "x": 177.05882,
+      "z": 112.10202,
+      "scale": 1.5,
+      "yaw": 0,
+      "zone": "grass",
+      "footprint": [
+        0.63,
+        0.63
+      ]
+    },
+    {
+      "id": "east-lamp",
+      "asset": "globe-lamp",
+      "x": 210.3,
+      "z": 83.4,
+      "scale": 1.5,
+      "yaw": 0,
+      "zone": "grass",
+      "footprint": [
+        0.63,
+        0.63
+      ]
+    },
+    {
+      "id": "north-lamp",
+      "asset": "globe-lamp",
+      "x": 190.5,
+      "z": 37.5,
+      "scale": 1.5,
+      "yaw": 0,
+      "zone": "grass",
+      "footprint": [
+        0.63,
+        0.63
+      ]
+    },
+    {
+      "id": "tan-beam",
+      "asset": "balance-beam-tan",
+      "x": 164.7,
+      "z": 71.7,
+      "scale": 1.55,
+      "yaw": -0.84,
+      "zone": "grass",
+      "footprint": [
+        5.4,
+        0.58
+      ]
+    },
+    {
+      "id": "coral-beam",
+      "asset": "balance-beam-coral",
+      "x": 166.59741,
+      "z": 75.89645,
+      "scale": 1.35,
+      "yaw": -0.84,
+      "zone": "grass",
+      "footprint": [
+        5.4,
+        0.58
+      ]
+    },
+    {
+      "id": "step-1",
+      "asset": "stepping-cylinder",
+      "x": 159.9,
+      "z": 67.8,
+      "scale": 0.8,
+      "yaw": 0,
+      "zone": "grass",
+      "footprint": [
+        0.95,
+        0.95
+      ]
+    },
+    {
+      "id": "step-2",
+      "asset": "stepping-cylinder",
+      "x": 164.5,
+      "z": 63.6,
+      "scale": 1,
+      "yaw": 0,
+      "zone": "grass",
+      "footprint": [
+        0.95,
+        0.95
+      ]
+    },
+    {
+      "id": "step-3",
+      "asset": "stepping-cylinder",
+      "x": 170.7,
+      "z": 60.1,
+      "scale": 0.8,
+      "yaw": 0,
+      "zone": "grass",
+      "footprint": [
+        0.95,
+        0.95
+      ]
+    },
+    {
+      "id": "step-4",
+      "asset": "stepping-cylinder",
+      "x": 159.5,
+      "z": 78,
+      "scale": 1,
+      "yaw": 0,
+      "zone": "grass",
+      "footprint": [
+        0.95,
+        0.95
+      ]
+    },
+    {
+      "id": "step-5",
+      "asset": "stepping-cylinder",
+      "x": 173.7,
+      "z": 72.0,
+      "scale": 0.7,
+      "yaw": 0,
+      "zone": "grass",
+      "footprint": [
+        0.95,
+        0.95
+      ]
+    },
+    {
+      "id": "step-6",
+      "asset": "stepping-cylinder",
+      "x": 211,
+      "z": 82,
+      "scale": 0.85,
+      "yaw": 0,
+      "zone": "grass",
+      "footprint": [
+        0.95,
+        0.95
+      ]
+    },
+    {
+      "id": "step-7",
+      "asset": "stepping-cylinder",
+      "x": 211.5,
+      "z": 95,
+      "scale": 0.85,
+      "yaw": 0,
+      "zone": "grass",
+      "footprint": [
+        0.95,
+        0.95
+      ]
+    },
+    {
+      "id": "kennel-coral",
+      "asset": "kennel-coral",
+      "x": 215.1,
+      "z": 73.8,
+      "scale": 2.1,
+      "yaw": -0.6,
+      "zone": "grass",
+      "footprint": [
+        2,
+        2
+      ]
+    },
+    {
+      "id": "kennel-blue",
+      "asset": "kennel-blue",
+      "x": 216.6,
+      "z": 83.4,
+      "scale": 2.1,
+      "yaw": -0.6,
+      "zone": "grass",
+      "footprint": [
+        2,
+        2
+      ]
+    },
+    {
+      "id": "kennel-yellow",
+      "asset": "kennel-yellow",
+      "x": 214.7,
+      "z": 94.0,
+      "scale": 2.1,
+      "yaw": -0.6,
+      "zone": "grass",
+      "footprint": [
+        2,
+        2
+      ]
+    },
+    {
+      "id": "upper-bridge",
+      "asset": "bridge-upper",
+      "x": 189.59199999999998,
+      "z": 69.725,
+      "scale": 1,
+      "yaw": -0.5444543445465344,
+      "zone": "bridge",
+      "footprint": [
+        22.27,
+        5.922
+      ],
+      "endpoints": [
+        [
+          180.066,
+          63.957
+        ],
+        [
+          199.118,
+          75.493
+        ]
+      ],
+      "span": 22.27,
+      "width": 5.922,
+      "rise": 0.8
+    },
+    {
+      "id": "lower-bridge",
+      "asset": "bridge-lower",
+      "x": 172.0685,
+      "z": 107.515,
+      "scale": 1,
+      "yaw": -0.0,
+      "zone": "bridge",
+      "footprint": [
+        14.425,
+        4.379
+      ],
+      "endpoints": [
+        [
+          164.856,
+          107.515
+        ],
+        [
+          179.281,
+          107.515
+        ]
+      ],
+      "span": 14.425,
+      "width": 4.379,
+      "rise": 0.55
+    }
+  ],
+  "plants": [
+    {
+      "id": "tree-1",
+      "asset": "tree",
+      "x": 121.7,
+      "z": 31.7,
+      "scale": 1.7,
+      "yaw": 0.0,
+      "zone": "plant"
+    },
+    {
+      "id": "tree-2",
+      "asset": "tree",
+      "x": 126.9,
+      "z": 29.3,
+      "scale": 1.4,
+      "yaw": 1.618,
+      "zone": "plant"
+    },
+    {
+      "id": "tree-3",
+      "asset": "tree",
+      "x": 171.5,
+      "z": 28.4,
+      "scale": 1.7,
+      "yaw": 3.236,
+      "zone": "plant"
+    },
+    {
+      "id": "tree-4",
+      "asset": "tree",
+      "x": 181.2,
+      "z": 28.7,
+      "scale": 1.45,
+      "yaw": 4.854,
+      "zone": "plant"
+    },
+    {
+      "id": "tree-5",
+      "asset": "tree",
+      "x": 120.7,
+      "z": 70.5,
+      "scale": 1.8,
+      "yaw": 0.18900000000000006,
+      "zone": "plant"
+    },
+    {
+      "id": "tree-6",
+      "asset": "tree",
+      "x": 120.9,
+      "z": 93.1,
+      "scale": 1.9,
+      "yaw": 1.8069999999999995,
+      "zone": "plant"
+    },
+    {
+      "id": "tree-7",
+      "asset": "tree",
+      "x": 121.8,
+      "z": 108.9,
+      "scale": 1.8,
+      "yaw": 3.425,
+      "zone": "plant"
+    },
+    {
+      "id": "tree-8",
+      "asset": "tree",
+      "x": 130.1,
+      "z": 108.8,
+      "scale": 1.6,
+      "yaw": 5.043,
+      "zone": "plant"
+    },
+    {
+      "id": "tree-9",
+      "asset": "tree",
+      "x": 158.9,
+      "z": 57.3,
+      "scale": 1.6,
+      "yaw": 0.3780000000000001,
+      "zone": "plant"
+    },
+    {
+      "id": "tree-10",
+      "asset": "tree",
+      "x": 198,
+      "z": 30,
+      "scale": 1.65,
+      "yaw": 1.9960000000000004,
+      "zone": "plant"
+    },
+    {
+      "id": "tree-11",
+      "asset": "tree",
+      "x": 207,
+      "z": 30,
+      "scale": 1.8099999999999998,
+      "yaw": 3.613999999999999,
+      "zone": "plant"
+    },
+    {
+      "id": "tree-12",
+      "asset": "tree",
+      "x": 218,
+      "z": 30,
+      "scale": 1.97,
+      "yaw": 5.232000000000001,
+      "zone": "plant"
+    },
+    {
+      "id": "tree-13",
+      "asset": "tree",
+      "x": 229,
+      "z": 31,
+      "scale": 2.13,
+      "yaw": 0.5669999999999993,
+      "zone": "plant"
+    },
+    {
+      "id": "tree-14",
+      "asset": "tree",
+      "x": 240,
+      "z": 33,
+      "scale": 1.65,
+      "yaw": 2.1850000000000014,
+      "zone": "plant"
+    },
+    {
+      "id": "tree-15",
+      "asset": "tree",
+      "x": 248,
+      "z": 39,
+      "scale": 1.8099999999999998,
+      "yaw": 3.803,
+      "zone": "plant"
+    },
+    {
+      "id": "tree-16",
+      "asset": "tree",
+      "x": 202,
+      "z": 39,
+      "scale": 1.97,
+      "yaw": 5.421000000000002,
+      "zone": "plant"
+    },
+    {
+      "id": "tree-17",
+      "asset": "tree",
+      "x": 212,
+      "z": 39,
+      "scale": 2.13,
+      "yaw": 0.7560000000000002,
+      "zone": "plant"
+    },
+    {
+      "id": "tree-18",
+      "asset": "tree",
+      "x": 223,
+      "z": 40,
+      "scale": 1.65,
+      "yaw": 2.3739999999999988,
+      "zone": "plant"
+    },
+    {
+      "id": "tree-19",
+      "asset": "tree",
+      "x": 234,
+      "z": 42,
+      "scale": 1.8099999999999998,
+      "yaw": 3.992000000000001,
+      "zone": "plant"
+    },
+    {
+      "id": "tree-20",
+      "asset": "tree",
+      "x": 244,
+      "z": 47,
+      "scale": 1.97,
+      "yaw": 5.609999999999999,
+      "zone": "plant"
+    },
+    {
+      "id": "tree-21",
+      "asset": "tree",
+      "x": 211,
+      "z": 48,
+      "scale": 2.13,
+      "yaw": 0.9449999999999976,
+      "zone": "plant"
+    },
+    {
+      "id": "tree-22",
+      "asset": "tree",
+      "x": 222,
+      "z": 49,
+      "scale": 1.65,
+      "yaw": 2.5629999999999997,
+      "zone": "plant"
+    },
+    {
+      "id": "tree-23",
+      "asset": "tree",
+      "x": 235,
+      "z": 51,
+      "scale": 1.8099999999999998,
+      "yaw": 4.181000000000002,
+      "zone": "plant"
+    },
+    {
+      "id": "tree-24",
+      "asset": "tree",
+      "x": 249,
+      "z": 57,
+      "scale": 1.97,
+      "yaw": 5.799000000000004,
+      "zone": "plant"
+    },
+    {
+      "id": "tree-25",
+      "asset": "tree",
+      "x": 229,
+      "z": 60,
+      "scale": 2.13,
+      "yaw": 1.1339999999999986,
+      "zone": "plant"
+    },
+    {
+      "id": "tree-26",
+      "asset": "tree",
+      "x": 241,
+      "z": 65,
+      "scale": 1.65,
+      "yaw": 2.7520000000000007,
+      "zone": "plant"
+    },
+    {
+      "id": "tree-27",
+      "asset": "tree",
+      "x": 232,
+      "z": 71,
+      "scale": 1.8099999999999998,
+      "yaw": 4.370000000000003,
+      "zone": "plant"
+    },
+    {
+      "id": "tree-28",
+      "asset": "tree",
+      "x": 248,
+      "z": 74,
+      "scale": 1.97,
+      "yaw": 5.987999999999998,
+      "zone": "plant"
+    },
+    {
+      "id": "tree-29",
+      "asset": "tree",
+      "x": 234,
+      "z": 83,
+      "scale": 2.13,
+      "yaw": 1.3229999999999995,
+      "zone": "plant"
+    },
+    {
+      "id": "tree-30",
+      "asset": "tree",
+      "x": 247,
+      "z": 86,
+      "scale": 1.65,
+      "yaw": 2.9410000000000016,
+      "zone": "plant"
+    },
+    {
+      "id": "tree-31",
+      "asset": "tree",
+      "x": 232,
+      "z": 92,
+      "scale": 1.8099999999999998,
+      "yaw": 4.559000000000004,
+      "zone": "plant"
+    },
+    {
+      "id": "tree-32",
+      "asset": "tree",
+      "x": 247,
+      "z": 97,
+      "scale": 1.97,
+      "yaw": 6.176999999999999,
+      "zone": "plant"
+    },
+    {
+      "id": "tree-33",
+      "asset": "tree",
+      "x": 223,
+      "z": 102,
+      "scale": 2.13,
+      "yaw": 1.5120000000000005,
+      "zone": "plant"
+    },
+    {
+      "id": "tree-34",
+      "asset": "tree",
+      "x": 234,
+      "z": 104,
+      "scale": 1.65,
+      "yaw": 3.1300000000000026,
+      "zone": "plant"
+    },
+    {
+      "id": "tree-35",
+      "asset": "tree",
+      "x": 244,
+      "z": 106,
+      "scale": 1.8099999999999998,
+      "yaw": 4.7479999999999976,
+      "zone": "plant"
+    },
+    {
+      "id": "tree-36",
+      "asset": "tree",
+      "x": 215,
+      "z": 109,
+      "scale": 1.97,
+      "yaw": 0.0829999999999993,
+      "zone": "plant"
+    },
+    {
+      "id": "tree-37",
+      "asset": "tree",
+      "x": 225,
+      "z": 110,
+      "scale": 2.13,
+      "yaw": 1.7010000000000014,
+      "zone": "plant"
+    },
+    {
+      "id": "shrub-1",
+      "asset": "shrub",
+      "x": 132.8,
+      "z": 109.4,
+      "scale": 1.5,
+      "yaw": 0.0,
+      "zone": "plant"
+    },
+    {
+      "id": "shrub-2",
+      "asset": "shrub",
+      "x": 118.9,
+      "z": 108.3,
+      "scale": 1.3,
+      "yaw": 0.81,
+      "zone": "plant"
+    },
+    {
+      "id": "shrub-3",
+      "asset": "shrub",
+      "x": 124.87867965644035,
+      "z": 30.07867965644036,
+      "scale": 1.2,
+      "yaw": 1.62,
+      "zone": "plant"
+    },
+    {
+      "id": "shrub-4",
+      "asset": "shrub",
+      "x": 190,
+      "z": 28.4,
+      "scale": 1.4,
+      "yaw": 2.43,
+      "zone": "plant"
+    },
+    {
+      "id": "shrub-5",
+      "asset": "shrub",
+      "x": 197.2,
+      "z": 41.3,
+      "scale": 1.25,
+      "yaw": 3.24,
+      "zone": "plant"
+    },
+    {
+      "id": "shrub-6",
+      "asset": "shrub",
+      "x": 210.5,
+      "z": 53.5,
+      "scale": 1.3,
+      "yaw": 4.050000000000001,
+      "zone": "plant"
+    },
+    {
+      "id": "shrub-7",
+      "asset": "shrub",
+      "x": 222.5,
+      "z": 98.8,
+      "scale": 1.4,
+      "yaw": 4.86,
+      "zone": "plant"
+    },
+    {
+      "id": "shrub-8",
+      "asset": "shrub",
+      "x": 247.50192378864668,
+      "z": 98.4,
+      "scale": 1.4,
+      "yaw": 5.67,
+      "zone": "plant"
+    },
+    {
+      "id": "shrub-9",
+      "asset": "shrub",
+      "x": 233,
+      "z": 109,
+      "scale": 1.6,
+      "yaw": 6.48,
+      "zone": "plant"
+    },
+    {
+      "id": "shrub-10",
+      "asset": "shrub",
+      "x": 119.5,
+      "z": 89.0,
+      "scale": 1.0,
+      "yaw": 7.290000000000001,
+      "zone": "plant"
+    }
+  ],
+  "adjustments": [
+    [
+      "bowl-seat",
+      [
+        154.4,
+        74.2
+      ],
+      [
+        154.9,
+        74.2
+      ]
+    ],
+    [
+      "tree-9",
+      [
+        158.4,
+        57.3
+      ],
+      [
+        158.9,
+        57.3
+      ]
+    ],
+    [
+      "shrub-3",
+      [
+        127.0,
+        32.2
+      ],
+      [
+        124.87867965644035,
+        30.07867965644036
+      ]
+    ],
+    [
+      "shrub-8",
+      [
+        250.1,
+        96.9
+      ],
+      [
+        247.50192378864668,
+        98.4
+      ]
+    ]
+  ]
+}

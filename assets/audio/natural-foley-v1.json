@@ -1,0 +1,33 @@
+{
+  "sampleRate": 32000,
+  "clips": {
+    "horn": {
+      "offset": 0,
+      "duration": 0.17134375,
+      "loopStart": 0.077,
+      "loopEnd": 0.17134375
+    },
+    "takeoff": {
+      "offset": 0.19634375,
+      "duration": 0.131
+    },
+    "landing": {
+      "offset": 0.35234375,
+      "duration": 0.28
+    },
+    "ollie": {
+      "offset": 0.65734375,
+      "duration": 0.19
+    },
+    "flick": {
+      "offset": 0.87234375,
+      "duration": 0.21
+    },
+    "skateLanding": {
+      "offset": 1.10734375,
+      "duration": 0.387
+    }
+  },
+  "bytes": 97282,
+  "sha256": "a0e63506a6e6ec52002ebfa9a8150adac664307cc9a0252f9fe0ad006ecff674"
+}

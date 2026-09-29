@@ -1,0 +1,2342 @@
+[
+  {
+    "id": "friendsie_1:1",
+    "slot": "body",
+    "file": "models/items/friendsie_1/1.glb",
+    "bytes": 96112,
+    "primitives": [
+      {
+        "vertices": 1800,
+        "triangles": 2928
+      }
+    ]
+  },
+  {
+    "id": "friendsie_1:2",
+    "slot": "held",
+    "file": "models/items/friendsie_1/2.glb",
+    "bytes": 85496,
+    "primitives": [
+      {
+        "vertices": 1614,
+        "triangles": 2640
+      }
+    ]
+  },
+  {
+    "id": "friendsie_1:3",
+    "slot": "kicks",
+    "file": "models/items/friendsie_1/3.glb",
+    "bytes": 47372,
+    "primitives": [
+      {
+        "vertices": 659,
+        "triangles": 1126
+      }
+    ]
+  },
+  {
+    "id": "friendsie_100:1",
+    "slot": "sprout",
+    "file": "models/items/friendsie_100/1.glb",
+    "bytes": 78372,
+    "primitives": [
+      {
+        "vertices": 1084,
+        "triangles": 1884
+      }
+    ]
+  },
+  {
+    "id": "friendsie_100:2",
+    "slot": "body",
+    "file": "models/items/friendsie_100/2.glb",
+    "bytes": 112340,
+    "primitives": [
+      {
+        "vertices": 1800,
+        "triangles": 2928
+      }
+    ]
+  },
+  {
+    "id": "friendsie_100:3",
+    "slot": "held",
+    "file": "models/items/friendsie_100/3.glb",
+    "bytes": 97744,
+    "primitives": [
+      {
+        "vertices": 1514,
+        "triangles": 2530
+      }
+    ]
+  },
+  {
+    "id": "friendsie_100:4",
+    "slot": "back",
+    "file": "models/items/friendsie_100/4.glb",
+    "bytes": 132308,
+    "primitives": [
+      {
+        "vertices": 2385,
+        "triangles": 4270
+      }
+    ]
+  },
+  {
+    "id": "friendsie_100:5",
+    "slot": "kicks",
+    "file": "models/items/friendsie_100/5.glb",
+    "bytes": 148752,
+    "primitives": [
+      {
+        "vertices": 2992,
+        "triangles": 5534
+      }
+    ]
+  },
+  {
+    "id": "friendsie_1000:1",
+    "slot": "sprout",
+    "file": "models/items/friendsie_1000/1.glb",
+    "bytes": 38032,
+    "primitives": [
+      {
+        "vertices": 239,
+        "triangles": 412
+      }
+    ]
+  },
+  {
+    "id": "friendsie_1000:2",
+    "slot": "body",
+    "file": "models/items/friendsie_1000/2.glb",
+    "bytes": 92872,
+    "primitives": [
+      {
+        "vertices": 1796,
+        "triangles": 2922
+      }
+    ]
+  },
+  {
+    "id": "friendsie_1000:3",
+    "slot": "back",
+    "file": "models/items/friendsie_1000/3.glb",
+    "bytes": 70076,
+    "primitives": [
+      {
+        "vertices": 614,
+        "triangles": 960
+      }
+    ]
+  },
+  {
+    "id": "friendsie_1000:4",
+    "slot": "kicks",
+    "file": "models/items/friendsie_1000/4.glb",
+    "bytes": 61128,
+    "primitives": [
+      {
+        "vertices": 860,
+        "triangles": 1508
+      }
+    ]
+  },
+  {
+    "id": "friendsie_1111:1",
+    "slot": "sprout",
+    "file": "models/items/friendsie_1111/1.glb",
+    "bytes": 65680,
+    "primitives": [
+      {
+        "vertices": 956,
+        "triangles": 1690
+      }
+    ]
+  },
+  {
+    "id": "friendsie_1111:2",
+    "slot": "body",
+    "file": "models/items/friendsie_1111/2.glb",
+    "bytes": 100280,
+    "primitives": [
+      {
+        "vertices": 1796,
+        "triangles": 2922
+      }
+    ]
+  },
+  {
+    "id": "friendsie_1111:3",
+    "slot": "held",
+    "file": "models/items/friendsie_1111/3.glb",
+    "bytes": 94352,
+    "primitives": [
+      {
+        "vertices": 1614,
+        "triangles": 2640
+      }
+    ]
+  },
+  {
+    "id": "friendsie_1111:4",
+    "slot": "back",
+    "file": "models/items/friendsie_1111/4.glb",
+    "bytes": 150160,
+    "primitives": [
+      {
+        "vertices": 3009,
+        "triangles": 5408
+      }
+    ]
+  },
+  {
+    "id": "friendsie_1111:5",
+    "slot": "kicks",
+    "file": "models/items/friendsie_1111/5.glb",
+    "bytes": 103700,
+    "primitives": [
+      {
+        "vertices": 1853,
+        "triangles": 3386
+      }
+    ]
+  },
+  {
+    "id": "friendsie_12:1",
+    "slot": "body",
+    "file": "models/items/friendsie_12/1.glb",
+    "bytes": 98628,
+    "primitives": [
+      {
+        "vertices": 1796,
+        "triangles": 2922
+      }
+    ]
+  },
+  {
+    "id": "friendsie_12:2",
+    "slot": "held",
+    "file": "models/items/friendsie_12/2.glb",
+    "bytes": 76816,
+    "primitives": [
+      {
+        "vertices": 1278,
+        "triangles": 1902
+      }
+    ]
+  },
+  {
+    "id": "friendsie_12:3",
+    "slot": "back",
+    "file": "models/items/friendsie_12/3.glb",
+    "bytes": 85012,
+    "primitives": [
+      {
+        "vertices": 1193,
+        "triangles": 2008
+      }
+    ]
+  },
+  {
+    "id": "friendsie_12:4",
+    "slot": "kicks",
+    "file": "models/items/friendsie_12/4.glb",
+    "bytes": 54200,
+    "primitives": [
+      {
+        "vertices": 659,
+        "triangles": 1126
+      }
+    ]
+  },
+  {
+    "id": "friendsie_123:1",
+    "slot": "sprout",
+    "file": "models/items/friendsie_123/1.glb",
+    "bytes": 100168,
+    "primitives": [
+      {
+        "vertices": 1743,
+        "triangles": 2988
+      }
+    ]
+  },
+  {
+    "id": "friendsie_123:2",
+    "slot": "body",
+    "file": "models/items/friendsie_123/2.glb",
+    "bytes": 108124,
+    "primitives": [
+      {
+        "vertices": 1800,
+        "triangles": 2928
+      }
+    ]
+  },
+  {
+    "id": "friendsie_123:3",
+    "slot": "held",
+    "file": "models/items/friendsie_123/3.glb",
+    "bytes": 57480,
+    "primitives": [
+      {
+        "vertices": 435,
+        "triangles": 636
+      }
+    ]
+  },
+  {
+    "id": "friendsie_123:4",
+    "slot": "back",
+    "file": "models/items/friendsie_123/4.glb",
+    "bytes": 89200,
+    "primitives": [
+      {
+        "vertices": 1497,
+        "triangles": 2280
+      }
+    ]
+  },
+  {
+    "id": "friendsie_123:5",
+    "slot": "kicks",
+    "file": "models/items/friendsie_123/5.glb",
+    "bytes": 109508,
+    "primitives": [
+      {
+        "vertices": 1648,
+        "triangles": 2624
+      }
+    ]
+  },
+  {
+    "id": "friendsie_200:1",
+    "slot": "sprout",
+    "file": "models/items/friendsie_200/1.glb",
+    "bytes": 61304,
+    "primitives": [
+      {
+        "vertices": 513,
+        "triangles": 860
+      }
+    ]
+  },
+  {
+    "id": "friendsie_200:2",
+    "slot": "body",
+    "file": "models/items/friendsie_200/2.glb",
+    "bytes": 107476,
+    "primitives": [
+      {
+        "vertices": 1796,
+        "triangles": 2922
+      }
+    ]
+  },
+  {
+    "id": "friendsie_200:3",
+    "slot": "held",
+    "file": "models/items/friendsie_200/3.glb",
+    "bytes": 69184,
+    "primitives": [
+      {
+        "vertices": 727,
+        "triangles": 1188
+      }
+    ]
+  },
+  {
+    "id": "friendsie_200:4",
+    "slot": "back",
+    "file": "models/items/friendsie_200/4.glb",
+    "bytes": 60120,
+    "primitives": [
+      {
+        "vertices": 740,
+        "triangles": 1096
+      }
+    ]
+  },
+  {
+    "id": "friendsie_200:5",
+    "slot": "kicks",
+    "file": "models/items/friendsie_200/5.glb",
+    "bytes": 59388,
+    "primitives": [
+      {
+        "vertices": 659,
+        "triangles": 1126
+      }
+    ]
+  },
+  {
+    "id": "friendsie_2000:1",
+    "slot": "sprout",
+    "file": "models/items/friendsie_2000/1.glb",
+    "bytes": 61280,
+    "primitives": [
+      {
+        "vertices": 513,
+        "triangles": 860
+      }
+    ]
+  },
+  {
+    "id": "friendsie_2000:2",
+    "slot": "body",
+    "file": "models/items/friendsie_2000/2.glb",
+    "bytes": 105460,
+    "primitives": [
+      {
+        "vertices": 1796,
+        "triangles": 2922
+      }
+    ]
+  },
+  {
+    "id": "friendsie_2000:3",
+    "slot": "held",
+    "file": "models/items/friendsie_2000/3.glb",
+    "bytes": 49884,
+    "primitives": [
+      {
+        "vertices": 418,
+        "triangles": 734
+      }
+    ]
+  },
+  {
+    "id": "friendsie_2000:4",
+    "slot": "back",
+    "file": "models/items/friendsie_2000/4.glb",
+    "bytes": 155660,
+    "primitives": [
+      {
+        "vertices": 2946,
+        "triangles": 5168
+      }
+    ]
+  },
+  {
+    "id": "friendsie_2000:5",
+    "slot": "kicks",
+    "file": "models/items/friendsie_2000/5.glb",
+    "bytes": 68528,
+    "primitives": [
+      {
+        "vertices": 861,
+        "triangles": 1508
+      }
+    ]
+  },
+  {
+    "id": "friendsie_250:1",
+    "slot": "body",
+    "file": "models/items/friendsie_250/1.glb",
+    "bytes": 90328,
+    "primitives": [
+      {
+        "vertices": 1796,
+        "triangles": 2922
+      }
+    ]
+  },
+  {
+    "id": "friendsie_250:2",
+    "slot": "held",
+    "file": "models/items/friendsie_250/2.glb",
+    "bytes": 57616,
+    "primitives": [
+      {
+        "vertices": 805,
+        "triangles": 1434
+      }
+    ]
+  },
+  {
+    "id": "friendsie_250:3",
+    "slot": "back",
+    "file": "models/items/friendsie_250/3.glb",
+    "bytes": 68960,
+    "primitives": [
+      {
+        "vertices": 715,
+        "triangles": 1132
+      }
+    ]
+  },
+  {
+    "id": "friendsie_250:4",
+    "slot": "kicks",
+    "file": "models/items/friendsie_250/4.glb",
+    "bytes": 122768,
+    "primitives": [
+      {
+        "vertices": 2657,
+        "triangles": 4880
+      }
+    ]
+  },
+  {
+    "id": "friendsie_2500:1",
+    "slot": "body",
+    "file": "models/items/friendsie_2500/1.glb",
+    "bytes": 94072,
+    "primitives": [
+      {
+        "vertices": 1796,
+        "triangles": 2922
+      }
+    ]
+  },
+  {
+    "id": "friendsie_2500:2",
+    "slot": "back",
+    "file": "models/items/friendsie_2500/2.glb",
+    "bytes": 71544,
+    "primitives": [
+      {
+        "vertices": 1258,
+        "triangles": 2022
+      }
+    ]
+  },
+  {
+    "id": "friendsie_2500:3",
+    "slot": "kicks",
+    "file": "models/items/friendsie_2500/3.glb",
+    "bytes": 56272,
+    "primitives": [
+      {
+        "vertices": 860,
+        "triangles": 1508
+      }
+    ]
+  },
+  {
+    "id": "friendsie_333:1",
+    "slot": "body",
+    "file": "models/items/friendsie_333/1.glb",
+    "bytes": 102624,
+    "primitives": [
+      {
+        "vertices": 1796,
+        "triangles": 2922
+      }
+    ]
+  },
+  {
+    "id": "friendsie_333:2",
+    "slot": "held",
+    "file": "models/items/friendsie_333/2.glb",
+    "bytes": 66976,
+    "primitives": [
+      {
+        "vertices": 685,
+        "triangles": 936
+      }
+    ]
+  },
+  {
+    "id": "friendsie_333:3",
+    "slot": "back",
+    "file": "models/items/friendsie_333/3.glb",
+    "bytes": 106976,
+    "primitives": [
+      {
+        "vertices": 1885,
+        "triangles": 3196
+      }
+    ]
+  },
+  {
+    "id": "friendsie_333:4",
+    "slot": "kicks",
+    "file": "models/items/friendsie_333/4.glb",
+    "bytes": 63704,
+    "primitives": [
+      {
+        "vertices": 767,
+        "triangles": 1258
+      }
+    ]
+  },
+  {
+    "id": "friendsie_3333:1",
+    "slot": "sprout",
+    "file": "models/items/friendsie_3333/1.glb",
+    "bytes": 99412,
+    "primitives": [
+      {
+        "vertices": 1729,
+        "triangles": 2966
+      }
+    ]
+  },
+  {
+    "id": "friendsie_3333:2",
+    "slot": "body",
+    "file": "models/items/friendsie_3333/2.glb",
+    "bytes": 102240,
+    "primitives": [
+      {
+        "vertices": 1796,
+        "triangles": 2922
+      }
+    ]
+  },
+  {
+    "id": "friendsie_3333:3",
+    "slot": "held",
+    "file": "models/items/friendsie_3333/3.glb",
+    "bytes": 80468,
+    "primitives": [
+      {
+        "vertices": 1201,
+        "triangles": 2118
+      }
+    ]
+  },
+  {
+    "id": "friendsie_3333:4",
+    "slot": "back",
+    "file": "models/items/friendsie_3333/4.glb",
+    "bytes": 81188,
+    "primitives": [
+      {
+        "vertices": 1258,
+        "triangles": 2022
+      }
+    ]
+  },
+  {
+    "id": "friendsie_3333:5",
+    "slot": "kicks",
+    "file": "models/items/friendsie_3333/5.glb",
+    "bytes": 86932,
+    "primitives": [
+      {
+        "vertices": 910,
+        "triangles": 1522
+      }
+    ]
+  },
+  {
+    "id": "friendsie_404:1",
+    "slot": "sprout",
+    "file": "models/items/friendsie_404/1.glb",
+    "bytes": 53176,
+    "primitives": [
+      {
+        "vertices": 555,
+        "triangles": 876
+      }
+    ]
+  },
+  {
+    "id": "friendsie_404:2",
+    "slot": "body",
+    "file": "models/items/friendsie_404/2.glb",
+    "bytes": 107512,
+    "primitives": [
+      {
+        "vertices": 1796,
+        "triangles": 2922
+      }
+    ]
+  },
+  {
+    "id": "friendsie_404:3",
+    "slot": "held",
+    "file": "models/items/friendsie_404/3.glb",
+    "bytes": 52372,
+    "primitives": [
+      {
+        "vertices": 418,
+        "triangles": 768
+      }
+    ]
+  },
+  {
+    "id": "friendsie_404:4",
+    "slot": "back",
+    "file": "models/items/friendsie_404/4.glb",
+    "bytes": 73884,
+    "primitives": [
+      {
+        "vertices": 715,
+        "triangles": 1132
+      }
+    ]
+  },
+  {
+    "id": "friendsie_404:5",
+    "slot": "kicks",
+    "file": "models/items/friendsie_404/5.glb",
+    "bytes": 429580,
+    "primitives": [
+      {
+        "vertices": 10921,
+        "triangles": 21081
+      }
+    ]
+  },
+  {
+    "id": "friendsie_500:1",
+    "slot": "sprout",
+    "file": "models/items/friendsie_500/1.glb",
+    "bytes": 135696,
+    "primitives": [
+      {
+        "vertices": 2716,
+        "triangles": 4809
+      }
+    ]
+  },
+  {
+    "id": "friendsie_500:2",
+    "slot": "body",
+    "file": "models/items/friendsie_500/2.glb",
+    "bytes": 114144,
+    "primitives": [
+      {
+        "vertices": 1796,
+        "triangles": 2922
+      }
+    ]
+  },
+  {
+    "id": "friendsie_500:3",
+    "slot": "held",
+    "file": "models/items/friendsie_500/3.glb",
+    "bytes": 50792,
+    "primitives": [
+      {
+        "vertices": 472,
+        "triangles": 812
+      }
+    ]
+  },
+  {
+    "id": "friendsie_500:4",
+    "slot": "back",
+    "file": "models/items/friendsie_500/4.glb",
+    "bytes": 98868,
+    "primitives": [
+      {
+        "vertices": 1661,
+        "triangles": 3108
+      }
+    ]
+  },
+  {
+    "id": "friendsie_500:5",
+    "slot": "kicks",
+    "file": "models/items/friendsie_500/5.glb",
+    "bytes": 130488,
+    "primitives": [
+      {
+        "vertices": 2634,
+        "triangles": 4836
+      }
+    ]
+  },
+  {
+    "id": "friendsie_5000:1",
+    "slot": "sprout",
+    "file": "models/items/friendsie_5000/1.glb",
+    "bytes": 85752,
+    "primitives": [
+      {
+        "vertices": 1500,
+        "triangles": 2686
+      }
+    ]
+  },
+  {
+    "id": "friendsie_5000:2",
+    "slot": "body",
+    "file": "models/items/friendsie_5000/2.glb",
+    "bytes": 99672,
+    "primitives": [
+      {
+        "vertices": 1796,
+        "triangles": 2922
+      }
+    ]
+  },
+  {
+    "id": "friendsie_5000:3",
+    "slot": "held",
+    "file": "models/items/friendsie_5000/3.glb",
+    "bytes": 75560,
+    "primitives": [
+      {
+        "vertices": 1201,
+        "triangles": 2118
+      }
+    ]
+  },
+  {
+    "id": "friendsie_5000:4",
+    "slot": "kicks",
+    "file": "models/items/friendsie_5000/4.glb",
+    "bytes": 54208,
+    "primitives": [
+      {
+        "vertices": 659,
+        "triangles": 1126
+      }
+    ]
+  },
+  {
+    "id": "friendsie_555:1",
+    "slot": "body",
+    "file": "models/items/friendsie_555/1.glb",
+    "bytes": 98812,
+    "primitives": [
+      {
+        "vertices": 1796,
+        "triangles": 2922
+      }
+    ]
+  },
+  {
+    "id": "friendsie_555:2",
+    "slot": "held",
+    "file": "models/items/friendsie_555/2.glb",
+    "bytes": 75560,
+    "primitives": [
+      {
+        "vertices": 1201,
+        "triangles": 2118
+      }
+    ]
+  },
+  {
+    "id": "friendsie_555:3",
+    "slot": "back",
+    "file": "models/items/friendsie_555/3.glb",
+    "bytes": 87692,
+    "primitives": [
+      {
+        "vertices": 1374,
+        "triangles": 2304
+      }
+    ]
+  },
+  {
+    "id": "friendsie_555:4",
+    "slot": "kicks",
+    "file": "models/items/friendsie_555/4.glb",
+    "bytes": 78512,
+    "primitives": [
+      {
+        "vertices": 861,
+        "triangles": 1508
+      }
+    ]
+  },
+  {
+    "id": "friendsie_666:1",
+    "slot": "sprout",
+    "file": "models/items/friendsie_666/1.glb",
+    "bytes": 47096,
+    "primitives": [
+      {
+        "vertices": 399,
+        "triangles": 702
+      }
+    ]
+  },
+  {
+    "id": "friendsie_666:2",
+    "slot": "body",
+    "file": "models/items/friendsie_666/2.glb",
+    "bytes": 109120,
+    "primitives": [
+      {
+        "vertices": 1796,
+        "triangles": 2922
+      }
+    ]
+  },
+  {
+    "id": "friendsie_666:3",
+    "slot": "held",
+    "file": "models/items/friendsie_666/3.glb",
+    "bytes": 91880,
+    "primitives": [
+      {
+        "vertices": 1424,
+        "triangles": 2386
+      }
+    ]
+  },
+  {
+    "id": "friendsie_666:4",
+    "slot": "back",
+    "file": "models/items/friendsie_666/4.glb",
+    "bytes": 154700,
+    "primitives": [
+      {
+        "vertices": 3136,
+        "triangles": 5830
+      }
+    ]
+  },
+  {
+    "id": "friendsie_666:5",
+    "slot": "kicks",
+    "file": "models/items/friendsie_666/5.glb",
+    "bytes": 63064,
+    "primitives": [
+      {
+        "vertices": 860,
+        "triangles": 1508
+      }
+    ]
+  },
+  {
+    "id": "friendsie_777:1",
+    "slot": "sprout",
+    "file": "models/items/friendsie_777/1.glb",
+    "bytes": 94644,
+    "primitives": [
+      {
+        "vertices": 1743,
+        "triangles": 2988
+      }
+    ]
+  },
+  {
+    "id": "friendsie_777:2",
+    "slot": "body",
+    "file": "models/items/friendsie_777/2.glb",
+    "bytes": 97532,
+    "primitives": [
+      {
+        "vertices": 1796,
+        "triangles": 2922
+      }
+    ]
+  },
+  {
+    "id": "friendsie_777:3",
+    "slot": "held",
+    "file": "models/items/friendsie_777/3.glb",
+    "bytes": 62788,
+    "primitives": [
+      {
+        "vertices": 805,
+        "triangles": 1434
+      }
+    ]
+  },
+  {
+    "id": "friendsie_777:4",
+    "slot": "back",
+    "file": "models/items/friendsie_777/4.glb",
+    "bytes": 107976,
+    "primitives": [
+      {
+        "vertices": 2110,
+        "triangles": 3742
+      }
+    ]
+  },
+  {
+    "id": "friendsie_777:5",
+    "slot": "kicks",
+    "file": "models/items/friendsie_777/5.glb",
+    "bytes": 57620,
+    "primitives": [
+      {
+        "vertices": 664,
+        "triangles": 1134
+      }
+    ]
+  },
+  {
+    "id": "friendsie_88:1",
+    "slot": "sprout",
+    "file": "models/items/friendsie_88/1.glb",
+    "bytes": 68660,
+    "primitives": [
+      {
+        "vertices": 959,
+        "triangles": 1696
+      }
+    ]
+  },
+  {
+    "id": "friendsie_88:2",
+    "slot": "body",
+    "file": "models/items/friendsie_88/2.glb",
+    "bytes": 106084,
+    "primitives": [
+      {
+        "vertices": 1800,
+        "triangles": 2928
+      }
+    ]
+  },
+  {
+    "id": "friendsie_88:3",
+    "slot": "held",
+    "file": "models/items/friendsie_88/3.glb",
+    "bytes": 57100,
+    "primitives": [
+      {
+        "vertices": 539,
+        "triangles": 936
+      }
+    ]
+  },
+  {
+    "id": "friendsie_88:4",
+    "slot": "back",
+    "file": "models/items/friendsie_88/4.glb",
+    "bytes": 51620,
+    "primitives": [
+      {
+        "vertices": 425,
+        "triangles": 666
+      }
+    ]
+  },
+  {
+    "id": "friendsie_88:5",
+    "slot": "kicks",
+    "file": "models/items/friendsie_88/5.glb",
+    "bytes": 130488,
+    "primitives": [
+      {
+        "vertices": 2634,
+        "triangles": 4836
+      }
+    ]
+  },
+  {
+    "id": "friendsie_888:1",
+    "slot": "sprout",
+    "file": "models/items/friendsie_888/1.glb",
+    "bytes": 61096,
+    "primitives": [
+      {
+        "vertices": 515,
+        "triangles": 860
+      }
+    ]
+  },
+  {
+    "id": "friendsie_888:2",
+    "slot": "body",
+    "file": "models/items/friendsie_888/2.glb",
+    "bytes": 100888,
+    "primitives": [
+      {
+        "vertices": 1796,
+        "triangles": 2922
+      }
+    ]
+  },
+  {
+    "id": "friendsie_888:3",
+    "slot": "held",
+    "file": "models/items/friendsie_888/3.glb",
+    "bytes": 49636,
+    "primitives": [
+      {
+        "vertices": 418,
+        "triangles": 734
+      }
+    ]
+  },
+  {
+    "id": "friendsie_888:4",
+    "slot": "back",
+    "file": "models/items/friendsie_888/4.glb",
+    "bytes": 74860,
+    "primitives": [
+      {
+        "vertices": 614,
+        "triangles": 960
+      }
+    ]
+  },
+  {
+    "id": "friendsie_888:5",
+    "slot": "kicks",
+    "file": "models/items/friendsie_888/5.glb",
+    "bytes": 65920,
+    "primitives": [
+      {
+        "vertices": 860,
+        "triangles": 1508
+      }
+    ]
+  },
+  {
+    "id": "friendsie_2:1",
+    "slot": "sprout",
+    "file": "models/items/friendsie_2/1.glb",
+    "bytes": 462424,
+    "primitives": [
+      {
+        "vertices": 3043,
+        "triangles": 5494
+      }
+    ]
+  },
+  {
+    "id": "friendsie_2:2",
+    "slot": "body",
+    "file": "models/items/friendsie_2/2.glb",
+    "bytes": 516288,
+    "primitives": [
+      {
+        "vertices": 2800,
+        "triangles": 4800
+      }
+    ]
+  },
+  {
+    "id": "friendsie_2:3",
+    "slot": "held",
+    "file": "models/items/friendsie_2/3.glb",
+    "bytes": 769204,
+    "primitives": [
+      {
+        "vertices": 5438,
+        "triangles": 8352
+      }
+    ]
+  },
+  {
+    "id": "friendsie_2:4",
+    "slot": "back",
+    "file": "models/items/friendsie_2/4.glb",
+    "bytes": 727124,
+    "primitives": [
+      {
+        "vertices": 4152,
+        "triangles": 5888
+      }
+    ]
+  },
+  {
+    "id": "friendsie_2:5",
+    "slot": "kicks",
+    "file": "models/items/friendsie_2/5.glb",
+    "bytes": 743108,
+    "primitives": [
+      {
+        "vertices": 4176,
+        "triangles": 7840
+      }
+    ]
+  },
+  {
+    "id": "friendsie_3:1",
+    "slot": "body",
+    "file": "models/items/friendsie_3/1.glb",
+    "bytes": 422920,
+    "primitives": [
+      {
+        "vertices": 2800,
+        "triangles": 4800
+      }
+    ]
+  },
+  {
+    "id": "friendsie_3:2",
+    "slot": "held",
+    "file": "models/items/friendsie_3/2.glb",
+    "bytes": 764296,
+    "primitives": [
+      {
+        "vertices": 5438,
+        "triangles": 8352
+      }
+    ]
+  },
+  {
+    "id": "friendsie_3:3",
+    "slot": "back",
+    "file": "models/items/friendsie_3/3.glb",
+    "bytes": 254636,
+    "primitives": [
+      {
+        "vertices": 2853,
+        "triangles": 5128
+      }
+    ]
+  },
+  {
+    "id": "friendsie_3:4",
+    "slot": "kicks",
+    "file": "models/items/friendsie_3/4.glb",
+    "bytes": 568576,
+    "primitives": [
+      {
+        "vertices": 7004,
+        "triangles": 13300
+      }
+    ]
+  },
+  {
+    "id": "friendsie_6:1",
+    "slot": "sprout",
+    "file": "models/items/friendsie_6/1.glb",
+    "bytes": 148732,
+    "primitives": [
+      {
+        "vertices": 1225,
+        "triangles": 2208
+      }
+    ]
+  },
+  {
+    "id": "friendsie_6:2",
+    "slot": "body",
+    "file": "models/items/friendsie_6/2.glb",
+    "bytes": 473056,
+    "primitives": [
+      {
+        "vertices": 2800,
+        "triangles": 4800
+      }
+    ]
+  },
+  {
+    "id": "friendsie_6:3",
+    "slot": "held",
+    "file": "models/items/friendsie_6/3.glb",
+    "bytes": 303360,
+    "primitives": [
+      {
+        "vertices": 1065,
+        "triangles": 1900
+      }
+    ]
+  },
+  {
+    "id": "friendsie_6:4",
+    "slot": "back",
+    "file": "models/items/friendsie_6/4.glb",
+    "bytes": 307764,
+    "primitives": [
+      {
+        "vertices": 1574,
+        "triangles": 2518
+      }
+    ]
+  },
+  {
+    "id": "friendsie_6:5",
+    "slot": "kicks",
+    "file": "models/items/friendsie_6/5.glb",
+    "bytes": 453256,
+    "primitives": [
+      {
+        "vertices": 2143,
+        "triangles": 3168
+      }
+    ]
+  },
+  {
+    "id": "friendsie_7:1",
+    "slot": "body",
+    "file": "models/items/friendsie_7/1.glb",
+    "bytes": 264904,
+    "primitives": [
+      {
+        "vertices": 2800,
+        "triangles": 4800
+      }
+    ]
+  },
+  {
+    "id": "friendsie_7:2",
+    "slot": "held",
+    "file": "models/items/friendsie_7/2.glb",
+    "bytes": 294276,
+    "primitives": [
+      {
+        "vertices": 3789,
+        "triangles": 4784
+      }
+    ]
+  },
+  {
+    "id": "friendsie_7:3",
+    "slot": "back",
+    "file": "models/items/friendsie_7/3.glb",
+    "bytes": 249732,
+    "primitives": [
+      {
+        "vertices": 2853,
+        "triangles": 5128
+      }
+    ]
+  },
+  {
+    "id": "friendsie_8:90",
+    "slot": "sprout",
+    "file": "models/items/friendsie_8/90.glb",
+    "bytes": 870600,
+    "primitives": [
+      {
+        "vertices": 6116,
+        "triangles": 8656
+      }
+    ]
+  },
+  {
+    "id": "friendsie_8:1",
+    "slot": "body",
+    "file": "models/items/friendsie_8/1.glb",
+    "bytes": 649428,
+    "primitives": [
+      {
+        "vertices": 2800,
+        "triangles": 4800
+      }
+    ]
+  },
+  {
+    "id": "friendsie_8:2",
+    "slot": "held",
+    "file": "models/items/friendsie_8/2.glb",
+    "bytes": 429896,
+    "primitives": [
+      {
+        "vertices": 2493,
+        "triangles": 4104
+      }
+    ]
+  },
+  {
+    "id": "friendsie_8:3",
+    "slot": "back",
+    "file": "models/items/friendsie_8/3.glb",
+    "bytes": 389336,
+    "primitives": [
+      {
+        "vertices": 2853,
+        "triangles": 5128
+      }
+    ]
+  },
+  {
+    "id": "friendsie_8:4",
+    "slot": "kicks",
+    "file": "models/items/friendsie_8/4.glb",
+    "bytes": 400396,
+    "primitives": [
+      {
+        "vertices": 1773,
+        "triangles": 3136
+      }
+    ]
+  },
+  {
+    "id": "friendsie_9:1",
+    "slot": "body",
+    "file": "models/items/friendsie_9/1.glb",
+    "bytes": 500708,
+    "primitives": [
+      {
+        "vertices": 2800,
+        "triangles": 4800
+      }
+    ]
+  },
+  {
+    "id": "friendsie_9:2",
+    "slot": "held",
+    "file": "models/items/friendsie_9/2.glb",
+    "bytes": 612588,
+    "primitives": [
+      {
+        "vertices": 7959,
+        "triangles": 10304
+      }
+    ]
+  },
+  {
+    "id": "friendsie_9:3",
+    "slot": "back",
+    "file": "models/items/friendsie_9/3.glb",
+    "bytes": 198452,
+    "primitives": [
+      {
+        "vertices": 1232,
+        "triangles": 2048
+      }
+    ]
+  },
+  {
+    "id": "friendsie_9:4",
+    "slot": "kicks",
+    "file": "models/items/friendsie_9/4.glb",
+    "bytes": 279060,
+    "primitives": [
+      {
+        "vertices": 1104,
+        "triangles": 1984
+      }
+    ]
+  },
+  {
+    "id": "friendsie_16:1",
+    "slot": "body",
+    "file": "models/items/friendsie_16/1.glb",
+    "bytes": 245532,
+    "primitives": [
+      {
+        "vertices": 2800,
+        "triangles": 4800
+      }
+    ]
+  },
+  {
+    "id": "friendsie_16:2",
+    "slot": "held",
+    "file": "models/items/friendsie_16/2.glb",
+    "bytes": 610176,
+    "primitives": [
+      {
+        "vertices": 7959,
+        "triangles": 10304
+      }
+    ]
+  },
+  {
+    "id": "friendsie_16:3",
+    "slot": "back",
+    "file": "models/items/friendsie_16/3.glb",
+    "bytes": 390172,
+    "primitives": [
+      {
+        "vertices": 2021,
+        "triangles": 2288
+      }
+    ]
+  },
+  {
+    "id": "friendsie_16:4",
+    "slot": "kicks",
+    "file": "models/items/friendsie_16/4.glb",
+    "bytes": 679380,
+    "primitives": [
+      {
+        "vertices": 5833,
+        "triangles": 7952
+      }
+    ]
+  },
+  {
+    "id": "friendsie_17:1",
+    "slot": "sprout",
+    "file": "models/items/friendsie_17/1.glb",
+    "bytes": 370908,
+    "primitives": [
+      {
+        "vertices": 1648,
+        "triangles": 2958
+      }
+    ]
+  },
+  {
+    "id": "friendsie_17:2",
+    "slot": "body",
+    "file": "models/items/friendsie_17/2.glb",
+    "bytes": 305872,
+    "primitives": [
+      {
+        "vertices": 2800,
+        "triangles": 4800
+      }
+    ]
+  },
+  {
+    "id": "friendsie_17:3",
+    "slot": "held",
+    "file": "models/items/friendsie_17/3.glb",
+    "bytes": 256728,
+    "primitives": [
+      {
+        "vertices": 2162,
+        "triangles": 3120
+      }
+    ]
+  },
+  {
+    "id": "friendsie_17:4",
+    "slot": "back",
+    "file": "models/items/friendsie_17/4.glb",
+    "bytes": 358768,
+    "primitives": [
+      {
+        "vertices": 4556,
+        "triangles": 6016
+      }
+    ]
+  },
+  {
+    "id": "friendsie_17:5",
+    "slot": "kicks",
+    "file": "models/items/friendsie_17/5.glb",
+    "bytes": 175212,
+    "primitives": [
+      {
+        "vertices": 1746,
+        "triangles": 2896
+      }
+    ]
+  },
+  {
+    "id": "friendsie_18:1",
+    "slot": "sprout",
+    "file": "models/items/friendsie_18/1.glb",
+    "bytes": 305476,
+    "primitives": [
+      {
+        "vertices": 1470,
+        "triangles": 1344
+      }
+    ]
+  },
+  {
+    "id": "friendsie_18:2",
+    "slot": "body",
+    "file": "models/items/friendsie_18/2.glb",
+    "bytes": 478508,
+    "primitives": [
+      {
+        "vertices": 2800,
+        "triangles": 4800
+      }
+    ]
+  },
+  {
+    "id": "friendsie_18:3",
+    "slot": "held",
+    "file": "models/items/friendsie_18/3.glb",
+    "bytes": 262612,
+    "primitives": [
+      {
+        "vertices": 1039,
+        "triangles": 1536
+      }
+    ]
+  },
+  {
+    "id": "friendsie_18:4",
+    "slot": "back",
+    "file": "models/items/friendsie_18/4.glb",
+    "bytes": 145608,
+    "primitives": [
+      {
+        "vertices": 1345,
+        "triangles": 2560
+      }
+    ]
+  },
+  {
+    "id": "friendsie_19:1",
+    "slot": "body",
+    "file": "models/items/friendsie_19/1.glb",
+    "bytes": 291540,
+    "primitives": [
+      {
+        "vertices": 2800,
+        "triangles": 4800
+      }
+    ]
+  },
+  {
+    "id": "friendsie_19:2",
+    "slot": "held",
+    "file": "models/items/friendsie_19/2.glb",
+    "bytes": 218268,
+    "primitives": [
+      {
+        "vertices": 2162,
+        "triangles": 3120
+      }
+    ]
+  },
+  {
+    "id": "friendsie_19:3",
+    "slot": "back",
+    "file": "models/items/friendsie_19/3.glb",
+    "bytes": 1029212,
+    "primitives": [
+      {
+        "vertices": 9136,
+        "triangles": 12880
+      }
+    ]
+  },
+  {
+    "id": "friendsie_19:4",
+    "slot": "kicks",
+    "file": "models/items/friendsie_19/4.glb",
+    "bytes": 368752,
+    "primitives": [
+      {
+        "vertices": 1359,
+        "triangles": 2464
+      }
+    ]
+  },
+  {
+    "id": "friendsie_20:1",
+    "slot": "body",
+    "file": "models/items/friendsie_20/1.glb",
+    "bytes": 437564,
+    "primitives": [
+      {
+        "vertices": 2800,
+        "triangles": 4800
+      }
+    ]
+  },
+  {
+    "id": "friendsie_20:2",
+    "slot": "back",
+    "file": "models/items/friendsie_20/2.glb",
+    "bytes": 599328,
+    "primitives": [
+      {
+        "vertices": 4728,
+        "triangles": 8300
+      }
+    ]
+  },
+  {
+    "id": "friendsie_20:3",
+    "slot": "kicks",
+    "file": "models/items/friendsie_20/3.glb",
+    "bytes": 274264,
+    "primitives": [
+      {
+        "vertices": 1104,
+        "triangles": 1984
+      }
+    ]
+  },
+  {
+    "id": "friendsie_21:1",
+    "slot": "body",
+    "file": "models/items/friendsie_21/1.glb",
+    "bytes": 588536,
+    "primitives": [
+      {
+        "vertices": 2800,
+        "triangles": 4800
+      }
+    ]
+  },
+  {
+    "id": "friendsie_22:1",
+    "slot": "sprout",
+    "file": "models/items/friendsie_22/1.glb",
+    "bytes": 257860,
+    "primitives": [
+      {
+        "vertices": 156,
+        "triangles": 198
+      }
+    ]
+  },
+  {
+    "id": "friendsie_22:2",
+    "slot": "body",
+    "file": "models/items/friendsie_22/2.glb",
+    "bytes": 440896,
+    "primitives": [
+      {
+        "vertices": 2800,
+        "triangles": 4800
+      }
+    ]
+  },
+  {
+    "id": "friendsie_22:3",
+    "slot": "held",
+    "file": "models/items/friendsie_22/3.glb",
+    "bytes": 304796,
+    "primitives": [
+      {
+        "vertices": 1952,
+        "triangles": 976
+      }
+    ]
+  },
+  {
+    "id": "friendsie_22:4",
+    "slot": "back",
+    "file": "models/items/friendsie_22/4.glb",
+    "bytes": 258872,
+    "primitives": [
+      {
+        "vertices": 1384,
+        "triangles": 2496
+      }
+    ]
+  },
+  {
+    "id": "friendsie_22:5",
+    "slot": "kicks",
+    "file": "models/items/friendsie_22/5.glb",
+    "bytes": 405104,
+    "primitives": [
+      {
+        "vertices": 1773,
+        "triangles": 3136
+      }
+    ]
+  },
+  {
+    "id": "friendsie_23:1",
+    "slot": "sprout",
+    "file": "models/items/friendsie_23/1.glb",
+    "bytes": 520532,
+    "primitives": [
+      {
+        "vertices": 8096,
+        "triangles": 4048
+      }
+    ]
+  },
+  {
+    "id": "friendsie_23:2",
+    "slot": "body",
+    "file": "models/items/friendsie_23/2.glb",
+    "bytes": 296684,
+    "primitives": [
+      {
+        "vertices": 2800,
+        "triangles": 4800
+      }
+    ]
+  },
+  {
+    "id": "friendsie_23:3",
+    "slot": "held",
+    "file": "models/items/friendsie_23/3.glb",
+    "bytes": 84448,
+    "primitives": [
+      {
+        "vertices": 477,
+        "triangles": 814
+      }
+    ]
+  },
+  {
+    "id": "friendsie_23:4",
+    "slot": "back",
+    "file": "models/items/friendsie_23/4.glb",
+    "bytes": 359008,
+    "primitives": [
+      {
+        "vertices": 4556,
+        "triangles": 6016
+      }
+    ]
+  },
+  {
+    "id": "friendsie_23:5",
+    "slot": "kicks",
+    "file": "models/items/friendsie_23/5.glb",
+    "bytes": 354240,
+    "primitives": [
+      {
+        "vertices": 836,
+        "triangles": 1344
+      }
+    ]
+  },
+  {
+    "id": "friendsie_25:1",
+    "slot": "body",
+    "file": "models/items/friendsie_25/1.glb",
+    "bytes": 284084,
+    "primitives": [
+      {
+        "vertices": 2800,
+        "triangles": 4800
+      }
+    ]
+  },
+  {
+    "id": "friendsie_25:2",
+    "slot": "held",
+    "file": "models/items/friendsie_25/2.glb",
+    "bytes": 413152,
+    "primitives": [
+      {
+        "vertices": 1949,
+        "triangles": 2752
+      }
+    ]
+  },
+  {
+    "id": "friendsie_25:3",
+    "slot": "back",
+    "file": "models/items/friendsie_25/3.glb",
+    "bytes": 353452,
+    "primitives": [
+      {
+        "vertices": 740,
+        "triangles": 1316
+      }
+    ]
+  },
+  {
+    "id": "friendsie_25:4",
+    "slot": "kicks",
+    "file": "models/items/friendsie_25/4.glb",
+    "bytes": 294036,
+    "primitives": [
+      {
+        "vertices": 1359,
+        "triangles": 2464
+      }
+    ]
+  },
+  {
+    "id": "friendsie_26:90",
+    "slot": "head",
+    "file": "models/items/friendsie_26/90.glb",
+    "bytes": 563360,
+    "primitives": [
+      {
+        "vertices": 3648,
+        "triangles": 5556
+      }
+    ]
+  },
+  {
+    "id": "friendsie_26:1",
+    "slot": "body",
+    "file": "models/items/friendsie_26/1.glb",
+    "bytes": 550484,
+    "primitives": [
+      {
+        "vertices": 2800,
+        "triangles": 4800
+      }
+    ]
+  },
+  {
+    "id": "friendsie_26:2",
+    "slot": "held",
+    "file": "models/items/friendsie_26/2.glb",
+    "bytes": 247400,
+    "primitives": [
+      {
+        "vertices": 1886,
+        "triangles": 942
+      }
+    ]
+  },
+  {
+    "id": "friendsie_26:3",
+    "slot": "back",
+    "file": "models/items/friendsie_26/3.glb",
+    "bytes": 346560,
+    "primitives": [
+      {
+        "vertices": 1902,
+        "triangles": 3560
+      }
+    ]
+  },
+  {
+    "id": "friendsie_26:4",
+    "slot": "kicks",
+    "file": "models/items/friendsie_26/4.glb",
+    "bytes": 456884,
+    "primitives": [
+      {
+        "vertices": 2143,
+        "triangles": 3168
+      }
+    ]
+  },
+  {
+    "id": "friendsie_32:1",
+    "slot": "sprout",
+    "file": "models/items/friendsie_32/1.glb",
+    "bytes": 875380,
+    "primitives": [
+      {
+        "vertices": 8377,
+        "triangles": 11224
+      }
+    ]
+  },
+  {
+    "id": "friendsie_32:2",
+    "slot": "body",
+    "file": "models/items/friendsie_32/2.glb",
+    "bytes": 605628,
+    "primitives": [
+      {
+        "vertices": 2800,
+        "triangles": 4800
+      }
+    ]
+  },
+  {
+    "id": "friendsie_32:3",
+    "slot": "held",
+    "file": "models/items/friendsie_32/3.glb",
+    "bytes": 303544,
+    "primitives": [
+      {
+        "vertices": 1065,
+        "triangles": 1900
+      }
+    ]
+  },
+  {
+    "id": "friendsie_32:4",
+    "slot": "back",
+    "file": "models/items/friendsie_32/4.glb",
+    "bytes": 1128132,
+    "primitives": [
+      {
+        "vertices": 11730,
+        "triangles": 12208
+      }
+    ]
+  },
+  {
+    "id": "friendsie_32:5",
+    "slot": "kicks",
+    "file": "models/items/friendsie_32/5.glb",
+    "bytes": 387388,
+    "primitives": [
+      {
+        "vertices": 1100,
+        "triangles": 1824
+      }
+    ]
+  },
+  {
+    "id": "friendsie_40:1",
+    "slot": "sprout",
+    "file": "models/items/friendsie_40/1.glb",
+    "bytes": 298964,
+    "primitives": [
+      {
+        "vertices": 2998,
+        "triangles": 5424
+      }
+    ]
+  },
+  {
+    "id": "friendsie_40:2",
+    "slot": "body",
+    "file": "models/items/friendsie_40/2.glb",
+    "bytes": 598600,
+    "primitives": [
+      {
+        "vertices": 2800,
+        "triangles": 4800
+      }
+    ]
+  },
+  {
+    "id": "friendsie_40:3",
+    "slot": "held",
+    "file": "models/items/friendsie_40/3.glb",
+    "bytes": 453284,
+    "primitives": [
+      {
+        "vertices": 1523,
+        "triangles": 2464
+      }
+    ]
+  },
+  {
+    "id": "friendsie_40:4",
+    "slot": "back",
+    "file": "models/items/friendsie_40/4.glb",
+    "bytes": 417020,
+    "primitives": [
+      {
+        "vertices": 2294,
+        "triangles": 4040
+      }
+    ]
+  },
+  {
+    "id": "friendsie_40:5",
+    "slot": "kicks",
+    "file": "models/items/friendsie_40/5.glb",
+    "bytes": 448544,
+    "primitives": [
+      {
+        "vertices": 1588,
+        "triangles": 2784
+      }
+    ]
+  },
+  {
+    "id": "friendsie_46:1",
+    "slot": "sprout",
+    "file": "models/items/friendsie_46/1.glb",
+    "bytes": 520584,
+    "primitives": [
+      {
+        "vertices": 8096,
+        "triangles": 4048
+      }
+    ]
+  },
+  {
+    "id": "friendsie_46:2",
+    "slot": "body",
+    "file": "models/items/friendsie_46/2.glb",
+    "bytes": 296732,
+    "primitives": [
+      {
+        "vertices": 2800,
+        "triangles": 4800
+      }
+    ]
+  },
+  {
+    "id": "friendsie_46:3",
+    "slot": "held",
+    "file": "models/items/friendsie_46/3.glb",
+    "bytes": 304376,
+    "primitives": [
+      {
+        "vertices": 3789,
+        "triangles": 4784
+      }
+    ]
+  },
+  {
+    "id": "friendsie_46:4",
+    "slot": "back",
+    "file": "models/items/friendsie_46/4.glb",
+    "bytes": 436480,
+    "primitives": [
+      {
+        "vertices": 5587,
+        "triangles": 8000
+      }
+    ]
+  },
+  {
+    "id": "friendsie_46:5",
+    "slot": "kicks",
+    "file": "models/items/friendsie_46/5.glb",
+    "bytes": 363592,
+    "primitives": [
+      {
+        "vertices": 4296,
+        "triangles": 7520
+      }
+    ]
+  },
+  {
+    "id": "friendsie_49:1",
+    "slot": "sprout",
+    "file": "models/items/friendsie_49/1.glb",
+    "bytes": 520296,
+    "primitives": [
+      {
+        "vertices": 8096,
+        "triangles": 4048
+      }
+    ]
+  },
+  {
+    "id": "friendsie_49:2",
+    "slot": "body",
+    "file": "models/items/friendsie_49/2.glb",
+    "bytes": 584188,
+    "primitives": [
+      {
+        "vertices": 2800,
+        "triangles": 4800
+      }
+    ]
+  },
+  {
+    "id": "friendsie_49:3",
+    "slot": "held",
+    "file": "models/items/friendsie_49/3.glb",
+    "bytes": 185924,
+    "primitives": [
+      {
+        "vertices": 418,
+        "triangles": 768
+      }
+    ]
+  },
+  {
+    "id": "friendsie_49:4",
+    "slot": "back",
+    "file": "models/items/friendsie_49/4.glb",
+    "bytes": 727128,
+    "primitives": [
+      {
+        "vertices": 4152,
+        "triangles": 5888
+      }
+    ]
+  },
+  {
+    "id": "friendsie_49:5",
+    "slot": "kicks",
+    "file": "models/items/friendsie_49/5.glb",
+    "bytes": 448544,
+    "primitives": [
+      {
+        "vertices": 1588,
+        "triangles": 2784
+      }
+    ]
+  },
+  {
+    "id": "friendsie_51:1",
+    "slot": "sprout",
+    "file": "models/items/friendsie_51/1.glb",
+    "bytes": 756436,
+    "primitives": [
+      {
+        "vertices": 3279,
+        "triangles": 3980
+      }
+    ]
+  },
+  {
+    "id": "friendsie_51:2",
+    "slot": "body",
+    "file": "models/items/friendsie_51/2.glb",
+    "bytes": 593692,
+    "primitives": [
+      {
+        "vertices": 2800,
+        "triangles": 4800
+      }
+    ]
+  },
+  {
+    "id": "friendsie_51:3",
+    "slot": "held",
+    "file": "models/items/friendsie_51/3.glb",
+    "bytes": 89220,
+    "primitives": [
+      {
+        "vertices": 274,
+        "triangles": 396
+      }
+    ]
+  },
+  {
+    "id": "friendsie_51:4",
+    "slot": "back",
+    "file": "models/items/friendsie_51/4.glb",
+    "bytes": 394328,
+    "primitives": [
+      {
+        "vertices": 2853,
+        "triangles": 5128
+      }
+    ]
+  },
+  {
+    "id": "friendsie_51:5",
+    "slot": "kicks",
+    "file": "models/items/friendsie_51/5.glb",
+    "bytes": 448824,
+    "primitives": [
+      {
+        "vertices": 1588,
+        "triangles": 2784
+      }
+    ]
+  },
+  {
+    "id": "friendsie_52:1",
+    "slot": "body",
+    "file": "models/items/friendsie_52/1.glb",
+    "bytes": 605896,
+    "primitives": [
+      {
+        "vertices": 2800,
+        "triangles": 4800
+      }
+    ]
+  },
+  {
+    "id": "friendsie_52:2",
+    "slot": "held",
+    "file": "models/items/friendsie_52/2.glb",
+    "bytes": 842436,
+    "primitives": [
+      {
+        "vertices": 9620,
+        "triangles": 4812
+      }
+    ]
+  },
+  {
+    "id": "friendsie_52:3",
+    "slot": "back",
+    "file": "models/items/friendsie_52/3.glb",
+    "bytes": 389328,
+    "primitives": [
+      {
+        "vertices": 2853,
+        "triangles": 5128
+      }
+    ]
+  },
+  {
+    "id": "friendsie_52:4",
+    "slot": "kicks",
+    "file": "models/items/friendsie_52/4.glb",
+    "bytes": 563872,
+    "primitives": [
+      {
+        "vertices": 6556,
+        "triangles": 12404
+      }
+    ]
+  },
+  {
+    "id": "friendsie_54:1",
+    "slot": "sprout",
+    "file": "models/items/friendsie_54/1.glb",
+    "bytes": 282948,
+    "primitives": [
+      {
+        "vertices": 1922,
+        "triangles": 2016
+      }
+    ]
+  },
+  {
+    "id": "friendsie_54:2",
+    "slot": "body",
+    "file": "models/items/friendsie_54/2.glb",
+    "bytes": 392376,
+    "primitives": [
+      {
+        "vertices": 2800,
+        "triangles": 4800
+      }
+    ]
+  },
+  {
+    "id": "friendsie_54:3",
+    "slot": "held",
+    "file": "models/items/friendsie_54/3.glb",
+    "bytes": 463228,
+    "primitives": [
+      {
+        "vertices": 1950,
+        "triangles": 3364
+      }
+    ]
+  },
+  {
+    "id": "friendsie_54:4",
+    "slot": "back",
+    "file": "models/items/friendsie_54/4.glb",
+    "bytes": 203628,
+    "primitives": [
+      {
+        "vertices": 1232,
+        "triangles": 2048
+      }
+    ]
+  },
+  {
+    "id": "friendsie_54:5",
+    "slot": "kicks",
+    "file": "models/items/friendsie_54/5.glb",
+    "bytes": 354260,
+    "primitives": [
+      {
+        "vertices": 836,
+        "triangles": 1344
+      }
+    ]
+  },
+  {
+    "id": "friendsie_58:1",
+    "slot": "sprout",
+    "file": "models/items/friendsie_58/1.glb",
+    "bytes": 101588,
+    "primitives": [
+      {
+        "vertices": 646,
+        "triangles": 1152
+      }
+    ]
+  },
+  {
+    "id": "friendsie_58:2",
+    "slot": "body",
+    "file": "models/items/friendsie_58/2.glb",
+    "bytes": 296560,
+    "primitives": [
+      {
+        "vertices": 2800,
+        "triangles": 4800
+      }
+    ]
+  },
+  {
+    "id": "friendsie_58:3",
+    "slot": "held",
+    "file": "models/items/friendsie_58/3.glb",
+    "bytes": 88944,
+    "primitives": [
+      {
+        "vertices": 274,
+        "triangles": 396
+      }
+    ]
+  },
+  {
+    "id": "friendsie_58:4",
+    "slot": "back",
+    "file": "models/items/friendsie_58/4.glb",
+    "bytes": 397508,
+    "primitives": [
+      {
+        "vertices": 2021,
+        "triangles": 2288
+      }
+    ]
+  },
+  {
+    "id": "friendsie_58:5",
+    "slot": "kicks",
+    "file": "models/items/friendsie_58/5.glb",
+    "bytes": 586580,
+    "primitives": [
+      {
+        "vertices": 4126,
+        "triangles": 7136
+      }
+    ]
+  }
+]

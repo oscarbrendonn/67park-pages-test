@@ -1,0 +1,73 @@
+/* Settings use the existing cream / candy palette; no new render loop. */
+#party-settings-btn[hidden],body:has(.wardrobe,.return-entry) #party-settings-btn,body:has(.wardrobe,.return-entry) #party-settings{display:none!important}
+#party-settings{z-index:1000;padding:max(12px,env(safe-area-inset-top)) max(12px,env(safe-area-inset-right)) max(12px,env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-left));box-sizing:border-box;overscroll-behavior:contain;touch-action:pan-y}
+#party-settings [hidden]{display:none!important}
+#party-settings .party-card{width:min(490px,100%);max-height:calc(100dvh - 44px);overflow-y:auto;overscroll-behavior:contain;box-sizing:border-box;padding:20px 22px;background:#fffaf1;border:2px solid #fff;border-radius:28px;box-shadow:0 8px 0 #c8bcb385,0 18px 60px #45333a40;scrollbar-width:thin;scrollbar-color:#d5c6bf transparent}
+#party-settings .party-head{position:sticky;top:-20px;background:#fffaf1;z-index:2;padding:6px 0 10px;border-bottom:1px solid #e8ded0}
+#party-settings h2{margin:2px 0 0;font-size:25px;letter-spacing:-.04em;color:#423d46}
+#party-settings small{font-size:10px;letter-spacing:.13em;font-weight:800;color:#8c7e7b}
+#party-settings .party-close{min-width:44px;height:44px;background:linear-gradient(#ffdfea,#f7bdd3);box-shadow:0 3px 0 #d5a3b7;border:2px solid white}
+#party-settings .party-intro{font-size:13px;color:#716872;margin:8px 0 18px}
+#party-settings .party-save-status{font-size:12px;line-height:1.5;color:#716872}
+#party-settings #settings-save-status{margin:0 0 8px}
+#party-settings #settings-save-status:is([data-state=error],[data-state=unavailable],[data-state=recovered]){padding:10px;border-radius:12px;background:#fff0ce;color:#73541f}
+#party-settings #settings-connection{font-size:13px;font-weight:700;margin:12px 0 4px;color:#856b34}
+#party-settings #settings-connection[data-state=connected]{color:#3d8069}
+#party-settings section{border:1px solid #e6ddcf;background:#ffffff9c;border-radius:19px;padding:12px 14px;margin:12px 0}
+#party-settings section h3{font-size:15px;letter-spacing:-.02em;margin:0 0 10px;color:#514354}
+#party-settings section:nth-of-type(1) h3{color:#3e7ca8}
+#party-settings section:nth-of-type(2) h3{color:#916cb8}
+#party-settings section:nth-of-type(3) h3{color:#49866f}
+#party-settings .party-setting-row{display:grid;grid-template-columns:1fr auto;gap:5px 12px;padding:9px 0;border-top:1px solid #ede6dc;font-size:14px;font-weight:600}
+#party-settings output{color:#81707f;font-size:12px;min-width:38px;text-align:right;font-variant-numeric:tabular-nums}
+#party-settings input[type=range]{grid-column:1/-1;width:100%;margin:0;min-height:44px;accent-color:#e978aa;cursor:pointer;touch-action:pan-y}
+#party-settings .party-row{font-size:14px;border-color:#ede6dc;min-height:44px;padding:4px 0}
+#party-settings select{min-height:44px;max-width:52%;border:1px solid #d8ccc4;border-radius:12px;padding:8px;background:#fff;color:#514954;font:600 16px system-ui;cursor:pointer}
+#party-settings .party-toggle{flex:none;width:58px;height:36px}
+#party-settings .party-toggle i{width:26px;height:26px;top:3px;left:3px;transition:transform 120ms ease-out}
+#party-settings .party-toggle[aria-checked=true] i{left:3px;transform:translateX(23px)}
+#party-settings .party-hint{font-size:12px;line-height:1.5;color:#796e74;background:#f5f0e7;padding:9px 11px;margin:7px 0 0;border-radius:12px}
+#party-settings .party-hint p{margin:5px 0 10px}
+#party-settings details{border-top:1px solid #ede6dc}
+#party-settings summary{cursor:pointer;min-height:44px;box-sizing:border-box;padding:12px 0;font-size:14px;font-weight:650}
+#party-settings button:not(.party-toggle):not(.party-close),#party-settings .party-help-actions a{cursor:pointer;background:#fff;border:1px solid #e5d8d0;border-radius:13px;padding:10px 12px;min-height:44px;color:#554b57;font:650 13px system-ui;text-decoration:none;box-sizing:border-box}
+#party-settings .party-reset{width:100%;margin-top:10px;background:#fbedf1!important}
+#party-settings button:active{transform:scale(.97)}
+#party-settings :is(button,input,select,summary,a,textarea):focus-visible{outline:3px solid #668fb1;outline-offset:3px}
+#party-settings .party-report-label{display:block;margin:12px 0 6px;font-size:12px}
+#party-settings textarea{display:block;box-sizing:border-box;width:100%;resize:vertical;padding:10px;border:1px solid #d8ccc4;border-radius:10px;font:16px/1.4 system-ui;background:#fff;color:#514954}
+#party-settings .party-help-actions{display:flex;flex-wrap:wrap;gap:8px}
+#settings-report-status,#settings-reset-confirm{font-size:12px;line-height:1.5}
+#settings-reset-confirm button{margin:3px}
+html[data-park-show-chat=false] :is(.park-chat-history,#local-speech-bubble,.remote-speech-bubble){display:none!important}
+html[data-park-show-names=false] :is([data-remote-name],.park-player-name){display:none!important}
+/* Moving labels cross the whole 3D canvas. Re-rasterizing their blurred
+   backgrounds/shadows cost more than the avatars on the physical Android.
+   Keep every name, color and badge; composite the bounded label layers instead. */
+.park-nameplate-layer{will-change:transform;pointer-events:none}
+[data-remote-name]{will-change:transform;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;box-shadow:0 1px 0 #00000014!important}
+/* Scale the whole action layout so both visible targets and hit boxes match. */
+.park-actions,.park-desktop-actions{transform:scale(var(--park-button-scale,1));transform-origin:right bottom}
+/* Compact landscape controls must still have a 44px hit target at 80%. */
+.park-actions .park-action,.park-desktop-actions .park-action{min-width:calc(44px / var(--park-button-scale,1));min-height:calc(44px / var(--park-button-scale,1))}
+.party-eggy{scale:var(--park-button-scale,1);transform-origin:right bottom;bottom:calc(280px * var(--park-button-scale,1) + env(safe-area-inset-bottom,0px))!important}
+#party-throw{right:calc(20px + 88px * var(--park-button-scale,1))}
+/* Leave the centre and resized pedals clear; horn stays beside the wheel. */
+@media(pointer:coarse){#vehicle-horn-button{left:max(20px,env(safe-area-inset-left))!important;bottom:calc(164px + env(safe-area-inset-bottom))!important;transform:none!important}}
+@media(pointer:coarse) and (max-width:650px) and (max-height:700px) and (orientation:portrait){
+ .park-unified-ui button#preview-hit,.park-unified-ui button#party-throw{bottom:calc(238px * var(--park-button-scale,1) + env(safe-area-inset-bottom))!important}
+ .park-unified-ui button#party-throw{right:calc(14px + 68px * var(--park-button-scale,1))!important}
+}
+@media(pointer:coarse) and (max-height:540px) and (orientation:landscape){
+ .park-unified-ui .park-toolbar{width:max-content!important;max-width:calc(100vw - 250px - env(safe-area-inset-left) - env(safe-area-inset-right));left:50%!important;right:auto!important;transform:translateX(-50%)!important;padding:6px 8px!important;gap:4px!important}
+ .park-unified-ui .park-toolbar>span{display:none!important}
+ .park-unified-ui .park-weather,.park-unified-ui .park-hud>div.absolute.right-4.top-4{top:calc(var(--preview-top,24px) + 6px)!important}
+ .park-unified-ui .park-chat,.park-unified-ui .online-toggle{top:calc(var(--preview-top,24px) + 52px)!important;bottom:auto!important}
+ .park-unified-ui button#park-home-button{top:calc(var(--preview-top,24px) + 96px)!important}
+ .park-unified-ui #party-settings-btn{top:calc(var(--preview-top,24px) + 98px)!important;right:112px!important}
+ .park-unified-ui button#preview-hit{right:calc(210px * var(--park-button-scale,1) + env(safe-area-inset-right))!important}
+ .park-unified-ui button#party-throw{right:calc(278px * var(--park-button-scale,1) + env(safe-area-inset-right))!important}
+}
+@media(max-width:420px){#party-settings .party-card{padding:16px 14px;border-radius:24px}#party-settings .party-head{top:-16px}#party-settings section{padding:10px 12px}}
+@media(max-height:480px){#party-settings .party-card{max-height:calc(100dvh - 24px)}#party-settings .party-intro{margin-bottom:8px}}
+@media(prefers-reduced-motion:reduce){#party-settings *,#party-settings *::before{transition:none!important}}

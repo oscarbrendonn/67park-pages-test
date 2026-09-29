@@ -1,0 +1,126 @@
+{
+  "version": 57,
+  "variant": "kimi",
+  "patchId": "park-terrain-57-kimi-551050705ef6",
+  "byteLength": 336912,
+  "meshes": [
+    {
+      "name": "3_CIMEN",
+      "mode": "sparse",
+      "sourceVertices": 52771,
+      "sourceIndexCount": 91956,
+      "sourceHash": "51c433a3",
+      "matrixWorld": [
+        179.45658377779,
+        0,
+        0,
+        0,
+        0,
+        179.45658377779,
+        0,
+        0,
+        0,
+        0,
+        179.45658377779,
+        0,
+        8.131652123901338,
+        9.398031270658546,
+        -2.1953011248415946,
+        1
+      ],
+      "vertexIds": {
+        "byteOffset": 0,
+        "count": 0
+      },
+      "positions": {
+        "byteOffset": 0,
+        "count": 0
+      },
+      "normals": {
+        "byteOffset": 0,
+        "count": 0
+      },
+      "stats": {
+        "changedPositions": 0,
+        "changedNormals": 0
+      }
+    },
+    {
+      "name": "3_CIMEN_KOYU",
+      "mode": "replace",
+      "sourceVertices": 2376,
+      "sourceIndexCount": 4728,
+      "sourceHash": "0269001d",
+      "matrixWorld": [
+        179.45658377779,
+        0,
+        0,
+        0,
+        0,
+        179.45658377779,
+        0,
+        0,
+        0,
+        0,
+        179.45658377779,
+        0,
+        8.131652123901338,
+        9.398031270658546,
+        -2.1953011248415946,
+        1
+      ],
+      "vertices": 9194,
+      "positions": {
+        "byteOffset": 0,
+        "count": 27582
+      },
+      "normals": {
+        "byteOffset": 110328,
+        "count": 27582
+      },
+      "index": {
+        "byteOffset": 220656,
+        "count": 29064
+      },
+      "stats": {
+        "height": 0.8,
+        "shoulderWidth": 4.5,
+        "baseY": 9.398031270658546,
+        "bottomY": 9.380085612734112,
+        "vertices": 6818,
+        "triangles": 9264,
+        "topVertices": 2317,
+        "boundaryEdges": 546,
+        "refinementIterations": 0,
+        "retainedVertices": 2376,
+        "retainedOutsideIndices": 1272,
+        "removedParkTriangles": 1152,
+        "addedTriangles": 8112,
+        "parkBounds": [
+          [
+            192.88802535886643,
+            9.380085612734112,
+            25.799926522101725
+          ],
+          [
+            255.70934333549056,
+            9.398031270658546,
+            113.55419198897026
+          ]
+        ]
+      }
+    }
+  ],
+  "policy": {
+    "targets": [
+      "3_CIMEN",
+      "3_CIMEN_KOYU"
+    ],
+    "sameDarkParkGeometry": true,
+    "zeroAddedDrawCalls": true,
+    "pathsPondBowlUnchanged": true,
+    "otherDarkComponentByteIdentical": true,
+    "applyAfter": "final world scale/sink, side50, coastalRoad56, smallIslandMatch55",
+    "applyBefore": "Kimi AO mask and final terrain sampler"
+  }
+}

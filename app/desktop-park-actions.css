@@ -1,0 +1,6 @@
+.park-desktop-actions{position:absolute;right:20px;bottom:88px;display:flex;gap:12px;pointer-events:auto;--pt-ink:#2c3140;--pt-glass:#fffaf0e8;--pt-edge:#fff;--pt-shadow:0 5px 15px #261e3a20,inset 0 1px #fff}
+.park-desktop-actions .park-action{width:66px;height:66px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer}
+.park-desktop-actions .park-action svg{width:25px;height:25px}
+.park-desktop-actions .park-action:focus-visible{outline:3px solid #56878f;outline-offset:3px}
+@media(hover:hover){.park-desktop-actions .park-action:hover{background:#fff}}
+@media(max-height:500px){.park-desktop-actions{bottom:72px;right:12px;gap:8px}.park-desktop-actions .park-action{width:52px;height:52px}}

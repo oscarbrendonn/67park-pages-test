@@ -1,0 +1,265 @@
+/* Kimi preview only. Presentation layer: no lobby or network state changes. */
+.online-dialog.online-dialog {
+  --friend-ink: #414954;
+  --friend-muted: #626b70;
+  width: min(1020px, calc(100vw - 32px));
+  max-width: calc(100vw - 24px);
+  max-height: calc(100dvh - 48px);
+  border: 2px solid #fffdf5;
+  border-radius: 34px;
+  background: #fff8eb;
+  color: var(--friend-ink);
+  box-shadow: 0 24px 70px #242b4933, inset 0 2px 0 #fff;
+  font-family: Nunito, ui-rounded, "SF Pro Rounded", system-ui, sans-serif;
+}
+.online-dialog.online-dialog::backdrop { background: #343f5966; }
+.online-dialog.online-dialog header {
+  padding: 25px 28px 20px;
+  border-bottom: 1px solid #e9dfcd;
+  background: linear-gradient(120deg, #fffdf4, #fff2e5);
+  align-items: flex-start;
+}
+.online-dialog.online-dialog h1 { font-size: clamp(25px, 3.5vw, 34px); letter-spacing: -1px; margin: 5px 0 8px; }
+.online-dialog.online-dialog h2 { font-size: 19px; letter-spacing: -.4px; }
+.online-dialog.online-dialog p { color: var(--friend-muted); }
+.online-dialog.online-dialog .online-kicker { color: #64796a; font-size: 10px; letter-spacing: 2px; }
+.online-dialog.online-dialog .online-scroll { padding: 18px 24px 24px; scrollbar-width: thin; scrollbar-color: #d4c8b5 transparent; }
+.online-dialog.online-dialog button,
+.online-dialog.online-dialog .community-bot-test {
+  min-height: 46px;
+  border: 2px solid #fffdf5;
+  border-radius: 17px;
+  background: linear-gradient(#fffdf7, #f4edde);
+  box-shadow: 0 3px 0 #d9cfbf, inset 0 2px 0 #ffffffb3;
+  color: var(--friend-ink);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 800;
+  touch-action: manipulation;
+  transition: transform 120ms cubic-bezier(.23,1,.32,1);
+}
+.online-dialog.online-dialog button:active:not(:disabled),
+.online-dialog.online-dialog .community-bot-test:active:not([aria-disabled=true]) { transform: translateY(2px) scale(.98); }
+.online-dialog.online-dialog button:disabled,
+.online-dialog.online-dialog [aria-disabled=true] { opacity: .48; box-shadow: none; }
+.online-dialog.online-dialog :is(button, a, input, select):focus-visible { outline: 3px solid #3d7c91; outline-offset: 3px; }
+.online-dialog.online-dialog .online-close { width: 46px; height: 46px; min-width: 46px; padding: 0; border-radius: 50%; font-size: 22px; }
+.online-dialog.online-dialog .online-connection { color: #4f6759; gap: 9px; margin: 0 0 18px; }
+.online-dialog.online-dialog .online-dot { width: 9px; height: 9px; box-shadow: 0 0 0 4px #589d8514; }
+.online-dialog.online-dialog .online-you { color: var(--friend-muted); }
+.online-dialog.online-dialog .community-games { grid-template-columns: repeat(5,minmax(0,1fr)) !important; gap: 10px; margin-bottom: 24px; }
+.online-dialog.online-dialog .community-game-option { min-width: 0; display: flex; flex-direction: column; gap: 8px; }
+.online-dialog.online-dialog .community-game-option > button {
+  width: 100%; height: 114px; display: flex; flex-direction: column; align-items: flex-start;
+  gap: 3px; padding: 11px 12px; text-align: left; position: relative;
+  background: linear-gradient(#fffdf8, #f7f0e5);
+}
+.online-dialog.online-dialog .community-game-option > button > span { font-size: 27px; line-height: 1.2; }
+.online-dialog.online-dialog .community-game-option > button b { font-size: 13px; line-height: 1.3; }
+.online-dialog.online-dialog .community-game-option > button small { font-size: 10px; color: #60666b; line-height: 1.4; }
+.online-dialog.online-dialog .community-game-option:nth-child(1) { --game-tint: #ffc3d9; --game-edge: #dba0b5; }
+.online-dialog.online-dialog .community-game-option:nth-child(2) { --game-tint: #ffddb2; --game-edge: #d7b58c; }
+.online-dialog.online-dialog .community-game-option:nth-child(3) { --game-tint: #c5e5b7; --game-edge: #9cbe91; }
+.online-dialog.online-dialog .community-game-option:nth-child(4) { --game-tint: #bce3fa; --game-edge: #95bccf; }
+.online-dialog.online-dialog .community-game-option:nth-child(5) { --game-tint: #d8cdf5; --game-edge: #b1a3d2; }
+.online-dialog.online-dialog .community-game-option > button[aria-pressed=true] {
+  background: linear-gradient(#ffffff88, #ffffff00), var(--game-tint);
+  box-shadow: 0 3px 0 var(--game-edge), inset 0 2px 0 #ffffffb3;
+  border-color: #fff;
+}
+.online-dialog.online-dialog .community-game-option > button[aria-pressed=true]::after {
+  content: "✓"; position: absolute; right: 9px; top: 9px;
+  display: grid; place-content: center; width: 21px; height: 21px;
+  border-radius: 50%; background: #fffaf0; color: #425e50; font-size: 12px;
+}
+.online-dialog.online-dialog .community-bot-test { display: flex; align-items: center; justify-content: center; text-decoration: none; padding: 7px 5px; font-size: 11px; min-height: 38px; border-radius: 12px; }
+.online-dialog.online-dialog .online-grid { gap: 16px; grid-template-columns: 1fr 1fr; align-items: start; }
+.online-dialog.online-dialog .online-card { border: 1px solid #e9e1d3; border-radius: 25px; background: #fffdf6; padding: 20px; box-shadow: 0 4px 0 #e9dfcd66; min-width: 0; }
+.online-dialog.online-dialog .online-section-title { gap: 12px; margin-bottom: 18px; }
+.online-dialog.online-dialog .online-icon { width: 49px; height: 49px; border: 2px solid #fff; border-radius: 17px; background: #ffdbeb; box-shadow: 0 3px #e8b9cb; }
+.online-dialog.online-dialog .online-side .online-card:first-child .online-icon { background: #c9e7f7; box-shadow: 0 3px #a9c9dd; }
+.online-dialog.online-dialog .online-side .online-card:last-child .online-icon { background: #d5ebbf; box-shadow: 0 3px #b3cf9c; }
+.online-dialog.online-dialog .online-section-title p { font-size: 12px; line-height: 1.5; }
+.online-dialog.online-dialog .online-size { gap: 10px; margin-bottom: 8px; }
+.online-dialog.online-dialog .online-size button { min-height: 70px; }
+.online-dialog.online-dialog .online-size button[aria-pressed=true],
+.online-dialog.online-dialog .community-format button[aria-pressed=true] { background: linear-gradient(#effadc, #d7edbb); border: 2px solid #fff; box-shadow: 0 3px #adc58e; }
+.online-dialog.online-dialog .online-size span { color: #5e685d; }
+.online-dialog.online-dialog .online-primary { min-height: 53px; background: linear-gradient(#ffe97e, #ffd442); color: #51441f; border: 2px solid #fff5c5; box-shadow: 0 4px #dfb835, inset 0 2px #fff9d0; margin: 14px 0 12px; font-size: 15px; }
+.online-dialog.online-dialog input { border: 1px solid #dfd7c8; border-radius: 15px; min-height: 46px; background: #faf6ed; color: #414954; box-shadow: inset 0 2px 3px #7c705a0a; font-size: 16px; }
+.online-dialog.online-dialog input::placeholder { color: #717574; }
+.online-dialog.online-dialog .online-inline { gap: 8px; }
+.online-dialog.online-dialog .online-inline button { flex-shrink: 0; background: linear-gradient(#e6f5ff, #c5e6fa); box-shadow: 0 3px #a8cadd; }
+.online-dialog.online-dialog .online-code { min-height: 44px; padding: 8px 12px; border: 1px dashed #cabdab; background: #f8f0df; box-shadow: none; letter-spacing: 1px; }
+.online-dialog.online-dialog .online-caption,
+.online-dialog.online-dialog .community-account-note { color: #6e736e; font-size: 11px; line-height: 1.65; }
+.online-dialog.online-dialog .community-person { padding: 10px; border: 1px solid #e8e2d6; border-radius: 17px; background: #f8f7ed; }
+.online-dialog.online-dialog .community-avatar { width: 38px; height: 38px; border-radius: 13px; }
+.online-dialog.online-dialog .community-person b { font-size: 13px; }
+.online-dialog.online-dialog .community-person small { color: #667062; font-size: 11px; }
+.online-dialog.online-dialog .community-person-actions button { min-height: 44px; }
+.online-dialog.online-dialog .online-practice { min-height: 44px; display: inline-flex; align-items: center; color: #576e73; font-size: 12px; font-weight: 700; }
+.online-dialog.online-dialog footer { padding: 14px 24px; background: #fff5e3; border-color: #e9dfcd; }
+.online-dialog.online-dialog footer span { color: #687067; font-size: 11px; }
+.online-dialog.online-dialog footer button { background: linear-gradient(#e5f6d7, #c6e4b0); box-shadow: 0 3px #a6c38f; }
+@media (hover:hover) and (pointer:fine) {
+  .online-dialog.online-dialog button:not(:disabled):hover,
+  .online-dialog.online-dialog .community-bot-test:not([aria-disabled=true]):hover { filter: brightness(1.025); }
+}
+@media (max-width:700px) {
+  .online-dialog.online-dialog { width: calc(100vw - 20px); max-width: calc(100vw - 20px); max-height: calc(100dvh - 24px); border-radius: 26px; }
+  .online-dialog.online-dialog header { padding: 18px 16px 14px; gap: 10px; }
+  .online-dialog.online-dialog header p { font-size: 12px; margin-bottom: 0; }
+  .online-dialog.online-dialog h1 { font-size: 25px; }
+  .online-dialog.online-dialog .online-scroll { padding: 15px 12px 20px; }
+  .online-dialog.online-dialog .community-games { grid-template-columns: repeat(2,minmax(0,1fr)) !important; gap: 12px; }
+  .online-dialog.online-dialog .community-game-option:last-child:nth-child(odd) { grid-column: 1 / -1; }
+  .online-dialog.online-dialog .community-game-option > button { height: 109px; }
+  .online-dialog.online-dialog .community-bot-test { min-height: 44px; }
+  .online-dialog.online-dialog .online-grid { grid-template-columns: minmax(0,1fr); }
+  .online-dialog.online-dialog .online-card { padding: 16px; border-radius: 21px; }
+  .online-dialog.online-dialog footer { padding: 12px; gap: 8px; }
+  .online-dialog.online-dialog footer span { max-width: 145px; font-size: 10px; }
+}
+@media (max-height:500px) {
+  .online-dialog.online-dialog { max-height: calc(100dvh - 16px); }
+  .online-dialog.online-dialog header { padding: 10px 16px; }
+  .online-dialog.online-dialog header p, .online-dialog.online-dialog .online-kicker { display: none; }
+  .online-dialog.online-dialog h1 { font-size: 23px; }
+  .online-dialog.online-dialog footer { padding: 8px 16px; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .online-dialog.online-dialog button, .online-dialog.online-dialog .community-bot-test { transition: none; }
+  .online-dialog.online-dialog button:active:not(:disabled), .online-dialog.online-dialog .community-bot-test:active { transform: none; }
+}
+
+/* Approved white control family. Shared by every entry; no game/input changes. */
+.online-dialog.online-dialog{
+ --friend-ink:#344651;--friend-muted:#65727b;
+ border-color:#fff;background:#f5f8fb;box-shadow:0 18px 56px #24354330,inset 0 1px #fff;
+}
+.online-dialog.online-dialog header,.online-dialog.online-dialog footer{
+ background:#f9fbfd;border-color:#dfe6ec;
+}
+.online-dialog.online-dialog .online-scroll{scrollbar-color:#bac7d2 transparent}
+.online-dialog.online-dialog button,
+.online-dialog.online-dialog .community-bot-test,
+.online-dialog.online-dialog .community-game-launch{
+ background:linear-gradient(160deg,#fff,#eaf0f5);border:1px solid #fff;color:var(--friend-ink);
+ box-shadow:0 3px 9px #24354318,inset 0 1px #fff;border-radius:20px;
+}
+.online-dialog.online-dialog .community-games{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+.online-dialog.online-dialog .community-game-option>button,
+.online-dialog.online-dialog .community-game-launch{
+ background:linear-gradient(160deg,#fff,#f0f4f8);box-shadow:0 2px 7px #24354314,inset 0 1px #fff;
+}
+.online-dialog.online-dialog .community-game-launch{
+ box-sizing:border-box;width:100%;height:114px;display:flex;flex-direction:column;align-items:flex-start;
+ gap:3px;padding:11px 12px;text-align:left;text-decoration:none;
+}
+.online-dialog.online-dialog .community-game-launch>span{font-size:27px;line-height:1.2}
+.online-dialog.online-dialog .community-game-launch b{font-size:13px;line-height:1.3}
+.online-dialog.online-dialog .community-game-launch small{font-size:10px;line-height:1.4;color:var(--friend-muted)}
+.online-dialog.online-dialog .community-game-option>button[aria-pressed=true],
+.online-dialog.online-dialog .online-size button[aria-pressed=true],
+.online-dialog.online-dialog .community-format button[aria-pressed=true]{
+ background:#fff;box-shadow:0 0 0 2px #e88eaf,0 3px 9px #24354312;border-color:#fff;
+}
+.online-dialog.online-dialog .community-game-option>button[aria-pressed=true]::after{background:#f9dce9;color:#75475e}
+.online-dialog.online-dialog .online-card{background:#ffffffd9;border-color:#e0e7ee;box-shadow:0 3px 12px #2435430b}
+.online-dialog.online-dialog .online-icon,
+.online-dialog.online-dialog .online-side .online-card:first-child .online-icon,
+.online-dialog.online-dialog .online-side .online-card:last-child .online-icon{background:#f0f4f8;box-shadow:0 2px 5px #24354312}
+.online-dialog.online-dialog .online-primary{background:linear-gradient(#ff8fb8,#f25b90);color:#fff;border-color:#ffd9e9;box-shadow:0 3px 9px #b951791c}
+.online-dialog.online-dialog input{background:#f1f5f8;border-color:#d8e1e8;color:var(--friend-ink)}
+.online-dialog.online-dialog .online-code{background:#f1f5f8;border-color:#c4d0da;box-shadow:none}
+.online-dialog.online-dialog .online-inline button,.online-dialog.online-dialog footer button{background:linear-gradient(160deg,#fff,#eaf0f5);box-shadow:0 3px 9px #24354318,inset 0 1px #fff}
+.online-dialog.online-dialog .community-person{background:#f5f8fb;border-color:#e0e7ee}
+.online-dialog.online-dialog .community-bot-test{min-height:44px}
+.community-game-launch[aria-disabled=true]{pointer-events:none}
+.obstacle-practice-entry{position:fixed;z-index:45;left:50%;top:28%;transform:translateX(-50%);width:min(310px,calc(100vw - 40px));padding:20px;box-sizing:border-box;border:1px solid white;border-radius:24px;background:#f5f8fbf2;box-shadow:0 10px 32px #24354325;font:14px system-ui;color:#344651;display:grid;gap:10px;text-align:center}
+.obstacle-practice-entry[hidden]{display:none}
+.obstacle-practice-entry strong{font-size:22px}
+.obstacle-practice-entry button{min-height:48px;background:linear-gradient(#ff8fb8,#f25b90);border:1px solid #fff;border-radius:24px;color:white;font:700 15px system-ui;cursor:pointer;touch-action:manipulation}
+.obstacle-practice-entry a{min-height:44px;display:grid;place-items:center;color:#344651}
+.obstacle-practice-entry button:focus-visible,.obstacle-practice-entry a:focus-visible{outline:3px solid #56878f;outline-offset:3px}
+.obstacle-practice-entry button:active{transform:scale(.97)}
+@media(max-width:700px){
+ .online-dialog.online-dialog .community-games{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ .online-dialog.online-dialog .community-game-launch{height:109px}
+}
+
+/* White HUD family, release 46. Same finish on /play/ and the in-world dialog.
+   Static surfaces: no blur/compositing over the game and no input changes. */
+.online-dialog.online-dialog {
+ --friend-ink:#344651;--friend-muted:#64717a;
+ background:#eef2f6;border:2px solid #fff;border-radius:32px;
+ box-shadow:0 20px 60px #24354330,inset 0 1px #fff;
+}
+.online-dialog.online-dialog header {
+ background:linear-gradient(120deg,#fff,#f3f6fa);padding:24px 26px 20px;
+ border-bottom:1px solid #dde4eb;
+}
+.online-dialog.online-dialog h1{font-size:clamp(24px,3vw,32px);font-weight:850;line-height:1.16;letter-spacing:-.8px}
+.online-dialog.online-dialog header p{font-size:13px;line-height:1.5;margin:8px 0 0}
+.online-dialog.online-dialog .online-kicker{font-size:10px;font-weight:800;letter-spacing:1.5px;color:#73808a}
+.online-dialog.online-dialog button,
+.online-dialog.online-dialog .community-bot-test,
+.online-dialog.online-dialog .community-game-launch {
+ border:2px solid #fff;background:linear-gradient(155deg,#fff,#e8eef3);
+ box-shadow:0 3px 8px #24354316,inset 0 1px #fff;
+ border-radius:24px;font-weight:750;line-height:1.35;cursor:pointer;
+}
+.online-dialog.online-dialog .online-close{border-radius:50%;font-weight:500;font-size:23px}
+.online-dialog.online-dialog .online-connection{padding:9px 13px;min-height:40px;background:#ffffffb3;border:1px solid #fff;border-radius:22px;font-size:12px;font-weight:700;margin-bottom:16px}
+.online-dialog.online-dialog .online-you{margin-left:auto;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:40%}
+.online-dialog.online-dialog .community-games{gap:14px;margin-bottom:24px}
+.online-dialog.online-dialog .community-game-option{padding:8px;background:#ffffffad;border:1px solid #fff;border-radius:26px;gap:8px;box-shadow:0 4px 12px #2435430a}
+.online-dialog.online-dialog .community-game-option>:is(button,.community-game-launch){
+ display:grid;grid-template-columns:46px minmax(0,1fr);grid-template-rows:auto auto;
+ align-content:center;align-items:center;column-gap:10px;row-gap:3px;
+ flex:none;height:102px;padding:12px;text-align:left;border-radius:20px;position:relative;
+}
+.online-dialog.online-dialog .community-game-option>:is(button,.community-game-launch)>span{
+ grid-row:1/3;grid-column:1;width:46px;height:46px;display:grid;place-items:center;
+ font-size:27px;border:2px solid #fff;border-radius:50%;background:var(--game-tint,#e6dffa);
+ box-shadow:0 2px 5px #24354314;
+}
+.online-dialog.online-dialog .community-game-option>:is(button,.community-game-launch) b{grid-column:2;font-size:15px;font-weight:850;line-height:1.25}
+.online-dialog.online-dialog .community-game-option>:is(button,.community-game-launch) small{grid-column:2;color:#64717a;font-size:11px;line-height:1.35}
+.online-dialog.online-dialog .community-game-option:nth-child(6){--game-tint:#e1d6fb}
+.online-dialog.online-dialog .community-game-option>button[aria-pressed=true]{background:linear-gradient(155deg,#fff,#fcecf3);box-shadow:0 0 0 2px #e88eaf,0 3px 8px #24354312}
+.online-dialog.online-dialog .community-game-option>button[aria-pressed=true]::after{width:17px;height:17px;right:5px;top:5px;font-size:10px}
+.online-dialog.online-dialog .community-bot-test{min-height:44px;font-size:12px;padding:8px;border-radius:22px}
+.online-dialog.online-dialog .online-card{padding:20px;border:1px solid #fff;border-radius:26px;background:#ffffffdc;box-shadow:0 5px 18px #2435430c}
+.online-dialog.online-dialog .online-icon{border-radius:50%;width:48px;height:48px}
+.online-dialog.online-dialog .online-size button{border-radius:22px;min-height:74px}
+.online-dialog.online-dialog .online-size b{font-size:25px;font-weight:800}
+.online-dialog.online-dialog .online-size span{font-size:11px;color:var(--friend-muted)}
+.online-dialog.online-dialog .community-format{gap:8px}
+.online-dialog.online-dialog .online-primary{background:linear-gradient(155deg,#ff94bd,#f26097);border-color:#ffeaf3;box-shadow:0 3px 9px #b9517924;color:#fff;min-height:52px;border-radius:26px;font-size:15px}
+.online-dialog.online-dialog input{background:#f1f4f7;border:1px solid #d8e1e8;border-radius:22px;min-height:46px;padding-inline:14px;font-size:16px}
+.online-dialog.online-dialog .community-person{border:1px solid #e1e7ed;border-radius:22px;background:#f6f8fb}
+.online-dialog.online-dialog footer{background:#f7f9fc;border-color:#dde4eb;gap:14px}
+.online-dialog.online-dialog footer button{padding-inline:20px;border-radius:24px}
+.online-dialog.online-dialog :is(button,a):focus-visible{outline:3px solid #47718b;outline-offset:3px}
+@media(max-width:700px){
+ .online-dialog.online-dialog{max-height:calc(100dvh - 40px - env(safe-area-inset-top) - env(safe-area-inset-bottom));border-radius:26px}
+ .online-dialog.online-dialog header{padding:18px 16px 16px}
+ .online-dialog.online-dialog .online-scroll{padding:12px 10px 20px}
+ .online-dialog.online-dialog .community-games{gap:10px}
+ .online-dialog.online-dialog .community-game-option{padding:6px;border-radius:23px}
+ .online-dialog.online-dialog .community-game-option>:is(button,.community-game-launch){display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:4px;height:126px;padding:10px}
+ .online-dialog.online-dialog .community-game-option>:is(button,.community-game-launch)>span{width:40px;height:40px;font-size:24px;margin-bottom:3px}
+ .online-dialog.online-dialog .community-game-option>:is(button,.community-game-launch) b{font-size:14px}
+ .online-dialog.online-dialog .community-game-option>:is(button,.community-game-launch) small{font-size:10px}
+ .online-dialog.online-dialog .online-card{padding:16px}
+ .online-dialog.online-dialog footer{padding:10px;gap:8px}
+ .online-dialog.online-dialog footer span{max-width:46%;line-height:1.4}
+}
+@media(max-height:500px){
+ .online-dialog.online-dialog{max-height:calc(100dvh - 32px)}
+ .online-dialog.online-dialog header{padding:10px 16px}
+ .online-dialog.online-dialog header p,.online-dialog.online-dialog .online-kicker{display:none}
+ .online-dialog.online-dialog h1{font-size:23px}
+}

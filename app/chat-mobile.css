@@ -1,0 +1,5 @@
+/* Critical: loaded in the document head, before a chat field can gain focus. */
+.park-chat input{font-size:18px!important;line-height:1.4;min-height:40px;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+.park-chat,.park-chat button{touch-action:manipulation}
+.park-chat[data-chat-keyboard="true"]{position:fixed!important;top:var(--chat-keyboard-top)!important;bottom:auto!important}
+.park-chat[data-chat-keyboard="true"]>div:first-child:not(:has(input)){max-height:min(80px,var(--chat-keyboard-room));overflow-y:auto;overscroll-behavior:contain}

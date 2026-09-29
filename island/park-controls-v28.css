@@ -1,0 +1,28 @@
+#hareketKontrolleri{display:grid;grid-template-columns:60px 72px;grid-template-rows:60px 72px;gap:12px;align-items:center;justify-items:center;bottom:calc(34px + env(safe-area-inset-bottom))}
+#hareketKontrolleri[hidden]{display:none}
+#hareketKontrolleri button{width:60px;height:60px}
+#hareketKontrolleri button.parkJump{width:72px;height:72px}
+#hareketKontrolleri .parkBoard{grid-area:1/1}
+#hareketKontrolleri .parkPower{grid-area:1/2;background:#e1f6d5e8;color:#315a33}
+#hareketKontrolleri .parkRun{grid-area:2/1}
+#hareketKontrolleri .parkJump{grid-area:2/2}
+#hareketKontrolleri button[aria-disabled="true"]{opacity:.56}
+#parkWardrobe{box-sizing:border-box;width:min(430px,calc(100vw - 24px));max-height:calc(100dvh - 40px);border:1px solid #ffffffbd;border-radius:26px;padding:22px;background:#f3f5f7f5;color:#253a45;box-shadow:0 20px 80px #16253735;font:14px/1.5 -apple-system,BlinkMacSystemFont,system-ui,sans-serif;overflow:auto;overscroll-behavior:contain;touch-action:pan-y}
+#parkWardrobe::backdrop{background:#12233466}
+#parkWardrobe header{display:flex;align-items:center;justify-content:space-between;gap:10px}
+#parkWardrobe h2{margin:3px 0 0;font-size:22px;letter-spacing:-.04em;line-height:1.2}
+#parkWardrobe small{font-size:10px;letter-spacing:.14em;color:#637681;font-weight:700}
+#parkWardrobe h3{margin:18px 0 8px;font-size:14px}
+#parkWardrobe button{min-height:44px;border-radius:13px;background:#fff;border:1px solid #d7dfe3;color:#304551;font:600 12px/1.2 -apple-system,BlinkMacSystemFont,system-ui,sans-serif;cursor:pointer;touch-action:manipulation}
+#parkWardrobe button:active{background:#d5e8d1}
+#parkWardrobe button[aria-pressed="true"]{background:#dcebd6;border-color:#91b781;color:#244926}
+#parkWardrobe button:focus-visible,#tamEggyOyun:focus-visible{outline:3px solid #40799e;outline-offset:2px}
+#parkWardrobe button[data-close]{width:44px;flex-shrink:0;border-radius:50%;font-size:17px}
+.parkRoster{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;max-height:245px;overflow:auto;touch-action:pan-y}
+.parkRoster button{padding:10px 5px}
+.parkBoards,.parkEmotes{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
+.parkEmotes{grid-template-columns:repeat(3,1fr)}
+.parkMenuStatus,.parkKeys{font-size:11px;line-height:1.55;color:#596d78}
+@media(max-width:380px){#hareketKontrolleri{grid-template-columns:52px 62px;grid-template-rows:52px 62px;gap:9px;right:16px}#hareketKontrolleri button{width:52px;height:52px;font-size:10px}#hareketKontrolleri button.parkJump{width:62px;height:62px}#parkWardrobe{padding:17px}.parkRoster{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-height:460px){#hareketKontrolleri{grid-template-columns:52px 60px;grid-template-rows:52px 60px;gap:8px;bottom:20px}#hareketKontrolleri button{width:52px;height:52px}#hareketKontrolleri button.parkJump{width:60px;height:60px}}
+@media(prefers-reduced-transparency:reduce),(prefers-contrast:more){#parkWardrobe{background:#f3f5f7}#hareketKontrolleri .parkPower{background:#dcecd4;border-color:#315a33}}

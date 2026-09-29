@@ -1,0 +1,381 @@
+{
+  "version": 57,
+  "revision": "C1-r2",
+  "variant": "kimi",
+  "patchId": "park-path-polish57-kimi-b3e1adec86ba",
+  "byteLength": 5108676,
+  "bufferHash": "2223f996",
+  "sha256": "b3e1adec86ba9022bbe356a5c0bf9aad789549a5620d9c406f8c07a2842bf410",
+  "meshes": [
+    {
+      "name": "8_PARK_PATIKA_UST",
+      "sourceHash": "cd0e5e25",
+      "sourceVertices": 35392,
+      "sourceIndexCount": 63144,
+      "matrixWorld": [
+        179.45658377779,
+        0,
+        0,
+        0,
+        0,
+        179.45658377779,
+        0,
+        0,
+        0,
+        0,
+        179.45658377779,
+        0,
+        8.131652123901338,
+        9.4787867633086,
+        -2.1953011248415946,
+        1
+      ],
+      "vertices": 38302,
+      "positions": {
+        "byteOffset": 0,
+        "count": 114906
+      },
+      "normals": {
+        "byteOffset": 459624,
+        "count": 114906
+      },
+      "index": {
+        "byteOffset": 919248,
+        "count": 63168
+      },
+      "removedFaceStarts": {
+        "byteOffset": 1171920,
+        "count": 962
+      },
+      "retainedIndexCount": 60258,
+      "outputHash": "8b29092e",
+      "stats": {
+        "sourceVertices": 35392,
+        "sourceTriangles": 21048,
+        "selectedSourceTriangles": 21048,
+        "unselectedTrianglesPreserved": 0,
+        "selectedTrianglesPreservedExact": 20086,
+        "newTriangles": 970,
+        "outputVertices": 38302,
+        "outputTriangles": 21056,
+        "originalPrefixUnchanged": true,
+        "resultNonmanifoldEdges": 0,
+        "resultOpposedEdges": 0,
+        "removedDegenerateTriangles": 0,
+        "removedDuplicateTriangles": 0,
+        "elapsedSeconds": 1.0867830829956802,
+        "collinearSeamRepairs": 0,
+        "removedSourceTriangles": 962,
+        "retainedSourceTriangles": 20086,
+        "addedTriangles": 8
+      }
+    },
+    {
+      "name": "6_BORDUR",
+      "sourceHash": "bb413935",
+      "sourceVertices": 43867,
+      "sourceIndexCount": 174414,
+      "matrixWorld": [
+        179.45658377779,
+        0,
+        0,
+        0,
+        0,
+        179.45658377779,
+        0,
+        0,
+        0,
+        0,
+        179.45658377779,
+        0,
+        8.131652123901338,
+        9.380085642765637,
+        -2.1953011248415946,
+        1
+      ],
+      "vertices": 55057,
+      "positions": {
+        "byteOffset": 1175768,
+        "count": 165171
+      },
+      "normals": {
+        "byteOffset": 1836452,
+        "count": 165171
+      },
+      "index": {
+        "byteOffset": 2497136,
+        "count": 173958
+      },
+      "removedFaceStarts": {
+        "byteOffset": 3192968,
+        "count": 3882
+      },
+      "retainedIndexCount": 162768,
+      "outputHash": "5c959641",
+      "stats": {
+        "sourceVertices": 43867,
+        "sourceTriangles": 58138,
+        "selectedSourceTriangles": 8574,
+        "unselectedTrianglesPreserved": 49564,
+        "selectedTrianglesPreservedExact": 4692,
+        "newTriangles": 3730,
+        "outputVertices": 55057,
+        "outputTriangles": 57986,
+        "originalPrefixUnchanged": true,
+        "resultNonmanifoldEdges": 0,
+        "resultOpposedEdges": 0,
+        "removedDegenerateTriangles": 0,
+        "removedDuplicateTriangles": 0,
+        "elapsedSeconds": 1.0145762090105563,
+        "collinearSeamRepairs": 5,
+        "removedSourceTriangles": 3882,
+        "retainedSourceTriangles": 54256,
+        "addedTriangles": -152
+      }
+    },
+    {
+      "name": "3_CIMEN",
+      "sourceHash": "51c433a3",
+      "sourceVertices": 52771,
+      "sourceIndexCount": 91956,
+      "matrixWorld": [
+        179.45658377779,
+        0,
+        0,
+        0,
+        0,
+        179.45658377779,
+        0,
+        0,
+        0,
+        0,
+        179.45658377779,
+        0,
+        8.131652123901338,
+        9.398031270658546,
+        -2.1953011248415946,
+        1
+      ],
+      "vertices": 53779,
+      "positions": {
+        "byteOffset": 3208496,
+        "count": 161337
+      },
+      "normals": {
+        "byteOffset": 3853844,
+        "count": 161337
+      },
+      "index": {
+        "byteOffset": 4499192,
+        "count": 91500
+      },
+      "removedFaceStarts": {
+        "byteOffset": 4865192,
+        "count": 488
+      },
+      "retainedIndexCount": 90492,
+      "outputHash": "e341965b",
+      "stats": {
+        "sourceVertices": 52771,
+        "sourceTriangles": 30652,
+        "selectedSourceTriangles": 8188,
+        "unselectedTrianglesPreserved": 22464,
+        "selectedTrianglesPreservedExact": 7700,
+        "newTriangles": 336,
+        "outputVertices": 53779,
+        "outputTriangles": 30500,
+        "originalPrefixUnchanged": true,
+        "resultNonmanifoldEdges": 0,
+        "resultOpposedEdges": 0,
+        "removedDegenerateTriangles": 0,
+        "removedDuplicateTriangles": 0,
+        "elapsedSeconds": 0.4805417499883333,
+        "collinearSeamRepairs": 0,
+        "removedSourceTriangles": 488,
+        "retainedSourceTriangles": 30164,
+        "addedTriangles": -152
+      }
+    },
+    {
+      "name": "67D_REF_MAIN_WATER_CAP",
+      "sourceHash": "44fe7eb0",
+      "sourceVertices": 1280,
+      "sourceIndexCount": 3828,
+      "matrixWorld": [
+        179.45658377779,
+        0,
+        0,
+        0,
+        0,
+        179.45658377779,
+        0,
+        0,
+        0,
+        0,
+        179.45658377779,
+        0,
+        8.131652123901338,
+        6.822829322595075,
+        -2.1953011248415946,
+        1
+      ],
+      "vertices": 8234,
+      "positions": {
+        "byteOffset": 4867144,
+        "count": 24702
+      },
+      "normals": {
+        "byteOffset": 4965952,
+        "count": 24702
+      },
+      "index": {
+        "byteOffset": 5064760,
+        "count": 10230
+      },
+      "removedFaceStarts": {
+        "byteOffset": 5105680,
+        "count": 184
+      },
+      "retainedIndexCount": 3276,
+      "outputHash": "4cb6fe64",
+      "stats": {
+        "sourceVertices": 1280,
+        "sourceTriangles": 1276,
+        "selectedSourceTriangles": 1276,
+        "unselectedTrianglesPreserved": 0,
+        "selectedTrianglesPreservedExact": 1092,
+        "newTriangles": 2318,
+        "outputVertices": 8234,
+        "outputTriangles": 3410,
+        "originalPrefixUnchanged": true,
+        "resultNonmanifoldEdges": 0,
+        "resultOpposedEdges": 0,
+        "removedDegenerateTriangles": 0,
+        "removedDuplicateTriangles": 0,
+        "elapsedSeconds": 0.19716199999675155,
+        "collinearSeamRepairs": 0,
+        "removedSourceTriangles": 184,
+        "retainedSourceTriangles": 1092,
+        "addedTriangles": 2134
+      }
+    },
+    {
+      "name": "67D_REF_MAIN_WATER_NECK_CAP",
+      "sourceHash": "3fa592ed",
+      "sourceVertices": 24,
+      "sourceIndexCount": 36,
+      "matrixWorld": [
+        179.45658377779,
+        0,
+        0,
+        0,
+        0,
+        179.45658377779,
+        0,
+        0,
+        0,
+        0,
+        179.45658377779,
+        0,
+        8.131652123901338,
+        6.822829322595075,
+        -2.1953011248415946,
+        1
+      ],
+      "vertices": 81,
+      "positions": {
+        "byteOffset": 5106416,
+        "count": 243
+      },
+      "normals": {
+        "byteOffset": 5107388,
+        "count": 243
+      },
+      "index": {
+        "byteOffset": 5108360,
+        "count": 72
+      },
+      "removedFaceStarts": {
+        "byteOffset": 5108648,
+        "count": 7
+      },
+      "retainedIndexCount": 15,
+      "outputHash": "404a2dd3",
+      "stats": {
+        "sourceVertices": 24,
+        "sourceTriangles": 12,
+        "selectedSourceTriangles": 12,
+        "unselectedTrianglesPreserved": 0,
+        "selectedTrianglesPreservedExact": 5,
+        "newTriangles": 19,
+        "outputVertices": 81,
+        "outputTriangles": 24,
+        "originalPrefixUnchanged": true,
+        "resultNonmanifoldEdges": 0,
+        "resultOpposedEdges": 0,
+        "removedDegenerateTriangles": 0,
+        "removedDuplicateTriangles": 0,
+        "elapsedSeconds": 0.0033904579904628918,
+        "collinearSeamRepairs": 0,
+        "removedSourceTriangles": 7,
+        "retainedSourceTriangles": 5,
+        "addedTriangles": 12
+      }
+    }
+  ],
+  "policy": {
+    "scope": [
+      [
+        190,
+        78.4,
+        199,
+        99
+      ],
+      [
+        145,
+        99.5,
+        190,
+        105.3201
+      ]
+    ],
+    "protected": [
+      {
+        "bounds": [
+          168.63,
+          109.7045,
+          175.59,
+          113.2045
+        ],
+        "name": "south ramp"
+      },
+      {
+        "bounds": [
+          164.34,
+          105.325,
+          164.8563,
+          109.705
+        ],
+        "name": "west endpoint apron"
+      },
+      {
+        "bounds": [
+          179.2812,
+          105.325,
+          179.8,
+          109.705
+        ],
+        "name": "east endpoint apron"
+      }
+    ],
+    "waterBankMaxDisplacement": 0.32,
+    "contourTolerance": 0.00025,
+    "outsideCoverageTolerance": 0.00008,
+    "unchangedOriginalAttributePrefix": true,
+    "zeroAddedDrawCalls": true,
+    "sourceState": "post-final-transform-side50-road56-divider55-terrain57; plinth hook does not affect these targets",
+    "refreshCopiedSideShadowHelpers": [
+      "8_PARK_PATIKA_UST"
+    ],
+    "sampler": "wrapParkPathSampler57 after createTerrainSampler and wrapParkTerrainSampler57"
+  }
+}

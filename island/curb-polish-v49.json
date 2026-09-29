@@ -1,0 +1,93 @@
+{
+  "version": 49,
+  "variant": "kimi",
+  "bevelWidthWorld": 0.06,
+  "segments": 3,
+  "meshes": [
+    {
+      "name": "6_BORDUR",
+      "sourceVertexCount": 41990,
+      "sourceIndexCount": 77376,
+      "positions": {
+        "byteOffset": 0,
+        "count": 155349
+      },
+      "normals": {
+        "byteOffset": 621396,
+        "count": 155349
+      },
+      "index": {
+        "byteOffset": 1242792,
+        "count": 209334
+      }
+    },
+    {
+      "name": "7_KALDIRIM_TABANI",
+      "sourceVertexCount": 27956,
+      "sourceIndexCount": 83460,
+      "positions": {
+        "byteOffset": 2080128,
+        "count": 154311
+      },
+      "normals": {
+        "byteOffset": 2697372,
+        "count": 154311
+      },
+      "index": {
+        "byteOffset": 3314616,
+        "count": 214824
+      }
+    },
+    {
+      "name": "7_MERKEZ_KALDIRIM_TABANI",
+      "sourceVertexCount": 32663,
+      "sourceIndexCount": 62064,
+      "positions": {
+        "byteOffset": 4173912,
+        "count": 108864
+      },
+      "normals": {
+        "byteOffset": 4609368,
+        "count": 108864
+      },
+      "index": {
+        "byteOffset": 5044824,
+        "count": 155376
+      }
+    },
+    {
+      "name": "7_DOGU_SAHIL_KAVSAK_TABANI",
+      "sourceVertexCount": 6170,
+      "sourceIndexCount": 12240,
+      "positions": {
+        "byteOffset": 5666328,
+        "count": 20982
+      },
+      "normals": {
+        "byteOffset": 5750256,
+        "count": 20982
+      },
+      "index": {
+        "byteOffset": 5834184,
+        "count": 29628
+      }
+    },
+    {
+      "name": "7_DOGU_SAHIL_MEYDAN_APRON",
+      "sourceVertexCount": 1614,
+      "sourceIndexCount": 3180,
+      "positions": {
+        "byteOffset": 5952696,
+        "count": 9033
+      },
+      "normals": {
+        "byteOffset": 5988828,
+        "count": 9033
+      },
+      "index": {
+        "byteOffset": 6024960,
+        "count": 11142
+      }
+    }
+  ]
+}

@@ -1,0 +1,192 @@
+{
+  "version": 63,
+  "revision": "L1",
+  "variant": "kimi",
+  "patchId": "park-ring63-kimi-38fa1de1bd91",
+  "byteLength": 4678900,
+  "bufferHash": "42b7fda1",
+  "sha256": "38fa1de1bd912adaa2fd15991f11f578edce17a70cef3b97f14f2ccdd686127a",
+  "meshes": [
+    {
+      "name": "8_PARK_PATIKA_UST",
+      "sourceHash": "8b29092e",
+      "sourceVertices": 38302,
+      "sourceIndexCount": 63168,
+      "matrixWorld": [
+        179.45658377779,
+        0,
+        0,
+        0,
+        0,
+        179.45658377779,
+        0,
+        0,
+        0,
+        0,
+        179.45658377779,
+        0,
+        8.131652123901338,
+        9.4787867633086,
+        -2.1953011248415946,
+        1
+      ],
+      "vertices": 70693,
+      "positions": {
+        "byteOffset": 0,
+        "count": 212079
+      },
+      "normals": {
+        "byteOffset": 848316,
+        "count": 212079
+      },
+      "index": {
+        "byteOffset": 1696632,
+        "count": 80016
+      },
+      "removedFaceStarts": {
+        "byteOffset": 2016696,
+        "count": 5181
+      },
+      "retainedIndexCount": 47625,
+      "outputHash": "02f816b0",
+      "stats": {
+        "sourceVertices": 38302,
+        "sourceTriangles": 21056,
+        "selectedSourceTriangles": 21056,
+        "unselectedTrianglesPreserved": 0,
+        "selectedTrianglesPreservedExact": 15875,
+        "newTriangles": 10797,
+        "outputVertices": 70693,
+        "outputTriangles": 26672,
+        "originalPrefixUnchanged": true,
+        "resultNonmanifoldEdges": 0,
+        "resultOpposedEdges": 0,
+        "removedDegenerateTriangles": 0,
+        "removedDuplicateTriangles": 0,
+        "elapsedSeconds": 1.4995939590153284,
+        "collinearSeamRepairs": 0,
+        "removedSourceTriangles": 5181,
+        "retainedSourceTriangles": 15875,
+        "addedTriangles": 5616
+      }
+    },
+    {
+      "name": "3_CIMEN",
+      "sourceHash": "e341965b",
+      "sourceVertices": 53779,
+      "sourceIndexCount": 91500,
+      "matrixWorld": [
+        179.45658377779,
+        0,
+        0,
+        0,
+        0,
+        179.45658377779,
+        0,
+        0,
+        0,
+        0,
+        179.45658377779,
+        0,
+        8.131652123901338,
+        9.398031270658546,
+        -2.1953011248415946,
+        1
+      ],
+      "vertices": 89851,
+      "positions": {
+        "byteOffset": 2037420,
+        "count": 269553
+      },
+      "normals": {
+        "byteOffset": 3115632,
+        "count": 269553
+      },
+      "index": {
+        "byteOffset": 4193844,
+        "count": 118110
+      },
+      "removedFaceStarts": {
+        "byteOffset": 4666284,
+        "count": 3154
+      },
+      "retainedIndexCount": 82038,
+      "outputHash": "8b4d88a1",
+      "stats": {
+        "sourceVertices": 53779,
+        "sourceTriangles": 30500,
+        "selectedSourceTriangles": 20720,
+        "unselectedTrianglesPreserved": 9780,
+        "selectedTrianglesPreservedExact": 17566,
+        "newTriangles": 12024,
+        "outputVertices": 89851,
+        "outputTriangles": 39370,
+        "originalPrefixUnchanged": true,
+        "resultNonmanifoldEdges": 0,
+        "resultOpposedEdges": 0,
+        "removedDegenerateTriangles": 0,
+        "removedDuplicateTriangles": 0,
+        "elapsedSeconds": 1.652547167002922,
+        "collinearSeamRepairs": 0,
+        "removedSourceTriangles": 3154,
+        "retainedSourceTriangles": 27346,
+        "addedTriangles": 8870
+      }
+    }
+  ],
+  "policy": {
+    "scope": {
+      "type": "Polygon",
+      "coordinates": [
+        [
+          [
+            207,
+            69.5
+          ],
+          [
+            207,
+            114.1
+          ],
+          [
+            137.5,
+            114.1
+          ],
+          [
+            137.5,
+            69.5
+          ],
+          [
+            207,
+            69.5
+          ]
+        ]
+      ]
+    },
+    "scopeBounds": [
+      137.5,
+      69.5,
+      207,
+      114.1
+    ],
+    "walkWidth": 4.5,
+    "medialRasterStep": 0.05,
+    "splineSmoothing": 8,
+    "shorelineSetbackTarget": 2,
+    "shorelineSetbackAppliesTo": "east and south arcs outside bridge/junction masks",
+    "westNorthRoutePreservedFromPost57MedialAxis": true,
+    "lowerBridgeHasNoPathUnderDeck": true,
+    "southGrayStemPreserved": true,
+    "newPathPhysicallyClearsGrass": true,
+    "waterAndCreamRimUnchanged": true,
+    "outsideSourceFacesPreserved": true,
+    "contourTolerance": 0.00025,
+    "outsideCoverageTolerance": 0.00008,
+    "unchangedOriginalAttributePrefix": true,
+    "zeroAddedDrawCalls": true,
+    "sourceState": "post-final-transform-side50-road56-divider55-terrain57-path57",
+    "refreshCopiedSideShadowHelpers": [
+      "8_PARK_PATIKA_UST"
+    ],
+    "sampler": "wrapParkRingSampler63 outside wrapParkPathSampler57"
+  }
+}

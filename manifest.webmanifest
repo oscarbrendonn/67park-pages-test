@@ -1,0 +1,14 @@
+{
+  "id": "/67park-pages-test/",
+  "name": "67Park",
+  "short_name": "67Park",
+  "start_url": "/67park-pages-test/",
+  "scope": "/67park-pages-test/",
+  "display": "standalone",
+  "background_color": "#f6efe6",
+  "theme_color": "#f6efe6",
+  "icons": [
+    {"src": "brand/67park-icon-192-v1.png", "sizes": "192x192", "type": "image/png"},
+    {"src": "brand/67park-icon-512-v1.png", "sizes": "512x512", "type": "image/png"}
+  ]
+}

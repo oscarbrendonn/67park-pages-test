@@ -1,0 +1,35 @@
+@import url('./park-controls.css');
+@import url('../app/party/party-pack.css');
+@import url('../app/joystick-white.css');
+@import url('../app/game-viewport-guard.css?v=viewport-studio-1');
+:root{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:#3f4650;--ease-out:cubic-bezier(.23,1,.32,1);touch-action:none}
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#cbd8ee;overscroll-behavior:none}
+button,a{-webkit-tap-highlight-color:transparent}
+#game{display:block;width:100%;height:100%;touch-action:none}
+.touch{position:fixed;z-index:5;inset:0;pointer-events:none}
+.hud{position:fixed;z-index:4;left:max(16px,env(safe-area-inset-left));right:max(16px,env(safe-area-inset-right));top:max(14px,env(safe-area-inset-top));display:flex;align-items:center;gap:12px;pointer-events:none}
+.brand,.title,.race,.hint,#restart{background:#fffdf3e8;border:2px solid #fff;border-radius:24px;box-shadow:0 3px 12px #43546a1b}
+.brand{width:98px;height:58px;padding:11px 13px;display:grid;place-items:center;pointer-events:auto}.brand img{width:100%;height:auto}
+.title{padding:9px 18px;display:flex;flex-direction:column;min-width:170px}.title small{font-size:10px;font-weight:700;letter-spacing:.12em;color:#8a7a70}.title strong{font-size:20px;font-weight:750}
+.race{margin-left:auto;padding:10px 16px;display:flex;gap:15px;font-size:16px;font-weight:750;font-variant-numeric:tabular-nums}.race span+span{border-left:1px solid #d9d9cf;padding-left:15px}
+.hint{position:fixed;z-index:4;top:88px;left:max(16px,env(safe-area-inset-left));padding:8px 15px;font-size:12px;font-weight:650;max-width:calc(100vw - 142px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;pointer-events:none;transition:opacity 180ms var(--ease-out)}.hint.hide{opacity:0}
+.preview-badge{position:fixed;top:128px;left:max(16px,env(safe-area-inset-left));z-index:4;color:#425f7b;font-size:9px;font-weight:700;letter-spacing:.03em;pointer-events:none;white-space:nowrap}
+body.lane-park-ui #running-camera-settings{top:calc(88px + env(safe-area-inset-top));right:max(14px,env(safe-area-inset-right));min-height:44px;padding:6px 14px;border-radius:999px;border:1px solid #0000001a;background:#ffffffbf;color:#3f4650;font:700 12px/1.25 system-ui,-apple-system,"Segoe UI",sans-serif;box-shadow:0 1px 2px #0000000f;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
+#labels{position:fixed;inset:0;pointer-events:none;z-index:2;overflow:hidden}.racer-name{position:absolute;top:0;left:0;padding:3px 10px;border-radius:20px;background:#fffaf0d9;color:#44545b;font-size:12px;font-weight:600}
+#start{position:fixed;left:50%;top:52%;transform:translateX(-50%);z-index:8;border:2px solid white;border-radius:28px;background:#fffaf0;color:#435b58;padding:18px 32px;font:700 20px system-ui;box-shadow:0 6px 20px #43546a33;cursor:pointer}
+.countdown{position:fixed;z-index:6;inset:0;display:grid;place-items:center;pointer-events:none;font:900 clamp(26px,7vw,76px) system-ui;color:#fff;text-shadow:0 5px 0 #d9759d,0 10px 25px #51455b44;transition:opacity 160ms var(--ease-out)}.countdown.out{opacity:0}
+#restart{position:fixed;z-index:7;left:50%;top:60%;transform:translateX(-50%);padding:14px 24px;background:#f47faf;color:#fff;font:750 17px system-ui;cursor:pointer}
+@media(max-width:650px){.hud{gap:7px;top:max(8px,env(safe-area-inset-top))}.brand{width:80px;height:50px;padding:10px}.title{min-width:0;padding:8px 12px}.title strong{font-size:17px}.title small{font-size:8px}.race{padding:9px 11px;gap:8px;font-size:13px}.race span+span{padding-left:8px}.hint{top:74px}.preview-badge{top:115px}body.lane-park-ui #running-camera-settings{top:calc(74px + env(safe-area-inset-top))}}
+@media(max-width:460px){.title{display:none}}
+@media(max-height:500px){.title{display:none}.hint{top:16px;left:130px;max-width:calc(100vw - 370px)}.preview-badge{top:70px;font-size:8px}body.lane-park-ui #running-camera-settings{top:calc(74px + env(safe-area-inset-top))}}
+@media(prefers-reduced-motion:reduce){.hint,.countdown{transition:none}}
+#start{white-space:nowrap;max-width:calc(100vw - 32px)}
+#level-intro{position:fixed;z-index:7;left:50%;top:29%;transform:translateX(-50%);width:min(340px,90vw);padding:18px;text-align:center;border:2px solid white;border-radius:26px;background:#fffaf0ee;box-shadow:0 6px 20px #43546a22;pointer-events:none;display:grid;gap:6px}
+#level-intro strong{font-size:14px;letter-spacing:.14em;color:#806699}
+#level-intro span{font-size:26px;font-weight:800;color:#435b58}
+#level-intro small{font-size:11px;color:#627078}
+#level-intro[hidden]{display:none}
+.toy-preview .countdown{white-space:pre-line;text-align:center;font-size:clamp(24px,5vw,60px);line-height:1.4}
+.match-spectating .actions,.match-spectating #stick,.match-spectating #punch{display:none}
+@media(max-height:500px){#level-intro{top:25%;padding:10px;width:300px}#level-intro span{font-size:20px}#level-intro small{display:none}.toy-preview #start{top:57%}}

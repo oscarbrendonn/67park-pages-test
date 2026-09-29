@@ -1,0 +1,41 @@
+/* Block browser pinch/double-tap, not native one-finger scrolling. Include
+   nested scroll containers: touch-action ancestor intersection stops there.
+   Browser-menu/keyboard zoom and OS magnification stay available. */
+html,body,body *{touch-action:pan-y}
+input,textarea,select,[contenteditable]{font-size:max(16px,1em)}
+/* Game surfaces retain their own camera gestures. */
+body:has(.park-hud):not(:has(.wardrobe)) :is(canvas,.park-stick,.park-action,#preview-hit,#punch,.park-toolbar,.park-weather,#hawk-map-navigation,.park-chat>button,.online-toggle){
+ touch-action:none!important;
+ -webkit-user-select:none;
+ user-select:none;
+ -webkit-touch-callout:none;
+}
+/* Unlike manipulation, pan-y excludes page pinch and double-tap magnification
+   while retaining native vertical scrolling in character/clothing lists. */
+.wardrobe{touch-action:pan-y;overscroll-behavior:none}
+.wardrobe :is(button,a){touch-action:pan-y!important;-webkit-touch-callout:none}
+.wardrobe canvas{touch-action:none!important}
+.wardrobe :is(input,textarea,select){font-size:max(16px,1em)}
+/* Keep both name fields legible at their actual rendered size; never shrink
+   them with a transform. Specific IDs also beat later theme font shorthands. */
+#wardrobe-name,#studio-player-name{
+ font-size:max(18px,1em)!important;
+ line-height:1.4;
+ -webkit-text-size-adjust:100%;
+ text-size-adjust:100%;
+}
+html:has(.wardrobe),body:has(.wardrobe){background:#f6efe6!important;overscroll-behavior:none;overflow-x:clip}
+/* Cover the notch band as well as the connection label. Previously top:env()
+   left the game sky exposed above the otherwise opaque studio. */
+body:has(.wardrobe) #github-preview-notice{
+ top:0;min-height:calc(24px + env(safe-area-inset-top,0px));
+ padding-top:calc(4px + env(safe-area-inset-top,0px));background:#f6efe6;
+}
+body.lane-park-ui :is(canvas,.touch){touch-action:none!important}
+/* Standalone mini-games use their own HTML entry, not the park HUD. */
+body:has(.sp-controls,.rr-controls,.cr-pad,#touch-ui) :is(canvas,.sp-controls,.rr-controls,.cr-pad,.cr-tools,.cr-jump,#touch-ui){
+ touch-action:none!important;
+ -webkit-user-select:none;
+ user-select:none;
+ -webkit-touch-callout:none;
+}
