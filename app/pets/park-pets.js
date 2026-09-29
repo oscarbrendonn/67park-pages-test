@@ -1,7 +1,7 @@
 import * as T from 'three';
 import {createPetModels} from './pet-model.js?v=pet-play-1';
 import {createPetFollower} from './pet-follow.js?v=pet-play-1';
-import {createPetCompanion} from './pet-commands.js?v=pet-play-1';
+import {createPetCompanion} from './pet-commands.js?v=pet-play-2';
 import {createPetControls} from './pet-controls.js?v=pet-travel-1';
 import {createPetToys} from './pet-toys.js?v=pet-play-1';
 import {queuePetOwnerPose} from './pet-owner-pose.js?v=pet-play-1';

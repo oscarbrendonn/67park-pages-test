@@ -10,7 +10,7 @@ export function createPartyAudio({settings, saveSettings, gameMuted, host = wind
   // Warm only the 97KB file while the map prepares. No AudioContext, decoding,
   // autoplay or loading-screen dependency; muted entry allocates none of it.
   if(!host.document.hidden&&!gameMuted()&&settings.sfx>0)recordings.preload();
-  const limits = {step: 90, jump: 140, double: 140, land: 100, 'skate-ollie':110, 'skate-flip':140, 'skate-land':100, horn:120, swing: 150, hit: 100, pad: 250, grab: 150, throw: 150, click: 60, stars: 350, note:80, bell:1800, portal:500, 'water-splash':450, 'vehicle-start':500, 'vehicle-stop':250, 'ui-confirm':120, 'pet-call':240, 'punch-cat':600, 'punch-gorilla':600, 'punch-frog':600};
+  const limits = {step: 90, jump: 140, double: 140, land: 100, 'skate-ollie':110, 'skate-flip':140, 'skate-land':100, horn:120, swing: 150, hit: 100, pad: 250, grab: 150, throw: 150, click: 60, stars: 350, note:80, bell:1800, portal:500, 'water-splash':450, 'vehicle-start':500, 'vehicle-stop':250, 'vehicle-engine':180, 'vehicle-brake':300, 'ui-confirm':120, 'pet-call':240, 'pet-bark':500, 'pet-fetch':450, 'punch-cat':600, 'punch-gorilla':600, 'punch-frog':600};
   const audible = () => ctx?.state === 'running' && !host.document.hidden && !blocked && !gameMuted() && settings.sfx > 0;
   const volume = () => {
     if (ctx && master) master.gain.setTargetAtTime(audible() ? Math.min(1, Math.max(0, Number(settings.sfx) || 0)) * 0.65 : 0, ctx.currentTime, 0.025);
@@ -152,6 +152,8 @@ export function createPartyAudio({settings, saveSettings, gameMuted, host = wind
     'punch-frog'(){vocal({notes:[[0,220],[.06,270],[.24,130]],formants:[[0,850],[.08,1200],[.24,420]],duration:.24,gain:.075,pulses:3});},
     'pet-purr'(){for(let i=0;i<6;i++)voice({type:'triangle',from:64,to:58,duration:.13,delay:i*.09,gain:.045});},
     'pet-happy'(){voice({type:'triangle',from:360,to:440,duration:.09,gain:.055});voice({from:430,to:370,duration:.11,delay:.10,gain:.035});},
+    'pet-bark'(){vocal({notes:[[0,280],[.045,430],[.12,210]],formants:[[0,620],[.05,1100],[.16,440]],duration:.17,gain:.09});},
+    'pet-fetch'(){voice({type:'triangle',from:300,to:560,duration:.11,gain:.065});voice({type:'triangle',from:620,to:820,duration:.13,delay:.08,gain:.05});},
     // Same actual horn recording, with a finite release for assistive clicks.
     horn(){return !!recording('horn',{loop:true,duration:.22,gain:.2});},
     bell(){voice({from:660,to:660,duration:.3,gain:.16});voice({from:520,to:520,duration:.45,delay:.22,gain:.13});},
@@ -202,6 +204,12 @@ export function createPartyAudio({settings, saveSettings, gameMuted, host = wind
       voice({type:'triangle',from:124,to:236,duration:.22,delay:.06,gain:.035});
     },
     'vehicle-stop'() { voice({type:'triangle',from:180,to:72,duration:.16,gain:.08}); },
+    'vehicle-engine'(speed,p) {
+      const level=.035+Math.min(.05,Math.abs(Number(speed)||0)/700);
+      voice({type:'sawtooth',from:58,to:92,duration:.14,gain:level,pitch:p});
+      voice({type:'triangle',from:116,to:150,duration:.13,delay:.015,gain:level*.42,pitch:p});
+    },
+    'vehicle-brake'() { voice({noiseBand:'bandpass',from:980,duration:.12,gain:.07});voice({type:'triangle',from:210,to:92,duration:.18,gain:.065}); },
     'ui-confirm'() { voice({type:'sine',from:440,to:660,duration:.12,gain:.07}); voice({type:'sine',from:660,to:880,duration:.16,delay:.09,gain:.055}); },
     'pet-call'() { voice({type:'triangle',from:520,to:760,duration:.10,gain:.06}); voice({type:'triangle',from:760,to:620,duration:.14,delay:.11,gain:.045}); }
   };

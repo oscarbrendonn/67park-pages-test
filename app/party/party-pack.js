@@ -13,7 +13,7 @@ import {installSkateRailFinish} from './skate-rail-finish.js?v=flush-ends-2';
 import * as THREE from 'three';
 import {playerSettings as settings,savePlayerSettings as saveSettings} from '../player-settings.js';
 import {installPlayerSettings} from './settings-panel.js?v=recovery-graphics-1';
-import { createPartyAudio } from './party-audio.js?v=horn-hold-1&sound-pack=2';
+import { createPartyAudio } from './party-audio.js?v=horn-hold-1&sound-pack=3';
 import {createFeatureBoundary} from '../feature-boundary.js';
 import {createVehicleHorn} from './vehicle-horn.js?v=horn-hold-1';
 import {createTargetClub} from './target-club.js?v=target-club-1';
@@ -84,7 +84,7 @@ function kick(amount) { spring.v += amount; }
 function stepSpring(dt) { const a = -spring.k * spring.v - spring.c * spring.vel; spring.vel += a * dt; spring.v += spring.vel * dt; spring.v = clamp(spring.v, -0.42, 0.45); }
 let prevPunchT = 0, ballStrikeSeq = 0, wasEnabled = false, hitTumble = 0, tumbleDir = 0;
 let previousHeld = '';
-let previousMounted = null, previousSwimming = false;
+let previousMounted = null, previousSwimming = false, previousVehicleSpeed = 0, lastVehicleAudioAt = 0;
 const waterDives = [];
 
 function waterDiveEffect(pos) {
@@ -131,9 +131,24 @@ function stepWaterDives(dt) {
 }
 
 function vehicleAndWaterAudio(st) {
-  const mounted = window.__candy?.state?.().mounted || null;
+  const vehicleState = window.__candy?.state?.() || null;
+  const mounted = vehicleState?.mounted || null;
   if (mounted && !previousMounted) sfx.play('vehicle-start');
   if (!mounted && previousMounted) sfx.play('vehicle-stop');
+  if (mounted) {
+    const p = vehicleState?.position, cars = vehicleState?.cars || [];
+    let nearest = null, nearestD = Infinity;
+    if (p && Number.isFinite(p.x) && Number.isFinite(p.z)) for (const car of cars) {
+      const d = Math.hypot((car.x ?? 0) - p.x, (car.z ?? 0) - p.z);
+      if (d < nearestD) { nearestD = d; nearest = car; }
+    }
+    const speed = Number(nearest?.speed) || 0, now = performance.now();
+    if (Math.abs(speed) > .45 && now - lastVehicleAudioAt > 170) {
+      sfx.play('vehicle-engine', speed); lastVehicleAudioAt = now;
+    }
+    if (Math.abs(previousVehicleSpeed) > 2.2 && Math.abs(speed) < Math.abs(previousVehicleSpeed) - 1.6) sfx.play('vehicle-brake');
+    previousVehicleSpeed = speed;
+  } else { previousVehicleSpeed = 0; }
   previousMounted = mounted;
   const swimming = !!st?.swimming;
   if (swimming && !previousSwimming) {

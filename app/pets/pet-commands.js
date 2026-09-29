@@ -52,9 +52,9 @@ export function createPetCompanion(kind,probe,{sound=()=>{}}={}) {
     state.command=id;state.message=spec.label;actionOrigin={...owner};follow.hold();
     if(id==='follow'){phase('follow');state.message='Following you';}
     else if(['stay','sit','lie'].includes(id)){phase('hold');state.pose=id==='stay'?'idle':id;state.message=id==='stay'?'Waiting here':id==='sit'?'Sitting here':'Resting here';}
-    else if(target){phase('throw');state.ownerAction='throw';state.toy={kind:id,phase:'flying',from:{...owner,y:owner.y+.8},target,position:{...owner,y:owner.y+.8},age:0};state.message=kind==='dog'?'Fetch!':'Chase the ball!';sound('throw');}
+    else if(target){phase('throw');state.ownerAction='throw';state.toy={kind:id,phase:'flying',from:{...owner,y:owner.y+.8},target,position:{...owner,y:owner.y+.8},age:0};state.message=kind==='dog'?'Fetch!':'Chase the ball!';sound('throw');if(kind==='dog')sound('pet-bark');}
     else phase('approach');
-    if(!target)sound(kind==='dog'?'pet-happy':'pet-purr');
+    if(!target)sound(kind==='dog'?(id==='pet'?'pet-bark':'pet-happy'):'pet-purr');
     return {ok:true,message:state.message};
   }
   function step(dt,owner,yaw=0,{resting=false}={}) {
@@ -92,7 +92,7 @@ export function createPetCompanion(kind,probe,{sound=()=>{}}={}) {
     }else if(state.phase==='throw'){
       follow.hold();const toy=state.toy,t=Math.min(1,phaseAge/.7);toy.age=phaseAge;
       toy.position={x:toy.from.x+(toy.target.x-toy.from.x)*t,y:toy.from.y+(toy.target.y+.08-toy.from.y)*t+Math.sin(t*Math.PI)*1.0,z:toy.from.z+(toy.target.z-toy.from.z)*t};
-      if(t===1){toy.phase='ground';state.ownerAction='';phase(kind==='dog'?'chase':'stalk');}
+      if(t===1){toy.phase='ground';state.ownerAction='';if(kind==='dog')sound('pet-fetch');phase(kind==='dog'?'chase':'stalk');}
     }else if(state.phase==='stalk'){
       follow.hold();state.pose='stalk';if(phaseAge>.65)phase('chase');
     }else if(state.phase==='chase'){
