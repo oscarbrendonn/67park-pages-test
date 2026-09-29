@@ -1,9 +1,9 @@
 import * as T from 'three';
-import {createPetModels} from './pet-model.js?v=pet-play-1';
+import {createPetModels} from './pet-model.js?v=pet-motion-3';
 import {createPetFollower} from './pet-follow.js?v=pet-play-1';
-import {createPetCompanion} from './pet-commands.js?v=pet-play-2';
-import {createPetControls} from './pet-controls.js?v=pet-travel-1';
-import {createPetToys} from './pet-toys.js?v=pet-play-1';
+import {createPetCompanion} from './pet-commands.js?v=pet-motion-3';
+import {createPetControls} from './pet-controls.js?v=pet-motion-3';
+import {createPetToys} from './pet-toys.js?v=pet-motion-3';
 import {queuePetOwnerPose} from './pet-owner-pose.js?v=pet-play-1';
 import {petSelection,petFromCombo,comboWithPet,validPet} from './pet-state.js?v=pets-soft-2';
 
@@ -101,10 +101,13 @@ export function createParkPets({world,net,heading=()=>0,reducedMotion=()=>false,
     else {root.position.x+=(st.x-root.position.x)*factor;root.position.y+=(st.y-root.position.y)*factor;root.position.z+=(st.z-root.position.z)*factor;}
     root.rotation.y+=Math.atan2(Math.sin(st.heading-root.rotation.y),Math.cos(st.heading-root.rotation.y))*(1-Math.exp(-16*dt));
     const behavior=record.companion?.state;
-    record.model.update(dt,{speed:st.speed,reducedMotion:reducedMotion(),pose:behavior?.pose,actionTime:behavior?.actionTime,happy:behavior?.happy});
+    record.model.update(dt,{speed:st.speed,reducedMotion:reducedMotion(),autoSit:!behavior,pose:behavior?.pose,actionTime:behavior?.actionTime,playSide:behavior?.playSide,happy:behavior?.happy});
     if(localPlayer){
       if(behavior?.toy&&!toys)toys=createPetToys(current.scene);
       const toy=behavior?.toy;
+      if(toy?.phase==='carried'){
+        const point=record.model.contactPoint('carry');toy.position={x:point.x,y:point.y,z:point.z};
+      }
       if(toy&&careHand){if(toy.kind==='feather')toy.from={...careHand};if(toy.kind==='treat')toy.position={...careHand};}
       toys?.update(toy);
     }
@@ -163,6 +166,7 @@ export function createParkPets({world,net,heading=()=>0,reducedMotion=()=>false,
       const action=active&&!mounted()&&local?.model.root.visible&&canCare()&&b?.ownerAction&&n?.visible?b.ownerAction:'';
       const yaw=heading(),point=action?local.model.contactPoint(action):null;
       if(action==='feather'&&owner)point.set(owner.x-Math.cos(yaw)*.34+Math.sin(yaw)*.12,owner.y+.48,owner.z+Math.sin(yaw)*.34+Math.cos(yaw)*.12);
+      if(action==='roll'&&owner)point.set(owner.x-Math.cos(yaw)*.28+Math.sin(yaw)*.28,owner.y+.30,owner.z+Math.sin(yaw)*.28+Math.cos(yaw)*.28);
       queuePetOwnerPose(root,action?{action,time:b.actionTime,heading:yaw,point:{x:point.x,y:point.y,z:point.z}}:null,dt);
     },
     select:petSelection.select,play(){local?.model.play();},debug:()=>({selected:petSelection.get(),active,failed,...counts,local:local?{...local.model.stats,follow:local.follow.stats(),behavior:local.companion?.debug(),position:local.model.root.position.toArray()}:null,remotes:[...remotes].map(([id,r])=>({id,kind:r.kind,visible:r.model.root.visible})),remoteLimit,models:models?.stats(),toyVisible:!!toys?.root.visible}),dispose(){if(disposed)return;disposed=true;unsubscribe();clear();controls.dispose();globalThis.document?.removeEventListener('pointerdown',pointerDown);globalThis.document?.removeEventListener('pointerup',pointerUp);if(profileNet?.sendHello===wrappedHello)profileNet.sendHello=originalHello;if(onlineClient?.send===wrappedSend)onlineClient.send=originalSend;}};

@@ -1,4 +1,4 @@
-import {PET_COMMANDS} from './pet-commands.js?v=pet-play-1';
+import {PET_COMMANDS} from './pet-commands.js?v=pet-motion-3';
 const CONTROL_COMMANDS=[...PET_COMMANDS,{id:'home',label:'Send home'}];
 
 // The game already uses native dialogs: retain browser focus trapping,
@@ -23,7 +23,7 @@ export function createPetControls({snapshot,command,document:doc=globalThis.docu
     trigger.textContent=s.kind==='cat'?'Mochi · Play':'Biscuit · Play';
     if(!s.active||!s.kind){if(dialog.open)dialog.close();return;}
     title.textContent=s.kind==='cat'?'Mochi the cat':'Biscuit the dog';
-    for(const item of CONTROL_COMMANDS){const b=buttons.get(item.id);b.hidden=!!item.kind&&item.kind!==s.kind;b.disabled=item.id!=='home'&&(!s.visible||s.mounted);b.setAttribute('aria-pressed',String(s.command===item.id));}
+    for(const item of CONTROL_COMMANDS){const b=buttons.get(item.id);b.textContent=s.kind==='cat'?(item.catLabel||item.label):item.label;b.hidden=!!item.kind&&item.kind!==s.kind;b.disabled=item.id!=='home'&&(!s.visible||s.mounted);b.setAttribute('aria-pressed',String(s.command===item.id));}
     status.textContent=commandError||(s.mounted?'Resting while you ride. Your pet will return when you get out.':s.visible?s.message:'Finding a safe spot beside you…');
   }
   trigger.addEventListener('click',open);dialog.querySelector('header button').addEventListener('click',()=>dialog.close());
