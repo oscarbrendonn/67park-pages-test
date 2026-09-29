@@ -11,7 +11,7 @@ export function applyMapEdgeFinish(root,patch){
  if(root.userData.mapEdgeFinish1)return root.userData.mapEdgeFinish1;
  if(patch?.version!==1||!Array.isArray(patch.meshes)||patch.meshes.length!==8||patch.divider?.name!=='8_REF_AYIRICI'||patch.grassFill?.name!=='8_CIM_STUB_DOLGU'||patch.grassFill.source!=='3_CIMEN')throw Error('Invalid map-edge patch');
  root.updateMatrixWorld(true);
- const preserveParkContour=root.userData.parkEdges?.version>=3;
+ const preserveParkContour=root.userData.parkContourPreserved===true||root.userData.parkEdges?.version>=3;
  const prepared=[],allocated=[],seen=new Set();let fill,grass;
  function source(row,allowed){
   if(!allowed.has(row.name)||seen.has(row.name))throw Error('Invalid map-edge target');seen.add(row.name);

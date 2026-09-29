@@ -11,7 +11,7 @@ export function applyGrassBoundary(root,patch){
   !Number.isFinite(patch.metrics?.uncoveredArea)||patch.metrics.uncoveredArea>1e-8||
   !Number.isFinite(patch.metrics?.grassPavementOverlap)||patch.metrics.grassPavementOverlap>1e-8)throw Error('Invalid grass boundary patch');
  root.updateMatrixWorld(true);
- const preserveParkContour=root.userData.parkEdges?.version>=3;
+ const preserveParkContour=root.userData.parkContourPreserved===true||root.userData.parkEdges?.version>=3;
  try{
   for(const row of patch.meshes){
    if(!names.has(row.name)||seen.has(row.name))throw Error('Invalid grass boundary target');

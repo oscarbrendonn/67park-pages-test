@@ -16,7 +16,7 @@ export function applyTerrainBoundaries(root,patch){
   !Number.isFinite(patch.metrics.pathBowlAddedOverlap)||patch.metrics.pathBowlAddedOverlap>1e-6||
   !Number.isFinite(patch.metrics.pathGrassOverlap)||patch.metrics.pathGrassOverlap>1e-5)throw Error('Invalid terrain boundary patch');
  root.updateMatrixWorld(true);
- const preserveParkContour=root.userData.parkEdges?.version>=3;
+ const preserveParkContour=root.userData.parkContourPreserved===true||root.userData.parkEdges?.version>=3;
  const prepared=[],allocated=[],seen=new Set();
  function source(row,allowed){
   if(!allowed.has(row.name)||seen.has(row.name))throw Error('Invalid boundary target '+row.name);seen.add(row.name);
