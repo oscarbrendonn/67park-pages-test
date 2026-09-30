@@ -6,7 +6,7 @@ import {finishParkingGround as __parkingGroundFinish} from '../app/parking-groun
 import {applyMapJointFinish} from '../app/map-joint-finish.js?v=map-joint-finish-1';
 import {finishSportsStands as __finishSportsStands} from "../app/sports-stand-finish.js?v=stand-finish-1";
 import {createStairRailBlocker as __railCornerBlocker} from '../app/stair-rail-contact.js?v=rail-corner-1';
-import {applyNorthHousingSurface} from '../app/north-housing-surface.js?v=north-housing-8';
+import {applyNorthHousingSurface} from '../app/north-housing-surface.js?v=north-housing-9';
 import {applyPhotoSurfaceFinish} from '../app/photo-surface-finish.js?v=photo-surfaces-1';
 import {finishCoasterRails as finishCoasterRails1} from '../app/coaster-rail-finish.js?v=coaster-rail-finish-1';
 import {applyParkEntryFinish} from '../app/park-entry-finish.js?v=park-entry-finish-1';

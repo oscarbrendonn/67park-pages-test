@@ -21,6 +21,7 @@ export function applyNorthHousingSurface(root,patch){
     Math.abs(m.coastWidthMin-m.coastWalkwayWidth)>.003||Math.abs(m.coastWidthMax-m.coastWalkwayWidth)>.003||
     m.addedMeshes!==0||m.addedMaterials!==0||m.perFrameWork!==0)throw Error('Invalid northern housing surface patch');
  root.updateMatrixWorld(true);
+ const preserveParkContour=root.userData.parkContourPreserved===true||root.userData.parkEdges?.version>=3;
  const prepared=[],allocated=[];
  try{
   const road=patch.roadEnd;
@@ -53,6 +54,7 @@ export function applyNorthHousingSurface(root,patch){
    }
   }
   for(const row of patch.meshes){
+   if(preserveParkContour&&row.name==='3_CIMEN')continue;
    const mesh=root.getObjectByName(row.name),g=mesh?.geometry,e=row.expected;
    if(!TARGETS.has(row.name)||!mesh?.isMesh||Array.isArray(mesh.material)||!g?.index||
       g.attributes.position?.count!==e?.vertices||g.index.count!==e.indices||
