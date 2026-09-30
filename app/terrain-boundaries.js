@@ -29,9 +29,10 @@ export function applyTerrainBoundaries(root,patch){
  try{
   for(const row of patch.meshes){
    const {mesh,g}=source(row,ALLOWED),removed=new Set(row.remove),count=row.p.length/3;
-   // The terrain patch is baked against the park-edges output. Keep applying
-   // these rows after that prerequisite: they close the shared lawn/path seam
-   // and remove the visible stepped edge without replacing the authored mesh.
+   // park-edges-v4 owns the finished path/grass contour. Reapplying these
+   // older rows adds a second boundary and brings back the visible zig-zag.
+   // Keep the approved contour intact; the remaining rows still seal gaps.
+   if(preserveParkContour&&(row.name==='8_PARK_PATIKA_UST'||row.name==='3_CIMEN'))continue;
    if(removed.size!==row.remove.length||row.remove.some(i=>!Number.isInteger(i)||i%3||i<0||i>=g.index.count)||
     !count||!Number.isInteger(count)||row.n.length!==row.p.length||!row.p.every(Number.isFinite)||!row.n.every(Number.isFinite)||
     row.ix.length%3||row.ix.some(i=>!Number.isInteger(i)||i<0||i>=count))throw Error('Invalid boundary geometry: '+row.name);
