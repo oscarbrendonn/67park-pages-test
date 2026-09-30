@@ -81,5 +81,5 @@ export function applyTerrainBoundaries(root,patch){
  // shadow-only copy; native shadow casting on the updated model remains on.
  const rim=root.getObjectByName(FOUNTAIN[1]);
  for(const child of [...rim.children])if(child.name==='67D_DIK_YAN_GOLGE_'+FOUNTAIN[1]){rim.remove(child);child.geometry?.dispose();}
- return root.userData.terrainBoundaries2={...patch.metrics,version:2,triangleDelta,meshes:prepared.map(r=>r.mesh.name),materialsPreserved:true,preservedParkContour,perFrameWork:0};
+ return root.userData.terrainBoundaries2={...patch.metrics,version:2,triangleDelta,meshes:prepared.map(r=>r.mesh.name),materialsPreserved:true,preservedParkContour:preserveParkContour,perFrameWork:0};
 }

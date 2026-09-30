@@ -16,7 +16,7 @@ import {prepareCameraMeshes} from '../app/feel-camera-meshes.js?v=skate-corner-r
 import {applySidewalkMaterials} from '../app/sidewalk-materials.js?v=sidewalk-materials-1';
 import {applyMapEdgeFinish} from '../app/map-edge-finish.js?v=map-edge-finish-1&park-contour=1';
 import {applyGrassBoundary} from '../app/grass-boundary.js?v=grass-boundary-1&park-contour=1';
-import {applyTerrainBoundaries} from '../app/terrain-boundaries.js?v=ground-4&park-contour=1';
+import {applyTerrainBoundaries} from '../app/terrain-boundaries.js?v=ground-5&park-contour=1';
 import {assetFetch as __boundaryFetch} from '../app/entry-loading.js';
 import {applyMapContinuity} from '../app/map-continuity.js?v=seams-1';
 import {styleParkBus as __fleetBus38} from "../app/vehicle-branding.js?v=fleet-38";
