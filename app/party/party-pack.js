@@ -84,13 +84,17 @@ function kick(amount) { spring.v += amount; }
 function stepSpring(dt) { const a = -spring.k * spring.v - spring.c * spring.vel; spring.vel += a * dt; spring.v += spring.vel * dt; spring.v = clamp(spring.v, -0.42, 0.45); }
 let prevPunchT = 0, ballStrikeSeq = 0, wasEnabled = false, hitTumble = 0, tumbleDir = 0;
 let previousHeld = '';
-let previousMounted = null, previousSwimming = false, previousVehicleSpeed = 0, lastVehicleAudioAt = 0;
+let previousMounted = null, previousSwimming = false, previousWaterContact = false, previousVehicleSpeed = 0, lastVehicleAudioAt = 0;
 const waterDives = [];
 
 function waterDiveEffect(pos) {
   const s = scene(); if (!s || !pos || waterDives.length >= 4) return;
   const x = Number(pos.x), y = Number(pos.y), z = Number(pos.z);
   if (![x, y, z].every(finite)) return;
+  const w = world();
+  let surface = null;
+  try { surface = Number(w?.sea?.(x,z)); } catch {}
+  if (!finite(surface)) surface = y;
   const group = new THREE.Group(); group.name = 'PARTY_water-dive';
   const ring = new THREE.Mesh(
     new THREE.RingGeometry(0.16, 0.28, 28),
@@ -107,7 +111,7 @@ function waterDiveEffect(pos) {
     drop.position.set(Math.cos(a) * 0.16, 0.12 + (i % 2) * 0.08, Math.sin(a) * 0.16);
     group.add(drop); drops.push({mesh:drop, a, speed:0.55 + (i % 3) * 0.12});
   }
-  group.position.set(x, y, z); s.add(group);
+  group.position.set(x, surface + 0.035, z); s.add(group);
   waterDives.push({group, ring, drops, t:0});
 }
 
@@ -150,13 +154,14 @@ function vehicleAndWaterAudio(st) {
     previousVehicleSpeed = speed;
   } else { previousVehicleSpeed = 0; }
   previousMounted = mounted;
-  const swimming = !!st?.swimming;
-  if (swimming && !previousSwimming) {
+  const bodyPos = player.body?.translation?.();
+  const inWater = !!st?.swimming || !!(bodyPos && world()?.water?.(bodyPos.x, bodyPos.z));
+  if (inWater && !previousWaterContact) {
     sfx.play('water-splash');
-    const p = player.body?.translation?.();
-    if (p) waterDiveEffect(p);
+    if (bodyPos) waterDiveEffect(bodyPos);
   }
-  previousSwimming = swimming;
+  previousSwimming = !!st?.swimming;
+  previousWaterContact = inWater;
 }
 
 // ---------- hooks called by main.js ----------
