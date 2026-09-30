@@ -13,7 +13,7 @@ import {installSkateRailFinish} from './skate-rail-finish.js?v=flush-ends-2';
 import * as THREE from 'three';
 import {playerSettings as settings,savePlayerSettings as saveSettings} from '../player-settings.js';
 import {installPlayerSettings} from './settings-panel.js?v=recovery-graphics-1';
-import { createPartyAudio } from './party-audio.js?v=horn-hold-1&sound-pack=5';
+import { createPartyAudio } from './party-audio.js?v=vehicle-audio-1&sound-pack=6';
 import {createFeatureBoundary} from '../feature-boundary.js';
 import {createVehicleHorn} from './vehicle-horn.js?v=horn-hold-1';
 import {createTargetClub} from './target-club.js?v=target-club-1';
@@ -84,7 +84,7 @@ function kick(amount) { spring.v += amount; }
 function stepSpring(dt) { const a = -spring.k * spring.v - spring.c * spring.vel; spring.vel += a * dt; spring.v += spring.vel * dt; spring.v = clamp(spring.v, -0.42, 0.45); }
 let prevPunchT = 0, ballStrikeSeq = 0, wasEnabled = false, hitTumble = 0, tumbleDir = 0;
 let previousHeld = '';
-let previousMounted = null, previousSwimming = false, previousWaterContact = false, previousVehicleSpeed = 0, lastVehicleAudioAt = 0;
+let previousMounted = null, previousSwimming = false, previousWaterContact = false, previousVehicleSpeed = 0;
 const waterDives = [];
 
 function waterDiveEffect(pos) {
@@ -146,13 +146,14 @@ function vehicleAndWaterAudio(st) {
       const d = Math.hypot((car.x ?? 0) - p.x, (car.z ?? 0) - p.z);
       if (d < nearestD) { nearestD = d; nearest = car; }
     }
-    const speed = Number(nearest?.speed) || 0, now = performance.now();
-    if (Math.abs(speed) > .45 && now - lastVehicleAudioAt > 170) {
-      sfx.play('vehicle-engine', speed); lastVehicleAudioAt = now;
-    }
-    if (Math.abs(previousVehicleSpeed) > 2.2 && Math.abs(speed) < Math.abs(previousVehicleSpeed) - 1.6) sfx.play('vehicle-brake');
+    const speed = Number(nearest?.speed) || 0;
+    // Keep the engine as one continuous voice whose RPM/level follows speed;
+    // never rebuild it from periodic one-shot chirps.
+    sfx.updateVehicleEngine(speed);
+    const deceleration = Math.abs(previousVehicleSpeed) - Math.abs(speed);
+    if (Math.abs(previousVehicleSpeed) > 2.2 && deceleration > 1.6) sfx.play('vehicle-brake');
     previousVehicleSpeed = speed;
-  } else { previousVehicleSpeed = 0; }
+  } else { sfx.stopVehicleEngine(); previousVehicleSpeed = 0; }
   previousMounted = mounted;
   const bodyPos = player.body?.translation?.();
   const inWater = !!st?.swimming || !!(bodyPos && world()?.water?.(bodyPos.x, bodyPos.z));
