@@ -143,12 +143,18 @@ export function createVehicleHorn({
   const onVisibility = () => { if (documentRef?.hidden) releaseAll(); };
   const onFocus = event => { if (editableTarget(event.target) || safe(blocked)) releaseAll(); };
 
-  windowRef?.addEventListener?.('keydown', onKeyDown);
-  windowRef?.addEventListener?.('keyup', onKeyUp);
+  // Claim the focused horn's Space/Enter before the general driving keys.
+  // A bubbling listener runs too late: Space has already applied the brake.
+  windowRef?.addEventListener?.('keydown', onKeyDown, true);
+  windowRef?.addEventListener?.('keyup', onKeyUp, true);
   windowRef?.addEventListener?.('pointerup', onPointerEnd);
   windowRef?.addEventListener?.('pointercancel', onPointerEnd);
   windowRef?.addEventListener?.('blur', releaseAll);
   windowRef?.addEventListener?.('pagehide', releaseAll);
+  // Viewport changes do not reliably cancel captured touches. Releasing the
+  // pedals but keeping a displaced horn held leaves it sounding indefinitely.
+  const layoutInterruptions = ['resize', 'orientationchange', 'park:release-controls'];
+  for (const type of layoutInterruptions) windowRef?.addEventListener?.(type, releaseAll);
   documentRef?.addEventListener?.('visibilitychange', onVisibility);
   documentRef?.addEventListener?.('focusin', onFocus);
   step();
@@ -161,12 +167,13 @@ export function createVehicleHorn({
       if (disposed) return;
       disposed = true;
       releaseAll();
-      windowRef?.removeEventListener?.('keydown', onKeyDown);
-      windowRef?.removeEventListener?.('keyup', onKeyUp);
+      windowRef?.removeEventListener?.('keydown', onKeyDown, true);
+      windowRef?.removeEventListener?.('keyup', onKeyUp, true);
       windowRef?.removeEventListener?.('pointerup', onPointerEnd);
       windowRef?.removeEventListener?.('pointercancel', onPointerEnd);
       windowRef?.removeEventListener?.('blur', releaseAll);
       windowRef?.removeEventListener?.('pagehide', releaseAll);
+      for (const type of layoutInterruptions) windowRef?.removeEventListener?.(type, releaseAll);
       documentRef?.removeEventListener?.('visibilitychange', onVisibility);
       documentRef?.removeEventListener?.('focusin', onFocus);
       if (button) {
