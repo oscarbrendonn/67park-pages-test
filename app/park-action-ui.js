@@ -13,7 +13,8 @@ const vehicleLabels = {Accelerate:['gas','Gas'],Reverse:['reverse','Reverse'],Br
 export function installParkActionUI(doc = document) {
   const selector = '.park-action,#btn-jump,#btn-sprint,#btn-grab';
   const utilities = '#party-settings-btn,#park-home-button';
-  const observedSelector = selector + ',' + utilities;
+  const observedSelector = selector + ',' + utilities + ',.park-toolbar';
+  let settingsButton = null;
   const actions = {emote:'emote',bag:'bag',skate:'skate',walk:'walk',interact:'interact',exit:'exit',sprint:'sprint',jump:'jump'};
   const specific = {'btn-jump':['jump','Jump'],'btn-sprint':['sprint','Sprint'],'btn-grab':['punch','Dash']};
   doc.body.classList.add('park-unified-ui');
@@ -23,7 +24,18 @@ export function installParkActionUI(doc = document) {
   const decorate = () => {
     // These controls arrive independently. Keep the original nodes/listeners,
     // but let flex layout reserve space for Homes invites and notch insets.
-    const buttons = ['party-settings-btn','park-home-button'].map(id => doc.getElementById(id)).filter(Boolean);
+    settingsButton = doc.getElementById('party-settings-btn') || settingsButton;
+    const toolbar = doc.querySelector('.park-toolbar');
+    if(settingsButton && !settingsButton.querySelector('.park-settings-icon')){
+      settingsButton.innerHTML='<svg class="park-settings-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9.4 3-.6 2.2-1.6.9L5 5.5 2.5 9.8l1.6 1.6v1.8L2.5 15 5 19.3l2.2-.6 1.6.9.6 2.2h5.2l.6-2.2 1.6-.9 2.2.6 2.5-4.3-1.6-1.8v-1.8l1.6-1.6L19 5.5l-2.2.6-1.6-.9-.6-2.2Z" transform="translate(0 -1) scale(1 .98)"/><circle cx="12" cy="11.5" r="3.2"/></svg><span>Settings</span>';
+      settingsButton.title='Settings';
+    }
+    if(toolbar && settingsButton && settingsButton.parentElement!==toolbar){
+      toolbar.insertBefore(settingsButton,toolbar.querySelector('[aria-label="Return to lobby"]'));
+    }
+    // React may unmount the toolbar when opening Profile. Retain the original
+    // settings node and its handlers, and restore it when the toolbar returns.
+    const buttons = [!toolbar && settingsButton,doc.getElementById('park-home-button')].filter(Boolean);
     if (buttons.length) {
       let dock = doc.getElementById('park-utilities');
       if (!dock) {
@@ -63,7 +75,7 @@ export function installParkActionUI(doc = document) {
   const observer = new MutationObserver(records => {
     if (records.some(record => {
       const target = record.target.nodeType === 1 ? record.target : record.target.parentElement;
-      return target?.closest?.(observedSelector) || [...record.addedNodes].some(node => node.nodeType === 1 && (node.matches(observedSelector) || node.querySelector(observedSelector)));
+      return target?.closest?.(observedSelector) || [...record.addedNodes,...record.removedNodes].some(node => node.nodeType === 1 && (node.matches(observedSelector) || node.querySelector(observedSelector)));
     })) decorate();
   });
   const observe = () => observer.observe(doc.body,{childList:true,subtree:true,characterData:true});

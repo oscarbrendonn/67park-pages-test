@@ -36,6 +36,52 @@
 .park-unified-ui #stick-knob svg{width:26px;height:26px;pointer-events:none}
 .park-unified-ui .park-action:focus-visible{outline:3px solid #56878f;outline-offset:5px}
 @media(prefers-reduced-motion:reduce){.park-unified-ui .park-action{transition:none}}
+/* One top-level navigation row. No scaling of the world or touch targets. */
+body.park-unified-ui .park-toolbar{position:fixed!important;top:calc(var(--preview-top,24px) + 6px)!important;bottom:auto!important;gap:5px!important;padding:6px!important;transform:translateX(-50%)!important;left:50%!important;right:auto!important;width:max-content!important;max-width:calc(100vw - 24px - env(safe-area-inset-left) - env(safe-area-inset-right))!important}
+body.park-unified-ui .park-toolbar>button{flex:0 0 auto;min-width:44px!important;min-height:44px!important}
+body.park-unified-ui .park-toolbar>span>span{display:none!important}
+body.park-unified-ui .park-toolbar>button[aria-label="Profile studio"]{width:44px!important;padding:0!important;justify-content:center}
+body.park-unified-ui .park-toolbar>button[aria-label="Profile studio"]>span{display:none!important}
+body.park-unified-ui .park-toolbar>#party-settings-btn{position:static!important;inset:auto!important;display:flex;align-items:center;justify-content:center;gap:7px;margin:0!important;padding:0 12px!important;min-height:44px!important;border:2px solid #fff7;border-radius:17px;background:#dfcef6!important;color:#594a72!important;box-shadow:inset 0 2px 0 #fff9,0 3px 0 #afa0bf66;font:700 13px system-ui;touch-action:manipulation}
+body.park-unified-ui .park-toolbar>#party-settings-btn[hidden]{display:none!important}
+.park-settings-icon{width:24px;height:24px;pointer-events:none}
+body.park-unified-ui .park-toolbar>button:focus-visible{outline:3px solid #56878f;outline-offset:3px}
+body.park-unified-ui .park-toolbar>#party-settings-btn:active{transform:scale(.97)}
+@media(max-width:1000px){
+ body.park-unified-ui .park-toolbar>button{width:44px!important;padding:0!important}
+ body.park-unified-ui .park-toolbar>button>span{display:none!important}
+ body.park-unified-ui .park-toolbar>span>span{display:none!important}
+ body.park-unified-ui .park-toolbar>span img{width:44px!important;height:auto!important}
+ body.park-unified-ui .park-toolbar>#party-settings-btn{padding:0!important}
+}
+@media(pointer:coarse) and (orientation:landscape){
+ body.park-unified-ui .park-toolbar>span{display:none!important}
+ body.park-unified-ui .park-toolbar{gap:4px!important;padding:4px 6px!important}
+ body.park-unified-ui .park-toolbar>button{width:44px!important;padding:0!important}
+ body.park-unified-ui .park-toolbar>button>span{display:none!important}
+ body.park-unified-ui .park-toolbar>#party-settings-btn{padding:0!important}
+}
+/* Geographic markers are inexpensive DOM dots, not extra 3D avatars. */
+#park-map-players{position:fixed;inset:0;z-index:48;pointer-events:none;overflow:hidden}
+.park-map-player{position:absolute;top:0;left:0;width:44px;height:44px;padding:0;border:0;background:none;pointer-events:auto;display:grid;place-items:center;touch-action:manipulation;color:#39483f}
+.park-map-player[hidden]{display:none}
+.park-map-player-dot{width:17px;height:17px;border:3px solid white;border-radius:50%;background:var(--player-color);box-shadow:0 2px 6px #0005}
+.park-map-player.is-self{z-index:2}
+.park-map-player.is-self .park-map-player-dot{width:21px;height:21px;box-shadow:0 0 0 4px #60bea560,0 2px 6px #0004}
+.park-map-player-count{position:absolute;right:0;top:0;padding:1px 4px;border-radius:8px;background:#fff9ed;border:1px solid #b7c5b6;font:700 10px system-ui;pointer-events:none}
+.park-map-player-count[hidden]{display:none}
+.park-map-player-name{position:absolute;top:38px;left:50%;transform:translateX(-50%);max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:4px 8px;border:1px solid #fff;border-radius:12px;background:#fff9ed;box-shadow:0 2px 5px #0002;font:700 12px system-ui;display:none;pointer-events:none}
+.park-map-player:is(.is-self,.is-selected,:focus-visible) .park-map-player-name{display:block}
+.park-map-player.is-cluster-member .park-map-player-name{display:none}
+.park-map-player:focus-visible{outline:2px solid #56878f;border-radius:50%}
+@media(hover:hover) and (pointer:fine){.park-map-player:hover .park-map-player-name{display:block}}
+.park-map-legend{font-weight:700;margin-bottom:3px;color:#537469}
+#hawk-map-navigation{font-size:12px!important}
+#hawk-map-navigation>div:last-child{gap:4px!important}
+#hawk-map-navigation output{font-size:11px;min-width:29px}
+/* The map owns the bottom area while open; never cover live drive/run buttons. */
+body:has(#hawk-map-navigation) :is(.park-stick,.park-action,#preview-hit,#party-throw,.park-pet-button,.park-hint){visibility:hidden!important;pointer-events:none!important}
+@media(max-width:359px){#hawk-map-navigation{padding:8px!important}#hawk-map-navigation button{font-size:13px!important}}
 /* Short portrait phones cannot fit enlarged actions below the utility row.
    Keep Punch and Throw above the left joystick, clear of the right action grid. */
 @media(pointer:coarse) and (max-width:359px) and (max-height:600px) and (orientation:portrait){

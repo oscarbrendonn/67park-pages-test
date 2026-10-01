@@ -1,0 +1,32 @@
+{
+  "revision": "map-player-hud-20261001-1",
+  "parentPublicCommit": "21227817c8ae7999f2a0cfbe8ba3dfd440edf44c",
+  "moduleChanges": [
+    {
+      "file": "app/hawk-map-controls.js",
+      "sourceSha256": "5af0f262a03cb6b2f5971aa621499e690bf15b63099ec73a67213f25e3b9d29c",
+      "publicSha256": "5af0f262a03cb6b2f5971aa621499e690bf15b63099ec73a67213f25e3b9d29c"
+    },
+    {
+      "file": "app/main.js",
+      "sourceSha256": "efcce54b5fbffd505c804fca944280e69814153df12212361a6c116c1728eb0f",
+      "publicSha256": "832f2cd7168c0588af9255472be193972409058956ea75f918adccf2290fe2f0"
+    },
+    {
+      "file": "app/park-action-ui.js",
+      "sourceSha256": "c6174e331830a5014555fe076661aea74394daa091cbfa96c80dbcc9555d8174",
+      "publicSha256": "c6174e331830a5014555fe076661aea74394daa091cbfa96c80dbcc9555d8174"
+    },
+    {
+      "file": "app/park-action-ui.css",
+      "sourceSha256": "8db39f21af6c2d04616f2ad5f34de3228b2a8af95e195616181e555457a18ce8",
+      "publicSha256": "8db39f21af6c2d04616f2ad5f34de3228b2a8af95e195616181e555457a18ce8"
+    },
+    {
+      "file": "app/map-player-markers.js",
+      "sourceSha256": "029070b615386be8792d0beb17482e6cdb52d1df0626b27d14f4ba8cea77ece7",
+      "publicSha256": "029070b615386be8792d0beb17482e6cdb52d1df0626b27d14f4ba8cea77ece7"
+    }
+  ],
+  "physicalDeviceVerified": false
+}

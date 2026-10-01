@@ -1,4 +1,5 @@
 // Bird's-eye navigation; teleport uses the game's validated callback.
+import {mapPlayers,createMapPlayerLayer} from './map-player-markers.js?v=map-player-hud-20261001-1';
 const states = new WeakMap();
 const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
 export function transformHawkView(view, from, to, scale, viewport, limits) {
@@ -19,7 +20,7 @@ export function installHawkMapControls(camera, hawk, config, host = window) {
   states.get(camera)?.dispose();
   const doc = host.document, pointers = new Map(), listeners = [];
   let canvas = null, oldTouchAction = '', panel = null, output = null, view = null, enabled = false, frame = null;
-  let tap=null,lastTap=null,hint=null;
+  let tap=null,lastTap=null,hint=null,playerLayer=null,legend=null,lastPlayersAt=0;
   const requestRender = () => {
     if(doc.hidden || config.blocked?.())return;
     config.requestRender?.();
@@ -46,16 +47,25 @@ export function installHawkMapControls(camera, hawk, config, host = window) {
     camera.up.set(0,0,-1);
     camera.position.set(view.x, config.planeY + view.height, view.z);
     camera.lookAt(view.x, config.planeY, view.z);
+    const now=host.performance?.now()??Date.now();
+    if(playerLayer && now-lastPlayersAt>=80){
+      lastPlayersAt=now;
+      const state=config.players?.()||{},players=mapPlayers(state);
+      playerLayer.update(players,view,viewport(),config.planeY);
+      const count=players.filter(p=>!p.self).length;
+      const text=state.connected?`You · ${count} other ${count===1?'player':'players'} in this park`:'You · Offline';
+      if(legend.textContent!==text)legend.textContent=text;
+    }
   };
   const reset = () => {
     release();
     view = {x:config.center.x,z:config.center.z,height:Math.max(90,config.fitHeight(camera.fov,camera.aspect)-config.planeY)};
-    render();report();requestRender();
+    lastPlayersAt=-Infinity;render();report();requestRender();
   };
   const change = (from,to,scale=1) => {
     if (!enabled || config.blocked?.()) { release(); return; }
     transformHawkView(view,from,to,scale,viewport(),limits());
-    render();report();requestRender();
+    lastPlayersAt=-Infinity;render();report();requestRender();
   };
   const zoom = scale => { const vp=viewport(),p={x:vp.width/2,y:vp.height/2}; change(p,p,scale); };
   const sync = () => {
@@ -68,14 +78,23 @@ export function installHawkMapControls(camera, hawk, config, host = window) {
       panel=doc.createElement('section');panel.id='hawk-map-navigation';panel.setAttribute('aria-label','Bird’s-eye map navigation');
       panel.style.cssText='position:fixed;z-index:90;bottom:max(18px,env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);padding:10px;border-radius:20px;background:#fff8ecef;color:#424943;box-shadow:0 4px 18px #0002;font:13px system-ui;max-width:calc(100vw - 24px);text-align:center;pointer-events:auto;';
       hint=doc.createElement('div');hint.textContent='Drag to explore · Pinch to zoom · Double-tap to travel';panel.append(hint);
+      legend=doc.createElement('div');legend.className='park-map-legend';panel.prepend(legend);
+      playerLayer=createMapPlayerLayer(doc);
       const controls=doc.createElement('div');controls.style.cssText='display:flex;align-items:center;justify-content:center;gap:6px;margin-top:6px';panel.append(controls);
       const button=(label,text,action)=>{const b=doc.createElement('button');b.type='button';b.setAttribute('aria-label',label);b.textContent=text;b.style.cssText='min-width:44px;min-height:44px;border:1px solid #d5dfd4;border-radius:12px;background:#f6f1e6;color:inherit;font:600 15px system-ui;touch-action:manipulation;';b.addEventListener('click',action);controls.append(b);};
       button('Zoom out map','−',()=>zoom(1.3));
       output=doc.createElement('output');output.setAttribute('aria-label','Map zoom');controls.append(output);
-      button('Zoom in map','+',()=>zoom(1/1.3));button('Fit whole map','Fit',reset);button('Return to player','Back',()=>hawk.set(false));
+      button('Zoom in map','+',()=>zoom(1/1.3));button('Fit whole map','Fit',reset);
+      button('Find my location','Me',()=>{
+        const self=mapPlayers(config.players?.()).find(p=>p.self);if(!self)return;
+        release();view.x=self.p.x;view.z=self.p.z;view.height=Math.min(view.height,150);
+        lastPlayersAt=-Infinity;render();report();requestRender();
+      });
+      button('Return to player','Back',()=>hawk.set(false));
       doc.body.append(panel);reset();
     } else {
       if(canvas)canvas.style.touchAction=oldTouchAction;
+      playerLayer?.dispose();playerLayer=null;legend=null;
       panel?.remove();panel=null;output=null;view=null;canvas=null;
       requestRender();
     }
@@ -114,7 +133,7 @@ export function installHawkMapControls(camera, hawk, config, host = window) {
   on(host,'blur',release);on(doc,'visibilitychange',release);on(host,'resize',release);
   on(host,'wheel',e=>{if(!enabled||e.target!==canvas||config.blocked?.())return;e.preventDefault();const p=local(e);change(p,p,Math.exp(clamp(e.deltaY,-240,240)*.003));},{passive:false});
   const unsub=hawk.sub(sync);
-  const dispose=()=>{unsub();release();delete camera.userData.parkOverview;if(frame!==null)host.cancelAnimationFrame?.(frame);for(const remove of listeners)remove();if(canvas)canvas.style.touchAction=oldTouchAction;panel?.remove();states.delete(camera);};
+  const dispose=()=>{unsub();release();delete camera.userData.parkOverview;if(frame!==null)host.cancelAnimationFrame?.(frame);for(const remove of listeners)remove();if(canvas)canvas.style.touchAction=oldTouchAction;playerLayer?.dispose();panel?.remove();states.delete(camera);};
   states.set(camera,{render,dispose});sync();return dispose;
 }
 
