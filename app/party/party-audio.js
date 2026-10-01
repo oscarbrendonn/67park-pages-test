@@ -1,6 +1,7 @@
 import {createNaturalAudioBank,FOLEY_CLIPS} from './natural-audio.js?v=natural-audio-1';
 import {createVehicleAudio} from './vehicle-audio.js?v=five-gears-1';
 import {createCowVoice} from './cow-voice.js?v=cow-release-1';
+import {createInteractionAudioBank,INTERACTION_CLIPS} from './interaction-audio.js?v=interaction-foley-1';
 
 // One audio graph; bounded voices; no animation-loop ownership.
 export function createPartyAudio({settings, saveSettings, gameMuted, host = window}) {
@@ -9,6 +10,8 @@ export function createPartyAudio({settings, saveSettings, gameMuted, host = wind
   const pendingEffects=new Map();
   const recordedEffects=new Set(['jump','double','land','skate-ollie','skate-flip','skate-land','horn']);
   const recordings=createNaturalAudioBank({host,onReady:soundHeldHorn});
+  const interactions=createInteractionAudioBank({host});
+  const interactionEffects=new Set(['throw','water-splash','pet-bark','pet-happy','pet-purr','pet-toy','toy-bounce']);
   // Warm only the 97KB file while the map prepares. No AudioContext, decoding,
   // autoplay or loading-screen dependency; muted entry allocates none of it.
   if(!host.document.hidden&&!gameMuted()&&settings.sfx>0)recordings.preload();
@@ -56,6 +59,7 @@ export function createPartyAudio({settings, saveSettings, gameMuted, host = wind
       volume();
       // Load/decode once in the existing gesture-unlocked graph; never block entry.
       recordings.load(ctx);
+      interactions.load(ctx);
       if(cowSelected())cowVoice.load();
       return ctx;
     } catch { return null; } // Audio failure must never disable gameplay or the party pack.
@@ -90,14 +94,14 @@ export function createPartyAudio({settings, saveSettings, gameMuted, host = wind
     if (audible()) soundHeldHorn();
     else resuming?.then(soundHeldHorn); // release before iOS unlock cancels this start
   }
-  function recording(name,{gain=.4,pitch=1,loop=false,duration}={}){
-    if(!audible()||!recordings.buffer||voices.size>=24)return null;
-    const clip=FOLEY_CLIPS[name];if(!clip)return null;
+  function recording(name,{gain=.4,pitch=1,loop=false,duration,bank=recordings,clips=FOLEY_CLIPS}={}){
+    if(!audible()||!bank.buffer||voices.size>=24)return null;
+    const clip=clips[name];if(!clip)return null;
     let source,envelope;
     try{
       source=ctx.createBufferSource();envelope=ctx.createGain();
       const start=ctx.currentTime,v={source,envelope,started:start};
-      source.buffer=recordings.buffer;source.playbackRate.value=pitch;
+      source.buffer=bank.buffer;source.playbackRate.value=pitch;
       source.loop=loop;
       if(loop){source.loopStart=clip.offset+clip.loopStart;source.loopEnd=clip.offset+clip.loopEnd;}
       envelope.gain.setValueAtTime(0,start);
@@ -119,6 +123,7 @@ export function createPartyAudio({settings, saveSettings, gameMuted, host = wind
       return null;
     }
   }
+  const interaction=(name,options)=>!!recording(name,{...options,bank:interactions,clips:INTERACTION_CLIPS});
   function voice({noiseBand, type = 'sine', from = 400, to = 200, duration = 0.09, gain = 0.15, delay = 0, pitch = 1}) {
     if (!audible() || voices.size >= 24) return;
     const start = ctx.currentTime + delay, end = start + duration;
@@ -174,17 +179,19 @@ export function createPartyAudio({settings, saveSettings, gameMuted, host = wind
     'punch-cat'(){vocal({notes:[[0,580],[.055,760],[.14,590],[.3,340]],formants:[[0,900],[.09,1900],[.3,600]],duration:.3,gain:.075});},
     'punch-gorilla'(){vocal({notes:[[0,110],[.05,145],[.2,62]],formants:[[0,430],[.05,650],[.2,190]],duration:.2,gain:.1,pulses:2});},
     'punch-frog'(){vocal({notes:[[0,220],[.06,270],[.24,130]],formants:[[0,850],[.08,1200],[.24,420]],duration:.24,gain:.075,pulses:3});},
-    'pet-purr'(){for(let i=0;i<6;i++)voice({type:'triangle',from:64,to:58,duration:.13,delay:i*.09,gain:.045});},
-    'pet-happy'(){voice({type:'triangle',from:360,to:440,duration:.09,gain:.055});voice({from:430,to:370,duration:.11,delay:.10,gain:.035});},
-    'pet-bark'(){vocal({notes:[[0,280],[.045,430],[.12,210]],formants:[[0,620],[.05,1100],[.16,440]],duration:.17,gain:.09});},
-    'pet-fetch'(){voice({type:'triangle',from:300,to:560,duration:.11,gain:.065});voice({type:'triangle',from:620,to:820,duration:.13,delay:.08,gain:.05});},
-    // Pet actions use short, low-volume layers: a soft contact transient plus
-    // a rounded body tone. They read as foley instead of the old sharp UI beep.
-    'pet-pounce'(){voice({noiseBand:'bandpass',from:900,duration:.09,gain:.035});voice({type:'triangle',from:175,to:92,duration:.13,delay:.025,gain:.055});},
-    'pet-paw'(){voice({noiseBand:'lowpass',from:680,duration:.055,gain:.055});voice({type:'triangle',from:245,to:125,duration:.08,delay:.012,gain:.032});},
-    'pet-pickup'(){voice({type:'triangle',from:430,to:255,duration:.08,gain:.04});voice({noiseBand:'bandpass',from:1250,duration:.045,delay:.018,gain:.028});},
-    'pet-drop'(){voice({type:'triangle',from:190,to:82,duration:.11,gain:.05});voice({noiseBand:'lowpass',from:420,duration:.09,delay:.014,gain:.034});},
-    'pet-roll'(){voice({noiseBand:'bandpass',from:280,duration:.14,gain:.028});},
+    'pet-purr'(){return interaction('purr',{gain:.24});},
+    'pet-happy'(_,p){return interaction('bark',{gain:.12,pitch:1+(p-1)*.3});},
+    'pet-bark'(_,p){return interaction('bark',{gain:.22,pitch:1+(p-1)*.3});},
+    'pet-toy'(_,p){return interaction('toy',{gain:.14,pitch:1+(p-1)*.3});},
+    'toy-bounce'(_,p){return interaction('ball',{gain:.12,pitch:1.14+(p-1)*.3});},
+    // Do not turn every pet state transition into an electronic notification.
+    // The ball's actual ground contact / bite owns its foley in pet-commands.
+    'pet-fetch'(){return false;},
+    'pet-pounce'(){return false;},
+    'pet-paw'(){return false;},
+    'pet-pickup'(){return false;},
+    'pet-drop'(){return false;},
+    'pet-roll'(){return false;},
     // Same actual horn recording, with a finite release for assistive clicks.
     horn(){return !!recording('horn',{loop:true,duration:.22,gain:.2});},
     bell(){voice({from:660,to:660,duration:.3,gain:.16});voice({from:520,to:520,duration:.45,delay:.22,gain:.13});},
@@ -230,9 +237,7 @@ export function createPartyAudio({settings, saveSettings, gameMuted, host = wind
       voice({from:750, to:1500, duration:0.18, delay:0.16, gain:0.07, pitch:p});
     },
     grab(_, p) { voice({from:440, to:280, duration:0.10, gain:0.18, pitch:p}); voice({from:660, to:520, duration:0.08, delay:0.04, gain:0.07, pitch:p}); },
-    // A rounded toy-projectile whoosh; avoid the sharp "tif" transient that
-    // previously made every throw sound like a UI click.
-    throw(_, p) { voice({noiseBand:'bandpass', from:720, duration:0.2, gain:0.085, pitch:p}); voice({type:'triangle', from:260, to:105, duration:0.16, gain:0.11, pitch:p}); voice({type:'sine', from:420, to:610, duration:0.12, delay:0.035, gain:0.035, pitch:p}); },
+    throw(_,p){return interaction('whoosh',{gain:.22,pitch:1+(p-1)*.35});},
     click(_, p) { voice({from:750, to:570, duration:0.045, gain:0.10, pitch:p}); },
     stars(_, p) { [880,1100,1320].forEach((f,i)=>voice({from:f,to:f*1.02,duration:0.15,delay:i*0.08,gain:0.065,pitch:p})); },
     portal() {
@@ -240,11 +245,7 @@ export function createPartyAudio({settings, saveSettings, gameMuted, host = wind
       voice({type:'sine',from:520,to:1040,duration:.28,delay:.08,gain:.075});
       voice({type:'sine',from:1040,to:1560,duration:.34,delay:.17,gain:.045});
     },
-    'water-splash'() {
-      voice({noiseBand:'lowpass',from:900,duration:.22,gain:.24});
-      voice({type:'sine',from:420,to:150,duration:.28,delay:.015,gain:.12});
-      voice({type:'triangle',from:780,to:390,duration:.2,delay:.08,gain:.055});
-    },
+    'water-splash'(impact=.5,p){const strength=Math.max(0,Math.min(1,Number(impact)||0));return interaction('splash',{gain:.12+strength*.29,pitch:1.06-strength*.1+(p-1)*.3});},
     'ui-confirm'() { voice({type:'sine',from:440,to:660,duration:.12,gain:.07}); voice({type:'sine',from:660,to:880,duration:.16,delay:.09,gain:.055}); },
     'pet-call'() { voice({type:'triangle',from:520,to:760,duration:.10,gain:.06}); voice({type:'triangle',from:760,to:620,duration:.14,delay:.11,gain:.045}); }
   };
@@ -253,10 +254,11 @@ export function createPartyAudio({settings, saveSettings, gameMuted, host = wind
       // First touch can reach the controller a few milliseconds before Safari
       // finishes resume/decode. Preserve that one cue, but never replay it after
       // a slow load, mute, blur or page change. No timer or movement dependency.
-      if(ctx&&recordedEffects.has(name)&&!host.document.hidden&&!blocked&&!gameMuted()&&settings.sfx>0&&(!audible()||!recordings.buffer)){
+      const bank=interactionEffects.has(name)?interactions:recordedEffects.has(name)?recordings:null;
+      if(ctx&&bank&&!host.document.hidden&&!blocked&&!gameMuted()&&settings.sfx>0&&(!audible()||!bank.buffer)){
         if(pendingEffects.has(name))return;
         const token={at:Date.now()};pendingEffects.set(name,token);
-        Promise.all([recordings.load(ctx),resuming]).then(([ready])=>{
+        Promise.all([bank.load(ctx),resuming]).then(([ready])=>{
           if(pendingEffects.get(name)!==token)return;
           pendingEffects.delete(name);
           if(ready&&Date.now()-token.at<=80&&audible())play(name,arg);
@@ -266,8 +268,9 @@ export function createPartyAudio({settings, saveSettings, gameMuted, host = wind
       if (!audible() || !recipes[name]) return;
       if (name === 'horn' && hornWanted) return;
       const now = ctx.currentTime * 1000;
-      const rateKey=name==='note'?'note:'+Math.max(0,Math.min(5,Math.trunc(Number(arg)||0))):name;
-      if (now - (last.get(rateKey) ?? -Infinity) < (limits[name] ?? 80)) return;
+      const rateKey=name==='note'?'note:'+Math.max(0,Math.min(5,Math.trunc(Number(arg)||0))):name==='pet-happy'?'pet-bark':name;
+      const interval=name==='pet-purr'?1800:name==='pet-toy'?600:limits[rateKey]??80;
+      if (now - (last.get(rateKey) ?? -Infinity) < interval) return;
       volume();
       if(recipes[name](arg, 0.96 + Math.random() * 0.08)===false)return;
       last.set(rateKey, now);
@@ -318,11 +321,12 @@ export function createPartyAudio({settings, saveSettings, gameMuted, host = wind
   return {
     ensure, play, startHorn, stopHorn, updateVehicleEngine, stopVehicleEngine,
     ready:()=>ctx?recordings.load(ctx):Promise.resolve(false),
+    interactionReady:()=>ctx?interactions.load(ctx):Promise.resolve(false),
     vehicleReady:()=>ctx?vehicle.ready():Promise.resolve(false),
     cowReady:()=>ctx?cowVoice.load():Promise.resolve(false),
     punch(base){play('swing');if(base==='cow67')cowVoice.play();const sound={cat67:'punch-cat',goril:'punch-gorilla',frog67:'punch-frog'}[base];if(sound)play(sound);},
     state: () => ctx?.state || 'none',
     setVolume(value) { settings.sfx = Math.min(1, Math.max(0, Number(value) || 0)); quiet(); saveSettings(); },
-    stats: () => ({voices:voices.size, maxVoices:24, counts:{...counts}, cowVoice:cowVoice.stats(), hornActive:!!hornVoice, engineActive:vehicle.stats().active, vehicle:vehicle.stats(), state:ctx?.state || 'none',recordings:recordings.stats()})
+    stats: () => ({voices:voices.size, maxVoices:24, counts:{...counts}, cowVoice:cowVoice.stats(), hornActive:!!hornVoice, engineActive:vehicle.stats().active, vehicle:vehicle.stats(), state:ctx?.state || 'none',recordings:recordings.stats(),interactions:interactions.stats()})
   };
 }

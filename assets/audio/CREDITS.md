@@ -82,3 +82,17 @@ Converted to mono PCM16 at 24 kHz, 65 Hz high-pass / 6.5 kHz low-pass,
 The full 2.18-second call is retained. A new accepted punch fades the old call
 before retriggering; mute and page hiding cancel pending and active calls.
 This separate, lazy cow sample does not alter the vehicle or foley banks.
+# Interaction foley v1 — 2026-10-01
+
+268,844-byte mono 24 kHz PCM bank; loaded in the existing gesture-unlocked audio graph, never awaited by startup. No GTA or Eggy Party audio is shipped.
+
+All recordings below are CC0. Original public preview checksums, precise trims, fades and bank checksum are in `interaction-foley-v1.json`; rebuild with `node qa/build-interaction-audio.mjs <source-directory>`.
+
+- Pool entry: **Water Splash**, felix.blume / Sara Lana — https://freesound.org/people/felix.blume/sounds/434978/ (first 2.45 seconds; close swimming-pool dive).
+- Dog response: **Dog bark 3**, Sadiquecat — https://freesound.org/people/Sadiquecat/sounds/850824/ (0.34 seconds).
+- Cat care: **Cat Purr**, Joseph SARDIN — https://bigsoundbank.com/cat-purr-s0436.html (2.00–3.65 seconds).
+- Throw: **Stick - Whoosh 5**, Sadiquecat — https://freesound.org/people/Sadiquecat/sounds/802463/ (0.015–0.36 seconds).
+- Dog biting its ball: **Squeaky Toy #2**, Breviceps — https://freesound.org/people/Breviceps/sounds/468444/ (2.00–2.43 seconds).
+- Toy-ball contact: **basketball**, noamp2003 — https://freesound.org/people/noamp2003/sounds/460649/ (single contact, 0.195–0.43 seconds, quietly mixed for the small toy).
+
+Gentle DC removal, 55 Hz high-pass / 9.5 kHz low-pass, peak headroom and short edge fades; no synthetic tones added to these recordings. Technical sample/envelope checks are not a substitute for listening approval on the player's speakers.

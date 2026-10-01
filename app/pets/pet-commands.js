@@ -27,8 +27,8 @@ export function createPetCompanion(kind,probe,{sound=()=>{}}={}) {
     if(value==='pounce')sound('pet-pounce');
     else if(value==='roll')sound('pet-roll');
     else if(value==='bat'||(value==='care'&&state.command==='paw'))sound('pet-paw');
-    else if(value==='pickup')sound('pet-pickup');
-    else if(value==='drop')sound('pet-drop');
+    else if(value==='pickup')sound(kind==='dog'&&state.toy?.kind==='ball'?'pet-toy':'pet-pickup');
+    else if(value==='drop')sound(state.toy?.kind==='ball'?'toy-bounce':'pet-drop');
   }
   function finish(message='Following you',count=true) {
     if(count&&state.command!=='follow')state.completed++;state.command='follow';phase('follow');state.pose='idle';state.ownerAction='';state.toy=null;state.message=message;age=0;
@@ -121,7 +121,7 @@ export function createPetCompanion(kind,probe,{sound=()=>{}}={}) {
     }else if(state.phase==='throw'){
       follow.hold();const toy=state.toy,t=Math.min(1,phaseAge/.7);toy.age=phaseAge;
       toy.position={x:toy.from.x+(toy.target.x-toy.from.x)*t,y:toy.from.y+(toy.target.y+.08-toy.from.y)*t+Math.sin(t*Math.PI)*1.0,z:toy.from.z+(toy.target.z-toy.from.z)*t};
-      if(t===1){toy.phase='ground';state.ownerAction='';if(kind==='dog')sound('pet-fetch');phase('chase');}
+      if(t===1){toy.phase='ground';state.ownerAction='';if(toy.kind==='ball')sound('toy-bounce');phase('chase');}
     }else if(state.phase==='stalk'){
       faceToy(dt);state.pose='stalk';if(phaseAge>.65)phase('chase');
     }else if(state.phase==='chase'){

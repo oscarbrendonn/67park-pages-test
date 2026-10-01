@@ -1,0 +1,70 @@
+{
+  "sampleRate": 24000,
+  "channels": 1,
+  "license": "CC0",
+  "clips": {
+    "splash": {
+      "offset": 0,
+      "duration": 2.45,
+      "file": "splash.mp3",
+      "start": 0,
+      "end": 2.45,
+      "fade": 0.22,
+      "source": "https://freesound.org/people/felix.blume/sounds/434978/",
+      "sourceSha256": "47db85ab1f917190ac327113e2c5e615d7026516e7552be1f2a42208caff9066"
+    },
+    "bark": {
+      "offset": 2.475,
+      "duration": 0.34,
+      "file": "bark.mp3",
+      "start": 0,
+      "end": 0.34,
+      "fade": 0.035,
+      "source": "https://freesound.org/people/Sadiquecat/sounds/850824/",
+      "sourceSha256": "ba240df067eec77906b6006f44ae96590ff35039ab1685ce175eac478fdc8aa2"
+    },
+    "purr": {
+      "offset": 2.84,
+      "duration": 1.65,
+      "file": "purr.mp3",
+      "start": 2,
+      "end": 3.65,
+      "fade": 0.16,
+      "source": "https://bigsoundbank.com/cat-purr-s0436.html",
+      "sourceSha256": "1809316c24ddd40363201bdf09d1f43ae72a275c2510c552c286fee0ec53cac5"
+    },
+    "whoosh": {
+      "offset": 4.515,
+      "duration": 0.345,
+      "file": "whoosh.mp3",
+      "start": 0.015,
+      "end": 0.36,
+      "fade": 0.055,
+      "source": "https://freesound.org/people/Sadiquecat/sounds/802463/",
+      "sourceSha256": "779043e1bf128b4fa774aea55d2615fab29a30a9108ea2d25c0d509c97b78ed1"
+    },
+    "toy": {
+      "offset": 4.885,
+      "duration": 0.43,
+      "file": "toy.mp3",
+      "start": 2,
+      "end": 2.43,
+      "fade": 0.035,
+      "source": "https://freesound.org/people/Breviceps/sounds/468444/",
+      "sourceSha256": "9fefc9313b8f5a154da7b5f4150c4d6b338707a87c09669bd37843de56466913"
+    },
+    "ball": {
+      "offset": 5.34,
+      "duration": 0.235,
+      "file": "ball.mp3",
+      "start": 0.195,
+      "end": 0.43,
+      "fade": 0.045,
+      "source": "https://freesound.org/people/noamp2003/sounds/460649/",
+      "sourceSha256": "9091f0251d1312cba6aa89a12bafdc9f98e87b212cede9488062d8cef87ea75d"
+    }
+  },
+  "bytes": 268844,
+  "duration": 5.6,
+  "sha256": "73ef81de9ac82d7f7a257b569b978065579c923845e58a30acd3976b1be34df1"
+}

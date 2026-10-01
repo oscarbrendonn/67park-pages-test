@@ -18,6 +18,7 @@ import {readVehicleFeedbackInput} from '../chunk-OZ77422N.js?v=contact-escape-1'
 import {createFeatureBoundary} from '../feature-boundary.js';
 import {createVehicleHorn} from './vehicle-horn.js?v=horn-hold-1';
 import {createTargetClub} from './target-club.js?v=target-club-1';
+import {createWaterEntryFeedback} from './water-entry-feedback.js?v=water-contact-1';
 
 const BASE = new URL('../../', import.meta.url).pathname.replace(/\/$/, '');
 const CFG = Object.assign({runtime: '', carry: ''}, (typeof window !== 'undefined' && window.__partyConfig) || {});
@@ -85,55 +86,10 @@ function kick(amount) { spring.v += amount; }
 function stepSpring(dt) { const a = -spring.k * spring.v - spring.c * spring.vel; spring.vel += a * dt; spring.v += spring.vel * dt; spring.v = clamp(spring.v, -0.42, 0.45); }
 let prevPunchT = 0, ballStrikeSeq = 0, wasEnabled = false, hitTumble = 0, tumbleDir = 0;
 let previousHeld = '';
-let previousMounted = null, previousSwimming = false, previousWaterContact = false;
-const waterDives = [];
+let previousMounted = null;
+const waterEntry=createWaterEntryFeedback({world,scene,reducedMotion,sound:(name,strength)=>sfx.play(name,strength)});
+window.__parkWaterEntry=waterEntry;
 
-function waterDiveEffect(pos) {
-  const s = scene(); if (!s || !pos || waterDives.length >= 4) return;
-  const x = Number(pos.x), y = Number(pos.y), z = Number(pos.z);
-  if (![x, y, z].every(finite)) return;
-  const w = world();
-  let surface = null;
-  try { surface = Number(w?.sea?.(x,z)); } catch {}
-  if (!finite(surface)) surface = y;
-  const group = new THREE.Group(); group.name = 'PARTY_water-dive';
-  const ring = new THREE.Mesh(
-    new THREE.RingGeometry(0.16, 0.28, 28),
-    new THREE.MeshBasicMaterial({color:'#c9f4f1', transparent:true, opacity:0.9, depthWrite:false, side:THREE.DoubleSide})
-  );
-  ring.rotation.x = -Math.PI / 2; ring.position.y = 0.02; group.add(ring);
-  const drops = [];
-  for (let i = 0; i < 6; i++) {
-    const a = (i / 6) * Math.PI * 2 + 0.18;
-    const drop = new THREE.Mesh(
-      new THREE.SphereGeometry(0.055, 8, 6),
-      new THREE.MeshBasicMaterial({color:'#e8ffff', transparent:true, opacity:0.9, depthWrite:false})
-    );
-    drop.position.set(Math.cos(a) * 0.16, 0.12 + (i % 2) * 0.08, Math.sin(a) * 0.16);
-    group.add(drop); drops.push({mesh:drop, a, speed:0.55 + (i % 3) * 0.12});
-  }
-  group.position.set(x, surface + 0.035, z); s.add(group);
-  waterDives.push({group, ring, drops, t:0});
-}
-
-function stepWaterDives(dt) {
-  for (let i = waterDives.length - 1; i >= 0; i--) {
-    const fx = waterDives[i]; fx.t += dt; const k = fx.t / 0.72;
-    fx.ring.scale.setScalar(0.6 + k * 2.7);
-    fx.ring.material.opacity = Math.max(0, 0.9 * (1 - k));
-    for (const d of fx.drops) {
-      d.mesh.position.x = Math.cos(d.a) * (0.16 + k * d.speed);
-      d.mesh.position.z = Math.sin(d.a) * (0.16 + k * d.speed);
-      d.mesh.position.y = 0.12 + (1 - k) * 0.28 - k * k * 0.36;
-      d.mesh.material.opacity = Math.max(0, 0.9 * (1 - k));
-    }
-    if (k >= 1) {
-      fx.group.removeFromParent();
-      fx.group.traverse(o => { o.geometry?.dispose?.(); o.material?.dispose?.(); });
-      waterDives.splice(i, 1);
-    }
-  }
-}
 
 function vehicleAndWaterAudio(st) {
   const vehicleState = window.__candy?.state?.() || null;
@@ -147,14 +103,6 @@ function vehicleAndWaterAudio(st) {
     sfx.updateVehicleEngine(Number(car.physics?.speed)||0,{kind:car.kind,throttle:input.throttle,brake:input.brake,ignition:previousMounted!==car.id});
   }else if(previousMounted!==null)sfx.stopVehicleEngine(true);
   previousMounted=roadVehicle?car.id:null;
-  const bodyPos = player.body?.translation?.();
-  const inWater = !!st?.swimming || !!(bodyPos && world()?.water?.(bodyPos.x, bodyPos.z));
-  if (inWater && !previousWaterContact) {
-    sfx.play('water-splash');
-    if (bodyPos) waterDiveEffect(bodyPos);
-  }
-  previousSwimming = !!st?.swimming;
-  previousWaterContact = inWater;
 }
 
 // ---------- hooks called by main.js ----------
@@ -169,7 +117,7 @@ window.__partyStep = guard((body, input, dt, map) => {
   features.run('knockback',()=>knockStep(dt));
   features.run('footsteps',()=>footsteps(state(), dt));
   features.run('vehicle-water-audio',()=>vehicleAndWaterAudio(state()));
-  features.run('water-dive-fx',()=>stepWaterDives(dt));
+  features.run('water-dive-fx',()=>waterEntry.step({position:body?.translation?.(),velocityY:body?.linvel?.().y,dt,enabled:map==='city'&&!window.__candy?.state?.().mounted}));
   const held = heldId();
   if (held && !previousHeld) sfx.play('grab');
   previousHeld = held;
@@ -186,6 +134,7 @@ window.__partyVisual = guard((group, dt) => {
   features.run('toys-visual',()=>toys.visual(group,dt));
   features.run('pets-visual',()=>pets.visual(group,dt));
   features.run('swim-visual',()=>{if(player.map==='city')world()?.parkSwimVisual?.(group);});
+  features.run('water-entry-visual',()=>{if(player.map==='city')waterEntry.visual(group,player.body?.translation?.());});
   player.visual = group || null;
   dt = clamp(finite(dt) ? dt : 0, 0, 0.05);
   const st = state();
