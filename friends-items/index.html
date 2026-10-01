@@ -1,41 +1,67 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#f5f4ec">
-  <meta name="robots" content="noindex, nofollow">
-  <title>Friends · Wearable Items</title>
-  <style>
-    *{box-sizing:border-box}body{margin:0;min-height:100svh;display:grid;place-items:center;padding:28px 18px;background:#f5f4ec;color:#243c32;font:16px/1.55 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-    main{width:min(100%,480px);background:#fffefa;border:1px solid #dae2d6;border-radius:28px;padding:clamp(24px,6vw,40px);box-shadow:0 12px 50px #2944380b}
-    .eyebrow{margin:0 0 14px;font-size:12px;font-weight:750;letter-spacing:.13em;text-transform:uppercase;color:#637966}h1{font-size:clamp(29px,7vw,38px);line-height:1.12;letter-spacing:-.035em;margin:0 0 16px;text-wrap:balance}p{margin:0 0 24px;color:#5a6d60}
-    .download{min-height:56px;display:flex;align-items:center;justify-content:center;gap:12px;width:100%;padding:14px 20px;border-radius:16px;background:#28583f;color:white;font-weight:700;text-decoration:none;touch-action:manipulation;transition:transform 120ms cubic-bezier(.23,1,.32,1)}
-    .download:focus-visible{outline:3px solid #c18a28;outline-offset:4px}.download:active{transform:scale(.98)}.download svg{width:20px;height:20px;flex:none}
-    .size{text-align:center;font-size:13px;margin:10px 0 28px}ul{list-style:none;margin:0;padding:0;display:grid;gap:0}li{display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-bottom:1px solid #edf0e8;font-size:14px}li:last-child{border:0}li span{font-variant-numeric:tabular-nums;font-weight:700}
-    footer{font-size:12px;color:#68766b;margin-top:24px}.note{margin:24px 0 0;font-size:13px}
-    @media(hover:hover) and (pointer:fine){.download:hover{background:#1e4933}}
-    @media(prefers-reduced-motion:reduce){.download{transition:none}.download:active{transform:none}}
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f4f3ee">
+<meta name="robots" content="noindex, nofollow">
+<title>Friends — Item Studio</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="studio.css?v=1">
+<script type="importmap">{"imports":{"three":"../vendor/three.module.js","three/addons/":"../vendor/addons/"}}</script>
 </head>
 <body>
-  <main>
-    <p class="eyebrow">Friends · Asset pack</p>
-    <h1>Just the items.</h1>
-    <p>Wearable accessories in one ZIP.<br>No character models or body parts.</p>
-    <a class="download" href="Friends-Wearable-Items-2026-10-02.zip" download="Friends-Wearable-Items-2026-10-02.zip">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/></svg>
-      Download ZIP
-    </a>
-    <p class="size">111 GLB files · 17.3 MB</p>
-    <ul aria-label="Pack contents">
-      <li>Eyewear <span>1</span></li>
-      <li>Headwear <span>28</span></li>
-      <li>Back accessories <span>41</span></li>
-      <li>Footwear <span>41</span></li>
-    </ul>
-    <p class="note">Organized by category. Includes a file manifest and checksums for verification.</p>
-    <footer>This download is public. The original assets' license terms still apply.</footer>
-  </main>
+<header class="topbar">
+<a class="brand" href="./"><span class="brand-mark" aria-hidden="true">f.</span><span>Friends<small>ITEM STUDIO</small></span></a>
+<p class="top-note">A little space to make it yours.</p>
+<a class="button subtle zip" href="Friends-Wearable-Items-2026-10-02.zip" download>Originals ZIP <span aria-hidden="true">↗</span></a>
+</header>
+<nav class="mobile-tabs" aria-label="Workspace panel"><button type="button" data-panel="browse" aria-pressed="true">Browse collection</button><button type="button" data-panel="edit" aria-pressed="false">Edit selected item</button></nav>
+<main class="workspace" data-panel="browse">
+<aside class="library panel" aria-label="Item library">
+<div class="panel-heading"><div><span class="eyebrow">THE COLLECTION</span><h1>Small things.<br>Big personality.</h1></div><span class="count" id="total-count">118</span></div>
+<label class="search"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="Find an item or ID" aria-label="Search items" autocomplete="off"></label>
+<div class="categories" id="categories" aria-label="Filter by category"></div>
+<p class="list-summary" id="list-summary" role="status"></p>
+<div class="item-grid" id="item-grid"></div>
+<p class="empty" id="empty" hidden>No items found. Try another search or category.</p>
+<p class="library-foot">111 original accessories + 7 procedural effects.<br>No character models. Original asset licenses apply.</p>
+</aside>
+<section class="stage-panel" aria-label="3D item preview">
+<div class="stage-heading"><div><span class="eyebrow" id="item-category">ITEM PREVIEW</span><h2 id="item-name">Opening the studio…</h2></div><span class="badge" id="draft-badge">Original</span></div>
+<div id="viewport" tabindex="0" aria-label="Interactive 3D preview. Drag to rotate; pinch or scroll to zoom."><div class="loading" id="loading" role="status">Loading 3D preview…</div></div>
+<div class="view-tools" aria-label="Camera controls"><button type="button" id="previous" aria-label="Previous item">←</button><div><button type="button" data-view="front">Front</button><button type="button" data-view="side">Side</button><button type="button" data-view="back">Back</button><button type="button" data-view="fit">Fit</button></div><button type="button" id="next" aria-label="Next item">→</button></div>
+<p class="gesture-note">Drag to orbit · Pinch or scroll to zoom</p>
+<div class="stage-footer"><span id="item-id">—</span><span id="item-size">—</span></div>
+</section>
+<aside class="inspector panel" aria-label="Item editor">
+<div class="inspector-heading"><div><span class="eyebrow">MAKE IT YOURS</span><h2>Details & finish</h2></div><button class="text-button" id="reset" type="button">Reset</button></div>
+<p class="help" id="kind-note">Edits are saved on this browser only. Original files stay untouched.</p>
+<fieldset id="editing" disabled>
+<section class="edit-section"><h3>Appearance</h3>
+<label class="field">Material<select id="material" aria-label="Material"></select></label>
+<label class="field model-only">Color treatment<select id="color-mode"><option value="original">Original texture</option><option value="tint">Tint the texture</option><option value="solid">Solid color</option></select></label>
+<label class="color-field">Color<input type="color" id="color" value="#ffffff"><output id="color-value">#FFFFFF</output></label>
+<label class="range-field">Roughness <output id="roughness-value"></output><input id="roughness" type="range" min="0" max="1" step="0.01"></label>
+<label class="range-field">Metallic <output id="metalness-value"></output><input id="metalness" type="range" min="0" max="1" step="0.01"></label>
+</section>
+<section class="edit-section"><h3>Transform</h3>
+<label class="range-field">Size <output id="scale-value">100%</output><input id="scale" type="range" min="0.25" max="2" step="0.01" value="1"></label>
+<label class="range-field">Rotation <output id="rotation-value">0°</output><input id="rotation" type="range" min="-180" max="180" step="1" value="0"></label>
+<div class="axes"><label>X offset<input id="offset-x" aria-label="X offset" type="number" min="-2" max="2" step="0.05" value="0"></label><label>Y offset<input id="offset-y" aria-label="Y offset" type="number" min="-2" max="2" step="0.05" value="0"></label><label>Z offset<input id="offset-z" aria-label="Z offset" type="number" min="-2" max="2" step="0.05" value="0"></label></div>
+<p class="micro">Offsets are relative to the item's longest dimension.</p>
+</section>
+<section class="edit-section effect-only" hidden><h3>Motion</h3><label class="range-field">Speed <output id="speed-value">1×</output><input id="speed" type="range" min="0" max="3" step="0.1" value="1"></label><p class="micro">0 pauses the effect. Reduced-motion settings are respected.</p></section>
+</fieldset>
+<div class="history"><button type="button" id="undo" disabled>↶ Undo</button><button type="button" id="redo" disabled>↷ Redo</button><button type="button" id="snapshot" disabled>Save PNG</button></div>
+<button type="button" class="button primary" id="export" disabled>Export edited GLB <span aria-hidden="true">↓</span></button>
+<a class="original-link" id="original" download>Download original item</a>
+<a class="original-link effect-only" id="runtime" href="effect-runtime.js" download hidden>Download effect runtime (.js)</a>
+<p class="export-note" id="export-note">GLB keeps the item's materials and skinning. The editor's floor and lights are not exported.</p>
+<p class="save-status" id="save-status" role="status">Your edits stay on this device.</p>
+</aside>
+</main>
+<noscript>This 3D studio needs JavaScript. <a href="Friends-Wearable-Items-2026-10-02.zip">Download the original item pack</a>.</noscript>
+<script type="module" src="studio.js?v=1"></script>
 </body>
 </html>

@@ -1,0 +1,1001 @@
+[
+  {
+    "id": "friendsie_26:90",
+    "name": "Green Round Frames",
+    "kind": "model",
+    "category": "Eyewear",
+    "url": "../models/items/friendsie_26/90.glb",
+    "bytes": 563360,
+    "sha256": "00b1b5e2cb3294466a693c583be0bf869560b316265c3380195a82755bbc0782"
+  },
+  {
+    "id": "friendsie_100:1",
+    "name": "Pastel skull",
+    "kind": "model",
+    "category": "Headwear",
+    "url": "../models/items/friendsie_100/1.glb",
+    "bytes": 78372,
+    "sha256": "76c7bbaa7baad6c4e80e6825a91505ff5940ce878ae75f75236e9885e9e662fa"
+  },
+  {
+    "id": "friendsie_1000:1",
+    "name": "Gold star",
+    "kind": "model",
+    "category": "Headwear",
+    "url": "../models/items/friendsie_1000/1.glb",
+    "bytes": 38032,
+    "sha256": "8a42f3b3efb73821361d7c7321dbe73de3aa05e557835e3eba735e48d0d2532a"
+  },
+  {
+    "id": "friendsie_1111:1",
+    "name": "Golden crown",
+    "kind": "model",
+    "category": "Headwear",
+    "url": "../models/items/friendsie_1111/1.glb",
+    "bytes": 65680,
+    "sha256": "ed249d5cb068b5861ca75c8c34d9e7db2b0a5c40d70877b34a9d9c4cb6859ceb"
+  },
+  {
+    "id": "friendsie_123:1",
+    "name": "Cloud topper",
+    "kind": "model",
+    "category": "Headwear",
+    "url": "../models/items/friendsie_123/1.glb",
+    "bytes": 100168,
+    "sha256": "ae0e53fa39ee02cfb3cff628f9e859f43570a0bd3f503ee626fb3ceaf819dc5b"
+  },
+  {
+    "id": "friendsie_200:1",
+    "name": "Black bunny ears",
+    "kind": "model",
+    "category": "Headwear",
+    "url": "../models/items/friendsie_200/1.glb",
+    "bytes": 61304,
+    "sha256": "d90c3874734964b7f5186cf5f489f7dd6aceebc335687be4664c9cbdfcb8040d"
+  },
+  {
+    "id": "friendsie_2000:1",
+    "name": "Black bunny ears II",
+    "kind": "model",
+    "category": "Headwear",
+    "url": "../models/items/friendsie_2000/1.glb",
+    "bytes": 61280,
+    "sha256": "39d423cf01bbcf08928e05f02243812a8dcdbc364a72e7c2086a5a67f361582d"
+  },
+  {
+    "id": "friendsie_3333:1",
+    "name": "Cloud topper II",
+    "kind": "model",
+    "category": "Headwear",
+    "url": "../models/items/friendsie_3333/1.glb",
+    "bytes": 99412,
+    "sha256": "d310775dfc43812564de27a5a1d418ced52c0ff8fb729404ab69b122439b49aa"
+  },
+  {
+    "id": "friendsie_404:1",
+    "name": "Golden antenna",
+    "kind": "model",
+    "category": "Headwear",
+    "url": "../models/items/friendsie_404/1.glb",
+    "bytes": 53176,
+    "sha256": "c0bdf42320857c4d75c0fc7b97def96e77c8d37febd21392ea34e16145e93317"
+  },
+  {
+    "id": "friendsie_500:1",
+    "name": "Frog topper",
+    "kind": "model",
+    "category": "Headwear",
+    "url": "../models/items/friendsie_500/1.glb",
+    "bytes": 135696,
+    "sha256": "8d948afdced970183e02cda05a493fbb53370aba3deb9ea4b6b423cf712d9eba"
+  },
+  {
+    "id": "friendsie_5000:1",
+    "name": "Candy target",
+    "kind": "model",
+    "category": "Headwear",
+    "url": "../models/items/friendsie_5000/1.glb",
+    "bytes": 85752,
+    "sha256": "b37319926c6117e201281f132fa2be7627f2516e26454b785c9c48f14166a0b9"
+  },
+  {
+    "id": "friendsie_666:1",
+    "name": "Orange horns",
+    "kind": "model",
+    "category": "Headwear",
+    "url": "../models/items/friendsie_666/1.glb",
+    "bytes": 47096,
+    "sha256": "0349f3c944417f9d2dbf9a891b57163bbc341e425d6641e1187e6833c6325aa3"
+  },
+  {
+    "id": "friendsie_777:1",
+    "name": "Golden cloud",
+    "kind": "model",
+    "category": "Headwear",
+    "url": "../models/items/friendsie_777/1.glb",
+    "bytes": 94644,
+    "sha256": "35d76a5ef8916eb9c3fca76b61d5bcd07f68be6d60785a8d657b970ac40a8372"
+  },
+  {
+    "id": "friendsie_88:1",
+    "name": "Golden crown II",
+    "kind": "model",
+    "category": "Headwear",
+    "url": "../models/items/friendsie_88/1.glb",
+    "bytes": 68660,
+    "sha256": "f75a91ae50db10f6e8c54fcfe57cd3222d8e634514a3672fe545b8d5da430bd3"
+  },
+  {
+    "id": "friendsie_888:1",
+    "name": "Mint bunny ears",
+    "kind": "model",
+    "category": "Headwear",
+    "url": "../models/items/friendsie_888/1.glb",
+    "bytes": 61096,
+    "sha256": "fe60d90597dfba41d3b09daedfd615499c7efa33bedb76e34078cdd7eb39c62c"
+  },
+  {
+    "id": "friendsie_6:1",
+    "name": "Storm cloud",
+    "kind": "model",
+    "category": "Headwear",
+    "url": "../models/items/friendsie_6/1.glb",
+    "bytes": 148732,
+    "sha256": "00f05fff53ec9b72089bc28ddeb38dd274f452e1f71df99dc7cdf6a2512f7d0b"
+  },
+  {
+    "id": "friendsie_17:1",
+    "name": "White skull",
+    "kind": "model",
+    "category": "Headwear",
+    "url": "../models/items/friendsie_17/1.glb",
+    "bytes": 370908,
+    "sha256": "de0eacab80b60913ee8d5c88ca9a3601c7f8ecaa92b8327c1b821903de28731a"
+  },
+  {
+    "id": "friendsie_18:1",
+    "name": "Orange horns II",
+    "kind": "model",
+    "category": "Headwear",
+    "url": "../models/items/friendsie_18/1.glb",
+    "bytes": 305476,
+    "sha256": "b9e7447e530666cd4406b4e6a112359ad90c9608c8fbbc7af43561bb7573f130"
+  },
+  {
+    "id": "friendsie_22:1",
+    "name": "Dark pyramid",
+    "kind": "model",
+    "category": "Headwear",
+    "url": "../models/items/friendsie_22/1.glb",
+    "bytes": 257860,
+    "sha256": "f44586bc041f74aadf8ad4263c4b6b1f86e114120ad4e0373dcfa986f19e09de"
+  },
+  {
+    "id": "friendsie_23:1",
+    "name": "Golden cloud II",
+    "kind": "model",
+    "category": "Headwear",
+    "url": "../models/items/friendsie_23/1.glb",
+    "bytes": 520532,
+    "sha256": "9fa5f1f580441a9a8c1418e66410ab216d45c4dfc59b730f0bffef2dd2bff7ce"
+  },
+  {
+    "id": "friendsie_32:1",
+    "name": "Spiky antennae",
+    "kind": "model",
+    "category": "Headwear",
+    "url": "../models/items/friendsie_32/1.glb",
+    "bytes": 875380,
+    "sha256": "f7c2c17d15a3ee4361db37c225422214e6140478aeb5b077cfc285860512c0cf"
+  },
+  {
+    "id": "friendsie_40:1",
+    "name": "Octopus topper",
+    "kind": "model",
+    "category": "Headwear",
+    "url": "../models/items/friendsie_40/1.glb",
+    "bytes": 298964,
+    "sha256": "90e809df050969e91ab96413f29bb7dacc57a2d5e2de5f848a6ebbfbd16b0cd0"
+  },
+  {
+    "id": "friendsie_46:1",
+    "name": "Golden cloud III",
+    "kind": "model",
+    "category": "Headwear",
+    "url": "../models/items/friendsie_46/1.glb",
+    "bytes": 520584,
+    "sha256": "85257ff894c46fdb22ea9f43a89e49e6f6fc0418df3ef01ca1c2c625f22da6aa"
+  },
+  {
+    "id": "friendsie_49:1",
+    "name": "Golden cloud IV",
+    "kind": "model",
+    "category": "Headwear",
+    "url": "../models/items/friendsie_49/1.glb",
+    "bytes": 520296,
+    "sha256": "185201522428610f657a443c9bcd7456b7f77c1581043721d8b3903b0637f7ce"
+  },
+  {
+    "id": "friendsie_51:1",
+    "name": "Pastel branches",
+    "kind": "model",
+    "category": "Headwear",
+    "url": "../models/items/friendsie_51/1.glb",
+    "bytes": 756436,
+    "sha256": "6ad5daa4200c3bc36df21c819fed90ec3884bb0ae1d294d6d890dcd735bbfaa7"
+  },
+  {
+    "id": "friendsie_54:1",
+    "name": "Golden crown III",
+    "kind": "model",
+    "category": "Headwear",
+    "url": "../models/items/friendsie_54/1.glb",
+    "bytes": 282948,
+    "sha256": "4646ec46b9c35d4a63f162a59e53029806242661aa58ee6a25d678117f19f500"
+  },
+  {
+    "id": "friendsie_58:1",
+    "name": "Bear topper",
+    "kind": "model",
+    "category": "Headwear",
+    "url": "../models/items/friendsie_58/1.glb",
+    "bytes": 101588,
+    "sha256": "76a63d82c945e677d18807c42c96fe01606431de7b05675675ec20935c8513cd"
+  },
+  {
+    "id": "friendsie_2:1",
+    "name": "Little Crown",
+    "kind": "model",
+    "category": "Headwear",
+    "url": "../models/items/friendsie_2/1.glb",
+    "bytes": 462424,
+    "sha256": "72c65246d1cb289457b5d97b0ffef76ad11e205c5657b4387b790790bfb58b19"
+  },
+  {
+    "id": "friendsie_8:90",
+    "name": "Playtime Cap",
+    "kind": "model",
+    "category": "Headwear",
+    "url": "../models/items/friendsie_8/90.glb",
+    "bytes": 870600,
+    "sha256": "70a73e3b39eed2f512d7c1969865f5c924bcfeedd4fae67dd1441fb293749a4d"
+  },
+  {
+    "id": "friendsie_100:4",
+    "name": "Pastel wings",
+    "kind": "model",
+    "category": "Back",
+    "url": "../models/items/friendsie_100/4.glb",
+    "bytes": 132308,
+    "sha256": "87c11783a3e4a4a09f4ccaa746ea734d2847901fdd79d743696fff69635fe024"
+  },
+  {
+    "id": "friendsie_1000:3",
+    "name": "Color-wheel shield",
+    "kind": "model",
+    "category": "Back",
+    "url": "../models/items/friendsie_1000/3.glb",
+    "bytes": 70076,
+    "sha256": "e1d2b43d309cac2e7b22cc497c1a641c14b8c61bea3f172f67e6c57408f53118"
+  },
+  {
+    "id": "friendsie_1111:4",
+    "name": "Mint backpack",
+    "kind": "model",
+    "category": "Back",
+    "url": "../models/items/friendsie_1111/4.glb",
+    "bytes": 150160,
+    "sha256": "d775879439b1171bef0a489d5e7343610d1e0add85975daf59177bf5f57c8303"
+  },
+  {
+    "id": "friendsie_12:3",
+    "name": "Flame tail",
+    "kind": "model",
+    "category": "Back",
+    "url": "../models/items/friendsie_12/3.glb",
+    "bytes": 85012,
+    "sha256": "7baa50ca4143abbc0120dd67be4b8d5d6265928162a3b46c579d604af1528df8"
+  },
+  {
+    "id": "friendsie_123:4",
+    "name": "Mint board",
+    "kind": "model",
+    "category": "Back",
+    "url": "../models/items/friendsie_123/4.glb",
+    "bytes": 89200,
+    "sha256": "931908208cfdf0d13bc49d951611e9ed5cd6bb4afbc23d45499e034966597a50"
+  },
+  {
+    "id": "friendsie_200:4",
+    "name": "Butterfly wings",
+    "kind": "model",
+    "category": "Back",
+    "url": "../models/items/friendsie_200/4.glb",
+    "bytes": 60120,
+    "sha256": "39c517d2a7d215465dddf6a933614754b2d6c1ca42a521804381bab26b584f10"
+  },
+  {
+    "id": "friendsie_2000:4",
+    "name": "Orbit pack",
+    "kind": "model",
+    "category": "Back",
+    "url": "../models/items/friendsie_2000/4.glb",
+    "bytes": 155660,
+    "sha256": "5a9cfda99928297d2475bb5642a8e7b59f6a46c127c11dfd4f2e78a9390fb598"
+  },
+  {
+    "id": "friendsie_250:3",
+    "name": "Adventure propeller",
+    "kind": "model",
+    "category": "Back",
+    "url": "../models/items/friendsie_250/3.glb",
+    "bytes": 68960,
+    "sha256": "57c3186e65d3230022874206dc765900792f0e68ee1502f0a8929370ba9467a8"
+  },
+  {
+    "id": "friendsie_2500:2",
+    "name": "White backplate",
+    "kind": "model",
+    "category": "Back",
+    "url": "../models/items/friendsie_2500/2.glb",
+    "bytes": 71544,
+    "sha256": "45170d8c21b1826624acdfdfe6dae41ea313d0487686a4d54d773ed0ed838e14"
+  },
+  {
+    "id": "friendsie_333:3",
+    "name": "Space pack",
+    "kind": "model",
+    "category": "Back",
+    "url": "../models/items/friendsie_333/3.glb",
+    "bytes": 106976,
+    "sha256": "23f2e454ce73f61e6bf8c0e3c9eeabb9235b922ea268e763f0e98627b8ceadb6"
+  },
+  {
+    "id": "friendsie_404:4",
+    "name": "Adventure propeller II",
+    "kind": "model",
+    "category": "Back",
+    "url": "../models/items/friendsie_404/4.glb",
+    "bytes": 73884,
+    "sha256": "65031f520854a87c97d4213a4f3c242e8c383ad4396f2985e001c6ec36ccd989"
+  },
+  {
+    "id": "friendsie_500:4",
+    "name": "Star hoops",
+    "kind": "model",
+    "category": "Back",
+    "url": "../models/items/friendsie_500/4.glb",
+    "bytes": 98868,
+    "sha256": "f5b6bf6c4e837078ed38de213c820176b2b55c718c79258d7c89a20fb9de8caf"
+  },
+  {
+    "id": "friendsie_555:3",
+    "name": "Rocket orbit pack",
+    "kind": "model",
+    "category": "Back",
+    "url": "../models/items/friendsie_555/3.glb",
+    "bytes": 87692,
+    "sha256": "5e2dacc2cb1fcc8892a5fe1a515a9257b809ffd886753f8cb9e7f2e014d23c76"
+  },
+  {
+    "id": "friendsie_666:4",
+    "name": "Oxygen pack",
+    "kind": "model",
+    "category": "Back",
+    "url": "../models/items/friendsie_666/4.glb",
+    "bytes": 154700,
+    "sha256": "e87aa038bf52c888412be2c7a86f693f8dcf085a1086ebe910d90cba1a857f2e"
+  },
+  {
+    "id": "friendsie_777:4",
+    "name": "Golden cloud hoops",
+    "kind": "model",
+    "category": "Back",
+    "url": "../models/items/friendsie_777/4.glb",
+    "bytes": 107976,
+    "sha256": "3568be868036f62b9b3a670be9c9c32425a9ebef86e2e8fe80f08f46fb243615"
+  },
+  {
+    "id": "friendsie_88:4",
+    "name": "Mint bat wings",
+    "kind": "model",
+    "category": "Back",
+    "url": "../models/items/friendsie_88/4.glb",
+    "bytes": 51620,
+    "sha256": "61650e44b1aeac1793b23224a3850f1f0482f3f56f1d8e25554f5a33b2578f5c"
+  },
+  {
+    "id": "friendsie_888:4",
+    "name": "Color-wheel shield II",
+    "kind": "model",
+    "category": "Back",
+    "url": "../models/items/friendsie_888/4.glb",
+    "bytes": 74860,
+    "sha256": "7e08f031a4d60acb7a5bba43ac1f89d0ce035bb0c4207c070332985453decfa2"
+  },
+  {
+    "id": "friendsie_3:3",
+    "name": "Golden cloud hoops II",
+    "kind": "model",
+    "category": "Back",
+    "url": "../models/items/friendsie_3/3.glb",
+    "bytes": 254636,
+    "sha256": "0f1cc96c8539eeee2f8f382d624300296fe844e2e5937c56152b85a5ced04e28"
+  },
+  {
+    "id": "friendsie_6:4",
+    "name": "White backplate II",
+    "kind": "model",
+    "category": "Back",
+    "url": "../models/items/friendsie_6/4.glb",
+    "bytes": 307764,
+    "sha256": "69dc837fecc7558755205c838659adadc4cac64e20a81a3cfc71f6689659fd22"
+  },
+  {
+    "id": "friendsie_7:3",
+    "name": "Golden cloud hoops III",
+    "kind": "model",
+    "category": "Back",
+    "url": "../models/items/friendsie_7/3.glb",
+    "bytes": 249732,
+    "sha256": "315728f56b88683362b0a63d9d157b42742411bcf8c6c42ecb63db3c80b1b03b"
+  },
+  {
+    "id": "friendsie_8:3",
+    "name": "White cloud hoops",
+    "kind": "model",
+    "category": "Back",
+    "url": "../models/items/friendsie_8/3.glb",
+    "bytes": 389336,
+    "sha256": "d4dca232d9da40c321f9f5aa3f810cfa680fb32937bb57c9ec693d0a16fc62c0"
+  },
+  {
+    "id": "friendsie_9:3",
+    "name": "Butterfly wings II",
+    "kind": "model",
+    "category": "Back",
+    "url": "../models/items/friendsie_9/3.glb",
+    "bytes": 198452,
+    "sha256": "07364e069b30d60bc4bfe4117787a98cfe0b8d541681d1660b109837765b312b"
+  },
+  {
+    "id": "friendsie_16:3",
+    "name": "Adventure propeller III",
+    "kind": "model",
+    "category": "Back",
+    "url": "../models/items/friendsie_16/3.glb",
+    "bytes": 390172,
+    "sha256": "51863701185ac9853cabd4c4bc3073ce09b17163e63a986850f5f9e7357c3f0a"
+  },
+  {
+    "id": "friendsie_17:4",
+    "name": "Golden bat wings",
+    "kind": "model",
+    "category": "Back",
+    "url": "../models/items/friendsie_17/4.glb",
+    "bytes": 358768,
+    "sha256": "bf4248eaefa3e59e224a8592103ff0bfc487075c039972d735bd1cd27f52fd0e"
+  },
+  {
+    "id": "friendsie_18:4",
+    "name": "Devil tail",
+    "kind": "model",
+    "category": "Back",
+    "url": "../models/items/friendsie_18/4.glb",
+    "bytes": 145608,
+    "sha256": "ec329d45b4427a28f44530603d997dd463297a6f6ee736d03a9be66eeccb6732"
+  },
+  {
+    "id": "friendsie_19:3",
+    "name": "Dark shield",
+    "kind": "model",
+    "category": "Back",
+    "url": "../models/items/friendsie_19/3.glb",
+    "bytes": 1029212,
+    "sha256": "9346f3b617dd1828cb090a4aa1552d7d654474a7255d355ecfe3af7d932fe216"
+  },
+  {
+    "id": "friendsie_20:2",
+    "name": "Rose cloud hoops",
+    "kind": "model",
+    "category": "Back",
+    "url": "../models/items/friendsie_20/2.glb",
+    "bytes": 599328,
+    "sha256": "1da5e9dd2d33123ac03d59db59479f97e0ba593f3f1f4569ec0697570cb89b56"
+  },
+  {
+    "id": "friendsie_22:4",
+    "name": "Spiked sphere",
+    "kind": "model",
+    "category": "Back",
+    "url": "../models/items/friendsie_22/4.glb",
+    "bytes": 258872,
+    "sha256": "b09fd2893a39557a92a9212ecf735febb028a6137cebde412bf881af932d6d08"
+  },
+  {
+    "id": "friendsie_23:4",
+    "name": "Golden bat wings II",
+    "kind": "model",
+    "category": "Back",
+    "url": "../models/items/friendsie_23/4.glb",
+    "bytes": 359008,
+    "sha256": "653961445a839f09355b949bc3ba6b42885f30bb84d2afacd3a9d327589461b0"
+  },
+  {
+    "id": "friendsie_25:3",
+    "name": "Pink backpack",
+    "kind": "model",
+    "category": "Back",
+    "url": "../models/items/friendsie_25/3.glb",
+    "bytes": 353452,
+    "sha256": "04dc2e542c60c6422e565c5bdab55ea1d2bb6d528f136f3b8306dfbc45589139"
+  },
+  {
+    "id": "friendsie_26:3",
+    "name": "Star hoops II",
+    "kind": "model",
+    "category": "Back",
+    "url": "../models/items/friendsie_26/3.glb",
+    "bytes": 346560,
+    "sha256": "d19cab2c27a62e38924ecbc963e0f0d3b522793dba5e4c3b2497a5ef898dd173"
+  },
+  {
+    "id": "friendsie_32:4",
+    "name": "Rocket pack",
+    "kind": "model",
+    "category": "Back",
+    "url": "../models/items/friendsie_32/4.glb",
+    "bytes": 1128132,
+    "sha256": "9807f85e7f86dd92a16b96531775d8d0ff359b1151fe079b36b936e4ac07380e"
+  },
+  {
+    "id": "friendsie_40:4",
+    "name": "Sky propeller",
+    "kind": "model",
+    "category": "Back",
+    "url": "../models/items/friendsie_40/4.glb",
+    "bytes": 417020,
+    "sha256": "5ef6e5f6b3817a6aba4eb7ae5790984357648b2e6805a45546068c7764cd4ad7"
+  },
+  {
+    "id": "friendsie_46:4",
+    "name": "Gold butterfly wings",
+    "kind": "model",
+    "category": "Back",
+    "url": "../models/items/friendsie_46/4.glb",
+    "bytes": 436480,
+    "sha256": "6c4b521140a8c3e0b30d9c60356672f35349a11cb128d8488cd6bfedc05c79fe"
+  },
+  {
+    "id": "friendsie_49:4",
+    "name": "Pastel wings II",
+    "kind": "model",
+    "category": "Back",
+    "url": "../models/items/friendsie_49/4.glb",
+    "bytes": 727128,
+    "sha256": "7553ff529248cd2895ac4dbb3054fcec40e6a72db2bf2b16ce07349714a57a2a"
+  },
+  {
+    "id": "friendsie_51:4",
+    "name": "White cloud hoops II",
+    "kind": "model",
+    "category": "Back",
+    "url": "../models/items/friendsie_51/4.glb",
+    "bytes": 394328,
+    "sha256": "30d33d0f0c9ac57e49f49a0b15aafe8473e056a1a7417876b8ae3bac5e8f4398"
+  },
+  {
+    "id": "friendsie_52:3",
+    "name": "White cloud hoops III",
+    "kind": "model",
+    "category": "Back",
+    "url": "../models/items/friendsie_52/3.glb",
+    "bytes": 389328,
+    "sha256": "42be0c29e422c0e2d96a4096459da4ed3a0fad9b2c5ecd7ab1a83586547498e7"
+  },
+  {
+    "id": "friendsie_54:4",
+    "name": "Butterfly wings III",
+    "kind": "model",
+    "category": "Back",
+    "url": "../models/items/friendsie_54/4.glb",
+    "bytes": 203628,
+    "sha256": "67eb0d25a839eead0cb8ab3547856637179c5a681fe4a5a5e4c48c71eb287f9f"
+  },
+  {
+    "id": "friendsie_58:4",
+    "name": "Adventure propeller IV",
+    "kind": "model",
+    "category": "Back",
+    "url": "../models/items/friendsie_58/4.glb",
+    "bytes": 397508,
+    "sha256": "91461bfea37535c5a542c98a3dfa3b48e8f46adc82fa47004606ce4256df59c8"
+  },
+  {
+    "id": "friendsie_3333:4",
+    "name": "Little Backpack",
+    "kind": "model",
+    "category": "Back",
+    "url": "../models/items/friendsie_3333/4.glb",
+    "bytes": 81188,
+    "sha256": "24ce7b2b9c84af328d536775ac2f34714bd6e0c41655fa1d7544d5398d8aedd1"
+  },
+  {
+    "id": "friendsie_2:4",
+    "name": "Rainbow Wings",
+    "kind": "model",
+    "category": "Back",
+    "url": "../models/items/friendsie_2/4.glb",
+    "bytes": 727124,
+    "sha256": "56d2a4993f79ce143ba8f2bf4e6e35bfbb0ce6834b3f50404f61b6a3cf181236"
+  },
+  {
+    "id": "friendsie_2:5",
+    "name": "Candy Steps",
+    "kind": "model",
+    "category": "Footwear",
+    "url": "../models/items/friendsie_2/5.glb",
+    "bytes": 743108,
+    "sha256": "e2c0652708cf3346648e18eb15792129e26b061b951178b44838f4e9c4a8b517"
+  },
+  {
+    "id": "friendsie_1:3",
+    "name": "Cloud Boots",
+    "kind": "model",
+    "category": "Footwear",
+    "url": "../models/items/friendsie_1/3.glb",
+    "bytes": 47372,
+    "sha256": "46fea4cd376e01bc2b07dfaadaa2d705b6dd57c3d627a23e25586abe181ad006"
+  },
+  {
+    "id": "friendsie_100:5",
+    "name": "Pastel cloud shoes",
+    "kind": "model",
+    "category": "Footwear",
+    "url": "../models/items/friendsie_100/5.glb",
+    "bytes": 148752,
+    "sha256": "7b04f901f6ac0067243e8e46957b45c552fb2e30f26bdbe5b0d0776b87e2e894"
+  },
+  {
+    "id": "friendsie_1000:4",
+    "name": "White boots",
+    "kind": "model",
+    "category": "Footwear",
+    "url": "../models/items/friendsie_1000/4.glb",
+    "bytes": 61128,
+    "sha256": "5dfc80112954b6b9089db7f3fa994a5b740526214d2abe13028637be6e1c542e"
+  },
+  {
+    "id": "friendsie_1111:5",
+    "name": "Smile boots",
+    "kind": "model",
+    "category": "Footwear",
+    "url": "../models/items/friendsie_1111/5.glb",
+    "bytes": 103700,
+    "sha256": "34ced983f17416271adbc2e01745b357714d6c1391168e42cbce41d6ddb3e7ec"
+  },
+  {
+    "id": "friendsie_12:4",
+    "name": "Yellow boots",
+    "kind": "model",
+    "category": "Footwear",
+    "url": "../models/items/friendsie_12/4.glb",
+    "bytes": 54200,
+    "sha256": "ffcd41cc9c2c887bffad8263c45b5dcc633a6645aec6153d6a5aa3cc9f8c5a90"
+  },
+  {
+    "id": "friendsie_123:5",
+    "name": "Ribbon shoes",
+    "kind": "model",
+    "category": "Footwear",
+    "url": "../models/items/friendsie_123/5.glb",
+    "bytes": 109508,
+    "sha256": "cc7eb891187931df71f6cad437dced8df9d48707cdbaebf879e7347efb44aac7"
+  },
+  {
+    "id": "friendsie_200:5",
+    "name": "Yellow boots II",
+    "kind": "model",
+    "category": "Footwear",
+    "url": "../models/items/friendsie_200/5.glb",
+    "bytes": 59388,
+    "sha256": "9e7cc6acf31ebf98e834a20ec464209b8e2065640511c5231dd323acb3c7f116"
+  },
+  {
+    "id": "friendsie_2000:5",
+    "name": "Black boots",
+    "kind": "model",
+    "category": "Footwear",
+    "url": "../models/items/friendsie_2000/5.glb",
+    "bytes": 68528,
+    "sha256": "c1e971c1627aa80ad465c6099586bf29f8c907fa425f97f0bb2973ab8918c604"
+  },
+  {
+    "id": "friendsie_250:4",
+    "name": "Gold sandals",
+    "kind": "model",
+    "category": "Footwear",
+    "url": "../models/items/friendsie_250/4.glb",
+    "bytes": 122768,
+    "sha256": "35c1d80bc687d17546a4b47b39fb40453301450d6f8e71238c12bb6b8b75968a"
+  },
+  {
+    "id": "friendsie_2500:3",
+    "name": "Mint boots",
+    "kind": "model",
+    "category": "Footwear",
+    "url": "../models/items/friendsie_2500/3.glb",
+    "bytes": 56272,
+    "sha256": "b94b874db820cfe79315e2c1083e08b9a751b096e6d83b5d04fc77ad9e6c2024"
+  },
+  {
+    "id": "friendsie_333:4",
+    "name": "Rainbow high-tops",
+    "kind": "model",
+    "category": "Footwear",
+    "url": "../models/items/friendsie_333/4.glb",
+    "bytes": 63704,
+    "sha256": "a465ac0de136a51cfa80f6de3310a0c1b22a74fe9fcb76ee4b2ef3e76413c56c"
+  },
+  {
+    "id": "friendsie_404:5",
+    "name": "Textured face boots",
+    "kind": "model",
+    "category": "Footwear",
+    "url": "../models/items/friendsie_404/5.glb",
+    "bytes": 429580,
+    "sha256": "c854b2b40fafc66024560b68f7c5361aa34771b17cb9922ebfa6610710c038f9"
+  },
+  {
+    "id": "friendsie_500:5",
+    "name": "Cloud slippers",
+    "kind": "model",
+    "category": "Footwear",
+    "url": "../models/items/friendsie_500/5.glb",
+    "bytes": 130488,
+    "sha256": "ca6af307566900fa8826cb1224ff0bbbbfbe365057a560dbb9843a76944bac7d"
+  },
+  {
+    "id": "friendsie_5000:4",
+    "name": "Coral boots",
+    "kind": "model",
+    "category": "Footwear",
+    "url": "../models/items/friendsie_5000/4.glb",
+    "bytes": 54208,
+    "sha256": "c70c25446b45cae699ce7c3fa7188a36ffffa23133d7fa80aba3bc8713f08b38"
+  },
+  {
+    "id": "friendsie_555:4",
+    "name": "Purple spot boots",
+    "kind": "model",
+    "category": "Footwear",
+    "url": "../models/items/friendsie_555/4.glb",
+    "bytes": 78512,
+    "sha256": "6aa70d31bba4bf717e5a7a2a1918974ef858220c8ed81b6d324bcc0c738030e9"
+  },
+  {
+    "id": "friendsie_666:5",
+    "name": "Orange boots",
+    "kind": "model",
+    "category": "Footwear",
+    "url": "../models/items/friendsie_666/5.glb",
+    "bytes": 63064,
+    "sha256": "9731ba0cdfeccdda2e75bca26acc84af3b78aea7b56b0272e461a71948457a74"
+  },
+  {
+    "id": "friendsie_777:5",
+    "name": "Gold boots",
+    "kind": "model",
+    "category": "Footwear",
+    "url": "../models/items/friendsie_777/5.glb",
+    "bytes": 57620,
+    "sha256": "beb5c80ba6e5a98d97c1e419ed7fd3b5579446c78f69168ab2484049c3f92534"
+  },
+  {
+    "id": "friendsie_88:5",
+    "name": "Cloud slippers II",
+    "kind": "model",
+    "category": "Footwear",
+    "url": "../models/items/friendsie_88/5.glb",
+    "bytes": 130488,
+    "sha256": "b88ca2a3ff31274c1880fcdfc2c260cf4d20ce56097be8715fd4f7accb4741a4"
+  },
+  {
+    "id": "friendsie_888:5",
+    "name": "Mint boots II",
+    "kind": "model",
+    "category": "Footwear",
+    "url": "../models/items/friendsie_888/5.glb",
+    "bytes": 65920,
+    "sha256": "0d370f86acd265b15f8565ee9c0e9e2a2c52d1fb4f3cbcf56950ccf3c65ba55d"
+  },
+  {
+    "id": "friendsie_3:4",
+    "name": "Gold sandals II",
+    "kind": "model",
+    "category": "Footwear",
+    "url": "../models/items/friendsie_3/4.glb",
+    "bytes": 568576,
+    "sha256": "3590489a4d94b66f5ef54ab2aee16c5d5684807256113a03104e141e440b791b"
+  },
+  {
+    "id": "friendsie_6:5",
+    "name": "Monochrome boots",
+    "kind": "model",
+    "category": "Footwear",
+    "url": "../models/items/friendsie_6/5.glb",
+    "bytes": 453256,
+    "sha256": "44b45dd0d8dd918f34d175fe430752d0954f653325ccf2874cb0258788b99bc5"
+  },
+  {
+    "id": "friendsie_8:4",
+    "name": "Spiked boots",
+    "kind": "model",
+    "category": "Footwear",
+    "url": "../models/items/friendsie_8/4.glb",
+    "bytes": 400396,
+    "sha256": "5976c37420558dcdcf60c7a1e8f367ca16aecb08ffe63b652c69b97d0550b017"
+  },
+  {
+    "id": "friendsie_9:4",
+    "name": "Yellow boots III",
+    "kind": "model",
+    "category": "Footwear",
+    "url": "../models/items/friendsie_9/4.glb",
+    "bytes": 279060,
+    "sha256": "b689d396c8cb70de67eb09306e5d1397ddd5d9cc33302e167bbfdffe4e914dce"
+  },
+  {
+    "id": "friendsie_16:4",
+    "name": "Flame boots",
+    "kind": "model",
+    "category": "Footwear",
+    "url": "../models/items/friendsie_16/4.glb",
+    "bytes": 679380,
+    "sha256": "102dbd31eb09a5a98efd16a3e51fe7bac1e3e99b52bde1a8dfb614f640145237"
+  },
+  {
+    "id": "friendsie_17:5",
+    "name": "Coral slip-ons",
+    "kind": "model",
+    "category": "Footwear",
+    "url": "../models/items/friendsie_17/5.glb",
+    "bytes": 175212,
+    "sha256": "bb3050a04f5955c195e63b2055c04672e1090d92b8d3bb78dfbcf548604d0ef0"
+  },
+  {
+    "id": "friendsie_19:4",
+    "name": "Black-trim boots",
+    "kind": "model",
+    "category": "Footwear",
+    "url": "../models/items/friendsie_19/4.glb",
+    "bytes": 368752,
+    "sha256": "b9f6317b7398594abe756c7ea9ecb728de381f66622ab0ba416589b64ff756b0"
+  },
+  {
+    "id": "friendsie_20:3",
+    "name": "White boots II",
+    "kind": "model",
+    "category": "Footwear",
+    "url": "../models/items/friendsie_20/3.glb",
+    "bytes": 274264,
+    "sha256": "0ef55527341fe3491031994011b6033f474d3168d9fe8463edd6c4e20c8f2e39"
+  },
+  {
+    "id": "friendsie_22:5",
+    "name": "Spiked boots II",
+    "kind": "model",
+    "category": "Footwear",
+    "url": "../models/items/friendsie_22/5.glb",
+    "bytes": 405104,
+    "sha256": "82848d0fa9bcbd888d68a447d7b9622efc1d328a742e8b94ecbb0240858ce20a"
+  },
+  {
+    "id": "friendsie_23:5",
+    "name": "Silver spot boots",
+    "kind": "model",
+    "category": "Footwear",
+    "url": "../models/items/friendsie_23/5.glb",
+    "bytes": 354240,
+    "sha256": "6fc552248cb45355cc79f55651a614c7a42d101e0f3ac115301ae44d6bf92c96"
+  },
+  {
+    "id": "friendsie_25:4",
+    "name": "Orange boots II",
+    "kind": "model",
+    "category": "Footwear",
+    "url": "../models/items/friendsie_25/4.glb",
+    "bytes": 294036,
+    "sha256": "6a20d5c58f2122aee3ae1d1eb4888707de31b062b411ea4c9a51cccfef0cb6f1"
+  },
+  {
+    "id": "friendsie_26:4",
+    "name": "Pastel boots",
+    "kind": "model",
+    "category": "Footwear",
+    "url": "../models/items/friendsie_26/4.glb",
+    "bytes": 456884,
+    "sha256": "8e947bdbe979267c5f081056782f5f41e654a6216c64b3fc7db37bb8fe257225"
+  },
+  {
+    "id": "friendsie_32:5",
+    "name": "Cream western boots",
+    "kind": "model",
+    "category": "Footwear",
+    "url": "../models/items/friendsie_32/5.glb",
+    "bytes": 387388,
+    "sha256": "fc4f0956e270c60abfb93643623be8c4edce306c962f6f578fba643cccb90ace"
+  },
+  {
+    "id": "friendsie_40:5",
+    "name": "Rainbow star shoes",
+    "kind": "model",
+    "category": "Footwear",
+    "url": "../models/items/friendsie_40/5.glb",
+    "bytes": 448544,
+    "sha256": "682a55a550c577987c6d7df1eb64859952da39d799798381a87d67fd1c2151c7"
+  },
+  {
+    "id": "friendsie_46:5",
+    "name": "Gold spiral shoes",
+    "kind": "model",
+    "category": "Footwear",
+    "url": "../models/items/friendsie_46/5.glb",
+    "bytes": 363592,
+    "sha256": "3e69609c8e4c9f790a55d931a12d5b91591680032fd23943d41e95da70ee743e"
+  },
+  {
+    "id": "friendsie_49:5",
+    "name": "Rainbow star shoes II",
+    "kind": "model",
+    "category": "Footwear",
+    "url": "../models/items/friendsie_49/5.glb",
+    "bytes": 448544,
+    "sha256": "6da22b03c25282c32d1560c05095dcd4fc616bbbccce60763099432b56e483f8"
+  },
+  {
+    "id": "friendsie_51:5",
+    "name": "Rainbow star shoes III",
+    "kind": "model",
+    "category": "Footwear",
+    "url": "../models/items/friendsie_51/5.glb",
+    "bytes": 448824,
+    "sha256": "4e4490d8de562a82cfb93fc946f68e8711c94e62e769fbe283bd508b9ae48f47"
+  },
+  {
+    "id": "friendsie_52:4",
+    "name": "Cloud slippers III",
+    "kind": "model",
+    "category": "Footwear",
+    "url": "../models/items/friendsie_52/4.glb",
+    "bytes": 563872,
+    "sha256": "e510d982460033ca5a2fd187d5594988c670624b3e483395add8e8c8e9365120"
+  },
+  {
+    "id": "friendsie_54:5",
+    "name": "Silver spot boots II",
+    "kind": "model",
+    "category": "Footwear",
+    "url": "../models/items/friendsie_54/5.glb",
+    "bytes": 354260,
+    "sha256": "f7f3dfc8c623a69ee728bba516715dc43d910a9870962ba14163f07242f628dc"
+  },
+  {
+    "id": "friendsie_58:5",
+    "name": "Character slippers",
+    "kind": "model",
+    "category": "Footwear",
+    "url": "../models/items/friendsie_58/5.glb",
+    "bytes": 586580,
+    "sha256": "49281ce6606353b570dfb887f2d47ff8d9af8c1377efefa8baac34b03068ff91"
+  },
+  {
+    "id": "friendsie_3333:5",
+    "name": "Mix and Match",
+    "kind": "model",
+    "category": "Footwear",
+    "url": "../models/items/friendsie_3333/5.glb",
+    "bytes": 86932,
+    "sha256": "6cd7404fe076533f98ccb52918afcc9bf330bd84179650d4492ea2376aa06f5e"
+  }
+]
