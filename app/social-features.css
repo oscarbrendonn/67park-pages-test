@@ -1,0 +1,45 @@
+.social-lobby{margin-bottom:18px;min-width:0}
+.social-lobby h2,.social-lobby h3{margin:0 0 8px}
+.social-quick-invites,.social-phrases{display:flex;flex-wrap:wrap;gap:8px}
+.social-quick-invites button,.social-phrases button,.social-pending button{min-height:44px;padding:9px 14px;overflow-wrap:anywhere;max-width:100%}
+.social-pending{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:10px}
+.social-pending span{overflow-wrap:anywhere;min-width:0}
+.social-team-messages{margin-top:18px;border-top:1px solid #dfe6ec;padding-top:14px}
+.social-message-log{list-style:none;padding:0;max-height:120px;overflow:auto;margin:12px 0;font-size:13px;line-height:1.6;overflow-wrap:anywhere}
+.social-team-messages small{display:block;color:#65727b;font-size:12px}
+.social-privacy{margin:16px 0;border-top:1px solid #dfe6ec;padding-top:10px}
+.social-privacy summary{cursor:pointer;min-height:44px;display:flex;align-items:center;font-weight:750}
+.social-privacy summary::before{content:'▸';margin-right:8px}.social-privacy[open] summary::before{content:'▾'}
+.social-privacy label{display:grid;gap:8px;font-size:13px;margin-bottom:12px}
+.social-privacy select{width:100%;min-height:46px;border:1px solid #d8e1e8;background:#f1f5f8;border-radius:18px;padding:10px;color:#344651;font-size:16px}
+.social-privacy .social-checkbox{display:flex;align-items:center;gap:10px;min-height:44px}
+.online-dialog.online-dialog .social-checkbox input{width:22px;min-height:22px;height:22px;flex-shrink:0;accent-color:#cb608b}
+.social-round{margin-top:16px;padding:14px;border-radius:20px;background:#f5f8fb;color:#344651;font:14px/1.5 system-ui;box-sizing:border-box;max-width:100%}
+.social-round p{margin:0 0 10px;overflow-wrap:anywhere}
+.social-round button{display:block;width:100%;min-height:44px;margin:8px 0;border:2px solid white;border-radius:24px;padding:10px;font:700 14px system-ui;cursor:pointer;color:#344651;background:#e8eef3;touch-action:manipulation}
+.social-round .social-again{background:linear-gradient(155deg,#ff94bd,#f26097);color:white}
+.social-round button[hidden]{display:none}.social-round button:disabled{opacity:.6;cursor:default}
+.social-round button:focus-visible,.social-privacy :focus-visible{outline:3px solid #47718b;outline-offset:3px}
+.sp-result-card,.cr-dialog>div,#rr-result>div,dialog.om-result{max-height:calc(100dvh - 40px - env(safe-area-inset-top) - env(safe-area-inset-bottom));overflow-y:auto;box-sizing:border-box}
+/* Results must sit above the shared Sprint/Settings HUD, not underneath it. */
+#result.cr-dialog,#sp-result,#rr-result{z-index:90000}
+@media(max-width:420px){.social-quick-invites button,.social-phrases button{flex:1 1 44%;font-size:12px}.social-pending{flex-wrap:wrap}}
+@media(max-height:500px){.social-round{padding:10px;margin-top:10px}.social-round button{min-height:44px}}
+.social-party{margin-bottom:20px;border-bottom:1px solid #dfe6ec;padding-bottom:16px}
+.social-people{list-style:none;padding:0;margin:10px 0;max-height:290px;overflow:auto}
+.social-people li{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:10px 0;border-bottom:1px solid #e4e9ed;overflow-wrap:anywhere}
+.social-people li>span:first-child{flex:1 1 100px;min-width:0}
+.social-person-tools{display:flex;flex-wrap:wrap;gap:8px}
+.social-lobby details,.social-sent-requests,.social-recent,.social-safety,.social-account{border-top:1px solid #dfe6ec;padding:10px 0;margin-top:10px}
+.social-lobby summary,.social-sent-requests summary,.social-recent summary,.social-safety summary,.social-account summary{cursor:pointer;min-height:44px;display:flex;align-items:center;font-weight:700;overflow-wrap:anywhere}
+.social-account p,.social-recent p,.social-safety p{font-size:13px;line-height:1.6;color:#586976}
+.social-account label{display:grid;gap:8px;margin:12px 0;font-size:13px;line-height:1.5}
+.social-account label.social-checkbox{display:flex;align-items:flex-start;gap:8px}
+.social-account input,.social-account textarea{box-sizing:border-box;width:100%;min-width:0;font-size:16px!important}
+.social-account textarea{min-height:105px;padding:12px;border:1px solid #ccd5de;border-radius:16px;resize:vertical;overflow-wrap:anywhere;font-family:monospace}
+.social-account small{display:block;padding:8px 0;color:#586976}
+.social-account form{border-top:1px solid #dfe6ec;margin-top:18px;padding-top:18px}
+.social-account button,.social-people button{min-height:44px;max-width:100%;white-space:normal;overflow-wrap:anywhere}
+.social-result-people{border-top:1px solid #dfe6ec;margin-top:14px;padding-top:8px}
+.social-result-people>div{display:flex;align-items:center;flex-wrap:wrap;gap:8px;padding:6px 0}
+.social-result-people>div>span{flex:1;min-width:80px;overflow-wrap:anywhere}.social-result-people button{width:auto;margin:0}

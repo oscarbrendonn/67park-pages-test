@@ -1,5 +1,5 @@
 import * as T from 'three';
-import {boundaryPositionCRC as crc} from './terrain-boundaries.js?v=ground-3';
+import {boundaryPositionCRC as crc} from './terrain-boundaries.js?v=ground-2';
 
 const SLABS=[-1,1].flatMap(x=>[-1,1].map(z=>`CENTER_WHITE71_${x}_${z}`));
 const TARGETS=new Set(['67D_SKATEPARK_BASE','6_BORDUR','5_YOL',...SLABS]);

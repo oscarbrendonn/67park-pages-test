@@ -38,7 +38,10 @@ export function applyVehicleGroundPose(car,area){
    return denominator>1e-10&&Number.isFinite(numerator)&&Number.isFinite(denominator)?numerator/denominator:0;
   };
   const sx=slope('x'),sz=slope('z');
-  const pitch=Math.max(-.22,Math.min(.22,-Math.atan(sz))),roll=Math.max(-.22,Math.min(.22,Math.atan(sx)));
+  // The authored bank can exceed a street curb's 12-degree body limit.
+  // Retain street suspension unchanged; only the skatepark follows its slope.
+  const limit=Number.isFinite(area.skateHeight?.(p.x,p.z))?.55:.22;
+  const pitch=Math.max(-limit,Math.min(limit,-Math.atan(sz))),roll=Math.max(-limit,Math.min(limit,Math.atan(sx)));
   const y=my-sx*mx-sz*mz;
   car.group.position.y=y;car.group.rotation.set(pitch,p.yaw,roll,'YXZ');car.group.updateMatrixWorld(true);
   const up=scale*Math.cos(pitch)*Math.cos(roll);

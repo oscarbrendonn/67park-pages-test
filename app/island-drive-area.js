@@ -1,13 +1,16 @@
-import {createVehicleSurfaceDomain} from './vehicle-surface-domain.js?v=beach-drive-1';
+import {createVehicleSurfaceDomain} from './vehicle-surface-domain.js?v=skate-drive-1';
 import {tunePreviewWorld} from './park-driving-tuning.js?v=beach-drive-1';
-import {applyVehicleGroundPose} from './vehicle-ground-pose.js?v=vehicle-contact-3';
+import {applyVehicleGroundPose} from './vehicle-ground-pose.js?v=skate-drive-1';
 import {DRIVE_STEP,terrainProfile,traversableGrade} from './vehicle-terrain-grade.js?v=thumb-drive-1';
+import {installSkateRailFinish} from './party/skate-rail-finish.js?v=flush-ends-2';
 // The same domain and complete car/bus footprint are used by prediction and
 // server authority. No widening by bounding boxes at rounded sidewalk corners.
 export function expandIslandDriveArea(area,{ground,water=()=>false,sea=()=>8.776851733454327,blocked=()=>false,domain}){
  const surface=domain?.height??((x,z)=>area.road?.height(x,z));
  const solid=domain?.blocked;
  const waterLevel=(x,z)=>{
+  // A dry authored bowl can be below ocean datum without being the sea.
+  if(Number.isFinite(domain?.skateHeight?.(x,z)))return null;
   const y=surface(x,z),level=domain?.waterLevel?.(x,z),ocean=sea(x,z);
   // The raw map can still have old water beneath repaired grass/bridges.
   // Finished dry support wins; submerged sand is not a dry driving floor.
@@ -59,6 +62,7 @@ export function expandIslandDriveArea(area,{ground,water=()=>false,sea=()=>8.776
   return {ok:true,y:center};
  };
  area.supportHeight=surface;
+ area.skateHeight=domain?.skateHeight;
  // The open ocean is a scene-level mesh, outside terrain's pond capture.
  area.waterLevel=waterLevel;
  area.nearestSidewalk=domain?.nearestSidewalk;
@@ -73,6 +77,10 @@ export function expandIslandDriveArea(area,{ground,water=()=>false,sea=()=>8.776
 export function installIslandDriving(world){
  if(world.traffic)tunePreviewWorld(world.traffic);
  if(!world.traffic||world.traffic.freeDrive)return world;
+ // The bundle used to index vehicle support before the existing rounded-end
+ // finish. Apply that same idempotent finish first; client and authority must
+ // see identical already-approved coping tips, not an earlier sharp mesh.
+ installSkateRailFinish(world);
  const domain=createVehicleSurfaceDomain(world.terrain);
  expandIslandDriveArea(world.traffic.area,{domain,ground:(x,z)=>world.ground(x,z,true),water:world.water,sea:world.sea,blocked:world.treeBlocked});
  world.traffic.freeDrive=true;world.traffic.stats.roadOnly=false;

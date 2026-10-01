@@ -1,4 +1,7 @@
 import {vehicleConnectionHint} from './park-motion-transport.js?v=corner-slide-2';
+// Read the same pedal + Space-brake latch used by driving. Audio must not
+// mirror keyboard listeners or miss the desktop brake while mobile works.
+export function readVehicleFeedbackInput(){return at(N,true,pe);}
 import {applyVehicleGroundPose} from "./vehicle-ground-pose.js?v=vehicle-contact-3";
 import {predictVehicle,sweepVehicle,vehiclePredictionArea} from './vehicle-network-motion.js?v=vehicle-motion-1';
 import {findBoatExit as __parkBoatExit} from './boat-driving-rules.js?v=boat-driving-1';

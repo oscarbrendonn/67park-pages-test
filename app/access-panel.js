@@ -1,5 +1,6 @@
 // A lightweight playtest entrance, NOT server-side authentication. Pages and
 // game assets remain public on GitHub Pages. Never store the submitted password.
+import {GAME_LOAD_TIMEOUT_MS} from './startup-budget.js';
 export const ACCESS_KEY='67park.access.v1';
 export const ACCESS_REVISION='access-panel-1';
 const digest='84c103c457dd89d26735175de81fb54fb4a06063b9573082a38441863ead0be3';
@@ -26,10 +27,13 @@ export async function startAccessScripts(doc=document){
    const script=doc.createElement('script');
    for(const {name,value}of parked.attributes)if(name!=='type'&&name!=='data-park-access-type')script.setAttribute(name,value);
    script.type=parked.dataset.parkAccessType;script.async=false;
-   const timer=setTimeout(()=>reject(Error('Game startup timed out')),60000);
+   const timer=setTimeout(()=>reject(Error('Game startup timed out')),GAME_LOAD_TIMEOUT_MS);
    const finish=error=>{clearTimeout(timer);script.onload=script.onerror=null;error?reject(error):resolve();};
    script.onload=()=>finish();script.onerror=()=>finish(Error('Game script could not load'));
-   script.textContent=parked.textContent;parked.replaceWith(script);
+   script.textContent=parked.textContent;
+   // Sports rebuilds body.innerHTML while its module loads. Remaining parked
+   // nodes may then be detached: replacing one would never execute its script.
+   if(parked.isConnected)parked.replaceWith(script);else (doc.head||doc.body).append(script);
    if(!script.src&&script.type!=='module')finish();
   });}catch(error){
    errors.push(error);
@@ -58,6 +62,7 @@ export function installAccessPanel(doc=document,win=window){
    const recovery=doc.getElementById('park-connection-recovery');
    if(recovery&&!recovery.hidden){panel.remove();doc.documentElement.dataset.parkAccess='open';return;}
    // Do not leave a half-booted game interactive or automatically reload it.
+   if(!panel.isConnected)doc.body.append(panel);
    doc.documentElement.dataset.parkAccess='locked';
    message.textContent='The game could not load. Check your connection and try again.';
    submit.textContent='Reload';submit.disabled=false;reload=true;busy=false;

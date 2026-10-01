@@ -13,7 +13,8 @@ import {installSkateRailFinish} from './skate-rail-finish.js?v=flush-ends-2';
 import * as THREE from 'three';
 import {playerSettings as settings,savePlayerSettings as saveSettings} from '../player-settings.js';
 import {installPlayerSettings} from './settings-panel.js?v=recovery-graphics-1';
-import { createPartyAudio } from './party-audio.js?v=vehicle-audio-1&sound-pack=6';
+import { createPartyAudio } from './party-audio.js?v=vehicle-audio-3&sound-pack=9';
+import {readVehicleFeedbackInput} from '../chunk-OZ77422N.js?v=contact-escape-1';
 import {createFeatureBoundary} from '../feature-boundary.js';
 import {createVehicleHorn} from './vehicle-horn.js?v=horn-hold-1';
 import {createTargetClub} from './target-club.js?v=target-club-1';
@@ -39,7 +40,7 @@ function guard(fn,key='hook-'+(++guardId)) {
 // ---------- settings ----------
 const gameMuted = () => { try { return localStorage.getItem('67park-feel-lab-muted') === '1'; } catch { return false; } };
 
-// ---------- sound (synthesized, no files) ----------
+// ---------- sound (shared graph, recorded vehicle and movement foley) ----------
 const sfx = createPartyAudio({settings, saveSettings, gameMuted});
 window.addEventListener('candy:portal-travel', () => sfx.play('portal'));
 const buzz = pattern => { if (!settings.haptics || !isTouch) return; try { navigator.vibrate?.(pattern); } catch {} };
@@ -84,7 +85,7 @@ function kick(amount) { spring.v += amount; }
 function stepSpring(dt) { const a = -spring.k * spring.v - spring.c * spring.vel; spring.vel += a * dt; spring.v += spring.vel * dt; spring.v = clamp(spring.v, -0.42, 0.45); }
 let prevPunchT = 0, ballStrikeSeq = 0, wasEnabled = false, hitTumble = 0, tumbleDir = 0;
 let previousHeld = '';
-let previousMounted = null, previousSwimming = false, previousWaterContact = false, previousVehicleSpeed = 0;
+let previousMounted = null, previousSwimming = false, previousWaterContact = false;
 const waterDives = [];
 
 function waterDiveEffect(pos) {
@@ -137,24 +138,15 @@ function stepWaterDives(dt) {
 function vehicleAndWaterAudio(st) {
   const vehicleState = window.__candy?.state?.() || null;
   const mounted = vehicleState?.mounted || null;
-  if (mounted && !previousMounted) sfx.play('vehicle-start');
-  if (!mounted && previousMounted) sfx.play('vehicle-stop');
-  if (mounted) {
-    const p = vehicleState?.position, cars = vehicleState?.cars || [];
-    let nearest = null, nearestD = Infinity;
-    if (p && Number.isFinite(p.x) && Number.isFinite(p.z)) for (const car of cars) {
-      const d = Math.hypot((car.x ?? 0) - p.x, (car.z ?? 0) - p.z);
-      if (d < nearestD) { nearestD = d; nearest = car; }
-    }
-    const speed = Number(nearest?.speed) || 0;
-    // Keep the engine as one continuous voice whose RPM/level follows speed;
-    // never rebuild it from periodic one-shot chirps.
-    sfx.updateVehicleEngine(speed);
-    const deceleration = Math.abs(previousVehicleSpeed) - Math.abs(speed);
-    if (Math.abs(previousVehicleSpeed) > 2.2 && deceleration > 1.6) sfx.play('vehicle-brake');
-    previousVehicleSpeed = speed;
-  } else { sfx.stopVehicleEngine(); previousVehicleSpeed = 0; }
-  previousMounted = mounted;
+  const id=net()?.id,mount=window.__candyOnline?.world?.mounts?.[id];
+  const car=mounted==='car'&&id?(world()?.traffic?.cars||[]).find(c=>c.id===mount?.id||c.ownerAt?.(0)===id):null;
+  const roadVehicle=car&&(car.kind==='car'||car.kind==='bus');
+  if(roadVehicle){
+    const driver=car.ownerAt?.(0)===id;
+    const input=driver?readVehicleFeedbackInput():{throttle:0,brake:false};
+    sfx.updateVehicleEngine(Number(car.physics?.speed)||0,{kind:car.kind,throttle:input.throttle,brake:input.brake,ignition:previousMounted!==car.id});
+  }else if(previousMounted!==null)sfx.stopVehicleEngine(true);
+  previousMounted=roadVehicle?car.id:null;
   const bodyPos = player.body?.translation?.();
   const inWater = !!st?.swimming || !!(bodyPos && world()?.water?.(bodyPos.x, bodyPos.z));
   if (inWater && !previousWaterContact) {

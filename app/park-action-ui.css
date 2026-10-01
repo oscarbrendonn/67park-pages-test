@@ -36,3 +36,10 @@
 .park-unified-ui #stick-knob svg{width:26px;height:26px;pointer-events:none}
 .park-unified-ui .park-action:focus-visible{outline:3px solid #56878f;outline-offset:5px}
 @media(prefers-reduced-motion:reduce){.park-unified-ui .park-action{transition:none}}
+/* Short portrait phones cannot fit enlarged actions below the utility row.
+   Keep Punch and Throw above the left joystick, clear of the right action grid. */
+@media(pointer:coarse) and (max-width:359px) and (max-height:600px) and (orientation:portrait){
+ body.park-unified-ui button:is(#preview-hit,#party-throw){left:20px!important;right:auto!important;transform-origin:left bottom}
+ body.park-unified-ui button#preview-hit{bottom:calc(166px + env(safe-area-inset-bottom))!important}
+ body.park-unified-ui button#party-throw{bottom:calc(246px + env(safe-area-inset-bottom))!important}
+}

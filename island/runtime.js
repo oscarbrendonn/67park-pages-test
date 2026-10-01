@@ -13,23 +13,23 @@ import {applyMapEdgeFinish} from '../app/map-edge-finish.js?v=map-edge-finish-1&
 import {applyGrassBoundary} from '../app/grass-boundary.js?v=grass-boundary-1&park-contour=1';
 import {applyTerrainBoundaries} from '../app/terrain-boundaries.js?v=ground-7&park-contour=1';
 import {applyMapContinuity} from '../app/map-continuity.js?v=seams-1';
-import {applyKimiCoast20} from '/67park-foundation-next/app/kimi-coast20.js?v=coast-24';
-import {cleanLowerPark} from '/67park-foundation-next/app/park-lower-cleanup.js?v=20260914p';
-import {repairEastRoadEnd} from '/67park-foundation-next/app/east-road-end.js?v=corner-49b';
+import {applyKimiCoast20} from '/67park-pages-test/app/kimi-coast20.js?v=coast-24';
+import {cleanLowerPark} from '/67park-pages-test/app/park-lower-cleanup.js?v=20260914p';
+import {repairEastRoadEnd} from '/67park-pages-test/app/east-road-end.js?v=corner-49b';
 import {installLobbyCourts} from '../app/lobby-courts.js';
-import {shortenKimiRightTip} from '/67park-foundation-next/app/kimi-right-curb-tip.js?v=coast-20a';
-import {installIslandSwimBoundary} from '/67park-foundation-next/app/island-swim-runtime.js?v=corner-contact-1';
-import {installParcelGapQA} from '/67park-foundation-next/app/parcel-gap-qa.js';
-import {applyParcelPaving} from '/67park-foundation-next/app/island-parcel-paving.js';
-import {installParcelCornerQA} from '/67park-foundation-next/app/parcel-corner-qa.js';
-import {assetFetch} from '/67park-foundation-next/app/entry-loading.js';
-const islandFetch=(u,...a)=>assetFetch(typeof u==='string'&&u.startsWith('./')?'/67park-foundation-next/island/'+u.slice(2):u,...a);
+import {shortenKimiRightTip} from '/67park-pages-test/app/kimi-right-curb-tip.js?v=coast-20a';
+import {installIslandSwimBoundary} from '/67park-pages-test/app/island-swim-runtime.js?v=corner-contact-1';
+import {installParcelGapQA} from '/67park-pages-test/app/parcel-gap-qa.js';
+import {applyParcelPaving} from '/67park-pages-test/app/island-parcel-paving.js';
+import {installParcelCornerQA} from '/67park-pages-test/app/parcel-corner-qa.js';
+import {assetFetch} from '/67park-pages-test/app/entry-loading.js';
+const islandFetch=(u,...a)=>assetFetch(typeof u==='string'&&u.startsWith('./')?'/67park-pages-test/island/'+u.slice(2):u,...a);
 import {loadIslandPrerequisites} from '../app/island-startup-queue.js';
 import {createIslandAssetCache} from '../app/island-asset-cache.js';
-import {repairIslandStairs,stairAt} from '/67park-foundation-next/app/island-stair-geometry.js';
+import {repairIslandStairs,stairAt} from '/67park-pages-test/app/island-stair-geometry.js';
 import {createStairRailBlocker} from '../app/stair-rail-contact.js?v=rail-corner-1';
-import {applyCurbJoins} from '/67park-foundation-next/app/island-curb-joins.js';
-import {applyParkEdges} from '/67park-foundation-next/app/island-park-edges.js';
+import {applyCurbJoins} from '/67park-pages-test/app/island-curb-joins.js';
+import {applyParkEdges} from '/67park-pages-test/app/island-park-edges.js';
 import * as THREE from 'three';
 import {createStableSunShadow52} from './stable-sun-shadow-v52.js';
 import {loadSmallIslandProps} from './small-island-props-v62.js?v=roof1';
@@ -46,7 +46,7 @@ import {applyRoadSeal64} from './road-seal-v64.js?v=road-seal-r1';
 import {applyParkPond65} from './park-pond-v65.js?v=pond-v65-P8-pastel-closure-r6';
 import {applySmallIslandWalls48} from './small-island-walls-v48.js?v=walls3';
 import {applySmallIslandMatch55} from './small-island-match-v55.js?v=1';
-import {shortenSoutheastDivider49} from '/67park-foundation-next/app/southeast-divider-49.js?v=corner-49b';
+import {shortenSoutheastDivider49} from '/67park-pages-test/app/southeast-divider-49.js?v=corner-49b';
 import {applyCurbPolish49} from './curb-polish-v49.js?v=curb6';
 import {applySideContinuity50} from './side-continuity-v50.js?v=1';
 import {applyCoastalRoad56} from './coastal-road-v56.js?v=1';
@@ -67,7 +67,7 @@ import {cacheStaticTransforms} from '../app/island-static-transforms.js';
 import {installIslandShadowCache,createShadowAnchor} from '../app/island-shadow-cache.js';
 import {waterWithSolidFloor,createPondWater} from '../app/island-water-floor.js';
 import {treeIndex} from '../app/island-motion.js';
-import {entryStage} from '/67park-foundation-next/app/entry-loading.js';
+import {entryStage} from '/67park-pages-test/app/entry-loading.js';
 import {preserveAuthoredIslandEnvironment} from '../app/island-environment.js';
 export async function createIslandRuntime({renderer,sahne,kam}) {
 const islandStartupAssets=createIslandAssetCache();
@@ -158,7 +158,7 @@ const qaModu=urlParams.get('qa');
 // export adayini canli dosyanin ustune yazmadan inceleyebil.
 const GLB_DOSYASI=urlParams.get('model')==='pending'
   ? 'ada_calisma.pending.glb'
-  : '/67park-foundation-next/island/ada_calisma.glb';
+  : '/67park-pages-test/island/ada_calisma.glb';
 // Export sonrasi SHA on eki bu marker'a yazilir. finish_gate/v parametresi
 // verildiginde ayni anahtar gercek GLB istegine de aktarilir; telefon ve QA
 // artik yeni HTML icinde eski modeli cache'ten acamaz.
@@ -1581,15 +1581,15 @@ await entryStage(13,'Finishing the northern neighbourhood');
   } catch(e){renderer.domElement.dataset.pastelTraffic108='error: '+e.message;console.error('Pastel cars',e);}
   renderer.domElement.dataset.terrainQuery='exact-triangle-grid-v27';
   renderer.domElement.dataset.terrainQueryTriangles=String(terrainSampler.stats.triangles);
-  const parkEdgePatch=await islandFetch('/67park-foundation-next/repairs/park-edges-v4.json').then(r=>{if(!r.ok)throw Error('Park edge repair missing');return r.json();});
+  const parkEdgePatch=await islandFetch('/67park-pages-test/repairs/park-edges-v4.json').then(r=>{if(!r.ok)throw Error('Park edge repair missing');return r.json();});
   renderer.domElement.dataset.parkEdges=JSON.stringify(applyParkEdges(kok,parkEdgePatch));kok.userData.parkContourPreserved=true;
-  const curbJoinPatch=await islandFetch('/67park-foundation-next/repairs/curb-joins-v3.json').then(r=>{if(!r.ok)throw Error('Curb join repair missing');return r.json();});
+  const curbJoinPatch=await islandFetch('/67park-pages-test/repairs/curb-joins-v3.json').then(r=>{if(!r.ok)throw Error('Curb join repair missing');return r.json();});
   renderer.domElement.dataset.curbJoins=JSON.stringify(applyCurbJoins(kok,curbJoinPatch));
-  renderer.domElement.dataset.parcelPaving=JSON.stringify(applyParcelPaving(kok));shortenKimiRightTip(kok);repairEastRoadEnd(kok);cleanLowerPark(kok);applyKimiCoast20(kok);applyMapContinuity(kok,await fetch('/67park-foundation-next/repairs/map-continuity-59.json').then(r=>{if(!r.ok)throw Error('Map continuity missing');return r.json()}));applyTerrainBoundaries(kok,await islandFetch('/67park-foundation-next/repairs/terrain-boundaries-2.json?v=ground-2').then(r=>{if(!r.ok)throw Error('Terrain boundaries missing');return r.json()}));renderer.domElement.dataset.grassBoundary1=JSON.stringify(applyGrassBoundary(kok,await islandFetch('/67park-foundation-next/repairs/grass-boundary-1.json').then(r=>{if(!r.ok)throw Error('Grass boundary repair missing');return r.json()})));renderer.domElement.dataset.mapEdgeFinish1=JSON.stringify(applyMapEdgeFinish(kok,await islandFetch('/67park-foundation-next/repairs/map-edge-finish-1.json?v=curb-touch-finish-1').then(r=>{if(!r.ok)throw Error('Map edge repair missing');return r.json()})));renderer.domElement.dataset.sidewalkMaterials1=JSON.stringify(applySidewalkMaterials(sahne,kok));renderer.domElement.dataset.parkEntryFinish1=JSON.stringify(applyParkEntryFinish(kok,await islandFetch('/67park-foundation-next/repairs/park-entry-finish-1.json?v=park-entry-finish-1').then(r=>{if(!r.ok)throw Error('Park entry finish missing');return r.json()})));
+  renderer.domElement.dataset.parcelPaving=JSON.stringify(applyParcelPaving(kok));shortenKimiRightTip(kok);repairEastRoadEnd(kok);cleanLowerPark(kok);applyKimiCoast20(kok);applyMapContinuity(kok,await fetch('/67park-pages-test/repairs/map-continuity-59.json').then(r=>{if(!r.ok)throw Error('Map continuity missing');return r.json()}));applyTerrainBoundaries(kok,await islandFetch('/67park-pages-test/repairs/terrain-boundaries-2.json?v=ground-2').then(r=>{if(!r.ok)throw Error('Terrain boundaries missing');return r.json()}));renderer.domElement.dataset.grassBoundary1=JSON.stringify(applyGrassBoundary(kok,await islandFetch('/67park-pages-test/repairs/grass-boundary-1.json').then(r=>{if(!r.ok)throw Error('Grass boundary repair missing');return r.json()})));renderer.domElement.dataset.mapEdgeFinish1=JSON.stringify(applyMapEdgeFinish(kok,await islandFetch('/67park-pages-test/repairs/map-edge-finish-1.json?v=curb-touch-finish-1').then(r=>{if(!r.ok)throw Error('Map edge repair missing');return r.json()})));renderer.domElement.dataset.sidewalkMaterials1=JSON.stringify(applySidewalkMaterials(sahne,kok));renderer.domElement.dataset.parkEntryFinish1=JSON.stringify(applyParkEntryFinish(kok,await islandFetch('/67park-pages-test/repairs/park-entry-finish-1.json?v=park-entry-finish-1').then(r=>{if(!r.ok)throw Error('Park entry finish missing');return r.json()})));
   const stairGeometry=repairIslandStairs(kok);
   renderer.domElement.dataset.stairGeometry=JSON.stringify(stairGeometry.stats);
   zeminler=zeminler.filter(m=>!stairGeometry.nonWalkableNames.includes(m.name));
-  renderer.domElement.dataset.photoSurfaceFinish1=JSON.stringify(applyPhotoSurfaceFinish(kok,await islandFetch('/67park-foundation-next/repairs/photo-surface-finish-1.json?v=photo-surfaces-1').then(r=>{if(!r.ok)throw Error('Photo surface repair missing');return r.json()})));renderer.domElement.dataset.northHousingSurface1=JSON.stringify(applyNorthHousingSurface(kok,await islandFetch('/67park-foundation-next/repairs/north-housing-surface-1.json?v=north-housing-8').then(r=>{if(!r.ok)throw Error('Northern housing repair missing');return r.json()})));renderer.domElement.dataset.mapJointFinish1=JSON.stringify(applyMapJointFinish(kok,await islandFetch('/67park-foundation-next/repairs/map-joint-finish-1.json?v=city-curb-tangent-3').then(r=>{if(!r.ok)throw Error('Map joint repair missing');return r.json()})));renderer.domElement.dataset.parkingCurbFinish1=JSON.stringify(applyParkingCurbFinish(kok,await islandFetch('/67park-foundation-next/repairs/parking-curb-endcap-1.json?v=parking-curb-1').then(r=>{if(!r.ok)throw Error('Parking curb finish missing');return r.json()})));for(const name of ['3_CIMEN','8_PARK_PATIKA_UST','6_BORDUR','5_YOL','7_KALDIRIM_TABANI','67D_SKATEPARK_BASE']){
+  renderer.domElement.dataset.photoSurfaceFinish1=JSON.stringify(applyPhotoSurfaceFinish(kok,await islandFetch('/67park-pages-test/repairs/photo-surface-finish-1.json?v=photo-surfaces-1').then(r=>{if(!r.ok)throw Error('Photo surface repair missing');return r.json()})));renderer.domElement.dataset.northHousingSurface1=JSON.stringify(applyNorthHousingSurface(kok,await islandFetch('/67park-pages-test/repairs/north-housing-surface-1.json?v=north-housing-8').then(r=>{if(!r.ok)throw Error('Northern housing repair missing');return r.json()})));renderer.domElement.dataset.mapJointFinish1=JSON.stringify(applyMapJointFinish(kok,await islandFetch('/67park-pages-test/repairs/map-joint-finish-1.json?v=city-curb-tangent-3').then(r=>{if(!r.ok)throw Error('Map joint repair missing');return r.json()})));renderer.domElement.dataset.parkingCurbFinish1=JSON.stringify(applyParkingCurbFinish(kok,await islandFetch('/67park-pages-test/repairs/parking-curb-endcap-1.json?v=parking-curb-1').then(r=>{if(!r.ok)throw Error('Parking curb finish missing');return r.json()})));for(const name of ['3_CIMEN','8_PARK_PATIKA_UST','6_BORDUR','5_YOL','7_KALDIRIM_TABANI','67D_SKATEPARK_BASE']){
     if(!DIK_YAN_GOLGE_KAYNAGI.test(name))continue;
     const source=kok.getObjectByName(name),helper=source?.getObjectByName('67D_DIK_YAN_GOLGE_'+name),geometry=dikYanGolgeGeometrisi(source.geometry);
     if(helper&&geometry){helper.geometry.dispose();helper.geometry=geometry;}

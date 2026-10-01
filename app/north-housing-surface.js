@@ -1,5 +1,5 @@
 import * as T from 'three';
-import {boundaryPositionCRC as crc} from './terrain-boundaries.js?v=ground-3';
+import {boundaryPositionCRC as crc} from './terrain-boundaries.js?v=ground-2';
 
 const SOIL='4_KIYI_TOPRAK_TABANI';
 const TARGETS=new Set(['3_CIMEN','7_KALDIRIM_TABANI',SOIL]);

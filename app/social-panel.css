@@ -1,0 +1,26 @@
+/* Same control family; one scroll area and no new floating gameplay overlay. */
+.online-dialog.online-dialog [hidden]{display:none!important}
+.online-dialog.online-dialog .social-tabs{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;padding:10px 20px;border-bottom:1px solid #dfe6ec;background:#f9fbfd;flex-shrink:0}
+.online-dialog.online-dialog .social-tabs button{min-width:0;min-height:44px;padding:8px 5px;font-size:13px;box-shadow:none;border:1px solid #dfe6ec;white-space:normal;overflow-wrap:anywhere}
+.online-dialog.online-dialog .social-tabs button[aria-selected=true]{background:#fbe4ee;border-color:#dc80a3;color:#64384b}
+.social-tab-count{display:inline-block;min-width:17px;margin-left:4px;padding:1px 4px;box-sizing:border-box;border-radius:12px;background:#fff;color:#663a50;font-size:11px}
+.online-dialog.online-dialog .online-grid{grid-template-columns:minmax(0,1fr)}
+.online-dialog.online-dialog .online-scroll{min-height:0;overscroll-behavior:contain}
+.online-dialog.online-dialog .online-side{min-width:0}
+.social-friend-tools{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 14px;align-items:end;margin:14px 0}
+.social-friend-tools>label:first-child{display:grid;gap:6px;font-size:13px}
+.online-dialog.online-dialog .social-friend-tools input[type=search]{box-sizing:border-box;min-width:0;width:100%;font-size:16px}
+.social-online-filter{display:flex;align-items:center;gap:8px;min-height:46px;font-size:13px;cursor:pointer}
+.online-dialog.online-dialog .social-online-filter input{width:22px;height:22px;min-height:22px;accent-color:#cb608b}
+.social-friend-tools small{grid-column:1/-1;color:#65727b;font-size:12px}
+.online-dialog.online-dialog .community-person{flex-wrap:wrap;gap:10px;min-width:0}
+.online-dialog.online-dialog .community-person>div{min-width:70px;flex:1;overflow-wrap:anywhere}
+.online-dialog.online-dialog .community-person-actions{flex-wrap:wrap;max-width:100%}
+.social-remove-confirm{display:flex;flex-wrap:wrap;gap:8px;align-items:center;max-width:100%;padding:8px;border:1px solid #e8becd;border-radius:14px;background:#fff2f6}
+.social-remove-confirm>span{flex:1 1 100%;overflow-wrap:anywhere;font-size:13px}
+.online-dialog.online-dialog .social-people{max-height:none;overflow:visible}
+.online-dialog.online-dialog .social-requests-panel .online-invite{flex-wrap:wrap;gap:8px}
+.social-requests-panel .online-invite>div{flex:1 1 140px;min-width:0;overflow-wrap:anywhere}
+.social-announcement{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+@media(max-width:500px){.online-dialog.online-dialog .social-tabs{padding:8px;gap:4px}.online-dialog.online-dialog .social-tabs button{font-size:11px;padding:8px 2px}.social-friend-tools{grid-template-columns:1fr}.social-friend-tools small{grid-column:auto}.social-tab-count{margin-left:2px}}
+@media(max-height:500px){.online-dialog.online-dialog .social-tabs{padding:5px 10px}.online-dialog.online-dialog .social-tabs button{min-height:44px;padding:6px}.online-dialog.online-dialog .online-connection{margin-bottom:10px}.online-dialog.online-dialog footer{padding:5px 12px}.online-dialog.online-dialog footer span{display:none}}

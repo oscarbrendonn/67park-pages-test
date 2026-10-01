@@ -1,8 +1,10 @@
 import {createNaturalAudioBank,FOLEY_CLIPS} from './natural-audio.js?v=natural-audio-1';
+import {createVehicleAudio} from './vehicle-audio.js?v=five-gears-1';
+import {createCowVoice} from './cow-voice.js?v=cow-release-1';
 
 // One audio graph; bounded voices; no animation-loop ownership.
 export function createPartyAudio({settings, saveSettings, gameMuted, host = window}) {
-  let ctx, master, compressor, noise, resuming, hornVoice, hornWanted = false, blocked = false, engineVoice = null;
+  let ctx, master, compressor, noise, resuming, hornVoice, hornWanted = false, blocked = false;
   const voices = new Set(), last = new Map(), counts = {};
   const pendingEffects=new Map();
   const recordedEffects=new Set(['jump','double','land','skate-ollie','skate-flip','skate-land','horn']);
@@ -12,6 +14,14 @@ export function createPartyAudio({settings, saveSettings, gameMuted, host = wind
   if(!host.document.hidden&&!gameMuted()&&settings.sfx>0)recordings.preload();
   const limits = {step: 90, jump: 140, double: 140, land: 100, 'character-jump':110, 'character-land':120, 'skate-ollie':110, 'skate-flip':140, 'skate-land':100, horn:120, swing: 150, hit: 100, pad: 250, grab: 150, throw: 150, click: 60, stars: 350, note:80, bell:1800, portal:500, 'water-splash':450, 'vehicle-start':500, 'vehicle-stop':250, 'vehicle-brake':300, 'ui-confirm':120, 'pet-call':240, 'pet-purr':260, 'pet-happy':220, 'pet-bark':500, 'pet-fetch':450, 'pet-pounce':180, 'pet-paw':160, 'pet-pickup':260, 'pet-drop':240, 'pet-roll':220, 'punch-cat':600, 'punch-gorilla':600, 'punch-frog':600};
   const audible = () => ctx?.state === 'running' && !host.document.hidden && !blocked && !gameMuted() && settings.sfx > 0;
+  const cowVoice=createCowVoice({host,getContext:()=>ctx,getOutput:()=>master,audible,voices,onPlay:()=>{counts['punch-cow']=(counts['punch-cow']||0)+1;}});
+  function cowSelected(){
+    if(host.document.documentElement?.dataset.gameplayAvatarBase==='cow67')return true;
+    try{return JSON.parse(host.localStorage?.getItem('67park-feel-lab.character.v3')||'null')?.base==='cow67';}catch{return false;}
+  }
+  if(!host.document.hidden&&!gameMuted()&&settings.sfx>0&&cowSelected())cowVoice.preload();
+  let vehicleFocused=true;
+  const vehicle=createVehicleAudio({host,getContext:()=>ctx,getOutput:()=>master,audible:()=>audible()&&vehicleFocused,onCue:name=>{counts[name]=(counts[name]||0)+1;}});
   const volume = () => {
     if (ctx && master) master.gain.setTargetAtTime(audible() ? Math.min(1, Math.max(0, Number(settings.sfx) || 0)) * 0.65 : 0, ctx.currentTime, 0.025);
   };
@@ -43,6 +53,7 @@ export function createPartyAudio({settings, saveSettings, gameMuted, host = wind
       volume();
       // Load/decode once in the existing gesture-unlocked graph; never block entry.
       recordings.load(ctx);
+      if(cowSelected())cowVoice.load();
       return ctx;
     } catch { return null; } // Audio failure must never disable gameplay or the party pack.
   }
@@ -126,66 +137,11 @@ export function createPartyAudio({settings, saveSettings, gameMuted, host = wind
     source.onended = () => { voices.delete(source); source.disconnect(); envelope.disconnect(); filter?.disconnect(); };
     source.start(start); source.stop(end + 0.01);
   }
-  // Vehicle feedback is a continuous engine bed, not a rapidly repeated
-  // one-shot. The previous implementation replayed a tiny chirp every few
-  // frames, which read as "tutututu" and never tracked the car's speed.
-  const target = (param, value, time, constant = .045) => {
-    try {
-      if (typeof param.setTargetAtTime === 'function') param.setTargetAtTime(value, time, constant);
-      else param.setValueAtTime(value, time);
-    } catch {}
-  };
-  function stopVehicleEngine() {
-    const v = engineVoice; engineVoice = null;
-    if (!v) return;
-    const t = ctx?.currentTime ?? 0;
-    try { v.gain.gain.cancelScheduledValues(t); target(v.gain.gain, 0, t, .06); } catch {}
-    let closed = false;
-    const close = () => {
-      if (closed) return; closed = true;
-      for (const node of [v.osc, v.harmonic, v.noiseSource]) {
-        try { node?.disconnect(); } catch {}
-      }
-      for (const node of [v.filter, v.noiseFilter, v.gain, v.noiseGain]) {
-        try { node?.disconnect(); } catch {}
-      }
-    };
-    try { v.osc.onended = close; v.osc.stop(t + .13); } catch { close(); }
-    try { v.harmonic.stop(t + .13); } catch {}
-    try { v.noiseSource.stop(t + .13); } catch {}
-  }
-  function updateVehicleEngine(speed = 0) {
+  // Same unlocked graph as horn/movement; real loops, no oscillator engine.
+  function stopVehicleEngine(shutdown=false) { vehicle.stop({shutdown}); }
+  function updateVehicleEngine(speed=0,options={}) {
     if (!audible()) { stopVehicleEngine(); return; }
-    if (!ctx || !master) ensure();
-    if (!ctx || !master || !audible()) return;
-    if (!engineVoice) {
-      try {
-        const osc = ctx.createOscillator(), harmonic = ctx.createOscillator();
-        const filter = ctx.createBiquadFilter(), gain = ctx.createGain();
-        const noiseSource = ctx.createBufferSource(), noiseFilter = ctx.createBiquadFilter(), noiseGain = ctx.createGain();
-        osc.type = 'sawtooth'; harmonic.type = 'triangle';
-        filter.type = 'lowpass'; filter.Q.value = 1.1;
-        noiseFilter.type = 'bandpass'; noiseFilter.Q.value = .55;
-        noiseSource.buffer = noise; noiseSource.loop = true;
-        osc.connect(filter); harmonic.connect(filter); filter.connect(gain); gain.connect(master);
-        noiseSource.connect(noiseFilter); noiseFilter.connect(noiseGain); noiseGain.connect(master);
-        const now = ctx.currentTime;
-        gain.gain.setValueAtTime(0.0001, now); noiseGain.gain.setValueAtTime(0.0001, now);
-        osc.start(now); harmonic.start(now); noiseSource.start(now);
-        engineVoice = {osc, harmonic, filter, gain, noiseSource, noiseFilter, noiseGain};
-      } catch { engineVoice = null; return; }
-    }
-    const v = engineVoice, now = ctx.currentTime;
-    const magnitude = Math.min(1, Math.abs(Number(speed) || 0) / 11);
-    // Idle rumble stays present while mounted; speed raises the perceived RPM,
-    // harmonic, air intake and low-pass cutoff instead of adding another beep.
-    const rpm = 48 + magnitude * 122;
-    target(v.osc.frequency, rpm, now, .055);
-    target(v.harmonic.frequency, rpm * 2.015, now, .06);
-    target(v.filter.frequency, 360 + magnitude * 1120, now, .07);
-    target(v.noiseFilter.frequency, 520 + magnitude * 980, now, .08);
-    target(v.gain.gain, .014 + magnitude * .062, now, .08);
-    target(v.noiseGain.gain, .003 + magnitude * .012, now, .09);
+    vehicle.update(speed,options);
   }
   // Short stylized animal calls. One oscillator + filter + envelope per call;
   // no downloaded recordings, speech API, extra context or recurring timer.
@@ -282,12 +238,6 @@ export function createPartyAudio({settings, saveSettings, gameMuted, host = wind
       voice({type:'sine',from:420,to:150,duration:.28,delay:.015,gain:.12});
       voice({type:'triangle',from:780,to:390,duration:.2,delay:.08,gain:.055});
     },
-    'vehicle-start'() {
-      voice({type:'sawtooth',from:62,to:118,duration:.28,gain:.08});
-      voice({type:'triangle',from:124,to:236,duration:.22,delay:.06,gain:.035});
-    },
-    'vehicle-stop'() { voice({type:'triangle',from:180,to:72,duration:.16,gain:.08}); },
-    'vehicle-brake'() { voice({noiseBand:'bandpass',from:980,duration:.12,gain:.07});voice({type:'triangle',from:210,to:92,duration:.18,gain:.065}); },
     'ui-confirm'() { voice({type:'sine',from:440,to:660,duration:.12,gain:.07}); voice({type:'sine',from:660,to:880,duration:.16,delay:.09,gain:.055}); },
     'pet-call'() { voice({type:'triangle',from:520,to:760,duration:.10,gain:.06}); voice({type:'triangle',from:760,to:620,duration:.14,delay:.11,gain:.045}); }
   };
@@ -319,7 +269,7 @@ export function createPartyAudio({settings, saveSettings, gameMuted, host = wind
   }
   function quiet() {
     volume();
-    if (host.document.hidden || blocked || gameMuted() || !(settings.sfx > 0)) {stopHorn();stopVehicleEngine();pendingEffects.clear();}
+    if (host.document.hidden || blocked || gameMuted() || !(settings.sfx > 0)) {stopHorn();stopVehicleEngine();cowVoice.cancel();pendingEffects.clear();}
     if (host.document.hidden || blocked || gameMuted()) for (const source of voices) { try { source.stop(); } catch {} }
   }
   // Board mode bypasses the walking controller used by __partyVisual. Listen
@@ -345,13 +295,16 @@ export function createPartyAudio({settings, saveSettings, gameMuted, host = wind
   host.addEventListener('storage', quiet);
   host.addEventListener('park:settings-change',quiet);
   host.addEventListener('park:audio-mute-change',quiet);
-  host.addEventListener('blur',()=>{stopHorn();stopVehicleEngine();pendingEffects.clear();});
+  host.addEventListener('blur',()=>{vehicleFocused=false;stopHorn();stopVehicleEngine();cowVoice.cancel();pendingEffects.clear();});
+  host.addEventListener('focus',()=>{vehicleFocused=true;});
   return {
     ensure, play, startHorn, stopHorn, updateVehicleEngine, stopVehicleEngine,
     ready:()=>ctx?recordings.load(ctx):Promise.resolve(false),
-    punch(base){play('swing');const sound={cat67:'punch-cat',goril:'punch-gorilla',frog67:'punch-frog'}[base];if(sound)play(sound);},
+    vehicleReady:()=>ctx?vehicle.ready():Promise.resolve(false),
+    cowReady:()=>ctx?cowVoice.load():Promise.resolve(false),
+    punch(base){play('swing');if(base==='cow67')cowVoice.play();const sound={cat67:'punch-cat',goril:'punch-gorilla',frog67:'punch-frog'}[base];if(sound)play(sound);},
     state: () => ctx?.state || 'none',
     setVolume(value) { settings.sfx = Math.min(1, Math.max(0, Number(value) || 0)); quiet(); saveSettings(); },
-    stats: () => ({voices:voices.size, maxVoices:24, counts:{...counts}, hornActive:!!hornVoice, engineActive:!!engineVoice, state:ctx?.state || 'none',recordings:recordings.stats()})
+    stats: () => ({voices:voices.size, maxVoices:24, counts:{...counts}, cowVoice:cowVoice.stats(), hornActive:!!hornVoice, engineActive:vehicle.stats().active, vehicle:vehicle.stats(), state:ctx?.state || 'none',recordings:recordings.stats()})
   };
 }

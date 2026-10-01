@@ -52,3 +52,20 @@ export function parkSocket(channel){
  url.searchParams.set('protocol',CLIENT_PROTOCOL);
  return protectParkSocket(watchParkSocket(new WebSocket(url,['67park-v1','guest.'+state.session.token]),channel),channel);
 }
+async function accountRequest(action,body={}){
+ const session=await ensurePreviewGuest();
+ const response=await fetch(endpoint('/api/account/'+action),{method:'POST',mode:'cors',credentials:'same-origin',cache:'no-store',referrerPolicy:'no-referrer',headers:{'Content-Type':'application/json',Authorization:'Bearer '+session.token},body:JSON.stringify(body),signal:AbortSignal.timeout(15000)});
+ const result=await response.json();if(!response.ok)throw Error(result.error||'Account change failed.');return result;
+}
+export const createRecoveryCode=()=>accountRequest('save');
+export async function restoreRecoveryCode(code){
+ const restored=await accountRequest('restore',{code});
+ if(!/^[A-Za-z0-9_-]{43}$/.test(restored.token))throw Error('Invalid restored session.');
+ state.session={...state.session,...restored};
+ localStorage.setItem(key,restored.token);
+ localStorage.setItem('67park.name',restored.name||'Guest');
+ if(restored.combo)try{const profile=JSON.parse(restored.combo);localStorage.setItem('67park-feel-lab.character.v3',JSON.stringify(profile));localStorage.setItem('67park-feel-lab.player-profile.v1',JSON.stringify({...profile,version:1,name:restored.name}));}catch{}
+ // Never carry the previous guest's local block list into the restored account.
+ localStorage.removeItem('67park.feel-lab.safety.v1');
+ return restored;
+}

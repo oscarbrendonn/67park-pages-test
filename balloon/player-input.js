@@ -10,7 +10,7 @@ export function createPlayerInput(){
   const touch=()=>navigator.maxTouchPoints>0||matchMedia('(pointer:coarse)').matches||innerWidth<=700;
   document.body.classList.toggle('touch',touch());
   addEventListener('resize',()=>document.body.classList.toggle('touch',touch()));
-  let owner=null,x=0,y=0,startX=0,startY=0,wasDash=false,look=null;
+  let owner=null,x=0,y=0,startX=0,startY=0,wasDash=false,look=null,keyJumpPending=false;
   const move=e=>{
     if(e.pointerId!==owner)return;
     const dx=e.clientX-startX,dy=e.clientY-startY,n=Math.max(44,Math.hypot(dx,dy));
@@ -29,11 +29,12 @@ export function createPlayerInput(){
   addEventListener('keydown',e=>{
     if(blocked()||e.defaultPrevented||['Space','Enter'].includes(e.code)&&e.target?.closest?.('button,a'))return;
     if(['Space','ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.code))e.preventDefault();
+    if(e.code==='Space'&&!e.repeat)keyJumpPending=true;
     keys.add(e.code);
   });
   addEventListener('keyup',e=>keys.delete(e.code));
   function reset(){
-    keys.clear();const id=owner;owner=null;x=y=0;wasDash=false;knob.style.transform='';
+    keys.clear();keyJumpPending=false;const id=owner;owner=null;x=y=0;wasDash=false;knob.style.transform='';
     try{if(id!==null&&base.hasPointerCapture?.(id))base.releasePointerCapture(id);}catch{}
     jump.reset();dash.reset();sprint.reset();look?.reset();
   }
@@ -45,7 +46,7 @@ export function createPlayerInput(){
     if(blocked()){reset();return {mx:0,my:0,moving:false,jumpHeld:false,sprintHeld:false,grabPressed:false,lookYaw:0,lookPitch:0,looking:false};}
     let mx=x+(keys.has('KeyD')||keys.has('ArrowRight')?1:0)-(keys.has('KeyA')||keys.has('ArrowLeft')?1:0);
     let my=y+(keys.has('KeyS')||keys.has('ArrowDown')?1:0)-(keys.has('KeyW')||keys.has('ArrowUp')?1:0);
-    let jumping=jump.consume()||keys.has('Space'),dashing=dash.consume()||keys.has('KeyE')||keys.has('KeyF');
+    let jumping=jump.consume()||keyJumpPending||keys.has('Space'),dashing=dash.consume()||keys.has('KeyE')||keys.has('KeyF');keyJumpPending=false;
     let running=sprint.consume()||keys.has('ShiftLeft')||keys.has('ShiftRight');
     const camera=look?.poll()||{lookYaw:0,lookPitch:0,looking:false};
     for(const pad of navigator.getGamepads?.()||[]){

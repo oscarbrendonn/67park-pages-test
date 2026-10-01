@@ -1,15 +1,11 @@
 # 67Park public Pages comparison
 
-Owner-authorized public performance test, based on client revision
-`d07ff2b976ad565e4d42cf09ac589ccf5964bea1`.
+Client revision: 6a2fff148dbb27dbb1ba4486d3f88389fed7ec00 (friend-lobbies-1).
 
-Game/model files are intentionally public. The client password screen is a
-playtest entrance, NOT file access protection. The separate protected game and
-private source repositories are unchanged.
+Owner-authorized public test. Game/model files are intentionally public. The client password screen is a playtest entrance, NOT file access protection. The protected game and private source repositories are unchanged.
 
-Only hosting paths and the isolated test backend routing differ. Multiplayer
-still uses a Mac-hosted test service through a tunnel; this compares GitHub
-asset delivery, not a fully cloud-hosted game server. Progress is separate.
+Only hosting paths and isolated test-backend routing differ. Multiplayer still uses a separate Mac-hosted test service through a tunnel. Test accounts and progress are separate from the protected game.
 
-No server code, private runtime data, credentials, or source Git history is
-published here. The operational endpoint branch updates routing after restarts.
+50 players per island, overflow islands, friend-lobby joining and social panel are included. The test service has a separate 128-player overall safety limit.
+
+No server code, private runtime data, credentials, or source Git history is published here. The operational endpoint branch refreshes routing after restarts.

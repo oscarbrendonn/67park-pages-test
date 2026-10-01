@@ -1,0 +1,38 @@
+{
+  "sampleRate": 24000,
+  "clips": {
+    "start": {
+      "offset": 0,
+      "duration": 1.48
+    },
+    "stop": {
+      "offset": 1.505,
+      "duration": 1.05
+    },
+    "idle": {
+      "offset": 2.58,
+      "duration": 2.78,
+      "loopStart": 0.08,
+      "loopEnd": 2.78
+    },
+    "low": {
+      "offset": 5.385,
+      "duration": 1.88,
+      "loopStart": 0.08,
+      "loopEnd": 1.88
+    },
+    "mid": {
+      "offset": 7.29,
+      "duration": 2.56,
+      "loopStart": 0.08,
+      "loopEnd": 2.56
+    },
+    "brake": {
+      "offset": 9.875,
+      "duration": 1.05
+    }
+  },
+  "bytes": 525644,
+  "duration": 10.95,
+  "sha256": "e9f1487ddb499e83910f1a6ca9e7fa81627b0b5f0fef5ddfee53abcfa120266a"
+}

@@ -50,7 +50,8 @@ export const punchProfile=base=>CHARACTER_PUNCH_PROFILES[base]||CHARACTER_PUNCH_
 // converts only this new clip to an additive upper-body layer. Never mutate the
 // shared cached clips, root transform, lower body, head geometry or jump clips.
 export function withCharacterPunch(clips,base){
- const profile=CHARACTER_PUNCH_PROFILES[base];if(!profile)return clips;
+ // Cow and Shark use the approved shared-body punch, not new locomotion.
+ const profile=CHARACTER_PUNCH_PROFILES[['cow67','shark67','ghost67','axolotl67','superhero67'].includes(base)?'goril':base];if(!profile)return clips;
  const idle=clips.find(c=>c.name==='idle');if(!idle)throw Error('Punch needs the shared idle rig');
  const tracks=Object.entries(profile.poses).map(([bone,poses])=>{
   const rest=idle.tracks.find(t=>t.name===bone+'.quaternion');if(!rest)throw Error('Missing punch bone '+bone);

@@ -1,5 +1,5 @@
 import * as T from 'three';
-import {boundaryPositionCRC as crc} from './terrain-boundaries.js?v=ground-3';
+import {boundaryPositionCRC as crc} from './terrain-boundaries.js?v=ground-2';
 
 const TARGETS=['6_BORDUR','7_KALDIRIM_TABANI'];
 const WINDOW=[-154.60,-140.0,-151.9,-137.7];

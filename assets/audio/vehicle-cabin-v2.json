@@ -1,0 +1,44 @@
+{
+  "sampleRate": 24000,
+  "clips": {
+    "start": {
+      "offset": 0,
+      "duration": 1.48
+    },
+    "stop": {
+      "offset": 1.505,
+      "duration": 1.05
+    },
+    "idle": {
+      "offset": 2.58,
+      "duration": 2.78,
+      "loopStart": 0.08,
+      "loopEnd": 2.78
+    },
+    "low": {
+      "offset": 5.385,
+      "duration": 1.88,
+      "loopStart": 0.08,
+      "loopEnd": 1.88
+    },
+    "mid": {
+      "offset": 7.29,
+      "duration": 2.56,
+      "loopStart": 0.08,
+      "loopEnd": 2.56
+    },
+    "brake": {
+      "offset": 9.875,
+      "duration": 1.05
+    },
+    "high": {
+      "offset": 10.95,
+      "duration": 1.7,
+      "loopStart": 0.08,
+      "loopEnd": 1.7
+    }
+  },
+  "bytes": 608444,
+  "duration": 12.675,
+  "sha256": "d8cc6e7cf836a8facb3b0cf400ff2220152e803d34bccf27c463994e17f609d5"
+}

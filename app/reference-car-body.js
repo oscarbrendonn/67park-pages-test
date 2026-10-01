@@ -9,6 +9,17 @@ import {addParkPlates} from './vehicle-branding.js?v=fleet-38';
 const STYLE='pastel-retro-reference-car';
 const W=1.405,L=2.43,WHEEL_R=.46,WHEEL_X=1.285,WHEEL_Z=1.55;
 const TAU=Math.PI*2,clamp=T.MathUtils.clamp,lerp=T.MathUtils.lerp;
+// Include the exact wheel-arch endpoints and circular arc samples; a regular
+// perimeter grid alone bridges across them and creates pointed lower corners.
+const BELT_U=(()=>{
+ const values=Array.from({length:73},(_,i)=>i/72);
+ for(const center of [-WHEEL_Z,WHEEL_Z])for(let i=0;i<=16;i++){
+  const z=center+.535*Math.cos(i*Math.PI/16),c=Math.sign(z)*Math.abs(z/L)**2.1,u=Math.acos(c)/TAU;
+  values.push(u,1-u);
+ }
+ return [...new Set(values)].sort((a,b)=>a-b);
+})();
+const BELT_COLUMNS=BELT_U.length-1,BELT_ROWS=6,TOP_ROWS=4;
 let cached=null,leases=0;
 
 function surface(nu,nv,point,{flip=false,closed=false}={}){
@@ -74,19 +85,25 @@ function sideGeometry(g,side,offset=0){
 }
 function waist(z){return 1.355+.075*Math.exp(-Math.pow((Math.abs(z)-1.40)/.69,2));}
 function beltPoint(u,v){
- const a=u*TAU,s=Math.sin(a),c=Math.cos(a),sp=Math.abs(s)<1e-12?0:s,cp=Math.abs(c)<1e-12?0:c,e=2/4.2;
- const z=L*Math.sign(cp)*Math.pow(Math.abs(cp),e)*(1-.018*(1-v)**2);
- const swell=.035*Math.exp(-Math.pow((Math.abs(z)-WHEEL_Z)/.60,2))*Math.sin(v*Math.PI);
- const x=W*Math.sign(sp)*Math.pow(Math.abs(sp),e)*(1-.038*(2*v-1)**2+swell);
+ const a=u*TAU,s=Math.sin(a),c=Math.cos(a),e=2/4.2;
+ const x=W*Math.sign(s)*Math.abs(s)**e,z=L*Math.sign(c)*Math.abs(c)**e;
  const dz=Math.min(Math.abs(z-WHEEL_Z),Math.abs(z+WHEEL_Z));
  const lower=.45+(Math.abs(x)>1.15&&dz<.535?Math.sqrt(.535**2-dz**2):0);
- return [x,lerp(lower,waist(z),v),z];
+ const top=waist(z),radius=.16,shoulderStart=.5,rawY=lerp(lower,top-radius,Math.min(1,v/shoulderStart));
+ // Keep all shoulder rows at the same fraction of the round-over. Letting
+ // wheel cutout height shift these rows produced zipper-like specular ridges.
+ const t=clamp((v-shoulderStart)/(1-shoulderStart),0,1),inset=radius*(1-Math.cos(t*Math.PI/2));
+ // Roll the shoulder into the deck instead of joining a vertical wall to a
+ // separate raised strip. The same vertices still close the entire seam.
+ const nx=Math.sign(x)*Math.abs(x/W)**3.2/W,nz=Math.sign(z)*Math.abs(z/L)**3.2/L,n=Math.hypot(nx,nz);
+ return [x-inset*nx/n,t?top-radius+radius*Math.sin(t*Math.PI/2):rawY,z-inset*nz/n];
 }
 function skinX(z,y){
  let lo=0,hi=1,result=0;
  for(let i=0;i<22;i++){
-  const v=(lo+hi)*.5,topZ=z/(1-.018*(1-v)**2),c=Math.sign(topZ)*Math.pow(Math.min(1,Math.abs(topZ)/L),4.2/2);
-  const p=beltPoint(Math.acos(c)/TAU,v);result=p[0];if(p[1]<y)lo=v;else hi=v;
+  const v=(lo+hi)*.5;let a=0,b=.5;
+  for(let j=0;j<22;j++){const u=(a+b)*.5;if(beltPoint(u,v)[2]>z)a=u;else b=u;}
+  const p=beltPoint((a+b)*.5,v);result=p[0];if(p[1]<y)lo=v;else hi=v;
  }
  return result;
 }
@@ -115,13 +132,22 @@ function geometryLibrary(){
  };
  // Continuous rounded-superellipse belt. The lower edge follows actual wheel
  // openings, rather than placing a tyre in front of an uncut opaque body box.
- const belt=surface(96,7,beltPoint,{closed:true});
- const lowerBoundary=Array.from({length:97},(_,i)=>[belt.attributes.position.getX(i),belt.attributes.position.getY(i),belt.attributes.position.getZ(i)]);
+ const belt=surface(BELT_COLUMNS,BELT_ROWS,(u,v)=>beltPoint(BELT_U[Math.round(u*BELT_COLUMNS)],v),{closed:true});
+ // Area-weighted vertex normals bias toward the wider neighbouring triangle
+ // where arch samples are close together. Use the continuous surface normal
+ // so those harmless tessellation changes cannot draw a zigzag in the paint.
+ for(let j=0;j<=BELT_ROWS;j++)for(let i=0;i<=BELT_COLUMNS;i++){
+  const u=BELT_U[i],v=j/BELT_ROWS,e=1e-5;
+  const along=new T.Vector3(...beltPoint(u+e,v)).sub(new T.Vector3(...beltPoint(u-e,v)));
+  const up=new T.Vector3(...beltPoint(u,Math.min(1,v+e))).sub(new T.Vector3(...beltPoint(u,Math.max(0,v-e))));
+  const n=along.cross(up).normalize();belt.attributes.normal.setXYZ(j*(BELT_COLUMNS+1)+i,n.x,n.y,n.z);
+ }
+ const lowerBoundary=Array.from({length:BELT_COLUMNS+1},(_,i)=>[belt.attributes.position.getX(i),belt.attributes.position.getY(i),belt.attributes.position.getZ(i)]);
  // One closed underbody shares the real fender edge, including its wheel
  // notches. Each recess turns inward, down its inner wall, then into the floor.
  // Independent semicircles left bright slivers between the sampled surfaces.
- add('seal',surface(96,3,(u,v)=>{
-  const p=lowerBoundary[Math.round(u*96)],innerX=clamp(p[0],-.82,.82);
+ add('seal',surface(BELT_COLUMNS,3,(u,v)=>{
+  const p=lowerBoundary[Math.round(u*BELT_COLUMNS)],innerX=clamp(p[0],-.82,.82);
   if(v===0)return p;
   if(v<.5)return [innerX,p[1],p[2]];
   if(v<1)return [innerX,.40,p[2]];
@@ -142,19 +168,51 @@ function geometryLibrary(){
  // One continuous annular top, not independently sampled hood/deck rectangles.
  // The outer row is copied byte-for-byte from the belt's actual top vertices;
  // thus even the sparse superellipse poles share identical polygon edges.
- const topBoundary=Array.from({length:97},(_,i)=>[belt.attributes.position.getX(7*97+i),belt.attributes.position.getY(7*97+i),belt.attributes.position.getZ(7*97+i)]);
- const top=surface(96,6,(u,v)=>{
-  const outer=topBoundary[Math.round(u*96)],cz=-.515,dx=outer[0],dz=outer[2]-cz;
+ const topBoundary=Array.from({length:BELT_COLUMNS+1},(_,i)=>[belt.attributes.position.getX(BELT_ROWS*(BELT_COLUMNS+1)+i),belt.attributes.position.getY(BELT_ROWS*(BELT_COLUMNS+1)+i),belt.attributes.position.getZ(BELT_ROWS*(BELT_COLUMNS+1)+i)]);
+ const top=surface(BELT_COLUMNS,TOP_ROWS,(u,v)=>{
+  const outer=topBoundary[Math.round(u*BELT_COLUMNS)],cz=-.515,dx=outer[0],dz=outer[2]-cz;
   // Round the cabin opening inward wherever its rectangular corner would
   // otherwise leave the curved exterior and fold a top-strip triangle.
   const ratio=Math.min(.94,1.245/Math.max(1e-8,Math.abs(dx)),1.375/Math.max(1e-8,Math.abs(dz)));
   const inner=[dx*ratio,waist(cz+dz*ratio)+.015,cz+dz*ratio];
   if(v===1)return outer;
-  return [lerp(inner[0],outer[0],v),lerp(inner[1],outer[1],v)+.11*Math.sin(Math.PI*v),lerp(inner[2],outer[2],v)];
+  return [lerp(inner[0],outer[0],v),lerp(inner[1],outer[1],v)+.025*Math.sin(Math.PI*v)**2,lerp(inner[2],outer[2],v)];
  },{flip:true,closed:true});
+ for(let i=0;i<=BELT_COLUMNS;i++){
+  const n=belt.attributes.normal,k=BELT_ROWS*(BELT_COLUMNS+1)+i;
+  top.attributes.normal.setXYZ(TOP_ROWS*(BELT_COLUMNS+1)+i,n.getX(k),n.getY(k),n.getZ(k));
+ }
  const flatBelt=belt.toNonIndexed(),flatTop=top.toNonIndexed();
  const rawBody=mergeGeometries([flatBelt,flatTop],false);flatBelt.dispose();flatTop.dispose();belt.dispose();top.dispose();
- rawBody.deleteAttribute('normal');const body=mergeVertices(rawBody,1e-5);rawBody.dispose();body.computeVertexNormals();add('paint',body);
+ const body=mergeVertices(rawBody,1e-5);rawBody.dispose();
+ // Seat each lamp against the actual triangulated skin, not a guessed Z.
+ // The shallow bezel/lens follows the rounded corner across its entire face.
+ const fitMesh=new T.Mesh(body,new T.MeshBasicMaterial({side:T.DoubleSide})),ray=new T.Raycaster();
+ const skinDepth=(x,y,sign)=>{ray.set(new T.Vector3(x,y,sign*4),new T.Vector3(0,0,-sign));const hit=ray.intersectObject(fitMesh,false)[0];if(!hit)throw Error('Car fitting misses body');return hit.point.z;};
+ const fittedLamps=[];
+ function lamp(side,rear){
+  const sign=rear?-1:1,cx=side*(rear?1.02:.947),cy=rear?1.11:1.08;
+  const rx=rear?.148:.23,ry=rear?.186:.235,segments=32;
+  const skin=(x,y)=>skinDepth(x,y,sign);
+  const edge=Array.from({length:segments},(_,i)=>{const a=i/segments*TAU,x=cx+rx*Math.cos(a),y=cy+ry*Math.sin(a);return [x,y,skin(x,y)];});
+  const fittedOval=(key,sx,sy,offset,depth)=>{
+   // Spend triangles on the visible domed face, not a hidden rear hemisphere.
+   // The shallow rear cone closes on the exact same rim inside the paint.
+   const point=(u,v,back)=>{const a=u*TAU,x=cx+sx*v*Math.cos(a),y=cy+sy*v*Math.sin(a);return [x,y,skin(x,y)+sign*(offset+depth*(back?v-1:Math.sqrt(Math.max(0,1-v*v))))];};
+   const face=surface(28,4,(u,v)=>point(u,Math.sin(v*Math.PI/2),false),{closed:true,flip:!rear});
+   const back=surface(28,1,(u,v)=>point(u,v,true),{closed:true,flip:rear});
+   const g=mergeGeometries([face,back],false);face.dispose();back.dispose();g.deleteAttribute('normal');
+   const welded=mergeVertices(g,1e-5);g.dispose();welded.computeVertexNormals();add(key,welded);
+  };
+  fittedOval('metal',rx,ry,-.006,.034);
+  fittedOval(rear?'red':'light',rx*.81,ry*.82,.014,.019);
+  fittedLamps.push({rear,side,center:[cx,cy,skin(cx,cy)],radius:[rx,ry],rim:edge,overlap:.04});
+ }
+ for(const side of [-1,1]){lamp(side,false);lamp(side,true);}
+ const badge=new T.SphereGeometry(1,12,8),bp=badge.attributes.position;
+ for(let i=0;i<bp.count;i++){const x=bp.getX(i)*.036,y=1.295+bp.getY(i)*.054;bp.setXYZ(i,x,y,skinDepth(x,y,1)+.004+bp.getZ(i)*.014);}
+ badge.computeVertexNormals();add('metal',badge);
+ fitMesh.material.dispose();add('paint',body);
  // Keep the hole bottoms inside every extrusion layer: the caps have a
  // 20mm sill, and the .014 bevel expands it to 48mm. The sill stays buried
  // under the curved body through attachedPillarX, without a planar foot flap.
@@ -211,11 +269,6 @@ function geometryLibrary(){
   line('seal',[[side*1.315,1.51,.63],[side*1.445,1.56,.66],[side*1.466,1.60,.66]],.025,8,5);
   oval('paint',side*1.455,1.675,.675,.117,.12,.106);
   oval('glass',side*1.455,1.675,.578,.087,.088,.010,10,6);
-  const frontZ=2.312;
-  oval('metal',side*.947,1.16,frontZ,.255,.265,.063,16,8);
-  oval('light',side*.947,1.167,frontZ+.041,.218,.228,.043,16,8);
-  oval('metal',side*1.02,1.13,-2.356,.148,.186,.044,12,8);
-  oval('red',side*1.02,1.13,-2.389,.111,.144,.031,12,8);
  }
  // The continuous closed body is the front/rear finish; no separate thick
  // bumper bars project beyond it. Physics and seat anchors are factory-owned.
@@ -249,7 +302,6 @@ function geometryLibrary(){
  for(const p of [[.21,0],[.21,.48],[.58,0],[.83,0],[.37,.64],[.80,1.2],[.55,1.2],[.21,.74],[.21,1.2],[0,1.2]])kGlyph.lineTo(...p);
  kGlyph.closePath();
  // The authentic multicolour logo is shared by every vehicle, not black text.
- oval('metal',0,1.382,2.400,.036,.069,.018,10,6);
  // Retained seats/steering sit in a real hollow space above this low floor.
  box('seat',2.22,.13,.30,.055,0,1.125,.705);
  box('seal',.31,.12,.038,.018,-.61,1.215,.545);
@@ -279,7 +331,7 @@ function geometryLibrary(){
  const geometries=new Map();let triangles=0;
  for(const [key,list] of buckets){
   const g=mergeGeometries(list,false);list.forEach(p=>p.dispose());if(!g)throw Error('Reference car geometry merge: '+key);
-  if(key==='paint')g.userData.referenceCarBody={beltColumns:96,beltRows:7,beltTriangles:1344,topRows:6,sharedBeltTop:true,doorSeams:false,frontMark:'67',frontBrand:'67PARK',rearBrand:'67PARK',flushPillars:true,closedUnderbody:true,crownedRoof:true,insetRearWindow:true,externalBumperBars:false};
+  if(key==='paint')g.userData.referenceCarBody={beltColumns:BELT_COLUMNS,beltRows:BELT_ROWS,beltTriangles:BELT_COLUMNS*BELT_ROWS*2,topRows:TOP_ROWS,sharedBeltTop:true,roundedShoulder:true,fittedLamps,doorSeams:false,frontMark:'67',frontBrand:'67PARK',rearBrand:'67PARK',flushPillars:true,closedUnderbody:true,crownedRoof:true,insetRearWindow:true,externalBumperBars:false};
   g.computeBoundingBox();g.computeBoundingSphere();geometries.set(key,g);triangles+=g.attributes.position.count/3*(key.startsWith('wheel')?4:1);
  }
  cached={geometries,triangles};return cached;
@@ -326,7 +378,7 @@ export function useReferenceCarBody(car){
   car.steering.rotation.z=-turn*2.2;
  };
  car.style=STYLE;car.referenceExterior=exterior;car.wheels=wheels;car.roofUnderside=2.245*car.spec.scale;
- car.referenceBody={revision:6,shape:'rounded-retro-compact',geometryTriangles:library.triangles,wheelRadius:WHEEL_R*car.spec.scale,wheelVents:3,wheelFeedbackDraws:0,roofUnderside:car.roofUnderside,sharedGeometry:true,doorSeams:false,frontMark:'67',frontBrand:'67PARK',rearBrand:'67PARK',flushPillars:true,closedUnderbody:true,crownedRoof:true,insetRearWindow:true,externalBumperBars:false};
+ car.referenceBody={revision:7,shape:'rounded-retro-compact',geometryTriangles:library.triangles,fittedLamps:4,roundedShoulder:true,wheelRadius:WHEEL_R*car.spec.scale,wheelVents:3,wheelFeedbackDraws:0,roofUnderside:car.roofUnderside,sharedGeometry:true,doorSeams:false,frontMark:'67',frontBrand:'67PARK',rearBrand:'67PARK',flushPillars:true,closedUnderbody:true,crownedRoof:true,insetRearWindow:true,externalBumperBars:false};
  car.stats={draws:0,triangles:0};car.group.traverseVisible(o=>{if(o.isMesh){car.stats.draws++;car.stats.triangles+=(o.geometry.index?.count??o.geometry.attributes.position.count)/3;}});
  car.dispose=()=>{
   if(disposed)return;disposed=true;exterior.removeFromParent();oldDispose.call(car);
