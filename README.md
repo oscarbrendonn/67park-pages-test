@@ -1,6 +1,6 @@
 # 67Park public Pages comparison
 
-Client revision: 7ad510f3505367423f5cc503878a4377f323b82e (vehicle-safety-1).
+Client revision: 72e364255512f7c254e48fa0f9b1df7964a97941 (audio-guard-1).
 
 Owner-authorized public test. Game/model files are intentionally public. The client password screen is a playtest entrance, NOT file access protection. The protected game and private source repositories are unchanged.
 

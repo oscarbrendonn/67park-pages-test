@@ -4,7 +4,7 @@ import {playerSettings,savePlayerSettings} from './player-settings.js';
 // by button presses). This page has no party-pack audio graph of its own.
 export function createMinigameFeedback(){
  const sfx=createPartyAudio({settings:playerSettings,saveSettings:savePlayerSettings,gameMuted:()=>{try{return localStorage.getItem('67park-feel-lab-muted')==='1'}catch{return false}}});
- const unlock=()=>sfx.ensure();
- addEventListener('pointerdown',unlock);addEventListener('keydown',unlock);
- return {play:event=>sfx.play(event),dispose(){removeEventListener('pointerdown',unlock);removeEventListener('keydown',unlock);sfx.dispose?.()}};
+ // The shared engine already owns gesture unlock, including iOS touchend.
+ // An unconditional second ensure() bypasses mute/zero-volume/hidden guards.
+ return {play:event=>sfx.play(event),dispose(){sfx.dispose?.()}};
 }
