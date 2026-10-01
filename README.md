@@ -1,6 +1,6 @@
 # 67Park public Pages comparison
 
-Client revision: de625bfa0156abf38e479fabbd6bd7018daaf8ea (idle-continuity-1).
+Client revision: b25cd750bb5fc59b5ab21327177bdc6582d07990 (idle-continuity-2).
 
 Owner-authorized public test. Game/model files are intentionally public. The client password screen is a playtest entrance, NOT file access protection. The protected game and private source repositories are unchanged.
 

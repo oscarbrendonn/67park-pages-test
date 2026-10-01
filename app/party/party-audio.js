@@ -276,7 +276,12 @@ export function createPartyAudio({settings, saveSettings, gameMuted, host = wind
   }
   function quiet() {
     volume();
-    if (host.document.hidden || blocked || gameMuted() || !(settings.sfx > 0)) {clearVehicleBlur();stopHorn();stopVehicleEngine();cowVoice.cancel();pendingEffects.clear();}
+    if (host.document.hidden || blocked || gameMuted() || !(settings.sfx > 0)) {
+      // Cancelling a pending blur must retain its unfocused state; otherwise
+      // a later volume/storage change could restart the engine in background.
+      if(vehicleBlurTimer!==null){vehicleFocused=false;clearVehicleBlur();}
+      stopHorn();stopVehicleEngine();cowVoice.cancel();pendingEffects.clear();
+    }
     if (host.document.hidden || blocked || gameMuted()) for (const source of voices) { try { source.stop(); } catch {} }
   }
   // Board mode bypasses the walking controller used by __partyVisual. Listen
