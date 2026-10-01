@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import {approvedCharacter} from './approved-character-selection.js?v=approved-roster-20261001-2';
 
 // Reuse the game's existing action cadence and contact time. The Cat's second
 // paw is cosmetic: only the original .14-second impact may apply gameplay hits.
@@ -51,7 +52,7 @@ export const punchProfile=base=>CHARACTER_PUNCH_PROFILES[base]||CHARACTER_PUNCH_
 // shared cached clips, root transform, lower body, head geometry or jump clips.
 export function withCharacterPunch(clips,base){
  // Cow and Shark use the approved shared-body punch, not new locomotion.
- const profile=CHARACTER_PUNCH_PROFILES[['cow67','shark67','ghost67','axolotl67','superhero67'].includes(base)?'goril':base];if(!profile)return clips;
+ const profile=CHARACTER_PUNCH_PROFILES[approvedCharacter(base)||['cow67','shark67'].includes(base)?'goril':base];if(!profile)return clips;
  const idle=clips.find(c=>c.name==='idle');if(!idle)throw Error('Punch needs the shared idle rig');
  const tracks=Object.entries(profile.poses).map(([bone,poses])=>{
   const rest=idle.tracks.find(t=>t.name===bone+'.quaternion');if(!rest)throw Error('Missing punch bone '+bone);

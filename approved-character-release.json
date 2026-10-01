@@ -1,0 +1,86 @@
+{
+  "version": "approved-roster-20261001-2",
+  "parentPublicCommit": "5b7aa5153e422d00afbc953cbbdb0fefbf4faac9",
+  "characters": [
+    {
+      "base": "cyclops67",
+      "name": "Cyclops",
+      "model": "models/park-approved/cyclops.glb",
+      "sha256": "82c33a14a5a6fa4be6237cf8fe5442f630fca14114501e71dcf0f48121f8d51f",
+      "bytes": 1308728
+    },
+    {
+      "base": "skeleton67",
+      "name": "Skeleton",
+      "model": "models/park-approved/skeleton.glb",
+      "sha256": "cef6e3c55e725b0296f97eccf19a2b2a9792a2d2659baaa0544045cdefbad976",
+      "bytes": 1002020
+    },
+    {
+      "base": "zombie67",
+      "name": "Zombie",
+      "model": "models/park-approved/zombie.glb",
+      "sha256": "b787f54c0f55d89e17637644d9a5651f12c20f12a058e0f12058d1d1adb7ff37",
+      "bytes": 1322324
+    },
+    {
+      "base": "chick67",
+      "name": "Chick",
+      "model": "models/park-approved/chick.glb",
+      "sha256": "a5f14609aeb70bbe430ec392c08e6f5f3010964b7c215663e790a645c083248d",
+      "bytes": 1253224
+    },
+    {
+      "base": "sloth67",
+      "name": "Sloth",
+      "model": "models/park-approved/sloth.glb",
+      "sha256": "a0d64413707f4057f8c45d155ee624387bdf43b2f53bc16907293cff5b1c28a1",
+      "bytes": 1043044
+    },
+    {
+      "base": "axolotl67",
+      "name": "Axolotl",
+      "model": "models/park-approved/axolotl.glb",
+      "sha256": "440d9a4c31604d3842bb738f89253dcb443af565215bc601f0bcea6f1876a98e",
+      "bytes": 1126944
+    },
+    {
+      "base": "pig67",
+      "name": "Pig",
+      "model": "models/park-approved/pig.glb",
+      "sha256": "98069373ef5ff6eab0566c9df6c5a6f912ef3a687a3c74115c89c85265a4d788",
+      "bytes": 1402028
+    }
+  ],
+  "playableBases": [
+    "goril",
+    "cat67",
+    "ninja67",
+    "frog67",
+    "cow67",
+    "shark67",
+    "axolotl67",
+    "cyclops67",
+    "skeleton67",
+    "zombie67",
+    "chick67",
+    "sloth67",
+    "pig67"
+  ],
+  "removedBases": [
+    "ghost67",
+    "superhero67"
+  ],
+  "removedFiles": [
+    "models/park-originals/ghost.glb",
+    "models/park-originals/superhero.glb"
+  ],
+  "unchanged": [
+    "map",
+    "vehicles",
+    "audio",
+    "network backend",
+    "server"
+  ],
+  "frontendOnly": true
+}
