@@ -20,7 +20,10 @@ export function createPartyAudio({settings, saveSettings, gameMuted, host = wind
     try{return JSON.parse(host.localStorage?.getItem('67park-feel-lab.character.v3')||'null')?.base==='cow67';}catch{return false;}
   }
   if(!host.document.hidden&&!gameMuted()&&settings.sfx>0&&cowSelected())cowVoice.preload();
-  let vehicleFocused=true;
+  let vehicleFocused=true, vehicleBlurTimer=null;
+  const schedule=host.setTimeout?.bind(host)||setTimeout,cancel=host.clearTimeout?.bind(host)||clearTimeout;
+  const clearVehicleBlur=()=>{if(vehicleBlurTimer!==null){cancel(vehicleBlurTimer);vehicleBlurTimer=null;}};
+  const vehicleEnabled=()=>!host.document.hidden&&!blocked&&!gameMuted()&&settings.sfx>0&&vehicleFocused;
   const vehicle=createVehicleAudio({host,getContext:()=>ctx,getOutput:()=>master,audible:()=>audible()&&vehicleFocused,onCue:name=>{counts[name]=(counts[name]||0)+1;}});
   const volume = () => {
     if (ctx && master) master.gain.setTargetAtTime(audible() ? Math.min(1, Math.max(0, Number(settings.sfx) || 0)) * 0.65 : 0, ctx.currentTime, 0.025);
@@ -140,7 +143,11 @@ export function createPartyAudio({settings, saveSettings, gameMuted, host = wind
   // Same unlocked graph as horn/movement; real loops, no oscillator engine.
   function stopVehicleEngine(shutdown=false) { vehicle.stop({shutdown}); }
   function updateVehicleEngine(speed=0,options={}) {
-    if (!audible()) { stopVehicleEngine(); return; }
+    if (!vehicleEnabled() || ctx?.state==='closed') { stopVehicleEngine(); return; }
+    // Safari can briefly suspend/interrupt its audio session during a gesture.
+    // Its clock and buffer sources pause together: keep those loops alive so
+    // resume continues the same engine instead of repeatedly tearing it down.
+    if (!audible()) return;
     vehicle.update(speed,options);
   }
   // Short stylized animal calls. One oscillator + filter + envelope per call;
@@ -269,7 +276,7 @@ export function createPartyAudio({settings, saveSettings, gameMuted, host = wind
   }
   function quiet() {
     volume();
-    if (host.document.hidden || blocked || gameMuted() || !(settings.sfx > 0)) {stopHorn();stopVehicleEngine();cowVoice.cancel();pendingEffects.clear();}
+    if (host.document.hidden || blocked || gameMuted() || !(settings.sfx > 0)) {clearVehicleBlur();stopHorn();stopVehicleEngine();cowVoice.cancel();pendingEffects.clear();}
     if (host.document.hidden || blocked || gameMuted()) for (const source of voices) { try { source.stop(); } catch {} }
   }
   // Board mode bypasses the walking controller used by __partyVisual. Listen
@@ -291,12 +298,18 @@ export function createPartyAudio({settings, saveSettings, gameMuted, host = wind
   for (const event of ['pointerdown','pointerup','touchend','keydown']) host.addEventListener(event, gesture, {passive:true,capture:true});
   host.document.addEventListener('visibilitychange', quiet);
   host.addEventListener('pagehide', () => { blocked = true; quiet(); });
-  host.addEventListener('pageshow', () => { blocked = false; volume(); });
+  host.addEventListener('pageshow', () => { blocked = false; clearVehicleBlur();vehicleFocused=true;volume(); });
   host.addEventListener('storage', quiet);
   host.addEventListener('park:settings-change',quiet);
   host.addEventListener('park:audio-mute-change',quiet);
-  host.addEventListener('blur',()=>{vehicleFocused=false;stopHorn();stopVehicleEngine();cowVoice.cancel();pendingEffects.clear();});
-  host.addEventListener('focus',()=>{vehicleFocused=true;});
+  host.addEventListener('blur',()=>{
+    stopHorn();cowVoice.cancel();pendingEffects.clear();clearVehicleBlur();
+    // Release held input immediately, but do not turn an 80ms focus flicker
+    // during camera/UI input into a stopped/restarted idle engine. Hiding the
+    // page, leaving, muting, or zero volume still stops it immediately above.
+    vehicleBlurTimer=schedule(()=>{vehicleBlurTimer=null;vehicleFocused=false;stopVehicleEngine();},250);
+  });
+  host.addEventListener('focus',()=>{clearVehicleBlur();vehicleFocused=true;});
   return {
     ensure, play, startHorn, stopHorn, updateVehicleEngine, stopVehicleEngine,
     ready:()=>ctx?recordings.load(ctx):Promise.resolve(false),
