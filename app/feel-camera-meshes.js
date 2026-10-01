@@ -6,7 +6,7 @@ import { Box3, Matrix4, Ray, Vector3 } from 'three';
 const indexes = new WeakMap();
 const geometryTrees = new WeakMap();
 const geometryBounds = new WeakMap();
-const LEAF_TRIANGLES = 12;
+const LEAF_TRIANGLES = 32;
 const finite = (...values) => values.every(Number.isFinite);
 
 function geometryToken(geometry) {
@@ -23,65 +23,79 @@ function boundsFor(geometry) {
  geometryBounds.set(geometry, bounds); return bounds;
 }
 
-function triangleTree(geometry) {
- const token = geometryToken(geometry), cached = geometryTrees.get(geometry);
- if (cached && sameToken(cached.token, token)) return cached;
- const started = globalThis.performance?.now?.() ?? Date.now();
- const position = token.position, source = token.index, triangles = [], references = [];
- if (position?.itemSize >= 3) {
-  const available = source ? source.count : position.count, start = Math.max(0, token.start || 0), end = Math.min(available, start + (Number.isFinite(token.count) ? token.count : Infinity));
-  const vertexAt = source ? offset => source.getX(offset) : offset => offset;
-  for (let offset = start; offset + 2 < end; offset += 3) {
-   const ia = vertexAt(offset), ib = vertexAt(offset + 1), ic = vertexAt(offset + 2);
-   if (ia >= position.count || ib >= position.count || ic >= position.count) continue;
-   const values = [position.getX(ia), position.getY(ia), position.getZ(ia), position.getX(ib), position.getY(ib), position.getZ(ib), position.getX(ic), position.getY(ic), position.getZ(ic)];
-   if (finite(...values)) { triangles.push(...values); references.push(offset); }
+// A packed tree keeps the exact Float64 bounds and original triangle offsets.
+// No triangle vertices are copied or simplified. In-place partitioning avoids
+// a JS object and a separate typed array for every leaf (hundreds of thousands
+// of allocations in the park). Scratch bounds are dropped before publication.
+function* buildTriangleTree(geometry, token) {
+ const started=performance.now(),position=token.position,source=token.index;
+ const available=position?.itemSize>=3?(source?source.count:position.count):0;
+ const start=Math.max(0,token.start||0),end=Math.min(available,start+(Number.isFinite(token.count)?token.count:Infinity));
+ const capacity=Math.max(0,Math.floor((end-start)/3)),order=new Uint32Array(capacity),bounds=new Float64Array(capacity*6);
+ const localBox=new Box3().makeEmpty();let count=0,operations=0;
+ for(let id=0;id<capacity;id++){
+  const offset=start+id*3,ia=source?source.getX(offset):offset,ib=source?source.getX(offset+1):offset+1,ic=source?source.getX(offset+2):offset+2;
+  if(ia<position.count&&ib<position.count&&ic<position.count){
+   const ax=position.getX(ia),ay=position.getY(ia),az=position.getZ(ia),bx=position.getX(ib),by=position.getY(ib),bz=position.getZ(ib),cx=position.getX(ic),cy=position.getY(ic),cz=position.getZ(ic);
+   if(finite(ax,ay,az,bx,by,bz,cx,cy,cz)){
+    const at=id*6,minX=Math.min(ax,bx,cx),minY=Math.min(ay,by,cy),minZ=Math.min(az,bz,cz),maxX=Math.max(ax,bx,cx),maxY=Math.max(ay,by,cy),maxZ=Math.max(az,bz,cz);
+    bounds[at]=minX;bounds[at+1]=minY;bounds[at+2]=minZ;bounds[at+3]=maxX;bounds[at+4]=maxY;bounds[at+5]=maxZ;order[count++]=id;
+    localBox.expandByPoint({x:minX,y:minY,z:minZ});localBox.expandByPoint({x:maxX,y:maxY,z:maxZ});
+   }
   }
+  if(++operations%512===0)yield;
  }
- const data = new Float64Array(triangles), count = data.length / 9, bounds = new Float64Array(count * 6), centers = new Float64Array(count * 3), localBox = new Box3(); localBox.makeEmpty();
- for (let triangle = 0; triangle < count; triangle++) {
-  const at = triangle * 9, box = triangle * 6, center = triangle * 3;
-  let minX = Infinity, minY = Infinity, minZ = Infinity, maxX = -Infinity, maxY = -Infinity, maxZ = -Infinity;
-  for (let vertex = 0; vertex < 9; vertex += 3) { const x = data[at + vertex], y = data[at + vertex + 1], z = data[at + vertex + 2]; minX = Math.min(minX, x); minY = Math.min(minY, y); minZ = Math.min(minZ, z); maxX = Math.max(maxX, x); maxY = Math.max(maxY, y); maxZ = Math.max(maxZ, z); }
-  bounds.set([minX, minY, minZ, maxX, maxY, maxZ], box); centers.set([(minX + maxX) * .5, (minY + maxY) * .5, (minZ + maxZ) * .5], center);
-  localBox.expandByPoint({ x: minX, y: minY, z: minZ }); localBox.expandByPoint({ x: maxX, y: maxY, z: maxZ });
- }
- let nodes = 0;
- const build = ids => {
-  nodes++;
-  let minX = Infinity, minY = Infinity, minZ = Infinity, maxX = -Infinity, maxY = -Infinity, maxZ = -Infinity;
-  for (const triangle of ids) { const at = triangle * 6; minX = Math.min(minX, bounds[at]); minY = Math.min(minY, bounds[at + 1]); minZ = Math.min(minZ, bounds[at + 2]); maxX = Math.max(maxX, bounds[at + 3]); maxY = Math.max(maxY, bounds[at + 4]); maxZ = Math.max(maxZ, bounds[at + 5]); }
-  const node = { minX, minY, minZ, maxX, maxY, maxZ };
-  if (ids.length <= LEAF_TRIANGLES) { node.ids = Uint32Array.from(ids, triangle => references[triangle]); return node; }
-  const spans = [maxX - minX, maxY - minY, maxZ - minZ], axis = spans[1] > spans[0] && spans[1] >= spans[2] ? 1 : spans[2] > spans[0] ? 2 : 0, midpoint = [minX, minY, minZ][axis] + spans[axis] * .5;
-  const left = [], right = [];
-  for (const triangle of ids) (centers[triangle * 3 + axis] < midpoint ? left : right).push(triangle);
-  // Coincident centroids have no spatial split; a deterministic split still
-  // bounds leaf work without sorting every triangle at every tree level.
-  if (!left.length || !right.length) { const middle = ids.length >> 1; node.left = build(ids.slice(0, middle)); node.right = build(ids.slice(middle)); }
-  else { node.left = build(left); node.right = build(right); }
-  return node;
+ const chunkSize=Math.min(256,Math.max(1,2*Math.ceil(count/LEAF_TRIANGLES)-1)),chunks=[];
+ let nodes=0;
+ const allocate=()=>{
+  const id=nodes++;
+  if(id%chunkSize===0)chunks.push({bounds:new Float64Array(chunkSize*6),links:new Uint32Array(chunkSize*4)});
+  return id;
  };
- const root = count ? build(Array.from({ length: count }, (_, i) => i)) : null;
- const finished = globalThis.performance?.now?.() ?? Date.now();
- const tree = { token, position, source, data: null, root, localBox, triangleCount: count, nodeCount: nodes, referenceBytes: count * 4, transientBuildBytes: data.byteLength + bounds.byteLength + centers.byteLength, buildMs: +(finished - started).toFixed(3) };
- geometryTrees.set(geometry, tree); return tree;
-}
-
-async function stagedTriangleTree(geometry, yieldTask, limits) {
- const token = geometryToken(geometry), cached = geometryTrees.get(geometry); if (cached && sameToken(cached.token, token)) return cached;
- const started = performance.now(), position = token.position, source = token.index, triangles = [], references = []; let operations = 0;
- const checkpoint = () => { if (++operations % 512) return null; const now = performance.now(); if (now - limits.lastYield < limits.budgetMs) return null; limits.maxChunkMs = Math.max(limits.maxChunkMs, now - limits.lastYield); return Promise.resolve(yieldTask()).then(() => { limits.lastYield = performance.now(); }); };
- if (position?.itemSize >= 3) {
-  const available = source ? source.count : position.count, start = Math.max(0, token.start || 0), end = Math.min(available, start + (Number.isFinite(token.count) ? token.count : Infinity)), vertexAt = source ? offset => source.getX(offset) : offset => offset;
-  for (let offset = start; offset + 2 < end; offset += 3) { const ia = vertexAt(offset), ib = vertexAt(offset + 1), ic = vertexAt(offset + 2); if (ia < position.count && ib < position.count && ic < position.count) { const values = [position.getX(ia), position.getY(ia), position.getZ(ia), position.getX(ib), position.getY(ib), position.getZ(ib), position.getX(ic), position.getY(ic), position.getZ(ic)]; if (finite(...values)) { triangles.push(...values); references.push(offset); } } const pause = checkpoint(); if (pause) await pause; }
+ const root=count?allocate():-1,stack=count?[{node:root,from:0,to:count}]:[];
+ while(stack.length){
+  const task=stack.pop(),{node,from,to}=task,chunk=chunks[Math.floor(node/chunkSize)],at=node%chunkSize*6,link=node%chunkSize*4;
+  let minX=Infinity,minY=Infinity,minZ=Infinity,maxX=-Infinity,maxY=-Infinity,maxZ=-Infinity;
+  for(let i=from;i<to;i++){
+   const b=order[i]*6;minX=Math.min(minX,bounds[b]);minY=Math.min(minY,bounds[b+1]);minZ=Math.min(minZ,bounds[b+2]);maxX=Math.max(maxX,bounds[b+3]);maxY=Math.max(maxY,bounds[b+4]);maxZ=Math.max(maxZ,bounds[b+5]);
+   if(++operations%512===0)yield;
+  }
+  chunk.bounds[at]=minX;chunk.bounds[at+1]=minY;chunk.bounds[at+2]=minZ;chunk.bounds[at+3]=maxX;chunk.bounds[at+4]=maxY;chunk.bounds[at+5]=maxZ;
+  if(to-from<=LEAF_TRIANGLES){chunk.links[link+2]=from;chunk.links[link+3]=to-from;continue;}
+  const sx=maxX-minX,sy=maxY-minY,sz=maxZ-minZ,axis=sy>sx&&sy>=sz?1:sz>sx?2:0,span=axis===0?sx:axis===1?sy:sz,midpoint=(axis===0?minX:axis===1?minY:minZ)+span*.5;
+  let middle=from;
+  for(let i=from;i<to;i++){
+   const b=order[i]*6+axis;
+   if((bounds[b]+bounds[b+3])*.5<midpoint){const value=order[middle];order[middle++]=order[i];order[i]=value;}
+   if(++operations%512===0)yield;
+  }
+  if(middle===from||middle===to)middle=from+((to-from)>>1);
+  const left=allocate(),right=allocate();chunk.links[link]=left;chunk.links[link+1]=right;
+  stack.push({node:right,from:middle,to},{node:left,from,to:middle});
  }
- const data = new Float64Array(triangles), count = data.length / 9, bounds = new Float64Array(count * 6), centers = new Float64Array(count * 3), localBox = new Box3(); localBox.makeEmpty();
- for (let triangle = 0; triangle < count; triangle++) { const at = triangle * 9, box = triangle * 6, center = triangle * 3; let minX = Infinity, minY = Infinity, minZ = Infinity, maxX = -Infinity, maxY = -Infinity, maxZ = -Infinity; for (let vertex = 0; vertex < 9; vertex += 3) { const x = data[at + vertex], y = data[at + vertex + 1], z = data[at + vertex + 2]; minX = Math.min(minX, x); minY = Math.min(minY, y); minZ = Math.min(minZ, z); maxX = Math.max(maxX, x); maxY = Math.max(maxY, y); maxZ = Math.max(maxZ, z); } bounds.set([minX, minY, minZ, maxX, maxY, maxZ], box); centers.set([(minX + maxX) * .5, (minY + maxY) * .5, (minZ + maxZ) * .5], center); localBox.expandByPoint({ x:minX,y:minY,z:minZ }); localBox.expandByPoint({ x:maxX,y:maxY,z:maxZ }); const pause = checkpoint(); if (pause) await pause; }
- let nodes = 0;
- const build = async ids => { nodes++; let minX=Infinity,minY=Infinity,minZ=Infinity,maxX=-Infinity,maxY=-Infinity,maxZ=-Infinity; for (const triangle of ids) { const at=triangle*6; minX=Math.min(minX,bounds[at]);minY=Math.min(minY,bounds[at+1]);minZ=Math.min(minZ,bounds[at+2]);maxX=Math.max(maxX,bounds[at+3]);maxY=Math.max(maxY,bounds[at+4]);maxZ=Math.max(maxZ,bounds[at+5]); const pause=checkpoint();if(pause)await pause; } const node={minX,minY,minZ,maxX,maxY,maxZ}; if(ids.length<=LEAF_TRIANGLES){node.ids=Uint32Array.from(ids,triangle=>references[triangle]);return node;} const spans=[maxX-minX,maxY-minY,maxZ-minZ],axis=spans[1]>spans[0]&&spans[1]>=spans[2]?1:spans[2]>spans[0]?2:0,midpoint=[minX,minY,minZ][axis]+spans[axis]*.5,left=[],right=[]; for(const triangle of ids){(centers[triangle*3+axis]<midpoint?left:right).push(triangle);const pause=checkpoint();if(pause)await pause;} if(!left.length||!right.length){const middle=ids.length>>1;node.left=await build(ids.slice(0,middle));node.right=await build(ids.slice(middle));}else{node.left=await build(left);node.right=await build(right);}return node; };
- const root = count ? await build(Array.from({length:count},(_,i)=>i)) : null, finished = performance.now(); limits.maxChunkMs = Math.max(limits.maxChunkMs, finished - limits.lastYield); const tree={token,position,source,data:null,root,localBox,triangleCount:count,nodeCount:nodes,referenceBytes:count*4,transientBuildBytes:data.byteLength+bounds.byteLength+centers.byteLength,buildMs:+(finished-started).toFixed(3)};
- if (sameToken(token, geometryToken(geometry))) geometryTrees.set(geometry, tree); return tree;
+ for(let i=0;i<count;i++){order[i]=start+order[i]*3;if(++operations%512===0)yield;}
+ return {token,position,source,data:null,root,localBox,order,chunks,chunkSize,triangleCount:count,nodeCount:nodes,
+  referenceBytes:order.byteLength,nodeBytes:chunks.reduce((n,c)=>n+c.bounds.byteLength+c.links.byteLength,0),
+  transientBuildBytes:bounds.byteLength,buildMs:+(performance.now()-started).toFixed(3)};
+}
+function triangleTree(geometry) {
+ const token=geometryToken(geometry),cached=geometryTrees.get(geometry);
+ if(cached&&sameToken(cached.token,token))return cached;
+ const builder=buildTriangleTree(geometry,token);let step;
+ do{step=builder.next();}while(!step.done);
+ geometryTrees.set(geometry,step.value);return step.value;
+}
+async function stagedTriangleTree(geometry,yieldTask,limits) {
+ const token=geometryToken(geometry),cached=geometryTrees.get(geometry);
+ if(cached&&sameToken(cached.token,token))return cached;
+ const builder=buildTriangleTree(geometry,token);let step;
+ do{
+  step=builder.next();const now=performance.now();
+  limits.maxChunkMs=Math.max(limits.maxChunkMs,now-limits.lastYield);
+  if(!step.done&&now-limits.lastYield>=limits.budgetMs){await yieldTask();limits.lastYield=performance.now();}
+ }while(!step.done);
+ if(sameToken(token,geometryToken(geometry)))geometryTrees.set(geometry,step.value);
+ return step.value;
 }
 
 // Call while constructing the unpublished world. It builds every exact triangle
@@ -102,22 +116,29 @@ function refresh(record) {
  record.geometry = mesh.geometry; record.count = count; record.version = version; record.world.copy(mesh.matrixWorld); record.bounds = bounds;
 }
 
-function intersects(node, ray) {
- let minimum = -Infinity, maximum = Infinity;
- for (const [origin, direction, min, max] of [[ray.origin.x, ray.direction.x, node.minX, node.maxX], [ray.origin.y, ray.direction.y, node.minY, node.maxY], [ray.origin.z, ray.direction.z, node.minZ, node.maxZ]]) {
-  if (Math.abs(direction) < 1e-12) { if (origin < min || origin > max) return false; continue; }
-  const first = (min - origin) / direction, last = (max - origin) / direction; minimum = Math.max(minimum, Math.min(first, last)); maximum = Math.min(maximum, Math.max(first, last)); if (maximum < minimum) return false;
+function intersects(bounds,at,ray) {
+ let minimum=-Infinity,maximum=Infinity;
+ for(let axis=0;axis<3;axis++){
+  const origin=axis===0?ray.origin.x:axis===1?ray.origin.y:ray.origin.z,direction=axis===0?ray.direction.x:axis===1?ray.direction.y:ray.direction.z,min=bounds[at+axis],max=bounds[at+axis+3];
+  if(Math.abs(direction)<1e-12){if(origin<min||origin>max)return false;continue;}
+  const first=(min-origin)/direction,last=(max-origin)/direction;
+  minimum=Math.max(minimum,Math.min(first,last));maximum=Math.min(maximum,Math.max(first,last));
+  if(maximum<minimum)return false;
  }
- return maximum >= 0;
+ return maximum>=0;
 }
 
-function nearestHit(tree, ray, origin, near, far, scratch) {
- if (!tree.root || !intersects(tree.root, ray)) return null;
- let closest = far, found = null; scratch.stack.length = 0; scratch.stack.push(tree.root);
- while (scratch.stack.length) {
-  const node = scratch.stack.pop(); if (!intersects(node, ray)) continue;
-  if (!node.ids) { scratch.stack.push(node.left, node.right); continue; }
-  for (const offset of node.ids) {
+function nearestHit(tree,ray,origin,near,far,scratch) {
+ if(tree.root<0)return null;
+ let closest=far,found=null;scratch.stack.length=0;scratch.stack.push(tree.root);
+ while(scratch.stack.length){
+  const node=scratch.stack.pop(),chunk=tree.chunks[Math.floor(node/tree.chunkSize)],local=node%tree.chunkSize,link=local*4;
+  if(!intersects(chunk.bounds,local*6,ray))continue;
+  const count=chunk.links[link+3];
+  if(!count){scratch.stack.push(chunk.links[link],chunk.links[link+1]);continue;}
+  const start=chunk.links[link+2];
+  for(let i=start;i<start+count;i++){
+   const offset=tree.order[i];
    scratch.triangles++; const ia = tree.source ? tree.source.getX(offset) : offset, ib = tree.source ? tree.source.getX(offset + 1) : offset + 1, ic = tree.source ? tree.source.getX(offset + 2) : offset + 2, position = tree.position;
    scratch.a.set(position.getX(ia), position.getY(ia), position.getZ(ia)); scratch.b.set(position.getX(ib), position.getY(ib), position.getZ(ib)); scratch.c.set(position.getX(ic), position.getY(ic), position.getZ(ic));
    if (!ray.intersectTriangle(scratch.a, scratch.b, scratch.c, false, scratch.localHit)) continue;
@@ -150,9 +171,9 @@ export function cameraMeshCast(world, origin, direction, length) {
 // Test-only observability for a complexity bound; it cannot affect casting.
 export function cameraMeshCastStats(world) {
  const index = indexes.get(world), meshes = index?.records.map(record => record.mesh) || (world?.blockers || []), trees = new Set(meshes.map(mesh => geometryTrees.get(mesh.geometry)).filter(Boolean));
- let triangles = 0, nodes = 0, referenceBytes = 0, transientBuildPeakBytes = 0, buildMs = 0;
- for (const tree of trees) { triangles += tree.triangleCount; nodes += tree.nodeCount; referenceBytes += tree.referenceBytes; transientBuildPeakBytes = Math.max(transientBuildPeakBytes, tree.transientBuildBytes); buildMs += tree.buildMs; }
- // Node objects have engine-dependent overhead. The exact retained payload is
- // one Uint32 source-slot reference per triangle; positions stay in the mesh.
- return { triangleTests: index?.lastTriangleTests || 0, trees: trees.size, triangles, nodes, minimumRetainedBytes: referenceBytes, transientBuildPeakBytes, buildMs: +buildMs.toFixed(3) };
+ let triangles = 0, nodes = 0, referenceBytes = 0, nodeBytes = 0, transientBuildPeakBytes = 0, buildMs = 0;
+ for (const tree of trees) { triangles += tree.triangleCount; nodes += tree.nodeCount; referenceBytes += tree.referenceBytes; nodeBytes += tree.nodeBytes; transientBuildPeakBytes = Math.max(transientBuildPeakBytes, tree.transientBuildBytes); buildMs += tree.buildMs; }
+ // Packed bounds/links and source references are measured, not JS-object estimates.
+ // Vertex positions stay in the original geometry and are never duplicated.
+ return { triangleTests: index?.lastTriangleTests || 0, trees: trees.size, triangles, nodes, minimumRetainedBytes: referenceBytes + nodeBytes, referenceBytes, nodeBytes, transientBuildPeakBytes, buildMs: +buildMs.toFixed(3) };
 }

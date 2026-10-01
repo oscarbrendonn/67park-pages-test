@@ -1,0 +1,15 @@
+{
+  "revision": "camera-memory-20261001-1",
+  "parentPublicCommit": "c88fe76f1ebdb1c8de192bac0e22a821a571c03c",
+  "scope": "Exact camera BVH memory and cache keys only",
+  "cameraSha256": "7ce4eeefcd7b9f0faf97d7afb8d73fa5f02e91ec59cea83044707ceee757e569",
+  "unchanged": [
+    "all map and model geometry",
+    "character roster and colors",
+    "audio",
+    "vehicle physics",
+    "graphics quality",
+    "backend"
+  ],
+  "physicalIPhoneVerified": false
+}
