@@ -1,5 +1,42 @@
 // Reuse the existing curb/stair/swept-wall rules. A blocked diagonal must not
-// discard its free tangent. At most four sweeps (including a rail tangent).
+// discard its free tangent. An already embedded centre gets a bounded local
+// escape check; ordinary wall contact still uses at most four normal sweeps.
+function recoverEmbeddedCentre(options) {
+  const p=options.from;
+  if(!p||options.water?.(p.x,p.z))return null;
+  let samples=0;
+  const solid=(x,z,limit=p.y+.05)=>{
+    samples++;
+    const height=options.ground(x,z);
+    // Rail blockers already include the avatar radius and have their own
+    // continuous escape rule. That halo is not proof of an embedded centre.
+    return (!options.blocked?.canEscape&&!!options.blocked?.(x,p.y,z))||
+      Number.isFinite(height)&&height>limit;
+  };
+  // Side-probe contact alone is not penetration. Preserve ordinary sliding,
+  // curb traversal and standing beside a wall; require the centre inside it.
+  if(!solid(p.x,p.z))return null;
+  const support=options.supportGround||options.ground,feet=p.y-.555;
+  const dx=options.to.x-p.x,dz=options.to.z-p.z,back=Math.atan2(-dz,-dx);
+  const directions=Array.from({length:8},(_,n)=>({x:Math.cos(back+n*Math.PI/4),z:Math.sin(back+n*Math.PI/4),free:false,closed:false}));
+  const probes=[[.4,0],[-.4,0],[0,.4],[0,-.4],[.283,.283],[-.283,.283],[.283,-.283],[-.283,-.283]];
+  // Escape only this existing solid. Once a ray reaches open space it cannot
+  // cross a second obstacle to find a more distant opening. Never raise the
+  // player onto a roof or change the map to recover from an overlap.
+  for(let ring=1;ring<=25;ring++)for(const d of directions){
+    if(d.closed)continue;
+    const x=p.x+d.x*ring*.08,z=p.z+d.z*ring*.08;
+    if(options.water?.(x,z)){d.closed=true;continue;}
+    if(solid(x,z,feet+.012)){if(d.free)d.closed=true;continue;}
+    d.free=true;
+    const floor=support(x,z);samples++;
+    if(!Number.isFinite(floor)||floor>feet+.012)continue;
+    if(options.blocked?.(x,p.y,z)||probes.some(([ox,oz])=>options.water?.(x+ox,z+oz)||solid(x+ox,z+oz,feet+.012)))continue;
+    return {position:{x,y:p.y,z},vertical:Math.min(0,options.velocity.y),horizontal:{x:0,z:0},grounded:Math.abs(feet-floor)<.095,
+      blocked:true,kind:'depenetrate',samples};
+  }
+  return null;
+}
 export function resolveCharacterContact(sweep, options) {
   const finite=p=>p&&['x','y','z'].every(k=>Number.isFinite(p[k]));
   if(!finite(options.to)||!finite(options.velocity)||(options.from&&!finite(options.from))) {
@@ -27,6 +64,10 @@ export function resolveCharacterContact(sweep, options) {
   const hit = run(options);
   const velocity = options.velocity;
   const horizontal = {x: velocity.x, z: velocity.z};
+  if(hit.kind!=='sweep-limit'){
+    const recovery=recoverEmbeddedCentre(options);
+    if(recovery)return {...recovery,samples:recovery.samples+(hit.samples||0)};
+  }
   if (!hit.blocked) return {...hit, horizontal};
   horizontal.x = horizontal.z = 0;
   if (!options.from || hit.kind === 'sweep-limit') return {...hit, horizontal};

@@ -1,0 +1,7 @@
+{
+  "revision": "model-escape-20261001-1",
+  "parentPublicCommit": "b8edb6d8805cfb2cd621678e028b193f3f5107f9",
+  "contactSha256": "3a195b0dc40678251575cc167784672c14d2cd92555b77213c849381fd89f484",
+  "scope": "Character overlap recovery and its import-map cache keys only",
+  "physicalIPhoneVerified": false
+}
