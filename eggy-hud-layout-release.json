@@ -1,0 +1,22 @@
+{
+  "revision": "eggy-layout-20261001-1",
+  "parentPublicCommit": "068c5c717c89c74911f582ab92da34d33ef39f6a",
+  "moduleChanges": [
+    {
+      "file": "app/park-action-ui.css",
+      "sourceSha256": "7ca26fe16e377fcb7f5dc6e8285d1e446a1d2cf50308354b7345f7217dae3a28",
+      "publicSha256": "7ca26fe16e377fcb7f5dc6e8285d1e446a1d2cf50308354b7345f7217dae3a28"
+    },
+    {
+      "file": "app/park-hud-layout.css",
+      "sourceSha256": "d46d636cf5cb508ed2b1babce13b688a0417a067866cb86e64df706108539785",
+      "publicSha256": "d46d636cf5cb508ed2b1babce13b688a0417a067866cb86e64df706108539785"
+    },
+    {
+      "file": "app/chat-send-focus.js",
+      "sourceSha256": "954b9b6dc7958abc0353d19707f0c1ac33cf85b0fe8a49b78c593abbf6c91b54",
+      "publicSha256": "954b9b6dc7958abc0353d19707f0c1ac33cf85b0fe8a49b78c593abbf6c91b54"
+    }
+  ],
+  "physicalDeviceVerified": false
+}

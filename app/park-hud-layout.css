@@ -1,0 +1,74 @@
+/* Eggy-style spatial hierarchy; keep 67Park artwork and original input nodes.
+   Reference: NetEase MuMu's Eggy Party lobby capture, not copied UI assets. */
+body.park-unified-ui:has(.park-toolbar){--hud-edge-l:max(12px,env(safe-area-inset-left));--hud-edge-r:max(12px,env(safe-area-inset-right));--hud-top:calc(var(--preview-top,24px) + 8px);--hud-bottom:max(14px,env(safe-area-inset-bottom))}
+body.park-unified-ui:has(.park-toolbar) .park-toolbar{display:contents!important;transform:none!important;position:static!important}
+body.park-unified-ui:has(.park-toolbar) .park-toolbar>button{position:fixed!important;top:var(--hud-top)!important;bottom:auto!important;left:auto!important;transform:none;z-index:72;width:44px!important;height:44px!important;min-width:44px!important;min-height:44px!important;padding:0!important;border-radius:15px!important;pointer-events:auto}
+body.park-unified-ui:has(.park-toolbar) .park-toolbar>button>span{display:none!important}
+body.park-unified-ui:has(.park-toolbar) .park-toolbar>span{display:flex!important;position:fixed;left:calc(var(--hud-edge-l) + 52px);top:calc(var(--hud-top) + 11px);width:42px;z-index:72;pointer-events:none;overflow:hidden}
+body.park-unified-ui:has(.park-toolbar) .park-toolbar>span img{width:42px!important;max-width:42px;height:auto!important}
+body.park-unified-ui:has(.park-toolbar) .park-toolbar>span>span{display:none!important}
+body.park-unified-ui:has(.park-toolbar) .park-toolbar>button[aria-label="Profile studio"]{left:var(--hud-edge-l)!important;right:auto!important}
+body.park-unified-ui:has(.park-toolbar) .park-toolbar>button[aria-label="Bird’s-eye view"]{right:calc(var(--hud-edge-r) + 156px)!important}
+body.park-unified-ui:has(.park-toolbar) .park-toolbar>button[aria-label="Return to lobby"]{right:calc(var(--hud-edge-r) + 52px)!important}
+body.park-unified-ui:has(.park-toolbar) .park-toolbar>#party-settings-btn{position:fixed!important;inset:auto!important;top:var(--hud-top)!important;right:var(--hud-edge-r)!important;padding:0!important}
+/* Play & friends is the single, labelled match entry in the upper-right. */
+body.park-unified-ui:has(.park-toolbar) .park-toolbar>button[aria-label="Games and friends"]{display:none!important}
+body.park-unified-ui:has(.park-toolbar) .online-toggle{position:fixed!important;top:calc(var(--hud-top) + 54px)!important;right:var(--hud-edge-r)!important;left:auto!important;bottom:auto!important;min-height:44px;max-width:155px;padding:7px 12px;font-size:11px}
+body.park-unified-ui:has(.park-toolbar) .park-hud>div.absolute.right-4.top-4{position:fixed!important;top:calc(var(--hud-top) + 54px)!important;left:var(--hud-edge-l)!important;right:auto!important;bottom:auto!important;min-height:32px}
+body.park-unified-ui:has(.park-toolbar) .park-weather{position:fixed!important;top:calc(var(--hud-top) + 104px)!important;left:var(--hud-edge-l)!important;right:auto!important;bottom:auto!important;max-width:110px}
+body.park-unified-ui:has(.park-toolbar) #park-utilities{display:contents!important}
+body.park-unified-ui:has(.park-toolbar) #park-home-button{position:fixed!important;inset:auto!important;left:calc(var(--hud-edge-l) + 118px)!important;top:calc(var(--hud-top) + 102px)!important;max-width:154px!important;min-height:44px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:6px 10px;font-size:11px}
+body.park-unified-ui:has(.park-toolbar) .park-pet-button{position:fixed!important;left:var(--hud-edge-l)!important;top:calc(var(--hud-top) + 154px)!important;bottom:auto!important;max-width:150px;min-height:44px}
+/* Chat has its own bottom-centre lane, clear of the two thumb control areas. */
+body.park-unified-ui:has(.park-toolbar) .park-chat{position:fixed!important;left:50%!important;right:auto!important;top:auto!important;bottom:var(--hud-bottom)!important;transform:translateX(-50%)!important;max-width:min(300px,calc(100vw - 360px));min-width:72px;z-index:80}
+body.park-unified-ui:has(.park-toolbar) .park-chat>div:first-child:not(:has(input)){max-height:min(100px,18dvh);max-width:100%;overflow:auto}
+body.park-unified-ui:has(.park-toolbar) .park-chat:has(input){width:min(360px,calc(100vw - 24px))!important;max-width:calc(100vw - 24px);padding:6px;border-radius:20px;background:#fff8ef}
+/* Preserve the existing visualViewport keyboard anchor above the iOS keyboard. */
+body.park-unified-ui:has(.park-toolbar) .park-chat[data-chat-keyboard=true]{top:var(--chat-keyboard-top)!important;bottom:auto!important}
+/* Bag stays with the upper utility controls, not next to the jump button. */
+body.park-unified-ui:has(.park-toolbar) .park-action[data-party-icon=bag]{position:fixed!important;top:var(--hud-top)!important;right:calc(var(--hud-edge-r) + 104px)!important;bottom:auto!important;left:auto!important;width:44px!important;height:44px!important;min-width:44px!important;min-height:44px!important;transform:none!important;scale:1!important;z-index:72}
+body.park-unified-ui:has(.park-toolbar) .park-action[data-party-icon=bag] .party-icon{width:24px!important;height:24px!important}
+body.park-unified-ui:has(.park-toolbar) .park-action[data-party-icon=bag]>span{display:none!important}
+@media(pointer:coarse){
+ body.park-unified-ui:has(.park-toolbar){--hud-action:max(44px,min(calc(50px * var(--park-button-scale,1)),calc((100dvh - var(--hud-top) - 126px - var(--hud-bottom)) / 4.24)));--hud-jump:calc(var(--hud-action) * 1.24);--hud-pad:clamp(96px,26vw,124px)}
+ body.park-unified-ui:has(.park-toolbar) .park-actions{display:contents!important;transform:none!important;scale:1!important}
+ body.park-unified-ui:has(.park-toolbar) .park-actions>.park-action{position:fixed!important;width:var(--hud-action)!important;height:var(--hud-action)!important;min-width:44px!important;min-height:44px!important;scale:1!important;transform:none!important;left:auto!important;top:auto!important;right:var(--hud-edge-r)!important}
+ body.park-unified-ui:has(.park-toolbar) .park-actions>.park-action[data-party-icon=jump]{width:var(--hud-jump)!important;height:var(--hud-jump)!important;bottom:calc(var(--hud-bottom) + var(--hud-action) + 8px)!important}
+ body.park-unified-ui:has(.park-toolbar) .park-actions>.park-action[data-party-icon=sprint]{right:calc(var(--hud-edge-r) + var(--hud-jump) * .72)!important;bottom:var(--hud-bottom)!important}
+ body.park-unified-ui:has(.park-toolbar) .park-actions>.park-action:is([data-party-icon=skate],[data-party-icon=walk]){right:calc(var(--hud-edge-r) + var(--hud-jump) + 8px)!important;bottom:calc(var(--hud-bottom) + var(--hud-action) + 8px)!important}
+ body.park-unified-ui:has(.park-toolbar) .park-actions>.park-action[data-party-icon=interact]{right:calc(var(--hud-edge-r) + (var(--hud-jump) - var(--hud-action)) / 2)!important;bottom:calc(var(--hud-bottom) + var(--hud-action) + var(--hud-jump) + 16px)!important}
+ body.park-unified-ui:has(.park-toolbar) .park-actions>.park-action[data-party-icon=emote]{right:calc(var(--hud-edge-r) + (var(--hud-jump) - var(--hud-action)) / 2)!important;bottom:calc(var(--hud-bottom) + var(--hud-action) * 2 + var(--hud-jump) + 24px)!important}
+ body.park-unified-ui:has(.park-toolbar) button:is(#preview-hit,#party-throw){position:fixed!important;width:var(--hud-action)!important;height:var(--hud-action)!important;min-width:44px!important;min-height:44px!important;right:calc(var(--hud-edge-r) + var(--hud-jump) + 8px)!important;bottom:calc(var(--hud-bottom) + var(--hud-action) * 2 + 16px)!important;top:auto!important;left:auto!important;scale:1!important;transform:none!important}
+ body.park-unified-ui:has(.park-toolbar) button#party-throw{bottom:calc(var(--hud-bottom) + var(--hud-action) * 3 + 24px)!important}
+ body.park-unified-ui:has(.park-toolbar) .park-action .party-icon{width:26px!important;height:26px!important}
+ body.park-unified-ui:has(.park-toolbar) .park-action>span{font-size:8px!important}
+ body.park-unified-ui:has(.park-toolbar) .park-stick{left:var(--hud-edge-l)!important;bottom:calc(var(--hud-bottom) + 52px)!important;width:var(--hud-pad)!important;height:var(--hud-pad)!important}
+ body.park-unified-ui:has(.park-toolbar) .park-stick:not(.park-steering) .park-stick-knob{width:44px!important;height:44px!important;left:calc(50% - 22px)!important;top:calc(50% - 22px)!important;margin:0!important}
+ /* Mounted controls retain all four pedals/actions; only the layout changes. */
+ body.park-unified-ui:has(.park-toolbar) .park-actions>.park-action:is([data-party-icon=gas],[data-party-icon=brake],[data-party-icon=reverse],[data-party-icon=exit]){width:var(--hud-action)!important;height:var(--hud-action)!important;bottom:calc(var(--hud-bottom) + 52px)!important}
+ body.park-unified-ui:has(.park-toolbar) .park-actions>.park-action:is([data-party-icon=brake],[data-party-icon=exit]){right:calc(var(--hud-edge-r) + var(--hud-action) + 8px)!important}
+ body.park-unified-ui:has(.park-toolbar) .park-actions>.park-action:is([data-party-icon=reverse],[data-party-icon=exit]){bottom:calc(var(--hud-bottom) + 60px + var(--hud-action))!important}
+ body.park-unified-ui:has(.park-toolbar) .park-actions>.park-action[data-party-icon=bag]{top:var(--hud-top)!important;bottom:auto!important;right:calc(var(--hud-edge-r) + 104px)!important;width:44px!important;height:44px!important}
+ body.park-unified-ui:has(.park-toolbar) #vehicle-horn-button{left:var(--hud-edge-l)!important;bottom:var(--hud-bottom)!important;min-height:44px}
+}
+@media(pointer:coarse) and (orientation:portrait){
+ body.park-unified-ui:has(.park-toolbar) .park-chat{max-width:calc(100vw - 24px)}
+ body.park-unified-ui:has(.park-toolbar) .park-chat:not(:has(input)){bottom:var(--hud-bottom)!important;left:var(--hud-edge-l)!important;transform:none!important;max-width:calc(100vw - 160px)}
+ body.park-unified-ui:has(.park-toolbar) .park-chat:not(:has(input))>div:first-child:not(:empty){position:absolute;bottom:calc(var(--hud-pad) + 64px);left:0;max-width:calc(100vw - var(--hud-edge-l) - var(--hud-edge-r) - var(--hud-jump) - var(--hud-action) - 24px);padding:3px;border-radius:12px;background:#fff9}
+ body.park-unified-ui:has(.park-toolbar) #vehicle-horn-button{bottom:calc(var(--hud-bottom) + var(--hud-pad) + 64px)!important}
+ body.park-unified-ui:has(.park-toolbar):has(.park-action[data-party-icon=gas]) .park-chat:not(:has(input))>div:first-child:not(:empty){bottom:calc(var(--hud-pad) + 116px)}
+}
+@media(pointer:coarse) and (orientation:landscape){
+ body.park-unified-ui:has(.park-toolbar) .park-weather{top:calc(var(--hud-top) + 54px)!important}
+ body.park-unified-ui:has(.park-toolbar) .park-hud>div.absolute.right-4.top-4{left:calc(var(--hud-edge-l) + 124px)!important;top:calc(var(--hud-top) + 54px)!important}
+ body.park-unified-ui:has(.park-toolbar) #park-home-button{top:var(--hud-top)!important;left:calc(var(--hud-edge-l) + 108px)!important;max-width:108px!important}
+ body.park-unified-ui:has(.park-toolbar) .park-pet-button{top:calc(var(--hud-top) + 104px)!important;left:var(--hud-edge-l)!important;max-width:140px;min-height:44px}
+ body.park-unified-ui:has(.park-toolbar) .park-stick{bottom:var(--hud-bottom)!important;width:96px!important;height:96px!important}
+ body.park-unified-ui:has(.park-toolbar) #vehicle-horn-button{left:calc(var(--hud-edge-l) + 108px)!important;bottom:var(--hud-bottom)!important;width:72px;min-width:72px}
+}
+@media(pointer:coarse) and (orientation:landscape) and (max-height:350px){
+ body.park-unified-ui:has(.park-toolbar) .park-actions>.park-action[data-party-icon=emote]{right:calc(var(--hud-edge-r) + var(--hud-jump) + var(--hud-action) + 16px)!important;bottom:calc(var(--hud-bottom) + var(--hud-action) * 2 + 16px)!important}
+ body.park-unified-ui:has(.park-toolbar) button#party-throw{right:calc(var(--hud-edge-r) + var(--hud-jump) + var(--hud-action) * 2 + 24px)!important;bottom:calc(var(--hud-bottom) + var(--hud-action) * 2 + 16px)!important}
+}
+/* Text entry owns the keyboard-sized viewport; thumb controls resume on close. */
+body.park-unified-ui:has(.park-toolbar):has(.park-chat input) :is(.park-stick,.park-actions,#preview-hit,#party-throw,.park-pet-button,#vehicle-horn-button,.park-toolbar>*,.park-weather,.park-hud>div.absolute.right-4.top-4,#park-home-button,.online-toggle){visibility:hidden!important}

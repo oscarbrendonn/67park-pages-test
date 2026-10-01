@@ -1,4 +1,5 @@
 @import url('./party/party-pack.css?v=horn-edge-1');
+@import url('./park-hud-layout.css?v=eggy-layout-20261001-1');
 
 /* Same approved park art on desktop, touch, and returning mini-game controls. */
 .park-unified-ui .park-action[data-party-icon="emote"]{--eggy-hi:#e6d8ff;--eggy-lo:#a98af2;--eggy-shade:#7455c2}
