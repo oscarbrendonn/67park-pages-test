@@ -1,0 +1,103 @@
+/* Landscape HUD only. Keep the canvas/camera, portrait UI, original controls
+   and user button-size preference intact; reflow instead of zooming the page.
+   The extra gameplay scope wins over late-loaded legacy presentation sheets. */
+@media (pointer:coarse) and (orientation:landscape){
+ body.park-unified-ui:has(.park-toolbar):not(:has(.wardrobe,.return-entry)){
+  --hud-edge-l:max(10px,env(safe-area-inset-left));
+  --hud-edge-r:max(10px,env(safe-area-inset-right));
+  --hud-top:calc(var(--preview-top,24px) + 4px);
+  --hud-bottom:max(12px,env(safe-area-inset-bottom));
+  --profile-logo-width:56px;
+  --landscape-action-base:clamp(44px,12dvh,46px);
+  --hud-action:clamp(44px,calc(var(--landscape-action-base) * var(--park-button-scale,1)),62px);
+  --hud-jump:calc(var(--hud-action) * 1.13);
+  --hud-pad:88px;
+  --landscape-gap:6px;
+  --park-chat-top:calc(var(--hud-top) + 96px);
+ }
+ body.park-unified-ui:has(.park-toolbar):not(:has(.wardrobe,.return-entry)) .park-toolbar>button,
+ body.park-unified-ui:has(.park-toolbar):not(:has(.wardrobe,.return-entry)) .park-action[data-party-icon=bag]{border-radius:13px!important}
+ body.park-unified-ui:has(.park-toolbar):not(:has(.wardrobe,.return-entry)) .park-toolbar>button svg,
+ body.park-unified-ui:has(.park-toolbar):not(:has(.wardrobe,.return-entry)) .park-action[data-party-icon=bag]>svg:not(.party-icon){width:20px!important;height:20px!important}
+ body.park-unified-ui:has(.park-toolbar):not(:has(.wardrobe,.return-entry)) .park-toolbar>button[aria-label="Bird’s-eye view"]{right:calc(var(--hud-edge-r) + 150px)!important}
+ body.park-unified-ui:has(.park-toolbar):not(:has(.wardrobe,.return-entry)) .park-toolbar>button[aria-label="Return to lobby"]{right:calc(var(--hud-edge-r) + 50px)!important}
+ body.park-unified-ui:has(.park-toolbar):not(:has(.wardrobe,.return-entry)) .park-action[data-party-icon=bag]{right:calc(var(--hud-edge-r) + 100px)!important}
+ body.park-unified-ui:has(.park-toolbar):not(:has(.wardrobe,.return-entry)) .online-toggle{top:calc(var(--hud-top) + 48px)!important;min-height:44px;max-width:145px;padding:5px 10px;font-size:10px}
+ body.park-unified-ui:has(.park-toolbar):not(:has(.wardrobe,.return-entry)) #park-home-button{top:calc(var(--hud-top) + 98px)!important;max-width:145px!important;min-height:44px;padding:5px 10px;font-size:10px}
+ body.park-unified-ui:has(.park-toolbar):not(:has(.wardrobe,.return-entry)) .park-weather{top:calc(var(--hud-top) + 48px)!important;max-width:106px}
+ body.park-unified-ui:has(.park-toolbar):not(:has(.wardrobe,.return-entry)) .park-hud>div.absolute.right-4.top-4{top:calc(var(--hud-top) + 48px)!important;left:calc(var(--hud-edge-l) + 114px)!important;font-size:10px}
+ body.park-unified-ui:has(.park-toolbar):not(:has(.wardrobe,.return-entry)) .park-chat:not(:has(input)){width:66px!important;min-width:66px;max-width:66px!important}
+ body.park-unified-ui:has(.park-toolbar):not(:has(.wardrobe,.return-entry)) .park-chat:not(:has(input))>button{min-width:66px;min-height:44px;padding:6px 8px;font-size:11px;white-space:nowrap}
+ body.park-unified-ui:has(.park-toolbar):not(:has(.wardrobe,.return-entry)) .park-pet-button{left:calc(var(--hud-edge-l) + 72px)!important;max-width:126px;min-height:44px;padding:6px 10px;font-size:11px}
+ /* Messages never displace Chat or the pet button and stop above the dock. */
+ body.park-unified-ui:has(.park-toolbar):not(:has(.wardrobe,.return-entry)) .park-chat:not(:has(input))>.park-chat-history{
+  top:50px!important;left:100px!important;
+  width:min(260px,max(80px,calc(100vw - var(--hud-edge-l) - var(--hud-edge-r) - 350px)));
+  max-width:min(260px,max(80px,calc(100vw - var(--hud-edge-l) - var(--hud-edge-r) - 350px)))!important;
+  max-height:min(90px,max(0px,calc(100dvh - var(--park-chat-top) - 50px - var(--hud-bottom) - var(--hud-jump) - var(--hud-action) - 12px)))!important;
+ }
+ /* Two shallow rows on phones AND tablets; no tall tower across the view. */
+ body.park-unified-ui:has(.park-toolbar):not(:has(.wardrobe,.return-entry)) .park-actions>.park-action[data-party-icon=emote]{right:calc(var(--hud-edge-r) + var(--hud-jump) + var(--hud-action) + 12px)!important;bottom:calc(var(--hud-bottom) + var(--hud-jump) + 6px)!important}
+ body.park-unified-ui:has(.park-toolbar):not(:has(.wardrobe,.return-entry)) .park-actions>.park-action[data-party-icon=interact]{right:calc(var(--hud-edge-r) + var(--hud-jump) + 6px)!important;bottom:calc(var(--hud-bottom) + var(--hud-jump) + 6px)!important}
+ body.park-unified-ui:has(.park-toolbar):not(:has(.wardrobe,.return-entry)) button#preview-hit{right:calc(var(--hud-edge-r) + (var(--hud-jump) - var(--hud-action)) / 2)!important;bottom:calc(var(--hud-bottom) + var(--hud-jump) + 6px)!important}
+ body.park-unified-ui:has(.park-toolbar):not(:has(.wardrobe,.return-entry)) button#party-throw{right:calc(var(--hud-edge-r) + var(--hud-jump) + var(--hud-action) * 2 + 18px)!important;bottom:calc(var(--hud-bottom) + var(--hud-jump) + 6px)!important}
+ body.park-unified-ui:has(.park-toolbar):not(:has(.wardrobe,.return-entry)) .park-actions>.park-action:is([data-party-icon=skate],[data-party-icon=walk]){right:calc(var(--hud-edge-r) + var(--hud-jump) + var(--hud-action) + 12px)!important;bottom:var(--hud-bottom)!important}
+ body.park-unified-ui:has(.park-toolbar):not(:has(.wardrobe,.return-entry)) .park-actions>.park-action[data-party-icon=sprint]{right:calc(var(--hud-edge-r) + var(--hud-jump) + 6px)!important;bottom:var(--hud-bottom)!important}
+ body.park-unified-ui:has(.park-toolbar):not(:has(.wardrobe,.return-entry)) .park-actions>.park-action[data-party-icon=jump]{bottom:var(--hud-bottom)!important}
+ body.park-unified-ui:has(.park-toolbar):not(:has(.wardrobe,.return-entry)) .park-actions>.park-action:is([data-party-icon=gas],[data-party-icon=brake]){bottom:var(--hud-bottom)!important}
+ body.park-unified-ui:has(.park-toolbar):not(:has(.wardrobe,.return-entry)) .park-actions>.park-action:is([data-party-icon=brake],[data-party-icon=exit]){right:calc(var(--hud-edge-r) + var(--hud-action) + 6px)!important}
+ body.park-unified-ui:has(.park-toolbar):not(:has(.wardrobe,.return-entry)) .park-actions>.park-action:is([data-party-icon=reverse],[data-party-icon=exit]){bottom:calc(var(--hud-bottom) + var(--hud-action) + 6px)!important}
+ body.park-unified-ui:has(.park-toolbar):not(:has(.wardrobe,.return-entry)) :is(.park-action,button#preview-hit,button#party-throw) .party-icon{width:24px!important;height:24px!important}
+ body.park-unified-ui:has(.park-toolbar):not(:has(.wardrobe,.return-entry)) .park-stick{width:var(--hud-pad)!important;height:var(--hud-pad)!important;bottom:var(--hud-bottom)!important}
+ body.park-unified-ui:has(.park-toolbar):not(:has(.wardrobe,.return-entry)) #vehicle-horn-button{left:calc(var(--hud-edge-l) + var(--hud-pad) + 10px)!important;min-width:64px;width:64px;min-height:44px;padding:6px 10px;font-size:11px}
+ /* Use spare top-row width for status on wide landscape screens. */
+ @media(min-width:700px){
+  body.park-unified-ui:has(.park-toolbar):not(:has(.wardrobe,.return-entry)){--park-chat-top:calc(var(--hud-top) + 48px)}
+  body.park-unified-ui:has(.park-toolbar):not(:has(.wardrobe,.return-entry)) .park-weather{top:calc(var(--hud-top) + 5px)!important;left:calc(var(--hud-edge-l) + 120px)!important}
+  body.park-unified-ui:has(.park-toolbar):not(:has(.wardrobe,.return-entry)) .park-hud>div.absolute.right-4.top-4{top:calc(var(--hud-top) + 5px)!important;left:calc(var(--hud-edge-l) + 236px)!important}
+ }
+ /* Browser chrome can leave less than 310px. Use two utility rows here:
+    identity + Chat/pet + navigation, then status + Homes/Play. No control is
+    removed. Homes only sits beside Play in this very short fallback so it
+    cannot cover Punch or the pedals. The saved size is capped by free space. */
+ @media(max-height:310px){
+  body.park-unified-ui:has(.park-toolbar):not(:has(.wardrobe,.return-entry)){
+   --hud-action:clamp(44px,calc(var(--landscape-action-base) * var(--park-button-scale,1)),calc((100dvh - var(--hud-top) - 98px - var(--hud-bottom)) / 2.1));
+   --hud-jump:calc(var(--hud-action) * 1.1);
+   --park-chat-top:var(--hud-top);
+  }
+  body.park-unified-ui:has(.park-toolbar):not(:has(.wardrobe,.return-entry)) .park-chat:not(:has(input)),
+  body.park-unified-ui:has(.park-toolbar):not(:has(.wardrobe,.return-entry)):has(#hawk-map-navigation[data-player-directory]) .park-chat:not(:has(input)){left:calc(var(--hud-edge-l) + 114px)!important;top:var(--park-chat-top)!important;width:66px!important;max-width:66px!important}
+  body.park-unified-ui:has(.park-toolbar):not(:has(.wardrobe,.return-entry)) .park-pet-button{left:calc(var(--hud-edge-l) + 186px)!important;max-width:min(126px,max(44px,calc(100vw - var(--hud-edge-l) - var(--hud-edge-r) - 404px)));white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  body.park-unified-ui:has(.park-toolbar):not(:has(.wardrobe,.return-entry)) .park-weather{top:calc(var(--hud-top) + 46px)!important;left:var(--hud-edge-l)!important}
+  body.park-unified-ui:has(.park-toolbar):not(:has(.wardrobe,.return-entry)) .park-hud>div.absolute.right-4.top-4{top:calc(var(--hud-top) + 46px)!important;left:calc(var(--hud-edge-l) + 114px)!important}
+  body.park-unified-ui:has(.park-toolbar):not(:has(.wardrobe,.return-entry)) .online-toggle{top:calc(var(--hud-top) + 46px)!important}
+  body.park-unified-ui:has(.park-toolbar):not(:has(.wardrobe,.return-entry)) #park-home-button{top:calc(var(--hud-top) + 46px)!important;right:calc(var(--hud-edge-r) + 151px)!important;max-width:108px!important}
+  body.park-unified-ui:has(.park-toolbar):not(:has(.wardrobe,.return-entry)) .park-chat:not(:has(input))>.park-chat-history,
+  body.park-unified-ui:has(.park-toolbar):not(:has(.wardrobe,.return-entry)):has(#hawk-map-navigation[data-player-directory]) .park-chat:not(:has(input))>.park-chat-history:first-child:not(:empty){top:96px!important;left:0!important;box-sizing:border-box;max-height:min(90px,max(0px,calc(100dvh - var(--park-chat-top) - 96px - var(--hud-bottom) - var(--hud-jump) - var(--hud-action) - 12px)))!important}
+  /* Fixed modal chrome must leave a usable scrolling region at 240px too. */
+  body.park-unified-ui:not(:has(.wardrobe,.return-entry)) .online-dialog.online-dialog header{padding:4px 12px;align-items:center}
+  body.park-unified-ui:not(:has(.wardrobe,.return-entry)) .online-dialog.online-dialog h1{font-size:20px;margin:0;line-height:1.2}
+  body.park-unified-ui:not(:has(.wardrobe,.return-entry)) .online-dialog.online-dialog .online-close{width:44px;height:44px;min-width:44px;min-height:44px}
+  body.park-unified-ui:not(:has(.wardrobe,.return-entry)) .online-dialog.online-dialog .social-tabs{padding:3px 10px}
+  body.park-unified-ui:not(:has(.wardrobe,.return-entry)) .online-dialog.online-dialog footer{padding:3px 12px}
+  body.park-unified-ui:not(:has(.wardrobe,.return-entry)) .online-dialog.online-dialog footer button{min-height:44px;padding:6px 12px}
+  body.park-unified-ui:not(:has(.wardrobe,.return-entry)) .online-dialog.online-dialog .online-scroll{padding:8px 12px}
+  /* Map status and controls share a row, with its instructions underneath. */
+  body.park-unified-ui:not(:has(.wardrobe,.return-entry)) #hawk-map-navigation{display:grid!important;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:4px 12px;width:min(560px,calc(100vw - var(--hud-edge-l) - var(--hud-edge-r) - 20px));max-width:calc(100vw - var(--hud-edge-l) - var(--hud-edge-r) - 20px)!important;padding:6px 8px!important;bottom:var(--hud-bottom)!important;box-sizing:border-box}
+  body.park-unified-ui:not(:has(.wardrobe,.return-entry)) #hawk-map-navigation>div:first-child{grid-column:1;grid-row:1;min-width:0;margin:0!important}
+  body.park-unified-ui:not(:has(.wardrobe,.return-entry)) #hawk-map-navigation .park-map-legend{min-width:0;font-size:11px;margin:0}
+  body.park-unified-ui:not(:has(.wardrobe,.return-entry)) #hawk-map-navigation>div:nth-child(2){grid-column:1/-1;grid-row:2;font-size:11px;line-height:1.2}
+  body.park-unified-ui:not(:has(.wardrobe,.return-entry)) #hawk-map-navigation>div:last-child{grid-column:2;grid-row:1;margin:0!important}
+  body.park-unified-ui:has(#hawk-map-navigation):not(:has(.wardrobe,.return-entry)) .park-hud>div.absolute.top-4.left-1\/2{top:auto!important;bottom:calc(var(--park-map-navigation-height,74px) + var(--hud-bottom) + 6px)!important;max-width:calc(100vw - var(--hud-edge-l) - var(--hud-edge-r) - 20px);width:max-content;padding:4px 10px!important;font-size:10px;line-height:1.2}
+ }
+ /* Reduce panel chrome, not content or input font sizes. Every option remains
+    reachable by native scrolling even in the shortest landscape viewport. */
+ body.park-unified-ui:not(:has(.wardrobe,.return-entry)) #party-settings .party-card{max-height:calc(100dvh - 24px - env(safe-area-inset-top) - env(safe-area-inset-bottom));padding:12px 16px;border-radius:22px}
+ body.park-unified-ui:not(:has(.wardrobe,.return-entry)) #party-settings .party-head{top:-12px;padding:4px 0 8px}
+ body.park-unified-ui:not(:has(.wardrobe,.return-entry)) #party-settings h2{font-size:22px}
+ body.park-unified-ui:not(:has(.wardrobe,.return-entry)) #party-settings section{padding:8px 12px;margin:8px 0}
+ body.park-unified-ui:not(:has(.wardrobe,.return-entry)) #party-settings .party-setting-row{padding:6px 0;gap:3px 10px}
+ body.park-unified-ui:not(:has(.wardrobe,.return-entry)) #party-settings .party-intro{margin:6px 0 10px}
+ body.park-unified-ui:not(:has(.wardrobe,.return-entry)) .park-inventory-panel{max-height:calc(100dvh - var(--preview-top,24px) - 24px - env(safe-area-inset-bottom));width:min(300px,calc(100vw - 24px))}
+}
