@@ -2,11 +2,11 @@ import {playerSettings as settings, setPlayerSetting, savePlayerSettings, resetP
 import {BASICS_VERSION, readPlayerDiagnostics, makeBugReport} from '../player-diagnostics.js?v=foundation-basics-1';
 import {installSafetyControls} from '../social-safety.js';
 import {cameraZoomLabel} from '../camera-zoom.js?v=camera-settings-1';
-import {createScreenOrientation} from '../screen-orientation.js?v=orientation-1';
+import {createScreenOrientation} from '../screen-orientation.js?v=settings-complete-20261002-1';
 import '../park-fundamentals-entry.js?v=park-fundamentals-20261002-1';
 
 export function installPlayerSettings({sfx,isTouch}){
- const sheet=document.createElement('link');sheet.rel='stylesheet';sheet.href=new URL('./settings-panel.css?v=display-mode-1',import.meta.url).href;document.head.append(sheet);
+ const sheet=document.createElement('link');sheet.rel='stylesheet';sheet.href=new URL('./settings-panel.css?v=settings-complete-20261002-1',import.meta.url).href;document.head.append(sheet);
  const gear=document.createElement('button');gear.id='party-settings-btn';gear.type='button';gear.textContent='Settings';gear.setAttribute('aria-label','Party settings');gear.setAttribute('aria-expanded','false');
  gear.hidden=true;
  const panel=document.createElement('div');panel.id='party-settings';panel.hidden=true;panel.setAttribute('role','dialog');panel.setAttribute('aria-modal','true');panel.setAttribute('aria-labelledby','settings-title');
@@ -36,9 +36,26 @@ export function installPlayerSettings({sfx,isTouch}){
  };
  window.addEventListener('park:rescue-status',e=>{const d=e.detail;if(!d||!['pending','success','error'].includes(d.state)||typeof d.message!=='string')return;rescueStatus(d.state,d.message.slice(0,300));});
  document.body.append(gear,panel);
+ const display=panel.querySelector('section'),fullButton=panel.querySelector('[data-action=fullscreen]');
+ fullButton.setAttribute('aria-controls','settings-app-mode');
+ fullButton.insertAdjacentHTML('afterend','<button type="button" data-action="app-mode" aria-controls="settings-app-mode" aria-expanded="false">Play as an app</button>');
+ display.insertAdjacentHTML('beforeend','<div id="settings-app-mode" class="party-app-mode" tabindex="-1" role="region" aria-labelledby="settings-app-mode-title" hidden><h4 id="settings-app-mode-title"></h4><ol></ol><p data-app-note></p><p data-app-identity></p><label for="settings-game-link">Game link</label><input id="settings-game-link" type="url" readonly><div class="party-help-actions"><button type="button" data-action="copy-game-link">Copy game link</button><button type="button" data-action="account">Account & recovery</button><button type="button" data-action="hide-app-mode">Hide instructions</button></div><p id="settings-game-link-status" role="status"></p></div>');
+ const appGuide=panel.querySelector('#settings-app-mode');
+ // Link to the game root, never copy a friend/recovery code or QA query string.
+ panel.querySelector('#settings-game-link').value=new URL('../../',import.meta.url).href;
+ const focusAppGuide=()=>{if(!appGuide.hidden){appGuide.focus({preventScroll:true});appGuide.scrollIntoView({block:'nearest'});}};
  const orientation=createScreenOrientation({preference:()=>settings.screenOrientation,changed:state=>{
   panel.querySelector('#settings-fullscreen-status').textContent=state.fullscreenMessage;
-  const full=panel.querySelector('[data-action=fullscreen]');full.textContent=state.fullscreen?'Exit full screen':state.standalone?'App mode active':'Full screen';full.disabled=state.busy||(!state.fullscreen&&(!state.fullscreenSupported||state.standalone));
+  fullButton.textContent=state.fullscreen?'Exit full screen':state.standalone&&!state.fullscreenSupported?'App mode active':'Full screen';fullButton.disabled=state.busy;
+  fullButton.setAttribute('aria-expanded',String(state.helpVisible));
+  panel.querySelector('[data-action=app-mode]').setAttribute('aria-expanded',String(state.helpVisible));
+  appGuide.hidden=!state.helpVisible;
+  if(appGuide.dataset.platform!==state.guide.platform){
+   appGuide.dataset.platform=state.guide.platform;appGuide.querySelector('h4').textContent=state.guide.title;
+   appGuide.querySelector('ol').replaceChildren(...state.guide.steps.map(text=>{const li=document.createElement('li');li.textContent=text;return li;}));
+   appGuide.querySelector('[data-app-note]').textContent=state.guide.note;
+   appGuide.querySelector('[data-app-identity]').textContent=state.guide.identity;
+  }
   if(isTouch){
    panel.querySelector('#settings-orientation-status').textContent=state.message;
    panel.querySelector('#setting-screenOrientation').disabled=state.busy;
@@ -95,7 +112,10 @@ export function installPlayerSettings({sfx,isTouch}){
   const el=e.target.closest('button');if(!el)return;
   if(el.matches('[role=switch]')){setPlayerSetting(el.dataset.setting,!settings[el.dataset.setting]);sfx.play('click');return}
   switch(el.dataset.action){
-   case 'fullscreen':await orientation.toggleFullscreen();break;
+   case 'fullscreen':await orientation.toggleFullscreen();focusAppGuide();break;
+   case 'app-mode':orientation.showAppGuide();focusAppGuide();break;
+   case 'hide-app-mode':{orientation.hideAppGuide();const button=panel.querySelector('[data-action=app-mode]');button.focus({preventScroll:true});button.scrollIntoView({block:'center'});break;}
+   case 'copy-game-link':{const link=panel.querySelector('#settings-game-link'),status=panel.querySelector('#settings-game-link-status');try{await navigator.clipboard.writeText(link.value);status.textContent='Game link copied. Open it in your browser.';}catch{link.focus();link.select();status.textContent='Copy the selected game link, then paste it in your browser.';}break;}
    case 'account':open(false);window.dispatchEvent(new CustomEvent('candy:online-open',{detail:{tab:'account'}}));break;
    case 'guide':open(false);window.dispatchEvent(new Event('park:guide-replay'));break;
    case 'rescue':if(!rescuePending){panel.querySelector('#settings-rescue-confirm').hidden=false;panel.querySelector('#settings-rescue-status').hidden=true;panel.querySelector('[data-action=cancel-rescue]').focus({preventScroll:true});}break;

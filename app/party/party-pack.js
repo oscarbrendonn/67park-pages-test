@@ -141,12 +141,12 @@ window.__partyVisual = guard((group, dt) => {
   if (!group) return;
   const punchStarted = st?.punchT > 0 && prevPunchT === 0;
   if(punchStarted&&st?.enabled&&player.map==='city'&&world()?.lobbyCourts?.canStrike(st.heading))netHook.flag(`pk1b:${++ballStrikeSeq%100000}`);
-  // Sound follows actions even when visual bounce or reduced-motion effects are off.
+  // Sound and haptics follow actions even when visual bounce or reduced-motion effects are off.
   if (st?.enabled && player.map === 'city') {
     const base=document.documentElement.dataset.gameplayAvatarBase;
-    if (st.jumped === 1) { sfx.play('jump'); sfx.play('character-jump', base); }
-    else if (st.jumped === 2) { sfx.play('double'); sfx.play('character-jump', base); }
-    if (st.landed) { const hard=st.landed>9; sfx.play('land', hard); sfx.play('character-land', {hard,base}); }
+    if (st.jumped === 1) { sfx.play('jump'); sfx.play('character-jump', base); buzz(8); }
+    else if (st.jumped === 2) { sfx.play('double'); sfx.play('character-jump', base); buzz([8, 30, 8]); }
+    if (st.landed) { const hard=st.landed>9; sfx.play('land', hard); sfx.play('character-land', {hard,base}); buzz(hard ? 22 : 10); }
     if (punchStarted) sfx.punch(document.documentElement.dataset.gameplayAvatarBase);
   }
   prevPunchT = st?.punchT || 0;
@@ -155,9 +155,9 @@ window.__partyVisual = guard((group, dt) => {
     return;
   }
   wasEnabled = true;
-  if (st.jumped === 1) { kick(0.16); buzz(8); }
-  else if (st.jumped === 2) { kick(0.22); buzz([8, 30, 8]); }
-  if (st.landed) { const hard = st.landed > 9; kick(-0.30 * clamp(st.landed / 10, 0.5, 1)); buzz(hard ? 22 : 10); }
+  if (st.jumped === 1) { kick(0.16); }
+  else if (st.jumped === 2) { kick(0.22); }
+  if (st.landed) { kick(-0.30 * clamp(st.landed / 10, 0.5, 1)); }
   if (punchStarted) kick(0.07);
   if (st.punchImpact) { st.shake = Math.max(st.shake || 0, 0.22); hits.punch(); }
   stepSpring(dt);

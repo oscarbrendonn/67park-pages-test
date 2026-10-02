@@ -23,8 +23,8 @@
 #party-settings input[type=range]{grid-column:1/-1;width:100%;margin:0;min-height:44px;accent-color:#e978aa;cursor:pointer;touch-action:pan-y}
 #party-settings .party-row{font-size:14px;border-color:#ede6dc;min-height:44px;padding:4px 0}
 #party-settings select{min-height:44px;max-width:52%;border:1px solid #d8ccc4;border-radius:12px;padding:8px;background:#fff;color:#514954;font:600 16px system-ui;cursor:pointer}
-#party-settings .party-toggle{flex:none;width:58px;height:36px}
-#party-settings .party-toggle i{width:26px;height:26px;top:3px;left:3px;transition:transform 120ms ease-out}
+#party-settings .party-toggle{flex:none;width:58px;height:44px;min-height:44px;box-sizing:border-box}
+#party-settings .party-toggle i{width:26px;height:26px;top:calc(50% - 13px);left:3px;transition:transform 120ms ease-out}
 #party-settings .party-toggle[aria-checked=true] i{left:3px;transform:translateX(23px)}
 #party-settings .party-hint{font-size:12px;line-height:1.5;color:#796e74;background:#f5f0e7;padding:9px 11px;margin:7px 0 0;border-radius:12px}
 #party-settings .party-hint p{margin:5px 0 10px}
@@ -37,6 +37,14 @@
 #party-settings .party-report-label{display:block;margin:12px 0 6px;font-size:12px}
 #party-settings textarea{display:block;box-sizing:border-box;width:100%;resize:vertical;padding:10px;border:1px solid #d8ccc4;border-radius:10px;font:16px/1.4 system-ui;background:#fff;color:#514954}
 #party-settings .party-help-actions{display:flex;flex-wrap:wrap;gap:8px}
+#party-settings .party-app-mode{margin-top:12px;padding:12px;border:1px solid #c6ddd5;border-radius:14px;background:#edf5f0;color:#38534a;font-size:13px;line-height:1.55;scroll-margin-top:76px}
+#party-settings .party-app-mode h4{margin:0 0 8px;font-size:15px}
+#party-settings .party-app-mode ol{padding-left:22px;margin:8px 0}
+#party-settings .party-app-mode li+li{margin-top:7px}
+#party-settings .party-app-mode p{margin:10px 0}
+#party-settings .party-app-mode label{display:block;font-weight:650}
+#party-settings #settings-game-link{display:block;width:100%;box-sizing:border-box;min-height:44px;margin:6px 0 10px;padding:9px;border:1px solid #bdcfc6;border-radius:10px;background:#fff;color:#38534a;font:16px system-ui}
+#party-settings .party-app-mode:focus-visible{outline:3px solid #668fb1;outline-offset:2px}
 #settings-report-status,#settings-reset-confirm{font-size:12px;line-height:1.5}
 #settings-reset-confirm button{margin:3px}
 html[data-park-show-chat=false] :is(.park-chat-history,#local-speech-bubble,.remote-speech-bubble){display:none!important}

@@ -34,3 +34,35 @@ body.park-unified-ui:has(.park-toolbar):has(#hawk-map-navigation[data-player-dir
   max-height:min(100px,max(0px,calc(100dvh - var(--hud-top) - 172px - var(--hud-bottom))))!important;
  }
 }
+
+/* A transformed ancestor becomes the containing block for position:fixed.
+   Resize desktop action buttons themselves so the upper Bag never moves. */
+@media(pointer:fine){
+ body.park-unified-ui:has(.park-toolbar) .park-desktop-actions{transform:none!important;scale:none!important;gap:calc(12px * var(--park-button-scale,1))}
+ body.park-unified-ui:has(.park-toolbar) .park-desktop-actions>.park-action:not([data-party-icon=bag]){width:max(44px,calc(66px * var(--park-button-scale,1)));height:max(44px,calc(66px * var(--park-button-scale,1)));min-width:44px;min-height:44px}
+}
+/* Short desktop windows keep combat actions in the lower action lane, clear
+   of Settings, lobby, Play & friends and Homes at every supported size. */
+@media(pointer:fine) and (max-height:640px){
+ body.park-unified-ui:has(.park-toolbar){--desktop-compact-action:max(44px,calc(52px * var(--park-button-scale,1)))}
+ body.park-unified-ui:has(.park-toolbar) .park-desktop-actions{right:var(--hud-edge-r);bottom:72px;gap:8px}
+ body.park-unified-ui:has(.park-toolbar) .park-desktop-actions>.park-action:not([data-party-icon=bag]){width:var(--desktop-compact-action);height:var(--desktop-compact-action)}
+ body.park-unified-ui:has(.park-toolbar) button:is(#preview-hit,#party-throw){width:var(--desktop-compact-action);height:var(--desktop-compact-action);min-width:44px;min-height:44px;top:auto!important;bottom:72px!important;right:calc(var(--hud-edge-r) + var(--desktop-compact-action) + 8px)!important;scale:1!important}
+ body.park-unified-ui:has(.park-toolbar) button#party-throw{right:calc(var(--hud-edge-r) + var(--desktop-compact-action) * 2 + 16px)!important}
+}
+/* The game also exposes thumb actions in a narrow desktop window. Fine-pointer
+   users need a compact dock too; this does not change touch-device styling. */
+@media(pointer:fine) and (max-width:767px){
+ body.park-unified-ui:has(.park-toolbar){--desktop-narrow-action:max(44px,min(calc(50px * var(--park-button-scale,1)),calc((100dvh - var(--hud-top) - 160px - var(--hud-bottom)) / 2)))}
+ body.park-unified-ui:has(.park-toolbar) .park-actions{display:grid!important;grid-template-columns:repeat(3,var(--desktop-narrow-action));gap:8px;position:fixed!important;right:var(--hud-edge-r)!important;bottom:var(--hud-bottom)!important;left:auto!important;top:auto!important;transform:none!important;scale:none!important}
+ body.park-unified-ui:has(.park-toolbar) .park-actions>.park-action:not([data-party-icon=bag]){position:relative!important;inset:auto!important;width:var(--desktop-narrow-action)!important;height:var(--desktop-narrow-action)!important;min-width:44px!important;min-height:44px!important;transform:none!important;scale:none!important}
+ body.park-unified-ui:has(.park-toolbar) button#preview-hit{right:var(--hud-edge-r)!important;bottom:var(--hud-bottom)!important;width:var(--desktop-narrow-action);height:var(--desktop-narrow-action);scale:1!important}
+ body.park-unified-ui:has(.park-toolbar) button#party-throw{right:calc(var(--hud-edge-r) + var(--desktop-narrow-action) * 3 + 24px)!important;bottom:var(--hud-bottom)!important;width:var(--desktop-narrow-action);height:var(--desktop-narrow-action);scale:1!important}
+ body.park-unified-ui:has(.park-toolbar) .park-stick{left:var(--hud-edge-l)!important;bottom:var(--hud-bottom)!important;width:96px!important;height:96px!important}
+}
+@media(pointer:fine) and (max-width:767px) and (max-height:480px){
+ body.park-unified-ui:has(.park-toolbar){--park-chat-top:calc(var(--hud-top) + 104px)}
+ body.park-unified-ui:has(.park-toolbar) .park-weather{top:calc(var(--hud-top) + 54px)!important}
+ body.park-unified-ui:has(.park-toolbar) .park-hud>div.absolute.right-4.top-4{left:calc(var(--hud-edge-l) + 124px)!important;top:calc(var(--hud-top) + 54px)!important}
+ body.park-unified-ui:has(.park-toolbar) .park-chat:not(:has(input))>.park-chat-history{left:108px!important;max-height:100px!important;width:min(280px,calc(100vw - 340px));max-width:min(280px,calc(100vw - 340px))!important}
+}
