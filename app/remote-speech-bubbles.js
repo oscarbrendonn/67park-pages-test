@@ -1,9 +1,9 @@
 import {Vector3} from 'three';
 import {hidesPlayerChat} from './social-safety.js';
+import {createSpeechBubble,placeSpeechBubble} from './speech-bubble-view.js?v=speech-polish-1';
 
 const entries=new Map(),anchor=new Vector3(),stack=[],seen=new Set();
 const LIMIT=16,LIFETIME=10000;
-let sheet=null;
 
 function findHead(root){
   stack.length=0;seen.clear();stack.push(root);
@@ -20,11 +20,7 @@ function latest(messages,id){
   return null;
 }
 function element(id){
-  if(!sheet){sheet=document.createElement('style');sheet.textContent='.remote-speech-bubble::after{content:"";position:absolute;left:50%;bottom:-6px;width:10px;height:10px;border-radius:0 0 3px 0;background:#fffaf4;border-right:1px solid #8770692e;border-bottom:1px solid #8770692e;transform:translateX(-50%) rotate(45deg)}';document.head.append(sheet);}
-  const node=document.createElement('div');node.className='remote-speech-bubble';node.dataset.playerId=id;
-  node.setAttribute('role','status');node.setAttribute('aria-live','polite');
-  node.style.cssText='position:fixed;left:0;top:0;z-index:25;pointer-events:none;max-width:min(240px,65vw);padding:10px 16px;border:1px solid #8770692e;border-radius:16px;background:#fffaf4;color:#443f43;box-shadow:0 2px 4px #51403a0a,0 8px 20px #51403a14,inset 0 1px 0 #fff;font:550 14px/1.45 system-ui;letter-spacing:.01em;text-align:center;overflow-wrap:anywhere;white-space:pre-wrap;';
-  node.hidden=true;document.body.append(node);return node;
+  return createSpeechBubble(document,{playerId:id});
 }
 
 // Called by the existing remote-avatar frame callback. No separate frame loop,
@@ -38,9 +34,9 @@ export function updateRemoteSpeech({id,visual,camera,messages,blocked=false,now=
     const key=String(message.nonce||at)+'|'+text;
     if(!entry){
       if(entries.size>=LIMIT)removeRemoteSpeech(entries.keys().next().value);
-      entry={node:element(id),key:'',visual:null,head:null,nextSearch:0,expires:0,failed:false,transform:''};entries.set(id,entry);
+      entry={node:element(id),key:'',visual:null,head:null,nextSearch:0,expires:0,failed:false};entries.set(id,entry);
     }
-    if(entry.key!==key){entry.key=key;entry.node.textContent=text;entry.expires=now+Math.min(LIFETIME,LIFETIME-Math.max(0,now-at));entry.failed=false;}
+    if(entry.key!==key){entry.key=key;entry.node.textContent=text;entry.node.dataset.speaker=String(message.name||'Player').slice(0,32);entry.expires=now+Math.min(LIFETIME,LIFETIME-Math.max(0,now-at));entry.failed=false;}
     if(entry.failed||now>=entry.expires||document.hidden||blocked||!camera||!visual){if(!entry.node.hidden)entry.node.hidden=true;return;}
     if(entry.visual!==visual||entry.head&&!attached(entry.head,visual)){entry.visual=visual;entry.head=null;entry.nextSearch=0;}
     if(!entry.head&&now>=entry.nextSearch){entry.head=findHead(visual);entry.nextSearch=now+250;}
@@ -53,10 +49,8 @@ export function updateRemoteSpeech({id,visual,camera,messages,blocked=false,now=
     const rect=document.querySelector('canvas')?.getBoundingClientRect(),width=rect?.width||innerWidth,height=rect?.height||innerHeight;
     const label=document.querySelector('[data-remote-name="'+String(id).replace(/[^a-zA-Z0-9_-]/g,'')+'"]')?.getBoundingClientRect();
     let top=(rect?.top||0)+(1-anchor.y)*height/2-12;
-    if(label?.width>0&&Number.isFinite(label.top))top=Math.min(top,label.top-10);
-    const transform=`translate(${(rect?.left||0)+(anchor.x+1)*width/2}px,${top}px) translate(-50%,-100%)`;
-    if(entry.transform!==transform){entry.node.style.transform=transform;entry.transform=transform;}
-    entry.node.hidden=false;
+    if(!camera.userData?.parkOverview&&label?.width>0&&Number.isFinite(label.top))top=Math.min(top,label.top-10);
+    placeSpeechBubble(entry.node,(rect?.left||0)+(anchor.x+1)*width/2,top,rect,{overview:!!camera.userData?.parkOverview});
   }catch{if(entry){entry.failed=true;try{entry.node.hidden=true;}catch{}}}
 }
 export function removeRemoteSpeech(id){const entry=entries.get(id);if(entry){try{entry.node.remove();}catch{}entries.delete(id);}}

@@ -1,0 +1,76 @@
+{
+  "revision": "speech-overview-20261002-1",
+  "parentPublicCommit": "5a6ad0d446da1972f948f4ce43e6de41396d2552",
+  "deployed": false,
+  "modules": [
+    {
+      "file": "app/local-speech-bubble.js",
+      "sha256": "ada1e48984a25b3a0d338c15ff397860c005ad20ba793901a681aa2cd1c269f5"
+    },
+    {
+      "file": "app/remote-speech-bubbles.js",
+      "sha256": "a5603fe13d03af77ca6dad9ebf88b9bcca900df0dc9c736ee90936c1d999ff41"
+    },
+    {
+      "file": "app/speech-bubble-view.js",
+      "sha256": "0891bb1c41cf64e0458cd6a68d04fa345a5b2df0559bde8ab15290732db366d8"
+    }
+  ],
+  "entries": [
+    {
+      "file": "index.html",
+      "before": "ec7abe7ca0c555519830ead8f301c32f5644e66faeb2cad4346aeff04f50bb0a",
+      "after": "236af81f77e4887768d3ff8a8ead78a1c48494d2478cf707298ba4b899298ebf"
+    },
+    {
+      "file": "play/index.html",
+      "before": "a95d741c3514b2cb1a1a86ec8b6771ab17dd0e56d667c71e690413b583e29502",
+      "after": "785682c33eb260ee906c9f884c8269b275aba74fcc44817a73dc80676f4105ae"
+    },
+    {
+      "file": "explore/index.html",
+      "before": "2e6418c5f587b7c4dbd7ffc735d56bcdba55be628da4771c95ce29b2e006bfb1",
+      "after": "ba8384e26602bc777910ff8e613d7773f1b03cb5fbc1853703a48b489eab11fa"
+    },
+    {
+      "file": "style-studio/index.html",
+      "before": "d973b6f4b58fb076b8ec96c14ba85c535457308ad882d5747058dd7e80be1e3d",
+      "after": "3403f914aabc1edc650a5874e3fcc6be5e016f7f85fc45d60dcc2ada981d6f5c"
+    },
+    {
+      "file": "balloon/index.html",
+      "before": "8931754558fc66f3bd7d562876db24cc559a8ecdb4945b2b7095967eb23564fa",
+      "after": "1bd367fa941e9fa584dedf3212012d42e8e9a231ccec002f94db59d88243ae0f"
+    },
+    {
+      "file": "race/index.html",
+      "before": "c61f09e17257616a822cb984225e48f0af639fa7201e85789b58ffae05546f97",
+      "after": "3cb710831db0d883e7b9c5441a5894d590337baf6b4377b25707c3185da4cbc5"
+    },
+    {
+      "file": "rockets/index.html",
+      "before": "d38724572d1f94a8a0160802f41615d3c537537abba8c5e1c52a52320257f111",
+      "after": "6e443813372179cfb4799084067d278475ea39d75475f33c7780fc76ac735cdc"
+    },
+    {
+      "file": "sports/index.html",
+      "before": "f2a574ebf4a781116781ee63d0512e16b8ccbc5c43cc379b145b80ba366f4542",
+      "after": "f233b3b36856e588dd273c3b70453147547ff1819af46b0c439453e0e8f95553"
+    },
+    {
+      "file": "lane-rush/index.html",
+      "before": "3d0b69c2fcf2bdad6a7a5e203034f56fbec798a7a34840d6c43fb2331349e39d",
+      "after": "4149225bad57f9689429ed0801b1bbf06ad068bee872daa7024735a69aeab4e9"
+    },
+    {
+      "file": "skybound-soft/index.html",
+      "before": "4ebc5e1920fc0ac3d524f4ee632e316628506d9901cf3a7afae024d581e58862",
+      "after": "c690b517eb78a579398cbb3ab54eedf5a6e5387fcdef72eee368a2abcecf8500"
+    },
+    {
+      "file": "pet-play-preview/index.html",
+      "before": "f6a28805a1b7ddf2ac1d0bb68594712eb34fb9b3be520c29779063c9c07ad8b7",
+      "after": "90c677a814360ded768b709223260b78e54e66b6df2743f1402c5c7804ab6450"
+    }
+  ]
+}
