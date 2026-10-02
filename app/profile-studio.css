@@ -1,10 +1,25 @@
 @import url('./studio-panel.css?v=character-select-2');
-/* Keep the existing shelf and confirmation reachable on short landscape screens. */
+/* Compact the collection footer, not the game or the input text, in landscape. */
 @media(max-height:520px) and (orientation:landscape){
- .wardrobe.wardrobe-shelf .wardrobe-panel{overflow:hidden;min-height:0;gap:4px}
- .wardrobe.wardrobe-shelf .wardrobe-options{flex:1 1 0;min-height:0;overflow-y:auto;overscroll-behavior:contain}
- .wardrobe.wardrobe-shelf .wardrobe-bottom{flex:none;padding-top:4px;gap:4px}
- .wardrobe.wardrobe-shelf .wardrobe-pager{flex:none}
+ .wardrobe.wardrobe-shelf .wardrobe-panel{overflow:hidden;min-height:0;gap:4px;padding:6px 10px;border-radius:20px}
+ .wardrobe.wardrobe-shelf .wardrobe-options{flex:1 1 0;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:4px 5px 4px 3px;gap:0}
+ /* Keep the descriptive text accessible without spending the short viewport on it. */
+ .wardrobe.wardrobe-shelf :is(.wardrobe-panel-heading,.wardrobe-collection-note,.wardrobe-name-label){position:absolute;width:1px;height:1px;min-height:0;padding:0;margin:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+ .wardrobe.wardrobe-shelf .wardrobe-grid{grid-template-rows:repeat(2,clamp(100px,calc(100dvh - 244px),132px));gap:10px;padding:4px 4px 7px 2px}
+ .wardrobe.wardrobe-shelf .wardrobe-bottom{flex:none;display:grid;grid-template-columns:minmax(0,1fr) 104px;align-items:start;padding-top:4px;gap:4px 8px}
+ .wardrobe.wardrobe-shelf .wardrobe-person{grid-column:1;grid-row:1;min-width:0;gap:6px}
+ .wardrobe.wardrobe-shelf .wardrobe-person>label{height:44px;min-height:44px;padding:4px 8px;gap:6px;border-radius:13px}
+ .wardrobe.wardrobe-shelf .wardrobe-person>button{height:44px;min-height:44px;padding:4px 7px;gap:4px;font-size:10px;border-radius:13px}
+ .wardrobe.wardrobe-shelf .wardrobe-person svg{width:18px;height:18px}
+ .wardrobe.wardrobe-shelf .wardrobe-enter{grid-column:2;grid-row:1;height:44px;min-height:44px;padding:4px 8px;gap:8px;font-size:17px!important;line-height:1.2;border-radius:13px}
+ .wardrobe.wardrobe-shelf .wardrobe-enter svg{width:20px;height:20px}
+ .wardrobe.wardrobe-shelf .wardrobe-bottom>.entry-status{grid-column:1/-1;padding:3px 6px;line-height:1.2}
+ .wardrobe.wardrobe-shelf .entry-status progress{display:block;width:100%;height:8px}
+ .wardrobe.wardrobe-shelf .wardrobe-bottom>.entry-status[data-entry-status="loading"]:not(:has(button)){padding:0;border:0;background:none;border-radius:4px}
+ .wardrobe.wardrobe-shelf .entry-status[data-entry-status="loading"]:not(:has(button)) progress{height:4px}
+ .wardrobe.wardrobe-shelf #wardrobe-player-name-error{grid-column:1/-1;margin:0!important;line-height:1.2}
+ .wardrobe.wardrobe-shelf .wardrobe-pager{flex:none;min-height:44px}
+ .wardrobe.wardrobe-shelf .wardrobe-pager button{width:44px;height:44px;min-width:44px;min-height:44px}
 }
 .wardrobe-profile .wardrobe-display-box,.wardrobe-profile .wardrobe-character-title,.wardrobe-profile .wardrobe-demo{display:none!important}
 .wardrobe-profile .wardrobe-stage{background:linear-gradient(180deg,#ead4d4,#f3e2e2 55%,#fff2f2)!important;border-radius:28px;overflow:hidden}
