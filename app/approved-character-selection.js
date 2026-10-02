@@ -1,6 +1,8 @@
 // Seven reference-color variants explicitly approved by the user on 2026-10-01.
 // Axolotl replaces its URL only; it is not a duplicate roster entry.
 export const APPROVED_CHARACTER_REVISION = 'approved-roster-20261001-2';
+// Keep the approved roster/color assets immutable; replace only the repaired lid.
+export const ZOMBIE_EYE_REVISION = 'zombie-eye-20261002-1';
 export const APPROVED_CHARACTER_SELECTION = Object.freeze([
  {base:'cyclops67',name:'Cyclops',file:'cyclops',head:'67Park_Cyclops_Head',eyeHeight:0.4987951807228916},
  {base:'skeleton67',name:'Skeleton',file:'skeleton',head:'67Park_Skeleton_Head',eyeHeight:0.454337899543379},
@@ -13,5 +15,6 @@ export const APPROVED_CHARACTER_SELECTION = Object.freeze([
 export const approvedCharacter = base => APPROVED_CHARACTER_SELECTION.find(c=>c.base===base);
 export const approvedCharacterURL = base => {
  const row=approvedCharacter(base);
+ if(row?.base==='zombie67')return '/67park-pages-test/models/park-approved/zombie-eye-v2.glb?v='+ZOMBIE_EYE_REVISION;
  return row ? '/67park-pages-test/models/park-approved/'+row.file+'.glb?v='+APPROVED_CHARACTER_REVISION : null;
 };
