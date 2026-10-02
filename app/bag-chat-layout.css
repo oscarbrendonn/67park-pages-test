@@ -1,0 +1,36 @@
+/* Upper utility styling only. Reuse the original Bag SVG, node and handlers. */
+body.park-unified-ui:has(.park-toolbar) .park-action[data-party-icon=bag]{border-radius:15px!important;border:2px solid #fff7!important;background:#cde9fa!important;color:#3e5d70!important;box-shadow:inset 0 2px 0 #fff9,0 3px 0 #93b4c666!important;text-shadow:none!important;display:flex!important;align-items:center;justify-content:center;padding:0!important}
+body.park-unified-ui:has(.park-toolbar) .park-action[data-party-icon=bag]::before{content:none!important}
+body.park-unified-ui:has(.park-toolbar) .park-action[data-party-icon=bag]>.party-icon{display:none!important}
+body.park-unified-ui:has(.park-toolbar) .park-action[data-party-icon=bag]>svg:not(.party-icon){display:block!important;width:24px!important;height:24px!important;filter:none;pointer-events:none}
+body.park-unified-ui:has(.park-toolbar) .park-action[data-party-icon=bag]:active{background:#cde9fa!important;transform:scale(.97)!important;box-shadow:inset 0 2px 0 #fff9,0 1px 0 #93b4c666!important}
+
+/* Fixed upper-left Chat anchor. Messages have a separate bounded area below;
+   incoming text must never move the button onto the pet or thumb controls. */
+body.park-unified-ui:has(.park-toolbar){--park-chat-top:calc(var(--hud-top) + 154px)}
+body.park-unified-ui:has(.park-toolbar) .park-chat:not(:has(input)){
+ top:var(--park-chat-top)!important;bottom:auto!important;left:var(--hud-edge-l)!important;right:auto!important;transform:none!important;width:72px!important;min-width:72px;max-width:72px!important;height:auto!important;
+}
+body.park-unified-ui:has(.park-toolbar) .park-chat:not(:has(input))>button{min-width:72px;min-height:44px}
+body.park-unified-ui:has(.park-toolbar) .park-pet-button{left:calc(var(--hud-edge-l) + 80px)!important;top:var(--park-chat-top)!important;max-width:min(140px,calc(100vw - var(--hud-edge-l) - var(--hud-edge-r) - 160px));min-height:44px}
+body.park-unified-ui:has(.park-toolbar) .park-chat:not(:has(input))>.park-chat-history{
+ position:absolute!important;top:52px!important;bottom:auto!important;left:0!important;margin:0!important;padding:3px;border-radius:12px;background:#ffffffb8;
+ width:min(280px,calc(100vw - var(--hud-edge-l) - var(--hud-edge-r) - 132px));max-width:min(280px,calc(100vw - var(--hud-edge-l) - var(--hud-edge-r) - 132px))!important;
+ max-height:min(100px,max(0px,calc(100dvh - var(--hud-top) - 266px - var(--hud-bottom) - var(--hud-pad,124px))))!important;overflow:auto;overscroll-behavior:contain;
+}
+/* Opening the composer keeps the existing keyboard/visualViewport behavior. */
+body.park-unified-ui:has(.park-toolbar) .park-chat:has(input){left:50%!important;transform:translateX(-50%)!important}
+body.park-unified-ui:has(.park-toolbar):has(#hawk-map-navigation) .park-chat:not(:has(input)){
+ left:var(--hud-edge-l)!important;top:var(--park-chat-top)!important;bottom:auto!important;transform:none!important;width:72px!important;max-width:72px!important;
+}
+body.park-unified-ui:has(.park-toolbar):has(#hawk-map-navigation) .park-chat:not(:has(input))>.park-chat-history:first-child:not(:empty){
+ position:absolute!important;top:52px!important;bottom:auto!important;max-width:min(280px,calc(100vw - var(--hud-edge-l) - var(--hud-edge-r) - 132px))!important;
+ max-height:min(100px,max(0px,calc(100dvh - var(--hud-top) - 222px - var(--hud-bottom) - var(--park-map-navigation-height,150px))))!important;
+}
+@media(pointer:coarse) and (orientation:landscape){
+ body.park-unified-ui:has(.park-toolbar){--park-chat-top:calc(var(--hud-top) + 104px)}
+ body.park-unified-ui:has(.park-toolbar) .park-chat:not(:has(input))>.park-chat-history{
+  left:108px!important;width:min(280px,max(80px,calc(100vw - var(--hud-edge-l) - var(--hud-edge-r) - 340px)));max-width:min(280px,max(80px,calc(100vw - var(--hud-edge-l) - var(--hud-edge-r) - 340px)))!important;
+  max-height:min(100px,max(0px,calc(100dvh - var(--hud-top) - 172px - var(--hud-bottom))))!important;
+ }
+}
