@@ -1,3 +1,5 @@
+import {openPlayerProfile} from './player-profile-panel.js?v=profile-hud-20261002-1';
+
 // A browser-local player, never an IP address. Commit only after successful entry.
 const KEY = '67park-feel-lab.player-profile.v1';
 export function hasChosenCharacter(base) {
@@ -9,9 +11,21 @@ export function rememberCharacter(base) {
   try { localStorage.setItem(KEY,JSON.stringify({version:1,base})); return true; }
   catch { return false; }
 }
-export function openPlayerStudio(equip,openWardrobe) {
+export const PROFILE_PORTRAIT_BASES = Object.freeze(['goril','cat67','ninja67','frog67','cow67','shark67','axolotl67','cyclops67','skeleton67','zombie67','chick67','sloth67','pig67']);
+export function getProfilePortrait(base) {
+  if(!PROFILE_PORTRAIT_BASES.includes(base))return '';
+  // Actual approved model thumbnails, rendered offline. Opening a profile must
+  // never allocate another WebGL context or download a second character model.
+  return new URL('./profile-portraits/'+base+'.png?v=profile-hud-20261002-1',import.meta.url).href;
+}
+export function createProfileAvatar(React) {
+  return function ProfileAvatar({equip,subscribeEquip}) {
+    const base=React.useSyncExternalStore(subscribeEquip,()=>equip.base);
+    const src=getProfilePortrait(base);
+    return src?React.createElement('img',{className:'park-profile-avatar',src,alt:'',draggable:false,'data-character':base}):null;
+  };
+}
+export function openPlayerStudio(equip,openWardrobe,api) {
   window.dispatchEvent(new Event('park:release-controls'));
-  // Keep the existing session, party and world alive while changing clothes.
-  // Every base uses the same in-game studio; no detached preview navigation.
-  openWardrobe(true);
+  return openPlayerProfile({equip,openWardrobe,getPortrait:getProfilePortrait,...api});
 }

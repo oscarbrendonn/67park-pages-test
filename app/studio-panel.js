@@ -5,7 +5,7 @@ const paths={shoe:'M3 16v-6l5 1 3 4 8 2c2 0 3 2 2 4H3v-5Zm0 2h17M9 13l-2 2',back
 
 export function createStudioPanel(React){
   const h=React.createElement;
-  return function StudioPanel({eq,name,onName,setSlot,baseEquipment,partLabel,Stage,onEnter,onBack,onCancel,busy,error,entryStatus,dialog}){
+  return function StudioPanel({eq,name,nameError='',onName,setSlot,baseEquipment,partLabel,Stage,onEnter,onBack,onCancel,busy,error,entryStatus,dialog}){
     const rows=studioSlots(eq,baseEquipment,partLabel);
     return h('div',{ref:dialog,className:'wardrobe wardrobe-studio',role:'dialog','aria-modal':true,'aria-label':'Style Studio',tabIndex:-1,'data-selected-base':eq.base,onKeyUp:e=>e.stopPropagation(),onKeyDown:e=>{
       e.stopPropagation();
@@ -25,6 +25,6 @@ export function createStudioPanel(React){
             const step=delta=>setSlot(row.slot,row.items[(index+delta+row.items.length)%row.items.length].id);
             return h('div',{className:'studio-slot',key:row.slot},h('span',{className:'studio-slot-icon',style:{background:row.color},'aria-hidden':true},h('svg',{viewBox:'0 0 24 24'},h('path',{d:paths[row.icon]}))),h('div',{className:'studio-slot-info'},h('span',null,row.title),h('strong',{'data-studio-slot':row.slot},item.name),h('small',null,`${index+1} / ${row.items.length}`)),h('div',{className:'studio-arrows'},h('button',{type:'button','aria-label':'Previous '+row.title.toLowerCase(),onClick:()=>step(-1),disabled:busy},'‹'),h('button',{type:'button','aria-label':'Next '+row.title.toLowerCase(),onClick:()=>step(1),disabled:busy},'›')));
           })),
-          h('div',{className:'studio-bottom'},h('label',{htmlFor:'studio-player-name'},'Player name'),h('input',{id:'studio-player-name',value:name,maxLength:16,onChange:e=>onName(e.target.value),autoComplete:'nickname',disabled:busy}),h('button',{type:'button',className:'studio-enter',onClick:onEnter,disabled:busy&&!error},error?'Retry loading':busy?'Preparing your character…':'Enter the park'),h('p',{className:'studio-save-note'},'Your look is saved on this browser and worn in the park.'),entryStatus,busy&&h('button',{type:'button',className:'studio-cancel',onClick:onCancel},'Keep choosing my look')))));
+          h('div',{className:'studio-bottom'},h('label',{htmlFor:'studio-player-name'},'Player name'),h('input',{id:'studio-player-name',value:name,maxLength:16,required:true,'aria-invalid':!!nameError,'aria-describedby':nameError?'studio-player-name-error':undefined,onChange:e=>onName(e.target.value),onKeyDown:e=>{if(e.key==='Enter'&&!e.nativeEvent.isComposing){e.preventDefault();onEnter()}},autoComplete:'nickname',disabled:busy}),nameError&&h('p',{id:'studio-player-name-error',className:'wardrobe-name-error',role:'alert',style:{color:'#9d354d',fontSize:13,fontWeight:700,margin:'6px 0'}},nameError),h('button',{type:'button',className:'studio-enter',onClick:onEnter,disabled:busy&&!error},error?'Retry loading':busy?'Preparing your character…':'Enter the park'),h('p',{className:'studio-save-note'},'Your look is saved on this browser and worn in the park.'),entryStatus,busy&&h('button',{type:'button',className:'studio-cancel',onClick:onCancel},'Keep choosing my look')))));
   };
 }
