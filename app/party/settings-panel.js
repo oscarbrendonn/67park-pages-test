@@ -3,6 +3,7 @@ import {BASICS_VERSION, readPlayerDiagnostics, makeBugReport} from '../player-di
 import {installSafetyControls} from '../social-safety.js';
 import {cameraZoomLabel} from '../camera-zoom.js?v=camera-settings-1';
 import {createScreenOrientation} from '../screen-orientation.js?v=orientation-1';
+import '../park-fundamentals-entry.js?v=park-fundamentals-20261002-1';
 
 export function installPlayerSettings({sfx,isTouch}){
  const sheet=document.createElement('link');sheet.rel='stylesheet';sheet.href=new URL('./settings-panel.css?v=display-mode-1',import.meta.url).href;document.head.append(sheet);
@@ -20,9 +21,20 @@ export function installPlayerSettings({sfx,isTouch}){
  <section><h3>Audio</h3>${slider('sfx','Sound effects',0,100,5)}${slider('ambience','Ambience & park music',0,100,5)}<p class="party-hint" id="settings-muted" hidden>Sound is muted with the speaker button. <button type="button" data-action="unmute">Turn sound on</button></p></section>
  <section><h3>Social</h3>${toggle('showChat','Show chat messages')}${toggle('showNames','Show player names')}<p class="party-hint">Only changes what you see. Other players keep their own preferences.</p></section>
  <section><h3>Party feel</h3>${toggle('juice','Bouncy moves')}${toggle('pads','Jump pads')}${isTouch&&typeof navigator.vibrate==='function'?toggle('haptics','Vibration'):''}</section>
- <section><h3>Profile & connection</h3><p class="party-hint">You are playing as a guest. Your character, outfit and settings are stored in this browser, not in a cloud account. Clearing site data or using another device does not restore them. Friends and online progress are not guaranteed across test-server restarts.</p><p id="settings-connection" role="status"></p><p id="settings-connection-hint" class="party-hint"></p></section>
+ <section><h3>Profile & connection</h3><p class="party-hint">Keep your identity before switching devices: create a secret recovery code in Account. It can restore your name, character, outfit, friends and privacy while your server account is available. Controls, sound and graphics settings stay on this browser. Keep the code private; there is no email reset, and it cannot recover lost server data.</p><div class="party-help-actions"><button type="button" data-action="account">Account & recovery</button></div><p id="settings-connection" role="status"></p><p id="settings-connection-hint" class="party-hint"></p></section>
  <section><h3>Help</h3><details><summary>Show controls</summary><div class="party-hint"><strong>On a phone</strong><p>Left joystick: move. Drag an empty area on the right: camera. Pinch two fingers on the game: zoom. Or use Camera distance above. Use the labelled action buttons.</p><strong>Keyboard & mouse</strong><p>WASD / arrows: move · Space: jump · Shift: sprint · F: punch · E: interact / grab · T: throw · V: skate / walk · B: emotes · I: bag · Enter: chat. Drag on the game with the left or right mouse button to look around. Mouse wheel: zoom.</p><p>Mini-games show their own relevant actions. Basketball and penalties use aiming instead of free movement.</p></div></details><details><summary>Report a bug</summary><p class="party-hint">Describe the problem, then save or copy the report and send it to the 67Park team with a screenshot. Reports are not sent automatically.</p><label class="party-report-label">What happened?<textarea id="settings-report-description" maxlength="2000" rows="3" placeholder="What did you do? What happened instead?"></textarea></label><label class="party-report-label">Diagnostic details<textarea id="settings-report" readonly rows="4"></textarea></label><div class="party-help-actions"><button type="button" data-action="copy">Copy details</button><button type="button" data-action="download">Save bug report</button></div><p id="settings-report-status" role="status"></p></details><button type="button" class="party-reset" data-action="reset">Restore defaults</button><div id="settings-reset-confirm" hidden><p>Reset these settings? Your character and progress will stay unchanged.</p><button type="button" data-action="confirm-reset">Reset settings</button><button type="button" data-action="cancel-reset">Cancel</button></div></section>
  <div class="party-foot">67Park · ${BASICS_VERSION} · ${SETTINGS_VERSION}</div></div>`;
+ const help=[...panel.querySelectorAll('section')].find(s=>s.querySelector('h3')?.textContent==='Help');
+ help.querySelector('h3').insertAdjacentHTML('afterend','<div class="party-help-actions"><button type="button" data-action="guide">Replay quick tour</button><button type="button" data-action="rescue">I’m stuck · return to safety</button></div><div id="settings-rescue-confirm" hidden><p class="party-hint">Leave your seat or home and return to a safe place in this park? Your items and account stay unchanged.</p><div class="party-help-actions"><button type="button" data-action="cancel-rescue">Cancel</button><button type="button" data-action="confirm-rescue">Return to safety</button></div></div><p id="settings-rescue-status" class="party-hint" role="status" aria-live="polite" hidden></p>');
+ let rescuePending=false;
+ const rescueStatus=(state,message)=>{
+  rescuePending=state==='pending';
+  const status=panel.querySelector('#settings-rescue-status');status.hidden=!message;status.dataset.state=state;status.textContent=message;
+  panel.querySelector('[data-action=confirm-rescue]').disabled=rescuePending;panel.querySelector('[data-action=cancel-rescue]').disabled=rescuePending;
+  panel.querySelector('[data-action=rescue]').disabled=rescuePending;
+  if(state==='success'){panel.querySelector('#settings-rescue-confirm').hidden=true;panel.querySelector('[data-action=rescue]').focus({preventScroll:true});}
+ };
+ window.addEventListener('park:rescue-status',e=>{const d=e.detail;if(!d||!['pending','success','error'].includes(d.state)||typeof d.message!=='string')return;rescueStatus(d.state,d.message.slice(0,300));});
  document.body.append(gear,panel);
  const orientation=createScreenOrientation({preference:()=>settings.screenOrientation,changed:state=>{
   panel.querySelector('#settings-fullscreen-status').textContent=state.fullscreenMessage;
@@ -84,6 +96,11 @@ export function installPlayerSettings({sfx,isTouch}){
   if(el.matches('[role=switch]')){setPlayerSetting(el.dataset.setting,!settings[el.dataset.setting]);sfx.play('click');return}
   switch(el.dataset.action){
    case 'fullscreen':await orientation.toggleFullscreen();break;
+   case 'account':open(false);window.dispatchEvent(new CustomEvent('candy:online-open',{detail:{tab:'account'}}));break;
+   case 'guide':open(false);window.dispatchEvent(new Event('park:guide-replay'));break;
+   case 'rescue':if(!rescuePending){panel.querySelector('#settings-rescue-confirm').hidden=false;panel.querySelector('#settings-rescue-status').hidden=true;panel.querySelector('[data-action=cancel-rescue]').focus({preventScroll:true});}break;
+   case 'cancel-rescue':if(!rescuePending){panel.querySelector('#settings-rescue-confirm').hidden=true;panel.querySelector('[data-action=rescue]').focus({preventScroll:true});}break;
+   case 'confirm-rescue':if(!rescuePending){rescueStatus('pending','Finding a safe place…');window.dispatchEvent(new CustomEvent('park:rescue-request'));}break;
    case 'apply-orientation':await orientation?.apply();break;
    case 'first-person':setPlayerSetting('cameraDistance',.5);break;
    case 'reset-camera':setPlayerSetting('cameraDistance',6.8);break;

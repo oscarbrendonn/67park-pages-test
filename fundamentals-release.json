@@ -1,0 +1,180 @@
+{
+  "revision": "park-fundamentals-20261002-1",
+  "parentPublicCommit": "ae9939a37229812f33af78d02e6d7687954d03bb",
+  "createdAt": "2026-10-02T01:52:52.553Z",
+  "deployed": false,
+  "scope": "Fundamentals, map directory and neutral interface only",
+  "modules": [
+    {
+      "file": "app/main.js",
+      "before": "832f2cd7168c0588af9255472be193972409058956ea75f918adccf2290fe2f0",
+      "sha256": "9223871d070db9b5ab509515a045c5f8c7fe97d26da51f70119477669c2191ec"
+    },
+    {
+      "file": "app/hawk-map-controls.js",
+      "before": "5af0f262a03cb6b2f5971aa621499e690bf15b63099ec73a67213f25e3b9d29c",
+      "sha256": "a21dcb5ca652b0f5ad1368f6580e9415769266f8655fdec1de1ae36cdf831069"
+    },
+    {
+      "file": "app/map-player-directory.js",
+      "before": null,
+      "sha256": "79bf39c3e2568afb29043b42953396111cf69049c8a3986eef771965119f4ad2"
+    },
+    {
+      "file": "app/invitation-summary.js",
+      "before": null,
+      "sha256": "7903d2afa0101dd27708547f55d5ad76836cccb50570a87f35d08f541786d8cc"
+    },
+    {
+      "file": "app/interface-theme.css",
+      "before": null,
+      "sha256": "6a02b128b3f9d2f32d5b68eadd3e2b3d9c2fb60e8db558f920dfa324f142e20a"
+    },
+    {
+      "file": "app/interface-panels.css",
+      "before": null,
+      "sha256": "f0c076f3af4c973e77a33a538c3915b09a0dd9492558ced583f38cf3f9677719"
+    },
+    {
+      "file": "app/interface-minigames.css",
+      "before": null,
+      "sha256": "6170e93b63bd6b993deacacad98b54603fdf8e88ff52dbbda6f263053e91a2d8"
+    },
+    {
+      "file": "app/party/settings-panel.js",
+      "before": "8264d680ff31eed3fa6eae090cbd1a9c9811bc6a5b4d91cfa7722487c2f2654e",
+      "sha256": "bec8e98b10abe3215f43c7625addc370323aa85821553a20d699987389af4d99"
+    },
+    {
+      "file": "app/social-features.js",
+      "before": "0cb395abe4ed7ae7aa7f900a894192acebba24f85305963af8f90f10ab54823d",
+      "sha256": "e0c07c189626fb944d4bae1ac53b4d5e2b87e22219f5c2c7d26bb7b019ebe825"
+    },
+    {
+      "file": "app/social-panel.js",
+      "before": "9224d95186ce927733650a6a4a9a8629d8690cac11a83a6d04deee2b6ad4f713",
+      "sha256": "945ef85c1050b1e16e361934d02f3fea37b76cc357a0eb5daa4cb21bc45a05df"
+    },
+    {
+      "file": "app/chunk-A5QZM2VZ.js",
+      "before": "79b07fd6bafcb0bf91dd9c1c003a128bd5612b447cc904a7169232fd0952e62e",
+      "sha256": "de6e2da06af675eec9e8f52552d115dcac49def63226e4316fff0243587d1dab"
+    },
+    {
+      "file": "app/chunk-OTLFO3YT.js",
+      "before": "1efae8dc76fac61b3c1cdc0aee1a2fab7dba676566d36ce89186522d8278f848",
+      "sha256": "3f8cd5190b50ff0d93a828170fffe3f40768fa80918df9c8b8160cf0af8d9eec"
+    },
+    {
+      "file": "app/park-carry.js",
+      "before": "818f2561740abff0c29bde177d0bd904326668cfb5323a89515e53e13efa52d7",
+      "sha256": "96a62c5867acacfa25fab0a306b4e7025bfcdd06fc7797258a416d7e41b7df2e"
+    },
+    {
+      "file": "app/park-fundamentals-entry.js",
+      "before": null,
+      "sha256": "3b76df7a3c460afe912fcb46a8e04c85538e26dc162bf957935d07e78e2d97d2"
+    },
+    {
+      "file": "app/player-rescue.js",
+      "before": null,
+      "sha256": "d45cc7edfbeecff08b46a76782e71001c96f8e1d8b8de54d69c16de1a69d6a28"
+    },
+    {
+      "file": "app/first-visit-guide.js",
+      "before": null,
+      "sha256": "bd185952f94e0762a1c498a56039dfe4abc53cc4219ae763eb2d6f6be43bc8c2"
+    },
+    {
+      "file": "app/first-visit-guide.css",
+      "before": null,
+      "sha256": "3717e8a303438facfc14bd46e2217a081ed06e70144dc87285965d1dd63a433b"
+    },
+    {
+      "file": "app/party-fundamentals.js",
+      "before": null,
+      "sha256": "bd9917b22b6b7d10693e799ea1c4044f9ce066aa54dc7df733dcca97f2b3d63b"
+    },
+    {
+      "file": "app/party-fundamentals.css",
+      "before": null,
+      "sha256": "3611e2a408eb6d9ccf4ef1e79122c99c677bff1a04c884533dcfbe133cdd7a6f"
+    },
+    {
+      "file": "app/player-report.js",
+      "before": null,
+      "sha256": "07b68d1e28acbb3648b99b66596f0e3fe319581e733993acfe0c14842b9e2307"
+    },
+    {
+      "file": "app/player-report.css",
+      "before": null,
+      "sha256": "63af58ffcf0a3b873ac82994a4f286109c65d54be826c51c133b56bb978a4da3"
+    }
+  ],
+  "entries": [
+    {
+      "file": "index.html",
+      "before": "236af81f77e4887768d3ff8a8ead78a1c48494d2478cf707298ba4b899298ebf",
+      "after": "115204a38bb006ee4bac3b978fa3fcc2f51bbe9df235d03274d0fc5c872ac27e"
+    },
+    {
+      "file": "play/index.html",
+      "before": "785682c33eb260ee906c9f884c8269b275aba74fcc44817a73dc80676f4105ae",
+      "after": "997cda1bd7a5d95b3b155ac3f8d9d1423e3b115e7fb25385ddb2cbc0e1f934ae"
+    },
+    {
+      "file": "race/index.html",
+      "before": "3cb710831db0d883e7b9c5441a5894d590337baf6b4377b25707c3185da4cbc5",
+      "after": "66f90747e9a9c78d67d6457f33025d762c0ae1a15d2559bcfd4cc555b2cd5bf0"
+    },
+    {
+      "file": "sports/index.html",
+      "before": "f233b3b36856e588dd273c3b70453147547ff1819af46b0c439453e0e8f95553",
+      "after": "788e92744c17606887fc4fff0a4024c1f2da1f3396f07efac89a8dc7555209c6"
+    },
+    {
+      "file": "rockets/index.html",
+      "before": "6e443813372179cfb4799084067d278475ea39d75475f33c7780fc76ac735cdc",
+      "after": "926835ce4c7c1e4dacbc978d5f043a4d4b9dad97669e1a520633ffd97d210436"
+    },
+    {
+      "file": "balloon/index.html",
+      "before": "1bd367fa941e9fa584dedf3212012d42e8e9a231ccec002f94db59d88243ae0f",
+      "after": "e8ab6f21d1ae6bd5e11701e836f51508c89757caee4e14637c31650e1a46723b"
+    },
+    {
+      "file": "skybound-soft/index.html",
+      "before": "c690b517eb78a579398cbb3ab54eedf5a6e5387fcdef72eee368a2abcecf8500",
+      "after": "4b768538c8915ba9fec8fec8fdc4f7a55eb20cba983c3103d34337ffe768bde8"
+    },
+    {
+      "file": "lane-rush/index.html",
+      "before": "4149225bad57f9689429ed0801b1bbf06ad068bee872daa7024735a69aeab4e9",
+      "after": "6dcba183d3a97e34b0dda74d8ae4adbcc2c8c0c99deab26639bf541f6e4d06d2"
+    },
+    {
+      "file": "explore/index.html",
+      "before": "ba8384e26602bc777910ff8e613d7773f1b03cb5fbc1853703a48b489eab11fa",
+      "after": "515ca0aafa588c8f83ea1545d1ad0043c3b0230a0f2a751daf59799476b98d20"
+    },
+    {
+      "file": "style-studio/index.html",
+      "before": "3403f914aabc1edc650a5874e3fcc6be5e016f7f85fc45d60dcc2ada981d6f5c",
+      "after": "cc68d6cc7f799215575878c7a0ee7c6e4184c86b94685d4d0983298b12f84839"
+    },
+    {
+      "file": "pets/index.html",
+      "before": "0bbe085b198c35f34124f2728a47de175c5c260f78cf546a7354e89c1c0ac858",
+      "after": "b48e0d98fa8677de14c8dea1638615eb51ee4c370b9f6c91ec0771035487e65f"
+    },
+    {
+      "file": "pet-play-preview/index.html",
+      "before": "90c677a814360ded768b709223260b78e54e66b6df2743f1402c5c7804ab6450",
+      "after": "8deb4c5c56c7a0d9df638c5049f105d52ff1de32760ca84d493dd165a402085f"
+    }
+  ],
+  "protectedBoundary": {
+    "unchanged": 283,
+    "authorizedChanges": 21
+  }
+}

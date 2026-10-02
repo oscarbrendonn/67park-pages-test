@@ -1,0 +1,279 @@
+/* Shared interface finish for the lobby and mini games.
+   Presentation only: no canvas, world, geometry, or gameplay input rules.
+   The final modal exceptions keep existing welcome/results cards reachable.
+   Body-scoped selectors keep this finish above late-loaded legacy sheets.
+   Team markers, trophies, score feedback, and colourful action controls retain
+   their own semantic colours. Tokens come from interface-theme.css. */
+
+/* Nested lobby surfaces were not covered by the existing white panel skin. */
+body .online-dialog.online-dialog .online-invite,
+body .online-dialog.online-dialog .community-rule,
+body .online-dialog.online-dialog .online-seats > div,
+body .online-dialog.online-dialog .community-team .online-seats > div {
+  background: var(--park-ui-soft);
+  border-color: var(--park-ui-line);
+  color: var(--park-ui-ink);
+}
+
+body .online-dialog.online-dialog .online-seats > div.filled,
+body .online-dialog.online-dialog .community-team .online-seats > div.filled {
+  background: var(--park-ui-card);
+}
+
+body .online-dialog.online-dialog .online-seats small,
+body .online-dialog.online-dialog .online-people small {
+  color: var(--park-ui-muted);
+}
+
+body .online-dialog.online-dialog .community-invite-team select {
+  background: var(--park-ui-soft);
+  border-color: var(--park-ui-line);
+  color: var(--park-ui-ink);
+}
+
+/* The standalone lobby entrance uses the same finish as its dialog. */
+body .community-page {
+  background: var(--park-ui-surface);
+  color: var(--park-ui-ink);
+}
+
+body .community-page > div > p,
+body .community-page > div > small {
+  color: var(--park-ui-muted);
+}
+
+body .community-page > div > button,
+body .community-page > div > a {
+  background: var(--park-ui-card);
+  border-color: var(--park-ui-line);
+  color: var(--park-ui-ink);
+}
+
+body .community-page > div > button {
+  background: var(--park-ui-accent);
+}
+
+/* Target Club keeps its gallery, trophy badge, rank and score colours. */
+body #target-club {
+  background: var(--park-ui-surface);
+  border-color: var(--park-ui-card);
+  color: var(--park-ui-ink);
+  box-shadow: 0 24px 70px #24354330;
+}
+
+body #target-club header,
+body #target-club footer,
+body #target-club .tc-cover {
+  background: var(--park-ui-surface);
+}
+
+body #target-club .tc-stats {
+  background: var(--park-ui-soft);
+  border-color: var(--park-ui-line);
+}
+
+body #target-club .tc-close {
+  background: var(--park-ui-card);
+  color: var(--park-ui-ink);
+}
+
+body #target-club [data-ranked] {
+  background: var(--park-ui-accent);
+  color: var(--park-ui-ink);
+}
+
+body #target-club small,
+body #target-club p,
+body #target-club footer,
+body #target-club .tc-stats span,
+body #target-club [data-week-status] {
+  color: var(--park-ui-muted);
+}
+
+body #target-club-hint {
+  background: var(--park-ui-card);
+  border-color: var(--park-ui-line);
+  color: var(--park-ui-ink);
+  box-shadow: 0 4px 20px #24354318;
+}
+
+body #target-club button:focus-visible,
+body #target-club-hint:focus-visible {
+  outline-color: var(--park-ui-focus);
+}
+
+body .online-dialog.online-dialog .tc-lobby {
+  background: var(--park-ui-card);
+  border-color: var(--park-ui-line);
+  color: var(--park-ui-ink);
+}
+
+body .tc-lobby .tc-lobby-heading h2 {
+  color: var(--park-ui-ink);
+}
+
+body .tc-lobby .tc-lobby-heading small,
+body .tc-lobby [data-board-status],
+body .tc-lobby .tc-lobby-note {
+  color: var(--park-ui-muted);
+}
+
+body .tc-lobby .tc-lobby-tag,
+body .tc-lobby li {
+  border-color: var(--park-ui-line);
+}
+
+body .tc-lobby .tc-lobby-own {
+  background: var(--park-ui-soft);
+}
+
+/* Pocket Rally: panels only; pedals, racer chips and race feedback stay as-is. */
+body .rr-brand,
+body .rr-actions button,
+body .rr-actions a,
+body .rr-stats,
+body .rr-standings li,
+body .rr-minimap,
+body .rr-speed,
+body .rr-foot > span,
+body .rr-foot button,
+body .rr-welcome > div,
+body .rr-result > div {
+  background: var(--park-ui-surface);
+  border-color: var(--park-ui-line);
+  color: var(--park-ui-ink);
+}
+
+body .rr-message:not(.rr-countdown) {
+  background: var(--park-ui-surface);
+  color: var(--park-ui-ink);
+}
+
+body .rr-standings li[data-self=true],
+body .rr-result li {
+  background: var(--park-ui-card);
+  border-color: var(--park-ui-line);
+}
+
+body .rr-stats > div {
+  border-color: var(--park-ui-line);
+}
+
+body .rr-brand h1 span,
+body .rr-stats small,
+body .rr-stats b span,
+body .rr-standings li b,
+body .rr-speed span,
+body .rr-speed small,
+body .rr-welcome small,
+body .rr-welcome p,
+body .rr-welcome span,
+body .rr-result small,
+body .rr-result p {
+  color: var(--park-ui-muted);
+}
+
+body .rr-welcome .rr-inspect button:not([aria-pressed=true]) {
+  background: var(--park-ui-soft);
+  border-color: var(--park-ui-line);
+  color: var(--park-ui-ink);
+}
+
+/* Basket/Penalty: preserve team stripes, shot power and the green action. */
+body .sp-brand,
+body .sp-home,
+body .sp-score,
+body .sp-status,
+body .sp-controls,
+body .sp-turn,
+body .sp-result-card {
+  background: var(--park-ui-surface);
+  color: var(--park-ui-ink);
+}
+
+body .sp-brand,
+body .sp-home,
+body .sp-status,
+body .sp-controls,
+body .sp-turn,
+body .sp-result-card {
+  border-color: var(--park-ui-line);
+}
+
+body .sp-result li {
+  background: var(--park-ui-card);
+}
+
+body .sp-brand small,
+body .sp-brand p,
+body .sp-control-title small,
+body .sp-aim-controls label,
+body .sp-help,
+body .sp-result p {
+  color: var(--park-ui-muted);
+}
+
+/* Candy Rockets: team borders and skill/weapon selection stay meaningful. */
+body .cr-top > div,
+body .cr-top a,
+body .cr-status,
+body .cr-bottom,
+body .cr-dialog > div,
+body .cr-view {
+  background: var(--park-ui-surface);
+  border-color: var(--park-ui-line);
+  color: var(--park-ui-ink);
+}
+
+body .cr-score > div {
+  background: var(--park-ui-surface);
+  color: var(--park-ui-ink);
+}
+
+body .cr-top small {
+  color: var(--park-ui-muted);
+}
+
+body .cr-results li {
+  border-color: var(--park-ui-line);
+}
+
+body .cr-tools button:not([aria-pressed=true]):not(#skill) {
+  background: var(--park-ui-card);
+  border-color: var(--park-ui-line);
+  color: var(--park-ui-ink);
+}
+
+/* Balloon and obstacle HUD late overrides otherwise restore beige panels. */
+body.balloon-mode .uv-toast,
+body.balloon-mode .ps-objective,
+body.balloon-mode .bb-hud,
+body.balloon-mode .bb-ability,
+body #back-park,
+body #running-camera-settings,
+body .game-topbar,
+body .game-stats > div,
+body .game-card,
+body .game-message {
+  background: var(--park-ui-surface);
+  border-color: var(--park-ui-line);
+  color: var(--park-ui-ink);
+}
+
+/* Welcome/results overlays own their input area above the game HUD. The
+   actual Settings panel remains higher (1000); its trigger must not cover a
+   welcome action. No gameplay-control position is changed. */
+body .cr-dialog,
+body #result.cr-dialog,
+body .game-overlay {
+  z-index: 900;
+}
+
+/* The obstacle welcome card is taller than a landscape phone. Keep its
+   content inside the existing overlay and allow touch scrolling to its CTA. */
+body .game-overlay > .game-card {
+  max-height: calc(100dvh - 48px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  touch-action: pan-y;
+}

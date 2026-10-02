@@ -1,6 +1,9 @@
 // Presentation only. Existing social authority and room commands remain intact.
 import {createSocialFeatures} from './social-features.js?v=friend-lobbies-1';
+import {invitationServerNow,invitationSummary} from './invitation-summary.js';
+import {createPartyFundamentals} from './party-fundamentals.js';
 export const SOCIAL_TABS=Object.freeze(['play','friends','requests','party','account']);
+export const requestedSocialTab=detail=>SOCIAL_TABS.includes(detail?.tab)?detail.tab:null;
 export function friendLobbyAction(state,person){
  if(!state.connected)return {label:'Reconnect first',disabled:true};
  if(!person.connected||!person.island)return {label:'Offline',disabled:true};
@@ -24,16 +27,18 @@ if(typeof document!=='undefined'){
 }
 export function createSocialPanel(React,client){
  const h=React.createElement,{SocialSettings}=createSocialFeatures(React,null,client);
+ const {PartyRequestButton,PartyRequests}=createPartyFundamentals(React,client);
  const labels={play:'Play',friends:'Friends',requests:'Requests',party:'Party',account:'Account'};
  function useSocialView(state,dialog){
   const [view,setView]=React.useState(()=>/\/play\/(index\.html)?$/.test(location.pathname)?'play':'friends');
   const [query,setQuery]=React.useState(''),[onlineOnly,setOnlineOnly]=React.useState(false),lastRoom=React.useRef(null);
   React.useEffect(()=>{if(state.room?.code&&state.room.code!==lastRoom.current)setView('party');lastRoom.current=state.room?.code||null;},[state.room?.code]);
+  React.useEffect(()=>{const open=event=>{const tab=requestedSocialTab(event.detail);if(tab)setView(tab);};window.addEventListener('candy:online-open',open);return()=>window.removeEventListener('candy:online-open',open);},[]);
   React.useEffect(()=>{const scroll=dialog.current?.querySelector('.online-scroll');if(scroll)scroll.scrollTop=0;},[view]);
   return {view,setView,query,setQuery,onlineOnly,setOnlineOnly};
  }
  function SocialTabs({social,state}){
-  const count=(state.invites?.length||0)+(state.requests?.length||0);
+  const count=(state.invites?.length||0)+(state.requests?.length||0)+(state.partyRequests?.length||0);
   const keys=event=>{
    let index=SOCIAL_TABS.indexOf(social.view);
    if(event.key==='ArrowRight')index=(index+1)%SOCIAL_TABS.length;
@@ -61,6 +66,7 @@ export function createSocialPanel(React,client){
    h('button',{ref:cancel,type:'button',onClick:()=>{setConfirm(false);queueMicrotask(()=>trigger.current?.focus());}},'Cancel'));
  }
  function FriendLobbyJoin({person,state}){
+  if(person.roomId&&person.roomStatus==='waiting')return h(PartyRequestButton,{person,state});
   const action=friendLobbyAction(state,person);
   return h('button',{type:'button',className:'social-join-lobby',disabled:action.disabled,
    'aria-label':`${action.label} · ${person.name}`,title:person.island?`${person.island.players}/${person.island.capacity} players · Same park and games`:'Friend is offline',
@@ -68,19 +74,26 @@ export function createSocialPanel(React,client){
  }
  function RequestsPanel({state,canJoin}){
   const invitations=state.invites||[],requests=state.requests||[],sent=state.sentInvites||[];
+  const [clock,setClock]=React.useState(()=>Date.now()),serverClock=React.useRef(null);
+  if(Number.isFinite(state.now)&&serverClock.current?.serverNow!==state.now)serverClock.current={serverNow:state.now,receivedAt:Date.now()};
+  const ticking=invitations.length>0||sent.length>0;
+  React.useEffect(()=>{if(!ticking)return;setClock(Date.now());const timer=setInterval(()=>setClock(Date.now()),1000);return()=>clearInterval(timer);},[ticking]);
+  const now=invitationServerNow(serverClock.current,clock);
   return h('section',{className:'online-card social-requests-panel','aria-label':'Requests and invitations'},
    h('h2',null,'Requests & invitations'),
-   !invitations.length&&!requests.length&&h('p',null,'No incoming requests. New invitations will appear here.'),
-   ...invitations.map(i=>h('div',{className:'online-invite',key:i.id},h('div',null,h('b',null,i.from),h('p',null,i.kind==='match'?'Match invitation':'Island invitation')),
-    h('button',{type:'button',disabled:!canJoin,onClick:()=>client.act('invite.accept',{id:i.id})},'Join'),
-    h('button',{type:'button',disabled:!state.connected,'aria-label':`Decline invitation from ${i.from}`,onClick:()=>client.act('invite.decline',{id:i.id})},'Decline'))),
+   !invitations.length&&!requests.length&&!state.partyRequests?.length&&!state.sentPartyRequests?.length&&h('p',null,'No incoming requests. New invitations will appear here.'),
+   h(PartyRequests,{state}),
+   ...invitations.map(i=>{const summary=invitationSummary(i,now);return h('div',{className:'online-invite',key:i.id},h('div',null,h('b',null,i.from),h('p',null,summary.label),
+    summary.expiryText&&h('small',{'aria-live':'off'},summary.expiryText)),
+    h('button',{type:'button',disabled:!canJoin||summary.expired,onClick:()=>{if(canJoin&&!invitationSummary(i,invitationServerNow(serverClock.current,Date.now())).expired)client.act('invite.accept',{id:i.id});}},'Join'),
+    h('button',{type:'button',disabled:!state.connected,'aria-label':`Decline invitation from ${i.from}`,onClick:()=>client.act('invite.decline',{id:i.id})},'Decline'));}),
    invitations.length>0&&!canJoin&&h('p',null,state.connected?'Finish or leave your current match before joining an invitation.':'Reconnect to respond to invitations.'),
    ...requests.map(q=>h('div',{className:'online-invite',key:q.id},h('div',null,h('b',null,q.fromPlayer?.name||'Player'),h('p',null,'Wants to be your friend.')),
     h('button',{type:'button',disabled:!state.connected,onClick:()=>client.act('friend.accept',{id:q.id})},'Accept'),
     h('button',{type:'button',disabled:!state.connected,'aria-label':`Decline friend request from ${q.fromPlayer?.name||'Player'}`,onClick:()=>client.act('friend.decline',{id:q.id})},'Decline'))),
    h(SocialSettings,{state,view:'requests'}),
    sent.length>0&&h('h3',null,'Sent invitations'),
-   ...sent.map(i=>h('div',{className:'social-pending',key:i.id},h('span',null,`${i.to} · Invitation pending`),h('button',{disabled:!state.connected,'aria-label':`Cancel invitation to ${i.to}`,onClick:()=>client.act('invite.cancel',{id:i.id})},'Cancel'))),
+   ...sent.map(i=>{const summary=invitationSummary(i,now);return h('div',{className:'social-pending',key:i.id},h('span',null,`${i.to} · ${summary.expired?'Invitation expired':'Invitation pending'}`,summary.expiryText&&h('small',{style:{display:'block'},'aria-live':'off'},summary.expiryText)),h('button',{disabled:!state.connected,'aria-label':`Cancel invitation to ${i.to}`,onClick:()=>client.act('invite.cancel',{id:i.id})},'Cancel'));}),
    !!state.inviteActivity?.length&&h('details',{className:'social-invite-history',open:true},h('summary',null,'Invitation activity'),h('ul',{className:'social-people','aria-label':'Invitation activity'},...state.inviteActivity.slice(-6).reverse().map(i=>h('li',{key:i.id},`${i.name} · ${i.direction==='sent'?'Sent':'Received'} · ${i.status}`)))));
  }
  function AccountPanel({state}){return h('section',{className:'online-card social-account-panel','aria-label':'Account and privacy'},h('h2',null,'Account & privacy'),h(SocialSettings,{state,view:'account'}));}

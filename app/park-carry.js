@@ -127,6 +127,14 @@ export function isLocalCarryActive() {
  return false;
 }
 
+// Only a confirmed recovery may discard cached carry links. Never synthesize E:
+// that would pick up another nearby player or interact with a home instead.
+if(typeof window!=='undefined')window.addEventListener('park:rescue-detach',()=>{
+ targetId='';localLift=null;pose.valid=false;
+ for(const entry of remotes.values())if(entry.carryTarget===localId){entry.carryTarget='';entry.lift=null;}
+ for(const remote of window.__eggyNet?.remotes?.values?.()||[])if(remote.carryTarget===localId)remote.carryTarget='';
+});
+
 if (typeof window !== 'undefined') window.addEventListener('keydown', event => {
   if (event.code!=='KeyE'||event.repeat||event.ctrlKey||event.metaKey||event.altKey)return;
   if (event.target?.closest?.('input,textarea,select,[contenteditable],[role="textbox"]'))return;

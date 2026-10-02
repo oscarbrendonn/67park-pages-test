@@ -1,0 +1,248 @@
+/* Park panel skin only. Existing owners retain layout, visibility, focus,
+   input, and state. Player/item swatches and the colourful HUD are excluded.
+   The body prefix wins against stylesheets loaded after a panel is opened. */
+
+body :is(.park-inventory-panel,.park-shop-panel) {
+  background:var(--park-ui-surface);
+  border-color:var(--park-ui-line);
+  color:var(--park-ui-ink);
+  box-shadow:0 14px 42px #273b5226,inset 0 1px 0 #fff;
+}
+/* These panels already block movement. Keep their close/items above the
+   existing HUD buttons without moving either the panel or the controls. */
+body :is(.park-inventory-panel,.park-shop-panel,.claude-emote-panel) {
+  z-index:90!important;
+}
+/* The shop is inside the game stacking context; sibling utility buttons
+   outside it must yield while shopping, as they already do for Inventory. */
+body:has(.park-shop-panel) :is(#preview-hit,#party-throw,.online-toggle,#park-home-button,#park-home-hint,#party-settings-btn,.park-pet-button,#vehicle-horn-button) {
+  visibility:hidden;
+}
+body :is(.park-inventory-panel,.park-shop-panel,.claude-emote-panel) :is([class~="text-[#6b573a]"],[class~="text-[#3a2b12]"]) {
+  color:var(--park-ui-ink);
+}
+body :is(.park-inventory-panel,.park-shop-panel,.claude-emote-panel) :is([class~="text-[#a98f6a]"],[class~="text-[#8a6d1f]"]) {
+  color:var(--park-ui-muted);
+}
+body :is(.park-inventory-panel,.park-shop-panel) [class~="bg-[#f3e4c2]"] {
+  min-width:44px;
+  min-height:44px;
+  background:var(--park-ui-soft);
+  color:var(--park-ui-ink);
+  box-shadow:none;
+}
+body .park-shop-panel [class~="bg-[#fff1c9]"] {
+  background:var(--park-ui-card);
+  color:var(--park-ui-ink);
+  box-shadow:inset 0 0 0 1px var(--park-ui-line);
+}
+body :is(.park-inventory-panel,.park-shop-panel) button:focus-visible {
+  outline:3px solid var(--park-ui-focus);
+  outline-offset:3px;
+}
+
+/* Emotes keep the purple currently-playing selection and its icon palette. */
+body .claude-emote-panel {
+  background:var(--park-ui-surface)!important;
+  border-color:var(--park-ui-line)!important;
+  color:var(--park-ui-ink);
+  box-shadow:0 14px 42px #273b5226,inset 0 1px 0 #fff!important;
+}
+body .claude-emote-panel > div:first-child button {
+  background:var(--park-ui-soft);
+  color:var(--park-ui-ink);
+}
+body .claude-emote-panel .grid button:not([class~="bg-[#e9e4f7]"]) {
+  background:var(--park-ui-card);
+  border-color:var(--park-ui-line);
+}
+body .claude-emote-panel .grid button[class~="bg-[#e9e4f7]"] {
+  background:#e9e4f7;
+}
+
+/* Settings: neutral surfaces, with existing pink ranges and mint switches. */
+body #party-settings .party-card {
+  background:var(--park-ui-surface);
+  border-color:var(--park-ui-card);
+  color:var(--park-ui-ink);
+  box-shadow:0 18px 60px #273b5233,inset 0 1px 0 #fff;
+  scrollbar-color:#c9d5de transparent;
+}
+body #party-settings .party-head {
+  background:var(--park-ui-surface);
+  border-color:var(--park-ui-line);
+}
+body #party-settings h2 { color:var(--park-ui-ink); }
+body #party-settings :is(small,.party-intro,.party-save-status,.party-foot,output) { color:var(--park-ui-muted); }
+body #party-settings .party-close {
+  background:var(--park-ui-soft);
+  color:var(--park-ui-ink);
+  border-color:var(--park-ui-card);
+  box-shadow:0 2px 0 #d4dee6;
+}
+body #party-settings section {
+  background:var(--park-ui-card);
+  border-color:var(--park-ui-line);
+}
+body #party-settings :is(.party-setting-row,.party-row,details) { border-color:var(--park-ui-line); }
+body #party-settings :is(select,textarea) {
+  background:var(--park-ui-card);
+  border-color:var(--park-ui-line);
+  color:var(--park-ui-ink);
+}
+body #party-settings .party-hint {
+  background:var(--park-ui-soft);
+  color:var(--park-ui-muted);
+}
+body #party-settings button:not(.party-toggle):not(.party-close),
+body #party-settings .party-help-actions a {
+  background:var(--park-ui-card);
+  border-color:var(--park-ui-line);
+  color:var(--park-ui-ink);
+}
+body #party-settings .party-reset { background:var(--park-ui-accent)!important; }
+body #party-settings #settings-save-status:is([data-state=error],[data-state=unavailable],[data-state=recovered]) {
+  background:#faeaf0;
+  color:#77465b;
+}
+body #party-settings #settings-connection:not([data-state=connected]) { color:var(--park-ui-muted); }
+body #party-settings :is(button,input,select,summary,a,textarea):focus-visible {
+  outline-color:var(--park-ui-focus);
+}
+
+/* Homes: retain green ownership and action state; only card chrome changes. */
+body #park-homes {
+  background:var(--park-ui-surface);
+  border-color:var(--park-ui-card);
+  color:var(--park-ui-ink);
+  box-shadow:0 18px 60px #273b5233,inset 0 1px 0 #fff;
+}
+body #park-homes::backdrop,body .park-pet-dialog::backdrop { background:#273b5259; }
+body #park-homes :is(small,p,.home-owner) { color:var(--park-ui-muted); }
+body #park-homes button:not(.home-primary):not(.home-lock):not(.home-release) {
+  background:var(--park-ui-card);
+  border-color:var(--park-ui-line);
+  color:var(--park-ui-ink);
+  box-shadow:0 2px 0 #dce5ed66;
+}
+body #park-homes .home-card:not([data-mine=true]) {
+  background:var(--park-ui-card);
+  border-color:var(--park-ui-line);
+  box-shadow:0 2px 8px #273b5208;
+}
+body #park-homes .home-card .home-lock {
+  background:var(--park-ui-soft)!important;
+  color:var(--park-ui-ink);
+}
+body #park-homes .home-invite-row select {
+  background:var(--park-ui-card);
+  border-color:var(--park-ui-line);
+  color:var(--park-ui-ink);
+}
+body #park-homes :is(button,select):focus-visible { outline-color:var(--park-ui-focus); }
+
+/* Pet choice and commands keep each pet's accent and selected mint state. */
+body .park-pet-inventory { border-color:var(--park-ui-line);color:var(--park-ui-ink); }
+body .park-pet-choices button:not([aria-pressed=true]) {
+  background:var(--park-ui-card);
+  border-color:var(--park-ui-line);
+}
+body :is(.park-pet-heading span,.park-pet-choices small,.park-pet-note,.park-pet-help) { color:var(--park-ui-muted); }
+body .park-pet-tools :is(button,a) {
+  background:var(--park-ui-card);
+  border-color:var(--park-ui-line);
+  color:var(--park-ui-ink);
+}
+body .park-pet-dialog {
+  background:var(--park-ui-surface);
+  border-color:var(--park-ui-card);
+  color:var(--park-ui-ink);
+  box-shadow:0 18px 60px #273b5233;
+}
+body .park-pet-dialog small { color:var(--park-ui-muted); }
+body .park-pet-dialog header button { background:var(--park-ui-soft);color:var(--park-ui-ink); }
+body .park-pet-command-grid button:not([aria-pressed=true]) {
+  background:var(--park-ui-card);
+  border-color:var(--park-ui-line);
+}
+body .park-pet-command-grid button:not([aria-pressed=true]):active { background:var(--park-ui-soft); }
+body :is(.park-pet-dialog,.park-pet-inventory) :is(button,a):focus-visible { outline-color:var(--park-ui-focus); }
+
+/* Character selection, dress-up and return-entry use the same panel chrome.
+   The approved pink avatar stage, toybox colours and item swatches stay intact. */
+body .wardrobe.wardrobe-studio,body .wardrobe.wardrobe-boxes,body .wardrobe.wardrobe-returning {
+  background:var(--park-ui-surface);
+  color:var(--park-ui-ink);
+  --ink:var(--park-ui-ink);
+  --muted:var(--park-ui-muted);
+  --cream:var(--park-ui-surface);
+}
+body .wardrobe-studio .studio-topbar,body .wardrobe-boxes .wardrobe-header { background:var(--park-ui-surface);border-color:var(--park-ui-line); }
+body .wardrobe-studio .studio-options,body .wardrobe-boxes .wardrobe-panel {
+  background:var(--park-ui-card);
+  border-color:var(--park-ui-line);
+  box-shadow:0 8px 24px #273b5208;
+  scrollbar-color:#c9d5de transparent;
+}
+body .wardrobe-studio :is(.studio-back,.studio-cancel,.studio-slot,.studio-arrows button) {
+  background:var(--park-ui-soft);
+  border-color:var(--park-ui-line);
+  color:var(--park-ui-ink);
+}
+body .wardrobe-studio :is(.studio-heading p,.studio-heading > span,.studio-slot-info span,.studio-slot-info small,.studio-save-note) { color:var(--park-ui-muted); }
+body .wardrobe-studio .studio-bottom > input,body .wardrobe-boxes .wardrobe-person > label {
+  background:var(--park-ui-card);
+  border-color:var(--park-ui-line);
+  color:var(--park-ui-ink);
+}
+body .wardrobe-boxes .wardrobe-person input { color:var(--park-ui-ink); }
+body .wardrobe-boxes .wardrobe-bottom { border-color:var(--park-ui-line); }
+body .wardrobe-boxes .wardrobe-pager button { background:var(--park-ui-soft);border-color:var(--park-ui-line);color:var(--park-ui-ink); }
+body .return-entry {
+  background:var(--park-ui-card);
+  border-color:var(--park-ui-line);
+  color:var(--park-ui-ink);
+  box-shadow:0 14px 42px #273b521c;
+}
+body :is(.return-entry-detail,.return-entry-hint) { color:var(--park-ui-muted); }
+body .return-entry-actions .return-entry-secondary { background:var(--park-ui-soft);color:var(--park-ui-ink); }
+body .return-entry progress,body .return-entry progress::-webkit-progress-bar { background:var(--park-ui-soft); }
+
+/* The password gate is only reskinned; locking/unlocking remains untouched. */
+html:root:is([data-park-access=locked],[data-park-access=opening]) { background:var(--park-ui-surface)!important; }
+body #park-access { background:var(--park-ui-surface);color:var(--park-ui-ink); }
+body #park-access .access-card { background:var(--park-ui-card);border-color:var(--park-ui-line);box-shadow:0 14px 42px #273b521c; }
+body #park-access :is(h1,input) { color:var(--park-ui-ink); }
+body #park-access :is(.access-intro,.access-note) { color:var(--park-ui-muted); }
+body #park-access .access-input { background:var(--park-ui-card);border-color:var(--park-ui-line); }
+body #park-access [data-access-show] { background:var(--park-ui-soft);color:var(--park-ui-ink); }
+body #park-access .access-input:focus-within,body #park-access button:focus-visible { outline-color:var(--park-ui-focus); }
+body #github-preview-notice { background:var(--park-ui-surface);color:var(--park-ui-ink); }
+html:root:has(.wardrobe),html body:has(.wardrobe) { background:var(--park-ui-surface)!important; }
+html body:has(.wardrobe) #github-preview-notice { background:var(--park-ui-surface); }
+
+/* Overview controls have inline paint declarations, hence these !important
+   overrides. Camera navigation, coordinates and world geometry are untouched. */
+body #hawk-map-navigation {
+  background:var(--park-ui-surface)!important;
+  color:var(--park-ui-ink)!important;
+  box-shadow:0 8px 28px #273b5226!important;
+}
+body #hawk-map-navigation button {
+  background:var(--park-ui-card)!important;
+  border-color:var(--park-ui-line)!important;
+  color:var(--park-ui-ink)!important;
+}
+body .park-map-directory-overlay { background:#273b5266;color:var(--park-ui-ink); }
+body .park-map-directory-panel {
+  background:var(--park-ui-surface);
+  border-color:var(--park-ui-card);
+  color:var(--park-ui-ink);
+  box-shadow:0 14px 50px #273b5233;
+}
+body .park-map-directory-close { background:var(--park-ui-soft);color:var(--park-ui-ink); }
+body :is(.park-map-directory-intro,.park-map-directory-status,.park-map-directory-detail,.park-map-directory-empty) { color:var(--park-ui-muted); }
+body :is(.park-map-directory-input,.park-map-directory-row) { background:var(--park-ui-card);border-color:var(--park-ui-line);color:var(--park-ui-ink); }
+body .park-map-directory-dot { box-shadow:0 0 0 3px var(--park-ui-soft); }
+body .park-map-directory-locate { background:#e3f0e8;border-color:#c3dacd;color:#355b49; }
+body .park-map-directory-overlay button:active { background:var(--park-ui-soft); }

@@ -1,0 +1,15 @@
+/* Presentation only. One neutral panel family across park and mini-games.
+   Do not reuse these tokens for world materials, team identity or controls. */
+@import url('./interface-panels.css?v=interface-neutral-20261002-1');
+@import url('./interface-minigames.css?v=interface-neutral-20261002-1');
+
+:root{
+ --park-ui-surface:#f5f8fb;
+ --park-ui-card:#fff;
+ --park-ui-soft:#eef2f6;
+ --park-ui-line:#dce5ed;
+ --park-ui-ink:#344651;
+ --park-ui-muted:#64717a;
+ --park-ui-accent:#fbe4ee;
+ --park-ui-focus:#47718b;
+}
