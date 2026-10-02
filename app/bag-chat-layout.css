@@ -20,10 +20,10 @@ body.park-unified-ui:has(.park-toolbar) .park-chat:not(:has(input))>.park-chat-h
 }
 /* Opening the composer keeps the existing keyboard/visualViewport behavior. */
 body.park-unified-ui:has(.park-toolbar) .park-chat:has(input){left:50%!important;transform:translateX(-50%)!important}
-body.park-unified-ui:has(.park-toolbar):has(#hawk-map-navigation) .park-chat:not(:has(input)){
+body.park-unified-ui:has(.park-toolbar):has(#hawk-map-navigation[data-player-directory]) .park-chat:not(:has(input)){
  left:var(--hud-edge-l)!important;top:var(--park-chat-top)!important;bottom:auto!important;transform:none!important;width:72px!important;max-width:72px!important;
 }
-body.park-unified-ui:has(.park-toolbar):has(#hawk-map-navigation) .park-chat:not(:has(input))>.park-chat-history:first-child:not(:empty){
+body.park-unified-ui:has(.park-toolbar):has(#hawk-map-navigation[data-player-directory]) .park-chat:not(:has(input))>.park-chat-history:first-child:not(:empty){
  position:absolute!important;top:52px!important;bottom:auto!important;max-width:min(280px,calc(100vw - var(--hud-edge-l) - var(--hud-edge-r) - 132px))!important;
  max-height:min(100px,max(0px,calc(100dvh - var(--hud-top) - 222px - var(--hud-bottom) - var(--park-map-navigation-height,150px))))!important;
 }
