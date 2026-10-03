@@ -1,3 +1,4 @@
+import {applyParkPathFinish,wrapParkPathFinishSampler} from '../app/park-path-finish.js?v=park-path-finish-20261003-1';
 import {applyPondPathJoin} from '../app/pond-path-join.js?v=pond-path-join-20261003-1';
 import {applyParkingCurbFinish} from '../app/parking-curb-finish.js?v=parking-curb-1';
 import {installBoatDriving} from '../app/boat-driving.js?v=boat-driving-1';
@@ -34,7 +35,7 @@ import {applyParkEdges} from '/67park-pages-test/app/island-park-edges.js';
 import * as THREE from 'three';
 import {createStableSunShadow52} from './stable-sun-shadow-v52.js';
 import {loadSmallIslandProps} from './small-island-props-v62.js?v=roof1';
-import {loadParkProps63} from './park-props-v63.js?v=anchor2';
+import {loadParkProps63} from './park-props-v63.js?v=park-path-finish-20261003-1';
 import {loadCityProps60} from './city-props-v60.js?v=city-startup-memory-1';
 import {applyPhotoFixes67} from './fixes-v67.js?v=8';
 import {applyParkTerrain57,wrapParkTerrainSampler57} from './park-terrain-v57.js?v=1';
@@ -1590,12 +1591,13 @@ await entryStage(13,'Finishing the northern neighbourhood');
   const stairGeometry=repairIslandStairs(kok);
   renderer.domElement.dataset.stairGeometry=JSON.stringify(stairGeometry.stats);
   zeminler=zeminler.filter(m=>!stairGeometry.nonWalkableNames.includes(m.name));
-  renderer.domElement.dataset.photoSurfaceFinish1=JSON.stringify(applyPhotoSurfaceFinish(kok,await islandFetch('/67park-pages-test/repairs/photo-surface-finish-1.json?v=photo-surfaces-1').then(r=>{if(!r.ok)throw Error('Photo surface repair missing');return r.json()})));renderer.domElement.dataset.northHousingSurface1=JSON.stringify(applyNorthHousingSurface(kok,await islandFetch('/67park-pages-test/repairs/north-housing-surface-1.json?v=north-housing-8').then(r=>{if(!r.ok)throw Error('Northern housing repair missing');return r.json()})));renderer.domElement.dataset.mapJointFinish1=JSON.stringify(applyMapJointFinish(kok,await islandFetch('/67park-pages-test/repairs/map-joint-finish-1.json?v=city-curb-tangent-3').then(r=>{if(!r.ok)throw Error('Map joint repair missing');return r.json()})));renderer.domElement.dataset.parkingCurbFinish1=JSON.stringify(applyParkingCurbFinish(kok,await islandFetch('/67park-pages-test/repairs/parking-curb-endcap-1.json?v=parking-curb-1').then(r=>{if(!r.ok)throw Error('Parking curb finish missing');return r.json()})));applyPondPathJoin(kok,await fetch('/67park-pages-test/repairs/pond-path-join-1.json?v=pond-path-join-20261003-1').then(r=>{if(!r.ok)throw Error('Pond join repair missing');return r.json()}));for(const name of ['3_CIMEN','8_PARK_PATIKA_UST','6_BORDUR','5_YOL','7_KALDIRIM_TABANI','67D_SKATEPARK_BASE']){
+  renderer.domElement.dataset.photoSurfaceFinish1=JSON.stringify(applyPhotoSurfaceFinish(kok,await islandFetch('/67park-pages-test/repairs/photo-surface-finish-1.json?v=photo-surfaces-1').then(r=>{if(!r.ok)throw Error('Photo surface repair missing');return r.json()})));renderer.domElement.dataset.northHousingSurface1=JSON.stringify(applyNorthHousingSurface(kok,await islandFetch('/67park-pages-test/repairs/north-housing-surface-1.json?v=north-housing-8').then(r=>{if(!r.ok)throw Error('Northern housing repair missing');return r.json()})));renderer.domElement.dataset.mapJointFinish1=JSON.stringify(applyMapJointFinish(kok,await islandFetch('/67park-pages-test/repairs/map-joint-finish-1.json?v=city-curb-tangent-3').then(r=>{if(!r.ok)throw Error('Map joint repair missing');return r.json()})));renderer.domElement.dataset.parkingCurbFinish1=JSON.stringify(applyParkingCurbFinish(kok,await islandFetch('/67park-pages-test/repairs/parking-curb-endcap-1.json?v=parking-curb-1').then(r=>{if(!r.ok)throw Error('Parking curb finish missing');return r.json()})));applyPondPathJoin(kok,await fetch('/67park-pages-test/repairs/pond-path-join-1.json?v=pond-path-join-20261003-1').then(r=>{if(!r.ok)throw Error('Pond join repair missing');return r.json()}));applyParkPathFinish(kok,await fetch('/67park-pages-test/repairs/park-path-finish-1.json?v=park-path-finish-20261003-1').then(r=>{if(!r.ok)throw Error('Park finish repair missing');return r.json()}));for(const name of ['3_CIMEN','8_PARK_PATIKA_UST','6_BORDUR','5_YOL','7_KALDIRIM_TABANI','67D_SKATEPARK_BASE']){
     if(!DIK_YAN_GOLGE_KAYNAGI.test(name))continue;
     const source=kok.getObjectByName(name),helper=source?.getObjectByName('67D_DIK_YAN_GOLGE_'+name),geometry=dikYanGolgeGeometrisi(source.geometry);
     if(helper&&geometry){helper.geometry.dispose();helper.geometry=geometry;}
   }
   terrainSampler=wrapParkEntryCapsSampler57(wrapParkRingSampler63(wrapParkPathSampler57(wrapParkTerrainSampler57(createTerrainSampler(zeminler.filter(m=>!m.userData.parkPond65CollisionOnly)),kok),kok),kok),kok);
+  terrainSampler=wrapParkPathFinishSampler(terrainSampler,kok);
   hazir=true;
   renderer.shadowMap.type=THREE.PCFShadowMap;
   renderer.domElement.dataset.receiverPlaneAdapter='r185-native-hardware-pcf';

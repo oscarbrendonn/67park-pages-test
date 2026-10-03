@@ -13,7 +13,7 @@ export async function loadParkProps63({scene,renderer,sample,variant}){
  const [furniture,lowerBridge,toys,foliage,layout]=await Promise.all([
   loader.loadAsync('./park-furniture-v57.glb?v=1'),loader.loadAsync('./park-lower-bridge-v63.glb?v=anchor2'),loader.loadAsync('./park-animals-1.glb?v=animals-1'),
   loader.loadAsync('./small-island-props-v45.glb?v=round1'),
-  fetch('./park-layout-v57.json?v=animals-1').then(r=>{if(!r.ok)throw Error('Park layout unavailable');return r.json();})
+  fetch('./park-layout-v57.json?v=park-path-finish-20261003-1').then(r=>{if(!r.ok)throw Error('Park layout unavailable');return r.json();})
  ]);
  if(layout.version!==57||layout.props.length!==31)throw Error('Park layout version mismatch');
  const lowerLayout=layout.props.find(p=>p.id==='lower-bridge'&&p.asset==='bridge-lower');
