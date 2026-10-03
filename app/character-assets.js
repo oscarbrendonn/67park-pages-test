@@ -1,5 +1,6 @@
 import {assetFetch} from './entry-loading.js';
 import {itemAssetParts} from './item-assets.js?v=items-only-1';
+import {applyNativeBodyScale} from './native-character-scale.js?v=native-body-scale-20261003-1';
 
 // One parsed template per URL for wardrobe, local player and remote players.
 // Consumers clone it; no second fetch/parse just to display the same outfit.
@@ -46,7 +47,7 @@ const store=createCharacterAssetStore(async url=>{
   return {scene,scenes:[scene],animations:[]};
  }
  const [parser,bytes]=await Promise.all([loader(),assetFetch(url).then(r=>r.arrayBuffer())]);
- return parser.parseAsync(bytes,url.slice(0,url.lastIndexOf('/')+1));
+ return applyNativeBodyScale(await parser.parseAsync(bytes,url.slice(0,url.lastIndexOf('/')+1)));
 });
 export const loadCharacterAsset=store.load;
 export const readCharacterAsset=store.read;
