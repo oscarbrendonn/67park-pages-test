@@ -4,6 +4,7 @@ import {isNativeCharacter,nextCharacter} from './native-character.js?v=cat-chara
 import {applyBodyFinish} from './frog-body-finish.js?v=frog-release-1';
 import {applyCharacterColorLighting} from './character-color-lighting.js?v=character-color-1';
 import {applyNativeShopItems} from './native-shop-items.js?v=player-account-shop-render-20261003-1';
+import {nativeItemFit} from './character-item-fit.js?v=accessory-fit-20261003-1';
 
 const owned=Symbol.for('67park.avatar-owned-resources');
 const canon=name=>name.replace(/_\d+$/,'');
@@ -52,13 +53,15 @@ export function applyGorillaStudioItems(rig,equipment,source) {
       if(!head||!headBone)throw Error('Gorilla head attachment is missing');
       const fittingHead=equipment.base==='axolotl67'?head.getObjectByName('axolotl-traced-cranium'):head;
       const headBox=new T.Box3().setFromObject(fittingHead||head,true),headSize=headBox.getSize(new T.Vector3()),size=box.getSize(new T.Vector3()),center=box.getCenter(new T.Vector3());
-      const factor=item.rigid==='hat'?headSize.x*(item.cap?.57:.4)/size.x:headSize.x*.86/size.x;
+      const fit=nativeItemFit(head,equipment.base,item,box,position,used);
+      const factor=fit?.factor??(item.rigid==='hat'?headSize.x*(item.cap?.57:.4)/size.x:headSize.x*.86/size.x);
       // Shark's crown fin is part of its bounds: use the traced eye row 389
       // between silhouette rows 577 and 103, not the Cat/Ninja eye position.
       const eyeHeight=extra?.eyeHeight??(equipment.base==='shark67'?(577-389)/(577-103):equipment.base==='frog67'?.80:equipment.base==='goril'?.46:.295);
-      const target=new T.Vector3((headBox.min.x+headBox.max.x)/2,item.rigid==='hat'?headBox.max.y-size.y*factor*(item.cap?.39:.22):headBox.min.y+headSize.y*eyeHeight,item.rigid==='hat'?(headBox.min.z+headBox.max.z)/2:headBox.max.z+.009);
+      const target=fit?.target??new T.Vector3((headBox.min.x+headBox.max.x)/2,item.rigid==='hat'?headBox.max.y-size.y*factor*(item.cap?.39:.22):headBox.min.y+headSize.y*eyeHeight,item.rigid==='hat'?(headBox.min.z+headBox.max.z)/2:headBox.max.z+.009);
+      const origin=fit?.origin??new T.Vector3(center.x,item.rigid==='hat'?box.min.y:center.y,item.rigid==='hat'?center.z:box.max.z);
       const inverse=new T.Matrix4().copy(headBone.matrixWorld).invert();
-      for(const i of used){v.fromBufferAttribute(position,i);v.x=(v.x-center.x)*factor+target.x;v.y=(v.y-(item.rigid==='hat'?box.min.y:center.y))*factor+target.y;v.z=(v.z-(item.rigid==='hat'?center.z:box.max.z))*factor+target.z;v.applyMatrix4(inverse);position.setXYZ(i,v.x,v.y,v.z)}
+      for(const i of used){v.fromBufferAttribute(position,i);v.sub(origin).multiplyScalar(factor).add(target).applyMatrix4(inverse);position.setXYZ(i,v.x,v.y,v.z)}
       for(let i=0;i<position.count;i++)if(!used.has(i))position.setXYZ(i,0,0,0);
       geometry.deleteAttribute('skinIndex');geometry.deleteAttribute('skinWeight');geometry.computeVertexNormals();geometry.computeBoundingSphere();
       mesh=new T.Mesh(geometry,material);headBone.add(mesh);
