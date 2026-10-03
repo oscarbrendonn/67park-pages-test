@@ -27,5 +27,9 @@ export function createProfileAvatar(React) {
 }
 export function openPlayerStudio(equip,openWardrobe,api) {
   window.dispatchEvent(new Event('park:release-controls'));
-  return openPlayerProfile({equip,openWardrobe,getPortrait:getProfilePortrait,...api});
+  const profileApi={equip,openWardrobe,getPortrait:getProfilePortrait,...api};
+  profileApi.openMyItems=api?.openMyItems||(()=>import('./park-market.js?v=player-account-20261003-1')
+    .then(({openParkMarket})=>openParkMarket(window,{initialMode:'owned'}))
+    .catch(()=>openPlayerProfile({...profileApi,initialStatus:'Your items could not open. Please try again.'})));
+  return openPlayerProfile(profileApi);
 }

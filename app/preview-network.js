@@ -7,6 +7,7 @@ import {assertConnectionAllowed,connectionProblem,watchParkSocket,currentParkSoc
 // GitHub Pages repositories share one origin. Do not replace the protected
 // Kimi desktop/mobile previews' guest identity when visiting Feel Lab.
 const key='67park.feel-lab.guest.v1.'+PREVIEW_VARIANT;
+const playerAccountCapability='player-account-20261003-1';
 const sharedKey=Symbol.for('67park.feel-lab.transport.v1.'+PREVIEW_VARIANT);
 const state=globalThis[sharedKey]??=( {pending:null,session:null} );
 const published=typeof location!=='undefined'&&location.origin==='https://oscarbrendonn.github.io'&&(location.pathname==='/67park-pages-test'||location.pathname.startsWith('/67park-pages-test/'));
@@ -14,6 +15,7 @@ const resolver=createPreviewEndpointResolver({fallback:PREVIEW_BACKEND,enabled:p
 state.backend??=PREVIEW_BACKEND;
 const endpoint=path=>state.backend+'/'+PREVIEW_VARIANT+path;
 export const currentPreviewBackend=()=>state.backend;
+export const currentPreviewGuest=()=>state.session;
 export async function ensurePreviewGuest(){
  assertConnectionAllowed();
  if(state.pending)return state.pending;
@@ -24,7 +26,7 @@ export async function ensurePreviewGuest(){
   const abort=new AbortController(),timer=setTimeout(()=>abort.abort(),10000);
   let refreshEndpoint=true;
   try{
-   const response=await fetch(endpoint('/api/session')+'?protocol='+CLIENT_PROTOCOL+'&build='+CLIENT_BUILD,{mode:'cors',credentials:'same-origin',cache:'no-store',referrerPolicy:'no-referrer',headers:token?{Authorization:'Bearer '+token}:{},signal:abort.signal});
+   const response=await fetch(endpoint('/api/session')+'?protocol='+CLIENT_PROTOCOL+'&build='+CLIENT_BUILD+'&capability='+playerAccountCapability,{mode:'cors',credentials:'same-origin',cache:'no-store',referrerPolicy:'no-referrer',headers:token?{Authorization:'Bearer '+token}:{},signal:abort.signal});
    refreshEndpoint=!response.ok&&![426,429].includes(response.status);
    const session=await response.json();
    if(response.status===401&&session.code==='ACCESS_REQUIRED'){const message='Your access expired. Reload and enter the park password again.';connectionProblem(message,{blocked:true});throw Error(message);}
@@ -50,6 +52,7 @@ export function parkSocket(channel){
  const existing=currentParkSocket(channel);if(existing)return existing;
  const url=new URL(endpoint('/'+channel));url.protocol=url.protocol==='https:'?'wss:':'ws:';
  url.searchParams.set('protocol',CLIENT_PROTOCOL);
+ url.searchParams.set('capability',playerAccountCapability);
  return protectParkSocket(watchParkSocket(new WebSocket(url,['67park-v1','guest.'+state.session.token]),channel),channel);
 }
 async function accountRequest(action,body={}){
@@ -59,11 +62,24 @@ async function accountRequest(action,body={}){
 }
 export const createRecoveryCode=()=>accountRequest('save');
 export async function restoreRecoveryCode(code){
+ // Check before rotating the account token: a browser that cannot save the
+ // replacement must not revoke the only usable session on another device.
+ try{localStorage.setItem('67park.restore-check','1');localStorage.removeItem('67park.restore-check');}
+ catch{throw Error('Allow browser storage before restoring your account. No account was changed.');}
  const restored=await accountRequest('restore',{code});
  if(!/^[A-Za-z0-9_-]{43}$/.test(restored.token))throw Error('Invalid restored session.');
+ const accountState=globalThis[Symbol.for('67park.player-account.v1')];
+ if(accountState){accountState.epoch++;accountState.pending=null;accountState.profile=null;}
  state.session={...state.session,...restored};
  localStorage.setItem(key,restored.token);
  localStorage.setItem('67park.name',restored.name||'Guest');
+ if(restored.profile?.inventory){
+  localStorage.setItem('67park.inventory.v1',JSON.stringify(restored.profile.inventory));
+  localStorage.setItem('67park.inventory.owner.v1',restored.id);
+ }else{
+  localStorage.removeItem('67park.inventory.v1');
+  localStorage.setItem('67park.inventory.owner.v1',restored.id);
+ }
  if(restored.combo)try{const profile=JSON.parse(restored.combo);localStorage.setItem('67park-feel-lab.character.v3',JSON.stringify(profile));localStorage.setItem('67park-feel-lab.player-profile.v1',JSON.stringify({...profile,version:1,name:restored.name}));}catch{}
  // Never carry the previous guest's local block list into the restored account.
  localStorage.removeItem('67park.feel-lab.safety.v1');

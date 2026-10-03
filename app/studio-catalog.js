@@ -29,7 +29,15 @@ export function withoutFittedItems(equipment) {
   return plain;
 }
 
-export function studioSlots(equipment,baseEquipment,label) {
+export function ownedShopItems(catalogue,owned=[]) {
+  const ids=new Set(owned),seen=new Set();
+  return catalogue.flatMap(shop=>shop.items||[]).filter(item=>{
+    if(!item.id||seen.has(item.id)||!ids.has(item.id)||!(item.slot||item.board))return false;
+    seen.add(item.id);return true;
+  });
+}
+
+export function studioSlots(equipment,baseEquipment,label,ownedItems=[]) {
   const gorilla=equipment.base==='goril', native=isNativeCharacter(equipment.base), original=baseEquipment(equipment.base);
   const rows=[
     ['kicks','Shoes','shoe','#c9e4fb',[original.kicks,'friendsie_3333:5','friendsie_1:3','friendsie_2:5']],
@@ -42,7 +50,8 @@ export function studioSlots(equipment,baseEquipment,label) {
     ['vibe','Glow','ring','#d5eafa',[null,'vibe-pink','vibe-mint','vibe-gold','vibe-sky']],
   ];
   return rows.map(([slot,title,icon,color,ids])=>{
-    const values=[...new Set([...ids,equipment[slot]].map(id=>id??null))];
-    return {slot,title,icon,color,items:values.map(id=>({id,name:id==null?(slot==='body'?'Original outfit':slot==='kicks'?'Original feet':'None'):(FITTED_ITEMS[id]?.name||label(id))}))};
+    const shopItems=ownedItems.filter(item=>item.slot===slot),names=new Map(shopItems.map(item=>[`shop:${item.id}`,item.name]));
+    const values=[...new Set([...ids,...names.keys(),equipment[slot]].map(id=>id??null))];
+    return {slot,title,icon,color,items:values.map(id=>({id,name:id==null?(slot==='body'?'Original outfit':slot==='kicks'?'Original feet':'None'):(names.get(id)||FITTED_ITEMS[id]?.name||label(id))}))};
   });
 }

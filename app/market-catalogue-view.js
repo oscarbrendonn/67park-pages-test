@@ -15,7 +15,7 @@ const artwork={
  kite:'m27 5 16 18-16 17L11 23Zm0 0v35M11 23h32M27 40c-10 1 10 11 0 12',
  board:'M12 23c-12 5-6 16 5 12l27-12c12-5 6-16-5-12ZM18 35a4 4 0 1 0 8 0 4 4 0 1 0-8 0M36 27a4 4 0 1 0 8 0 4 4 0 1 0-8 0',
 };
-export function createMarketCatalogueView({doc,panel,items,state,buy,equip,remove,close,changeCharacter}){
+export function createMarketCatalogueView({doc,panel,items,state,buy,equip,remove,close,changeCharacter,initialMode='shop'}){
  const order=['Outfits','Headwear','Back','Accessories','Handheld','Boards'];items=[...items].sort((a,b)=>order.indexOf(marketCategory(a))-order.indexOf(marketCategory(b)));
  const make=(tag,cls,text)=>{const e=doc.createElement(tag);if(cls)e.className=cls;if(text!==undefined)e.textContent=text;return e;};
  const button=(label,cls,action)=>{const b=make('button',cls,label);b.type='button';b.addEventListener('click',action);return b;};
@@ -23,7 +23,7 @@ export function createMarketCatalogueView({doc,panel,items,state,buy,equip,remov
  const header=make('header','market-heading'),brand=make('div'),logo=make('img','market-brand-logo');logo.src=new URL('../brand/67park-logo.png',import.meta.url).href;logo.alt='67Park';brand.append(logo,make('h2','','Park Shop'));
  const wallet=make('span','market-wallet'),exit=button('×','market-close',close);exit.setAttribute('aria-label','Close market');header.append(brand,wallet,exit);
  const modes=make('nav','market-modes');modes.setAttribute('aria-label','Shop views');
- let mode='shop',category='All',selected=items[0]?.id,confirming=false,lastState='',disposed=false;
+ let mode=initialMode==='owned'?'owned':'shop',category='All',selected=items[0]?.id,confirming=false,lastState='',disposed=false,pending=false;
  const shop=button('Shop','',()=>setMode('shop')),wardrobe=button('My items','',()=>setMode('owned'));modes.append(shop,wardrobe);
  const character=make('section','market-character'),portrait=make('img');portrait.alt='Current character';portrait.draggable=false;
  const characterInfo=make('div'),wearing=make('p','market-wearing');characterInfo.append(make('strong','','Your character'),wearing);
@@ -44,20 +44,20 @@ export function createMarketCatalogueView({doc,panel,items,state,buy,equip,remov
   const path=doc.createElementNS(svg.namespaceURI,'path');path.setAttribute('d',artwork[item.board?'board':item.id]||artwork.ball);
   const depth=path.cloneNode();depth.setAttribute('transform','translate(0 2.5)');depth.setAttribute('class','market-art-depth');path.setAttribute('fill',`url(#${id})`);svg.append(depth,path);svg.style.setProperty('--item-color',item.color);return svg;
  }
- function setMode(value){mode=value;confirming=false;render();}
+ function setMode(value){if(pending)return;mode=value==='owned'?'owned':'shop';confirming=false;render();}
  function render(){
-  if(disposed)return;const s=state();lastState=JSON.stringify(s);wallet.textContent=`₵ ${s.coins}`;wallet.setAttribute('aria-label',`${s.coins} coins`);
+  if(disposed)return;const s=state();lastState=JSON.stringify(s);wallet.textContent=`₵ ${s.coins}`;wallet.setAttribute('aria-label',`${s.coins} coins`);root.setAttribute('aria-busy',String(pending));shop.disabled=wardrobe.disabled=change.disabled=cancel.disabled=pending;
   const src=new URL(`./profile-portraits/${s.equipment.base}.png?v=profile-hud-20261002-1`,import.meta.url).href;
   if(portrait.src!==src)portrait.src=src;
   wearing.textContent=items.filter(i=>marketItemState(i,s).equipped&&!i.board).map(i=>i.name).join(' · ')||'Original look';
   shop.setAttribute('aria-pressed',String(mode==='shop'));wardrobe.setAttribute('aria-pressed',String(mode==='owned'));
-  for(const [name,b]of filterButtons)b.setAttribute('aria-pressed',String(category===name));
+  for(const [name,b]of filterButtons){b.setAttribute('aria-pressed',String(category===name));b.disabled=pending;}
   const visible=items.filter(i=>(category==='All'||marketCategory(i)===category)&&(mode!=='owned'||s.owned.includes(i.id)));
   if(!visible.some(i=>i.id===selected)){selected=visible[0]?.id;confirming=false;}
   const scroll=list.scrollTop,focused=doc.activeElement?.dataset.item;list.replaceChildren();
   if(!visible.length){const empty=make('div','market-empty');empty.append(make('strong','','Your next favourite is waiting'),make('p','','Items you buy will appear here. You can equip and change them whenever you like.'),button('Browse shop','',()=>{category='All';setMode('shop');}));list.append(empty);}
   for(const item of visible){
-   const row=make('div');row.setAttribute('role','listitem');const card=button('','market-product',()=>{selected=item.id;confirming=false;render();});card.dataset.item=item.id;card.setAttribute('aria-label',item.name);card.setAttribute('aria-pressed',String(selected===item.id));
+   const row=make('div');row.setAttribute('role','listitem');const card=button('','market-product',()=>{if(pending)return;selected=item.id;confirming=false;render();});card.disabled=pending;card.dataset.item=item.id;card.setAttribute('aria-label',item.name);card.setAttribute('aria-pressed',String(selected===item.id));
    const art=make('span','market-product-art');art.style.setProperty('--item-tint',item.color+'30');art.append(icon(item));
    const own=marketItemState(item,s),label=make('span','market-product-state',own.equipped?'Equipped':own.owned?'Owned':`₵ ${item.price}`);
    card.append(art,make('strong','',item.name),make('small','',marketCategory(item)),label);row.append(card);list.append(row);
@@ -65,18 +65,31 @@ export function createMarketCatalogueView({doc,panel,items,state,buy,equip,remov
   list.scrollTop=scroll;if(focused)list.querySelector(`[data-item="${focused}"]`)?.focus({preventScroll:true});
   const item=items.find(i=>i.id===selected);detail.hidden=!item;if(!item)return;
   const own=marketItemState(item,s);title.textContent=item.name;cancel.hidden=!confirming;
-  description.textContent=confirming?`Spend ${item.price} coins? This item will be yours.`:own.equipped?'Worn now. Change it whenever you like.':own.owned?'Yours to wear. No extra charge.':own.affordable?'Buy once. Keep it in My items.':`You need ${own.remaining} more coins.`;
-  action.textContent=own.equipped?(item.board?'Equipped':'Remove'):own.owned?'Equip':confirming?`Confirm · ₵ ${item.price}`:`Buy · ₵ ${item.price}`;
-  action.disabled=own.equipped&&!!item.board||!own.owned&&!own.affordable;
+  description.textContent=pending?'Saving to your player account…':confirming?`Spend ${item.price} coins? This item will be yours.`:own.equipped?'Worn now. Change it whenever you like.':own.owned?'Yours to wear. No extra charge.':own.affordable?'Buy once. Keep it in My items.':`You need ${own.remaining} more coins.`;
+  action.textContent=pending?'Saving…':own.equipped?(item.board?'Equipped':'Remove'):own.owned?'Equip':confirming?`Confirm · ₵ ${item.price}`:`Buy · ₵ ${item.price}`;
+  action.disabled=pending||own.equipped&&!!item.board||!own.owned&&!own.affordable;
  }
- function act(){
+ async function act(){
+  if(pending||disposed)return;
   const item=items.find(i=>i.id===selected);if(!item)return;const s=state(),own=marketItemState(item,s);
-  if(!own.owned){
-   if(!own.affordable)return;if(!confirming){confirming=true;render();return;}
-   buy(item);const next=state();status.textContent=next.owned.includes(item.id)?`${item.name} purchased and equipped.`:'Purchase did not complete. Your balance has been refreshed.';
-  }else if(own.equipped&&!item.board){remove(item);status.textContent=`${item.name} removed.`;}
-  else if(!own.equipped){equip(item);status.textContent=`${item.name} equipped.`;}
-  confirming=false;render();action.focus({preventScroll:true});
+  if(!own.owned&&!own.affordable||own.equipped&&item.board)return;
+  if(!own.owned&&!confirming){confirming=true;status.textContent='';render();return;}
+  pending=true;confirming=false;status.textContent='';render();
+  try{
+   let message;
+   if(!own.owned){
+    if(await buy(item)===false||!state().owned.includes(item.id))throw Error('Purchase did not complete. Check your balance and try again.');
+    message=`${item.name} purchased and equipped.`;
+   }else if(own.equipped&&!item.board){
+    if(await remove(item)===false)throw Error('This item could not be removed. Please try again.');
+    message=`${item.name} removed.`;
+   }else{
+    if(await equip(item)===false)throw Error('This item could not be equipped. Please try again.');
+    message=`${item.name} equipped.`;
+   }
+   if(!disposed)status.textContent=message;
+  }catch(error){if(!disposed)status.textContent=error?.message||'Your item could not be saved. Please try again.';}
+  finally{pending=false;if(!disposed){render();action.focus({preventScroll:true});}}
  }
  function key(event){
   event.stopPropagation();if(event.key==='Escape'){event.preventDefault();if(confirming){confirming=false;render();action.focus();}else close();}
@@ -86,5 +99,5 @@ export function createMarketCatalogueView({doc,panel,items,state,buy,equip,remov
   }
  }
  root.addEventListener('keydown',key);root.addEventListener('keyup',e=>e.stopPropagation());render();exit.focus({preventScroll:true});
- return {update(){if(lastState!==JSON.stringify(state()))render();},dispose(){disposed=true;root.remove();panel.classList.remove('market-catalogue-host');}};
+ return {setMode,update(){if(lastState!==JSON.stringify(state()))render();},dispose(){disposed=true;root.remove();panel.classList.remove('market-catalogue-host');}};
 }

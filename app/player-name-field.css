@@ -1,0 +1,7 @@
+.park-name-feedback{min-width:0;margin:7px 0 10px;color:var(--park-ui-muted);font:600 13px/1.4 var(--park-ui-font)}
+.park-name-feedback .wardrobe-name-error{margin:0 0 7px;color:var(--park-ui-pink-ink);font:inherit;overflow-wrap:anywhere}
+.park-name-suggestions{display:flex;flex-wrap:wrap;gap:7px;min-width:0}
+body .park-name-suggestions .park-ui-control{flex:0 1 auto;max-width:100%;min-height:44px;padding:8px 12px;white-space:normal;overflow-wrap:anywhere;background:var(--park-ui-card);border:2px solid var(--park-ui-line);color:var(--park-ui-ink);font:700 13px/1.25 var(--park-ui-font);border-radius:var(--park-ui-control-radius);box-shadow:var(--park-ui-button-shadow)}
+.park-name-suggestions button:disabled{opacity:.6;cursor:wait}
+.profile-owned-items{margin-top:8px}
+@media(max-width:359px){.park-name-suggestions{gap:6px}.park-name-suggestions .park-ui-control{flex:1 1 110px}}

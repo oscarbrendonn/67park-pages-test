@@ -1,5 +1,5 @@
 import {sa as shops,ta as inventory,va as openShop,wa as closeShop,xa as buyItem,ya as equipBoard,i as board,Ba as equipment,Ha as setSlot,Ja as openWardrobe} from './chunk-G7D6MVRW.js?v=online-next-1';
-import {createMarketCatalogueView} from './market-catalogue-view.js?v=ui-family-20261003-1';
+import {createMarketCatalogueView} from './market-catalogue-view.js?v=player-account-20261003-1';
 
 // Use the real catalogue, prices, ownership, equipment and save path. No second
 // wallet or cosmetic-only purchase state. Food/books are omitted here because
@@ -12,17 +12,18 @@ export function marketCatalogue(catalogue){
  });
 }
 const market={id:'park-market',sign:'Park Market',items:marketCatalogue(shops)};
-let activePanel=null,returnFocus=null,view=null,styleReady=false,stylePending=false;
+let activePanel=null,returnFocus=null,view=null,styleReady=false,stylePending=false,initialMode='shop';
 function loadStyle(doc){
  if(styleReady||stylePending)return;stylePending=true;
- const link=doc.createElement('link');link.rel='stylesheet';link.href=new URL('./market-catalogue.css?v=ui-family-20261003-1',import.meta.url).href;
+ const link=doc.createElement('link');link.rel='stylesheet';link.href=new URL('./market-catalogue.css?v=player-account-20261003-1',import.meta.url).href;
  link.onload=()=>{styleReady=true;};link.onerror=()=>{link.remove();stylePending=false;};doc.head.append(link);
 }
-export function openParkMarket(host=window){
+export function openParkMarket(host=window,options={}){
  loadStyle(host.document);
  // Leave unrelated dialogs to their own owner, rather than stacking two input
  // locks. The coin button is also hidden under those panels by the HUD CSS.
- if(inventory.menuShop===market){closeShop();return;}
+ if(inventory.menuShop===market){if(options.initialMode==='owned'){view?.setMode('owned');return;}closeShop();return;}
+ initialMode=options.initialMode==='owned'?'owned':'shop';
  host.dispatchEvent(new Event('park:release-controls'));
  openShop(market);
 }
@@ -41,11 +42,11 @@ export function updateMarketAccessibility(host=window,trigger){
  if(styleReady){
   activePanel=panel;returnFocus=trigger;
   panel.classList.add('park-market-panel');panel.setAttribute('role','dialog');panel.setAttribute('aria-modal','true');panel.setAttribute('aria-label','Park Market');
-  view=createMarketCatalogueView({doc,panel,items:market.items,
+  view=createMarketCatalogueView({doc,panel,items:market.items,initialMode,
    state:()=>({owned:[...inventory.owned],coins:inventory.coins,equipment:{...equipment},board:board.kind}),
    buy:item=>buyItem(market,item),
-   equip:item=>{if(!inventory.owned.includes(item.id))return;if(item.board)equipBoard(item.board);else setSlot(item.slot,`shop:${item.id}`);},
-   remove:item=>{if(inventory.owned.includes(item.id)&&equipment[item.slot]===`shop:${item.id}`)setSlot(item.slot,null);},
+   equip:async item=>{if(!inventory.owned.includes(item.id))return false;if(item.board)return equipBoard(item.board);setSlot(item.slot,`shop:${item.id}`);return equipment[item.slot]===`shop:${item.id}`;},
+   remove:item=>{if(!inventory.owned.includes(item.id)||equipment[item.slot]!==`shop:${item.id}`)return false;setSlot(item.slot,null);return equipment[item.slot]===null;},
    close:closeShop,changeCharacter:()=>openWardrobe(true),
   });return;
  }

@@ -1,4 +1,4 @@
-import {playerNameError} from './player-name-policy.js?v=profile-hud-20261002-1';
+import {createPlayerNameController,renderPlayerNameFeedback} from './player-name-field.js?v=player-account-20261003-1';
 
 let current=null;
 const release=()=>window.dispatchEvent(new Event('park:release-controls'));
@@ -31,12 +31,13 @@ export function openPlayerProfile(api) {
   identity.append(name,character,editButton);hero.append(portrait,identity);
   const form=element('form','profile-name-form');form.hidden=true;form.noValidate=true;
   const label=element('label','','Player name');label.htmlFor='profile-player-name';
-  const input=element('input');input.id='profile-player-name';input.name='playerName';input.type='text';input.maxLength=16;input.autocomplete='nickname';input.setAttribute('aria-describedby','profile-name-hint profile-name-error');
+  const input=element('input');input.id='profile-player-name';input.name='playerName';input.type='text';input.maxLength=16;input.required=true;input.autocomplete='nickname';input.setAttribute('aria-describedby','profile-name-hint profile-name-error');
   const hint=element('small','','Up to 16 characters. Your friends and progress stay with you.');hint.id='profile-name-hint';
-  const error=element('p','profile-name-error');error.id='profile-name-error';error.setAttribute('role','alert');error.hidden=true;
+  const error=element('div','park-name-feedback');error.id='profile-name-error';error.setAttribute('aria-live','polite');error.hidden=true;
   const formActions=element('div','profile-form-actions'),cancel=button('Cancel edit','profile-secondary',()=>finishEditing()),save=button('Save name','profile-primary');save.type='submit';
   formActions.append(cancel,save);form.append(label,input,hint,error,formActions);
   const change=button('Change character','profile-change',()=>navigate(()=>api.openWardrobe(true)));
+  const myItems=button('My items','profile-change profile-owned-items',()=>navigate(()=>api.openMyItems?.()));
   const codeSection=element('section','profile-code-section'),codeHeading=element('h3','','Friend code'),codeHelp=element('p','','Share this public code so friends can find you.');
   const codeRow=element('div','profile-code-row'),code=element('input','profile-friend-code');code.readOnly=true;code.setAttribute('aria-label','Your friend code');code.autocomplete='off';
   const copy=button('Copy friend code','profile-secondary',async()=>{
@@ -49,8 +50,18 @@ export function openPlayerProfile(api) {
   const openOnline=tab=>navigate(()=>window.dispatchEvent(new CustomEvent('candy:online-open',{detail:{tab}})));
   links.append(button('Friends','',()=>openOnline('friends')),button('Account & privacy','',()=>openOnline('account')),button('Settings','',()=>navigate(()=>document.getElementById('party-settings-btn')?.click())));
   const status=element('p','profile-status');status.setAttribute('role','status');status.setAttribute('aria-live','polite');
-  body.append(hero,form,change,codeSection,links,status);dialog.append(head,body);document.body.append(dialog);
+  status.textContent=api.initialStatus||'';
+  body.append(hero,form,change,myItems,codeSection,links,status);dialog.append(head,body);document.body.append(dialog);
   let editing=false,closed=false,portraitBase='',unblock=null;const unsubscribers=[];
+  const names=createPlayerNameController({getName:()=>api.getName?.()||'',setName:value=>api.setName(value)});
+  const renderName=()=>{
+    if(closed||!editing)return;
+    const state=names.getSnapshot();if(input.value!==state.name)input.value=state.name;
+    input.disabled=save.disabled=cancel.disabled=state.pending;save.textContent=state.pending?'Saving name…':'Save name';
+    input.setAttribute('aria-invalid',String(!!state.error));
+    renderPlayerNameFeedback(error,{...state,onChoose:value=>{names.edit(value);input.focus({preventScroll:true});}});
+  };
+  unsubscribers.push(names.subscribe(renderName));
   function refresh(){
     if(closed)return;
     name.textContent=api.getName?.()||'Choose a name';
@@ -63,12 +74,12 @@ export function openPlayerProfile(api) {
     code.value=typeof friendCode==='string'?friendCode:'';code.placeholder='Available when connected';
     copy.disabled=!code.value;
   }
-  function showError(message){error.textContent=message;error.hidden=!message;input.setAttribute('aria-invalid',String(!!message));}
-  function startEditing(){editing=true;form.hidden=false;editButton.hidden=true;input.value=api.getName?.()||'';showError('');input.focus({preventScroll:true});input.select();}
-  function finishEditing(){editing=false;form.hidden=true;editButton.hidden=false;showError('');refresh();editButton.focus({preventScroll:true});}
+  function startEditing(){editing=true;form.hidden=false;editButton.hidden=true;names.edit(api.getName?.()||names.getSnapshot().name);input.focus({preventScroll:true});input.select();}
+  function finishEditing(){if(names.getSnapshot().pending)return;editing=false;form.hidden=true;editButton.hidden=false;refresh();editButton.focus({preventScroll:true});}
   function navigate(action){close(false);action();}
   function close(restore=true){
     if(closed)return;closed=true;
+    names.dispose();
     for(const unsubscribe of unsubscribers)unsubscribe?.();
     window.removeEventListener('keydown',guard,true);window.removeEventListener('keyup',guard,true);
     document.documentElement.removeAttribute('data-park-profile-open');
@@ -88,16 +99,13 @@ export function openPlayerProfile(api) {
     }
     event.stopImmediatePropagation();
   }
-  form.addEventListener('submit',event=>{
-    event.preventDefault();const message=playerNameError(input.value);
-    if(message){showError(message);input.focus({preventScroll:true});return;}
-    try{
-      api.setName(input.value.trim());
-      if(api.getName()!==input.value.trim().replace(/[\u0000-\u001f<>]/g,'').slice(0,16))throw Error('Name could not be saved');
-      finishEditing();status.textContent='Name updated.';
-    }catch{showError('Your name could not be saved. Please try again.');}
+  form.addEventListener('submit',async event=>{
+    event.preventDefault();if(names.getSnapshot().pending)return;
+    const profile=await names.commit();if(closed)return;
+    if(!profile){input.focus({preventScroll:true});return;}
+    finishEditing();status.textContent='Name updated.';
   });
-  input.addEventListener('input',()=>{if(!error.hidden)showError(playerNameError(input.value));});
+  input.addEventListener('input',()=>names.edit(input.value));
   dialog.addEventListener('cancel',event=>{event.preventDefault();close();});
   dialog.addEventListener('click',event=>{if(event.target!==dialog)return;const r=dialog.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)close();});
   dialog.addEventListener('close',()=>{if(!closed)close();});

@@ -3,6 +3,7 @@ import {FITTED_ITEMS} from './studio-catalog.js';
 import {isNativeCharacter,nextCharacter} from './native-character.js?v=cat-character-1';
 import {applyBodyFinish} from './frog-body-finish.js?v=frog-release-1';
 import {applyCharacterColorLighting} from './character-color-lighting.js?v=character-color-1';
+import {applyNativeShopItems} from './native-shop-items.js?v=player-account-shop-render-20261003-1';
 
 const owned=Symbol.for('67park.avatar-owned-resources');
 const canon=name=>name.replace(/_\d+$/,'');
@@ -16,6 +17,7 @@ export function applyGorillaStudioItems(rig,equipment,source) {
   if(equipment.base==='superhero67'){const cape=rig.getObjectByName('67Park_Superhero_Cape');if(cape)cape.visible=!equipment.back;}
   if(equipment.base==='frog67')applyBodyFinish(rig,{id:'frog',finishRevision:2,bodyColor:'#48752D',roughness:.36});
   applyCharacterColorLighting(rig,equipment.base);
+  applyNativeShopItems(rig,equipment);
   rig.updateMatrixWorld(true);
   const bones=new Map();
   rig.traverse(o=>{if(o.isBone&&!bones.has(canon(o.name)))bones.set(canon(o.name),o)});
