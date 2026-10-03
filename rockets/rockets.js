@@ -23,3 +23,4 @@ react/cjs/react-jsx-runtime.production.js:
    * LICENSE file in the root directory of this source tree.
    *)
 */
+import {safeSessionStorage as sessionStorage} from '../app/session-storage.js?v=crash-guards-20261003-1';

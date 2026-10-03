@@ -21,3 +21,6 @@
 @media(max-width:350px){.studio-layout{padding-left:9px;padding-right:9px}.studio-options{padding:15px 12px}.studio-arrows button{width:36px}.studio-slot{gap:7px}}
 @media(max-height:540px){.studio-topbar{min-height:55px;padding-top:6px;padding-bottom:6px}.studio-brand img{height:34px}.studio-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,42%);gap:12px;padding:12px}.wardrobe-studio .studio-view{min-height:0}.studio-options{padding:15px}.studio-brand>span{display:none}}
 @media(prefers-reduced-motion:reduce){.wardrobe-studio button:active:not(:disabled){transform:none}}
+
+/* Explicit slow-entry recovery; same shared panel/control design. */
+.studio-entry-recovery{margin-top:12px;padding:12px;border:1px solid var(--park-ui-line);border-radius:16px;background:var(--park-ui-soft);color:var(--park-ui-ink);line-height:1.45;font-size:12px;overflow-wrap:anywhere}.studio-entry-recovery strong{display:block;font-size:13px}.studio-entry-recovery p{margin:7px 0}.studio-reload{width:100%;min-height:44px;margin-top:5px;padding:9px 12px;border:2px solid var(--park-ui-card);border-radius:16px;background:linear-gradient(var(--park-ui-card),var(--park-ui-pink));color:var(--park-ui-ink);box-shadow:var(--park-ui-button-shadow);font-weight:700!important}

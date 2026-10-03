@@ -22,24 +22,37 @@ export function rememberTabAccess(storage){
 // input setup before the module entry. Import maps are left untouched.
 export async function startAccessScripts(doc=document){
  const errors=[];
+ const record=(error,optional)=>{
+  if(!optional)errors.push(error);
+  // Optional presentation failures must not become a terminal recovery error.
+  const win=doc.defaultView;
+  const ledger=optional&&win?(win.__parkOptionalBootErrors??=[]):win?.__candyErrors;
+  if(Array.isArray(ledger)&&ledger.length<100)ledger.push(error.message);
+ };
  for(const parked of doc.querySelectorAll('script[data-park-access-type]')){
-  try{await new Promise((resolve,reject)=>{
+  const optional=parked.dataset.parkAccessOptional==='true';
+  const loading=new Promise((resolve,reject)=>{
    const script=doc.createElement('script');
    for(const {name,value}of parked.attributes)if(name!=='type'&&name!=='data-park-access-type')script.setAttribute(name,value);
    script.type=parked.dataset.parkAccessType;script.async=false;
-   const timer=setTimeout(()=>reject(Error('Game startup timed out')),GAME_LOAD_TIMEOUT_MS);
-   const finish=error=>{clearTimeout(timer);script.onload=script.onerror=null;error?reject(error):resolve();};
+   // An async=false optional module would still block the browser's ordered
+   // execution queue even without awaiting it here. Critical order stays intact.
+   if(optional)script.async=true;
+   let settled=false,timer;
+   const finish=error=>{if(settled)return;settled=true;clearTimeout(timer);script.onload=script.onerror=null;error?reject(error):resolve();};
+   timer=setTimeout(()=>finish(Error('Game startup timed out')),GAME_LOAD_TIMEOUT_MS);
    script.onload=()=>finish();script.onerror=()=>finish(Error('Game script could not load'));
    script.textContent=parked.textContent;
    // Sports rebuilds body.innerHTML while its module loads. Remaining parked
    // nodes may then be detached: replacing one would never execute its script.
-   if(parked.isConnected)parked.replaceWith(script);else (doc.head||doc.body).append(script);
-   if(!script.src&&script.type!=='module')finish();
-  });}catch(error){
-   errors.push(error);
-   // Independent connection recovery must still start after a failed entry.
-   const ledger=doc.defaultView?.__candyErrors;if(Array.isArray(ledger)&&ledger.length<100)ledger.push(error.message);
-  }
+   try{
+    if(parked.isConnected)parked.replaceWith(script);else (doc.head||doc.body).append(script);
+    if(!script.src&&script.type!=='module')finish();
+   }catch(error){finish(error);}
+  });
+  if(optional){void loading.catch(error=>record(error,true));continue;}
+  // Independent connection recovery must still start after a failed entry.
+  try{await loading;}catch(error){record(error,false);}
  }
  if(errors.length)throw errors[0];
 }

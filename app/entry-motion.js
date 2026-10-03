@@ -2,6 +2,19 @@ import {prepareClaudeGorillaEffects} from './claude-gorilla-runtime.js?v=skate-c
 import {compileEntryGraphics,waitForEntryGPU} from './entry-graphics.js?v=entry-light-1';
 import {cameraMeshCast} from './feel-camera-meshes.js?v=skate-corner-recovery-1';
 
+// Yield a frame when visible, but never retain an entry GPU lease indefinitely
+// because a hidden page stopped dispatching animation frames. Cancellation is
+// observed before the next subscriber/draw; this does not release the lease.
+export function waitForEntryFrame({cancelled=()=>false,requestFrame=fn=>requestAnimationFrame(fn),cancelFrame=id=>{if(typeof cancelAnimationFrame==='function')cancelAnimationFrame(id)},setTimer=setTimeout,clearTimer=clearTimeout,fallbackMs=50}={}){
+ if(cancelled())return Promise.resolve(false);
+ return new Promise((resolve,reject)=>{
+  let settled=false,frame=null,timer=null;
+  const finish=()=>{if(settled)return;settled=true;if(timer!==null)clearTimer(timer);if(frame!==null)cancelFrame(frame);try{resolve(!cancelled())}catch(error){reject(error)}};
+  timer=setTimer(finish,fallbackMs);
+  try{frame=requestFrame(finish)}catch(error){settled=true;clearTimer(timer);reject(error)}
+ });
+}
+
 // Preparation only: never replay held input here.
 export async function prepareEntryMotion(renderer,scene,camera,world,root,{upload,cancelled=()=>false}={}){
  if(typeof upload!=='function')throw TypeError('Entry motion needs the staged scene uploader');
@@ -17,7 +30,7 @@ export async function prepareEntryMotion(renderer,scene,camera,world,root,{uploa
    const render=renderer.render;
    try{renderer.render=()=>{};root.advance(root.get().clock.elapsedTime+1/60,false);}
    finally{renderer.render=render;}
-   await new Promise(resolve=>requestAnimationFrame(resolve));
+   if(!await waitForEntryFrame({cancelled}))return {cancelled:true};
   }
  }
  const fx=prepareClaudeGorillaEffects(scene),saved=[];
@@ -36,12 +49,15 @@ export async function prepareEntryMotion(renderer,scene,camera,world,root,{uploa
  }
 }
 
-export async function finishEntryMotion(renderer,root){
+export async function finishEntryMotion(renderer,root,{cancelled=()=>false}={}){
  if(root&&document.querySelector('.wardrobe')){
   for(let i=0;i<3;i++){
+   if(cancelled())return {cancelled:true};
    root.advance(root.get().clock.elapsedTime+1/60,false);
-   await new Promise(resolve=>requestAnimationFrame(resolve));
+   if(!await waitForEntryFrame({cancelled}))return {cancelled:true};
   }
  }
+ if(cancelled())return {cancelled:true};
  await waitForEntryGPU(renderer);
+ return {cancelled:cancelled()};
 }

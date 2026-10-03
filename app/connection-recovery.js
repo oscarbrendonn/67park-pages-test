@@ -1,5 +1,6 @@
 import {CLIENT_BUILD} from './protocol-version.js';
 import {allowParkMotionWire} from './park-motion-transport.js?v=corner-slide-2';
+import {GAME_LOAD_TIMEOUT_MS} from './startup-budget.js';
 
 const key=Symbol.for('67park.connection-recovery.v1');
 const state=globalThis[key]??={channels:new Map(),error:'',blocked:false,changedAt:Date.now(),retryAt:0,suspended:false};
@@ -16,6 +17,7 @@ export function recordedEntryLoadFailure(errors){
   return /loading|fetch|import|module|load/i.test(String(message));
  });
 }
+export const matchLoadBudgetExpired=(elapsedMs,ready=false)=>!ready&&elapsedMs>=GAME_LOAD_TIMEOUT_MS;
 // The root park already keeps a connection banner above the scene. Give its
 // local Style Studio the foreground while it is open, except a terminal
 // version/account block: its Reload action must stay reachable. Match recovery
@@ -145,10 +147,10 @@ export function installConnectionRecoveryUI(win=window,doc=document){
   if(connected)disconnectedAt=Date.now();
   // The authority bounds match loading too. This UI covers a missing bundle,
   // stopped download, lost room, or a server that cannot be reached at all.
-  const slow=Date.now()-started>45000;
+  const slow=matchLoadBudgetExpired(Date.now()-started,state.readyRooms.has(match));
   const abandoned=match&&online&&(!s.room||s.room.code!==match);
   const stopped=match&&online&&['waiting','results'].includes(s.room?.status);
-  const failed=entryError||(match&&slow&&!state.readyRooms.has(match));
+  const failed=entryError||(match&&slow);
   loadingFailed=failed;
   const disconnected=!connected&&Date.now()-disconnectedAt>8000;
   const visible=state.blocked||failed||abandoned||stopped||disconnected;
@@ -165,7 +167,7 @@ export function installConnectionRecoveryUI(win=window,doc=document){
   back.hidden=!match;
   panel.dataset.state=state.blocked?'incompatible':failed?'loading-error':abandoned?'match-ended':'reconnecting';
  };
- const onError=e=>{if(match&&(recordedEntryLoadFailure([e])||e.target?.tagName==='SCRIPT')){entryError=true;check();}};
+ const onError=e=>{if(e.target?.dataset?.parkAccessOptional==='true')return;if(match&&(recordedEntryLoadFailure([e])||e.target?.tagName==='SCRIPT')){entryError=true;check();}};
  const timer=setInterval(check,1000);
  win.addEventListener('error',onError,true);win.addEventListener('unhandledrejection',onError);
  win.addEventListener('park:connection-change',check);check();
