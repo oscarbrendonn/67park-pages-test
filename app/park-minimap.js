@@ -18,6 +18,9 @@ export async function installParkMinimap(host=window){
   if(disposed)return;
   frame=host.requestAnimationFrame(tick);
   if(doc.hidden||now-last<50)return;last=now;
+  // Its dimensions belong to the optional unified HUD. If that UI fails,
+  // preserve the native map button instead of inserting an unstyled canvas.
+  if(!doc.body.classList.contains('park-unified-ui')){if(button)detach();return;}
   const next=doc.querySelector('.park-toolbar>button[aria-label="Bird’s-eye view"]');
   const self=host.__eggyInput?.playerRef?.body?.translation();
   if(!next||!self||!Number.isFinite(self.x)||!Number.isFinite(self.z)){if(button)detach();return;}
