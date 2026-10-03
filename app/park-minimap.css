@@ -10,7 +10,11 @@ body.park-unified-ui.park-minimap-ready:has(.park-toolbar) .park-toolbar>.park-m
 body:not(.park-minimap-ready) .park-minimap-canvas,#park-minimap-coins[hidden]{display:none!important}
 .park-minimap-button:focus-visible{outline:3px solid #377e78;outline-offset:3px}
 body.park-unified-ui.park-minimap-ready:has(.park-toolbar) .park-minimap-button:active{transform:scale(.97)!important}
-#park-minimap-coins{position:fixed;z-index:73;top:var(--hud-top);left:var(--mini-left);width:var(--mini-size);height:28px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;gap:5px;padding:2px 7px;border:2px solid #fffdf5;border-radius:14px;background:#fff5d8;color:#645432;box-shadow:0 2px 0 #b6a97655;font:800 12px system-ui;font-variant-numeric:tabular-nums;pointer-events:none}
+#park-minimap-coins{position:fixed;z-index:73;top:calc(var(--mini-top) - 16px);left:calc(var(--mini-left) + var(--mini-size) - 36px);width:78px;height:36px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;gap:5px;padding:2px 7px;border:2px solid #fffdf5;border-radius:18px;background:#fff5d8;color:#645432;box-shadow:0 2px 0 #b6a97655;font:800 12px system-ui;font-variant-numeric:tabular-nums;cursor:pointer;touch-action:manipulation}
+#park-minimap-coins::before{content:'';position:absolute;inset:-4px 0;min-height:44px}
+#park-minimap-coins:focus-visible{outline:3px solid #377e78;outline-offset:3px}
+#park-minimap-coins:active{transform:scale(.97)}
+body:has(.wardrobe,.park-inventory-panel,#park-player-profile:not([hidden]),#party-settings:not([hidden])) #park-minimap-coins{visibility:hidden}
 .park-minimap-coin{display:grid;place-items:center;width:19px;height:19px;flex:none;border-radius:50%;background:#f2c767;border:1px solid #d6a44b;box-shadow:inset 0 0 0 2px #ffe39d;color:#9a742d;font-size:13px}
 .park-minimap-amount{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 body.park-unified-ui.park-minimap-ready:has(.park-toolbar) .park-weather{left:var(--hud-edge-l)!important;top:calc(var(--hud-top) + 128px)!important}
@@ -18,10 +22,21 @@ body.park-unified-ui.park-minimap-ready:has(.park-toolbar) .park-hud>div.absolut
 @media (max-width:359px){body.park-unified-ui.park-minimap-ready:has(.park-toolbar){--mini-size:88px}}
 @media (orientation:landscape) and (min-width:500px), (min-width:900px){
  body.park-unified-ui.park-minimap-ready:has(.park-toolbar){--mini-size:80px;--mini-top:calc(var(--hud-top) + 22px);--park-chat-top:calc(var(--hud-top) + 110px)}
- body.park-unified-ui.park-minimap-ready:has(.park-toolbar) .park-weather{left:calc(var(--hud-edge-l) + 144px)!important;top:var(--hud-top)!important}
- body.park-unified-ui.park-minimap-ready:has(.park-toolbar) .park-hud>div.absolute.right-4.top-4{left:calc(var(--hud-edge-l) + 266px)!important;right:auto!important;top:var(--hud-top)!important}
- #park-minimap-coins{height:26px;font-size:11px;gap:3px;padding:2px 5px}
+ body.park-unified-ui.park-minimap-ready:has(.park-toolbar) .park-weather{left:calc(var(--hud-edge-l) + 180px)!important;top:var(--hud-top)!important}
+ body.park-unified-ui.park-minimap-ready:has(.park-toolbar) .park-hud>div.absolute.right-4.top-4{left:calc(var(--hud-edge-l) + 302px)!important;right:auto!important;top:var(--hud-top)!important}
+ #park-minimap-coins{font-size:11px;gap:3px;padding:2px 5px}
 }
 @media (orientation:landscape) and (min-width:500px) and (max-width:700px){
- body.park-unified-ui.park-minimap-ready:has(.park-toolbar) .park-hud>div.absolute.right-4.top-4{left:calc(var(--hud-edge-l) + 144px)!important;top:calc(var(--hud-top) + 44px)!important}
+ body.park-unified-ui.park-minimap-ready:has(.park-toolbar) .park-hud>div.absolute.right-4.top-4{left:calc(var(--hud-edge-l) + 180px)!important;top:calc(var(--hud-top) + 44px)!important}
 }
+/* Keep the native purchase/equip panel; only its market presentation changes.
+   The item region scrolls independently, so Close remains reachable sideways. */
+body .park-shop-panel.park-market-panel{position:fixed!important;display:flex;flex-direction:column;max-height:calc(100dvh - 32px);width:min(92vw,430px);padding:16px;border-radius:24px;overflow:hidden}
+body .park-market-panel>div:first-child,body .park-market-panel>div:last-child{flex:none}
+body .park-market-panel>div:nth-child(2){overflow:auto;overscroll-behavior:contain;min-height:0;padding:2px 2px 4px;gap:8px}
+body .park-market-panel>div:nth-child(2)>button{min-height:64px;border-radius:16px;padding:10px;background:var(--park-ui-card,#fffdf8)}
+body .park-market-panel>div:last-child{line-height:1.5;font-size:10px;letter-spacing:.02em;text-transform:none}
+body:has(.park-market-panel) :is(#park-minimap-coins,.park-toolbar,.park-weather,.park-chat,.park-touch,.park-hud>div.absolute.right-4.top-4){visibility:hidden}
+body.park-minimap-ready .park-hud>div.absolute.left-1\/2.top-16{top:40%!important;max-width:min(300px,70vw);background:var(--park-ui-surface,#fffdf8);color:var(--park-ui-ink,#42545b);border-color:var(--park-ui-line,#dae4e2);text-align:center;font-size:12px;line-height:1.4}
+body:has(.park-market-panel) .park-hud>div.absolute.left-1\/2.top-16{visibility:hidden}
+@media(orientation:landscape) and (max-height:500px){body .park-shop-panel.park-market-panel{width:min(82vw,620px);padding:12px;max-height:calc(100dvh - 24px)}body .park-market-panel>div:nth-child(2){grid-template-columns:repeat(3,minmax(0,1fr))}}

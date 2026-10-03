@@ -1,6 +1,7 @@
 import {Ka as online,ta as inventory} from './chunk-G7D6MVRW.js?v=online-next-1';
 import {mapPlayers} from './map-player-markers.js?v=entry-map-recovery-20261003-1';
 import {minimapPoint,minimapImageRect,minimapCoins} from './park-minimap-math.js?v=minimap-20261003-1';
+import {openParkMarket,updateMarketAccessibility} from './park-market.js?v=steering-market-20261003-1';
 
 // An offline orthographic image, not a second renderer or a second island model.
 // Decorate the original map button: React's existing click/keyboard handler owns
@@ -9,7 +10,7 @@ export async function installParkMinimap(host=window){
  const doc=host.document,image=new host.Image();
  image.src=new URL('./minimap/park.webp?v=minimap-20261003-1',import.meta.url).href;
  await image.decode();
- const sheet=doc.createElement('link');sheet.rel='stylesheet';sheet.href=new URL('./park-minimap.css?v=minimap-20261003-1',import.meta.url).href;
+ const sheet=doc.createElement('link');sheet.rel='stylesheet';sheet.href=new URL('./park-minimap.css?v=steering-market-20261003-1',import.meta.url).href;
  await new Promise((resolve,reject)=>{sheet.onload=resolve;sheet.onerror=()=>{sheet.remove();reject(Error('Minimap style unavailable'));};doc.head.append(sheet);});
  let button=null,canvas=null,ctx=null,balance=null,frame=null,last=0,disposed=false;
  const detach=()=>{button?.classList.remove('park-minimap-button');canvas?.remove();balance?.remove();button=canvas=ctx=balance=null;doc.body.classList.remove('park-minimap-ready');};
@@ -24,7 +25,8 @@ export async function installParkMinimap(host=window){
    detach();button=next;canvas=doc.createElement('canvas');canvas.className='park-minimap-canvas';canvas.setAttribute('aria-hidden','true');
    // Fixed 256px backing store is enough even on Retina; no DPR-sized GPU work.
    canvas.width=canvas.height=256;ctx=canvas.getContext('2d');if(!ctx){detach();return;}
-   balance=doc.createElement('div');balance.id='park-minimap-coins';balance.setAttribute('role','status');balance.setAttribute('aria-live','off');
+   balance=doc.createElement('button');balance.type='button';balance.id='park-minimap-coins';balance.setAttribute('aria-haspopup','dialog');
+   balance.title='Open market';balance.addEventListener('click',event=>{event.stopPropagation();openParkMarket(host);});
    const coin=doc.createElement('span');coin.className='park-minimap-coin';coin.textContent='₵';coin.setAttribute('aria-hidden','true');
    const amount=doc.createElement('span');amount.className='park-minimap-amount';balance.append(coin,amount);doc.body.append(balance);
    button.append(canvas);button.classList.add('park-minimap-button');doc.body.classList.add('park-minimap-ready');
@@ -34,7 +36,8 @@ export async function installParkMinimap(host=window){
   const overview=!!doc.getElementById('hawk-map-navigation');
   doc.body.classList.toggle('park-minimap-ready',!overview);balance.hidden=overview;
   const amount=minimapCoins(inventory.coins);
-  if(balance.lastElementChild.textContent!==amount){balance.lastElementChild.textContent=amount;balance.setAttribute('aria-label',`${amount} coins`);}
+  if(balance.lastElementChild.textContent!==amount){balance.lastElementChild.textContent=amount;balance.setAttribute('aria-label',`Open market · ${amount} coins`);}
+  updateMarketAccessibility(host,balance);
   const size=256,rect=minimapImageRect(self,size);
   ctx.clearRect(0,0,size,size);ctx.fillStyle='#bed8e2';ctx.fillRect(0,0,size,size);
   if(rect)ctx.drawImage(image,rect.x,rect.y,rect.width,rect.height);

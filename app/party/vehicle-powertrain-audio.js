@@ -29,7 +29,7 @@ export function createVehiclePowertrain(){
   const signedLoad=clamp(Math.abs(throttle));
   const opposing=magnitude>.25&&rawSpeed*throttle<0;
   const targetLoad=brake||opposing?0:signedLoad;
-  load+=(targetLoad-load)*(1-Math.exp(-dt/(targetLoad>load?.09:.14)));
+  load+=(targetLoad-load)*(1-Math.exp(-dt/(targetLoad>load?.14:.20)));
   const normal=clamp(speed/PARK_DRIVING.maxSpeed);
   if(reverse){gear=-1;candidate=0;candidateAge=0;shiftAge=10;}
   else if(magnitude<.15){gear=1;candidate=0;candidateAge=0;shiftAge=10;}
@@ -53,8 +53,11 @@ export function createVehiclePowertrain(){
   const wheelRev=magnitude<.15?0:clamp(normal/ratio);
   const moving=clamp(magnitude/.65);
   const rev=wheelRev*.84+load*.10*(.3+.7*moving);
-  const targetRpm=idle+(kind==='bus'?2350:2800)*clamp(rev);
-  rpm+=(targetRpm-rpm)*(1-Math.exp(-dt/(shift>.1?.055:.09)));
+  let targetRpm=idle+(kind==='bus'?1850:2200)*clamp(rev);
+  // Automatic downshifts under the brake must not sound like another press
+  // of the accelerator. Steering/snapshot jitter also must not snap pitch.
+  if(brake)targetRpm=Math.min(targetRpm,rpm);
+  rpm+=(targetRpm-rpm)*(1-Math.exp(-dt/(shift>.1?.09:.16)));
   return {gear,rpm,load,speed,shift,shifts,limit:PARK_DRIVING.maxSpeed,
    mode:brake?'braking':magnitude<.15?'idle':load>.06?'pulling':'coasting'};
  }
@@ -70,8 +73,9 @@ export function powertrainMix({rpm=840,load=0,speed=0,shift=0}={},kind='car'){
  let lower=0;while(lower<RECORDED_RPM.length-2&&audibleRpm>RECORDED_RPM[lower+1])lower++;
  const blend=clamp((audibleRpm-RECORDED_RPM[lower])/(RECORDED_RPM[lower+1]-RECORDED_RPM[lower]));
  const w=blend*blend*(3-2*blend),gains=[0,0,0,0];
- const level=(.175+moving*.028+clamp(load)*.042)*(1-clamp(shift)*.32);
+ // Cabin mix: roughly half the previous level, without lowering other SFX.
+ const level=(.095+moving*.016+clamp(load)*.019)*(1-clamp(shift)*.18);
  gains[lower]=Math.sqrt(1-w)*level;gains[lower+1]=Math.sqrt(w)*level;
  return {gains,rates:RECORDED_RPM.map(base=>audibleRpm/base),
-  cutoff:(kind==='bus'?1300:1650)+clamp(load)*1500+moving*250};
+  cutoff:(kind==='bus'?1050:1350)+clamp(load)*750+moving*150};
 }

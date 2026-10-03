@@ -1,5 +1,5 @@
 // Real CC0 cabin recordings. This graph never changes driving or owns a timer.
-import {createVehiclePowertrain,powertrainMix} from './vehicle-powertrain-audio.js?v=five-gears-1';
+import {createVehiclePowertrain,powertrainMix} from './vehicle-powertrain-audio.js?v=steering-market-20261003-1';
 export const VEHICLE_AUDIO_URL=new URL('../../assets/audio/vehicle-cabin-v2.wav',import.meta.url);
 export const VEHICLE_AUDIO_BYTES=608444;
 export const VEHICLE_CLIPS=Object.freeze({
@@ -17,7 +17,7 @@ export function createVehicleAudio({host,getContext,getOutput,audible,onCue=()=>
  let buffer=null,pending=null,retryAt=0,loadState='idle',wanted=null,active=null;
  let previousTime=null,braking=false,lastBrake=-Infinity,powertrain=null;
  const transmission=createVehiclePowertrain();
- let lastMix=null,starts=0,sequence=0;
+ let lastMix=null,starts=0,sequence=0,lastAutomation=-Infinity;
  const sources=new Set();
  const target=(param,value,t,tau=.12)=>param.setTargetAtTime(value,t,tau);
  function cleanup(v){
@@ -71,8 +71,8 @@ export function createVehicleAudio({host,getContext,getOutput,audible,onCue=()=>
   const ignition=wanted.ignition&&Date.now()-wanted.at<2000;
   const layers=['idle','low','mid','high'].map(name=>voice(name,0,1,true));
   if(layers.some(v=>!v)){for(const v of layers)if(v)release(v);return;}
-  active={layers,started:getContext().currentTime,ignition};starts++;
-  if(ignition&&voice('start',.30,wanted.kind==='bus'?.91:1))onCue('vehicle-start');
+  active={layers,started:getContext().currentTime,ignition};lastAutomation=-Infinity;starts++;
+  if(ignition&&voice('start',.16,wanted.kind==='bus'?.91:1))onCue('vehicle-start');
  }
  function update(speed=0,{throttle=0,brake=false,kind='car',ignition=false}={}){
   if(!audible()){stop();return;}
@@ -93,18 +93,22 @@ export function createVehicleAudio({host,getContext,getOutput,audible,onCue=()=>
   if(slowing&&!braking&&now-lastBrake>1.4){if(voice('brake',.055,kind==='bus'?.85:1)){onCue('vehicle-brake');lastBrake=now;}}
   braking=slowing;previousTime=now;
   lastMix=powertrainMix(powertrain,kind);
+  // The same four loops keep running through rapid steering/camera gestures.
+  // 30 Hz control-rate automation is enough; do not enqueue 12 events on every
+  // 120 Hz display frame. WebAudio interpolates smoothly between targets.
+  if(now-lastAutomation<1/30)return;lastAutomation=now;
   const fade=active.ignition?smooth((now-active.started-.30)/.85):1;
   active.layers.forEach((v,i)=>{
-   target(v.gain.gain,lastMix.gains[i]*fade,now,.055);
-   target(v.source.playbackRate,lastMix.rates[i],now,.045);
-   target(v.filter.frequency,lastMix.cutoff,now,.10);
+   target(v.gain.gain,lastMix.gains[i]*fade,now,.10);
+   target(v.source.playbackRate,lastMix.rates[i],now,.10);
+   target(v.filter.frequency,lastMix.cutoff,now,.16);
   });
  }
  function stop({shutdown=false}={}){
   const running=!!active,kind=wanted?.kind;wanted=null;active=null;sequence++;
   previousTime=null;powertrain=null;lastMix=null;transmission.reset();braking=false;
   for(const v of sources)release(v,shutdown?.22:.06);
-  if(shutdown&&running&&audible()&&voice('stop',.32,kind==='bus'?.91:1))onCue('vehicle-stop');
+  if(shutdown&&running&&audible()&&voice('stop',.17,kind==='bus'?.91:1))onCue('vehicle-stop');
  }
  return {ready,update,stop,stats:()=>({state:loadState,active:!!active,layers:active?.layers.length||0,voices:sources.size,starts,
   speed:powertrain?.speed||0,load:powertrain?.load||0,powertrain,mix:lastMix,decodedBytes:buffer?buffer.length*4:0})};
