@@ -1,0 +1,84 @@
+/* Reuse the actual lobby skins. Do not import park-action-ui.js: it also
+   rearranges the park HUD and installs a global observer. */
+@import url('../app/party/party-pack.css?v=horn-edge-1');
+@import url('../app/joystick-white.css?v=white-stick-17');
+
+#controls {
+  --action-size:66px;
+  --jump-size:66px;
+  --stick-size:116px;
+  --knob-size:54px;
+  --control-bottom:max(26px,env(safe-area-inset-bottom));
+  --control-edge:max(20px,env(safe-area-inset-left));
+  position:fixed;inset:0;z-index:3;pointer-events:none;
+}
+/* Geometry from theme.css; colour/glass treatment comes from joystick-white. */
+#stick {
+  position:absolute;left:var(--control-edge);bottom:var(--control-bottom);
+  width:var(--stick-size);height:var(--stick-size);border-width:2px;border-style:solid;
+  border-radius:50%;pointer-events:auto;touch-action:none;
+  user-select:none;-webkit-user-select:none;
+}
+.park-stick-rings {position:absolute;inset:14px;border-width:1px;border-style:solid;border-radius:50%;pointer-events:none}
+#knob {
+  position:absolute;left:calc(50% - var(--knob-size) / 2);top:calc(50% - var(--knob-size) / 2);
+  width:var(--knob-size);height:var(--knob-size);display:grid;place-items:center;
+  border-width:2px;border-style:solid;border-radius:50%;pointer-events:none;will-change:transform;
+}
+#knob svg {width:26px;height:26px;pointer-events:none}
+#controls .actions {
+  position:absolute;right:max(14px,env(safe-area-inset-right));bottom:var(--control-bottom);
+  display:grid;grid-template-columns:var(--action-size) var(--jump-size);
+  gap:8px;align-items:center;justify-items:center;pointer-events:none;
+}
+#controls .park-action {
+  width:var(--action-size);height:var(--action-size);min-width:44px;min-height:44px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  border-radius:50%;padding:0;gap:1px;pointer-events:auto;touch-action:none;
+  user-select:none;-webkit-user-select:none;
+  transition:transform 90ms ease-out,box-shadow 90ms ease-out;
+}
+/* Same right-thumb anchors as the park: Punch above Jump. Bomb occupies the
+   spare lower-left action slot; no extra movement/dive control. */
+#controls .bomb {grid-column:1;grid-row:2}
+#controls .punch {grid-column:2;grid-row:1}
+#controls .jump {grid-column:2;grid-row:2;width:var(--jump-size);height:var(--jump-size)}
+#controls .park-action .party-icon {width:30px;height:30px;fill:none;stroke:none;flex:none;pointer-events:none}
+#controls .bomb .party-icon {stroke:#3d2b4a;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+#controls .park-action small {order:3;font-size:8px;font-weight:800;line-height:1;opacity:.85;pointer-events:none}
+#controls .park-action[aria-pressed=true] {transform:translateY(3px)!important;filter:brightness(.93)}
+#controls .park-action[aria-disabled=true] {filter:saturate(.5)}
+#controls .park-action:focus-visible {outline:3px solid #56878f;outline-offset:5px}
+@media(pointer:coarse) {
+  #controls {
+    --action-size:clamp(44px,calc(50px * var(--park-button-scale,1)),62px);
+    --jump-size:calc(var(--action-size) * 1.24);
+    --stick-size:clamp(96px,26vw,124px);--knob-size:44px;
+    --control-bottom:max(14px,env(safe-area-inset-bottom));
+    --control-edge:max(12px,env(safe-area-inset-left));
+  }
+  #stick {bottom:calc(var(--control-bottom) + 52px)}
+  #controls .park-action .party-icon {width:26px;height:26px;transform:translateY(-5px)}
+  /* Touch users do not need F/B/SPACE hints. Recharge replaces the label,
+     so the same lobby-size button never packs a clipped third text row. */
+  #controls .park-action>span,#controls .park-action small {
+    position:absolute;top:calc(50% + 4px);font-size:7px!important;line-height:1;
+  }
+  #controls .park-action small {display:none}
+  #controls .park-action[aria-disabled=true] small {display:block}
+  #controls .park-action[aria-disabled=true]>span {display:none}
+}
+@media(orientation:landscape) and (pointer:coarse) {
+  #controls {
+    --action-size:clamp(44px,calc(clamp(44px,12dvh,46px) * var(--park-button-scale,1)),62px);
+    --jump-size:calc(var(--action-size) * 1.13);--stick-size:88px;
+    --control-bottom:max(12px,env(safe-area-inset-bottom));
+    --control-edge:max(10px,env(safe-area-inset-left));
+  }
+  #stick {bottom:var(--control-bottom)}
+  #controls .actions {gap:6px;right:max(10px,env(safe-area-inset-right))}
+  #controls .park-action .party-icon {width:24px;height:24px}
+}
+@media(prefers-reduced-motion:reduce) {
+  #controls .park-action,#controls .park-action[aria-pressed=true] {transition:none;transform:none!important}
+}

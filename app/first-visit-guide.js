@@ -31,7 +31,7 @@ export function createGuideMemory({read=()=>null,write=()=>{},sessionRead=()=>nu
 
 const INSTALL_KEY=Symbol.for('67park.first-visit-guide');
 const MEMO_KEY=Symbol.for('67park.first-visit-guide-memory');
-const blockers='.wardrobe,.return-entry,dialog[open],#party-settings:not([hidden]),.park-inventory-panel,.park-shop-panel,.claude-emote-panel,.park-map-directory-panel,.park-chat input:focus,.park-chat textarea:focus';
+const blockers='.wardrobe,.return-entry,dialog[open],[role="dialog"],#party-settings:not([hidden]),.park-inventory-panel,.park-shop-panel,.claude-emote-panel,.park-map-directory-panel,.park-chat input:focus,.park-chat textarea:focus';
 function isVisible(host,element){
  if(!element||element.hidden||!element.getClientRects().length)return false;
  const style=host.getComputedStyle(element);return style.visibility!=='hidden'&&style.display!=='none'&&style.opacity!=='0';
@@ -102,12 +102,23 @@ export function installFirstVisitGuide({host=window,available=()=>readGuideAvail
   schedule();
  }
  const replayGuide=()=>{if(disposed)return;release();active=false;pending=true;replay=true;readyAt=0;hide();tick();};
+ // A chat or dialog can open between visibility polls. Yield immediately to
+ // its own keyboard handler without completing the suspended tour.
+ const ownsKeys=()=>{
+  if(card.hidden)return false;
+  let allowed=false;try{allowed=available();}catch{}
+  if(!allowed){readyAt=0;hide();schedule();return false;}
+  return true;
+ };
  const keydown=e=>{
-  if(card.hidden)return;
+  if(e.defaultPrevented||!ownsKeys())return;
   if(e.key==='Escape'){e.preventDefault();e.stopImmediatePropagation();close();return;}
   if(card.contains(e.target))e.stopImmediatePropagation();
  };
- const keyup=e=>{if(!card.hidden&&card.contains(e.target))e.stopImmediatePropagation();};
+ const keyup=e=>{if(!e.defaultPrevented&&ownsKeys()&&card.contains(e.target))e.stopImmediatePropagation();};
+ // Pointer users should be able to walk after Next. Keep real keyboard focus
+ // for Tab/Enter/Space users so operating the guide never also moves a player.
+ card.addEventListener('click',e=>{if(e.detail>0&&card.contains(doc.activeElement))doc.activeElement.blur();},true);
  card.querySelector('.park-guide-close').addEventListener('click',close);skip.addEventListener('click',close);
  next.addEventListener('click',()=>{if(index===GUIDE_STEPS.length-1){close();return;}index++;paint();});
  card.addEventListener('focusin',release);

@@ -4,7 +4,8 @@ export const botPracticeEnabled = () => {
   return p.get('practice') === '1' && p.get('bots') === '1';
 };
 export function botPracticeUrl(mode) {
-  if (!['balloon', 'basket', 'penalty', 'race', 'rockets'].includes(mode)) throw Error('Unknown minigame');
+  if (!['balloon', 'basket', 'penalty', 'race', 'rockets', 'tumble'].includes(mode)) throw Error('Unknown minigame');
+  if (mode === 'tumble') return '/67park-pages-test/tumble-tiles/?game=tumble&practice=1&bots=1';
   return (mode === 'basket' || mode === 'penalty' ? `/67park-pages-test/sports/?mode=${mode}&` : `/67park-pages-test/${mode}/?`) + 'practice=1&bots=1';
 }
 export function practiceRoster(player, count) {

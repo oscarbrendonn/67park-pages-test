@@ -67,7 +67,7 @@ body.park-unified-ui .park-toolbar>#party-settings-btn:active{transform:scale(.9
 }
 /* Geographic markers are inexpensive DOM dots, not extra 3D avatars. */
 #park-map-players{position:fixed;inset:0;z-index:48;pointer-events:none;overflow:hidden}
-.park-map-player{position:absolute;top:0;left:0;width:44px;height:44px;padding:0;border:0;background:none;pointer-events:auto;display:grid;place-items:center;touch-action:manipulation;color:#39483f}
+.park-map-player{position:absolute;top:0;left:0;width:44px;height:44px;padding:0;border:0;background:none;pointer-events:auto;display:grid;place-items:center;touch-action:none;color:#39483f}
 .park-map-player[hidden]{display:none}
 .park-map-player-dot{width:17px;height:17px;border:3px solid white;border-radius:50%;background:var(--player-color);box-shadow:0 2px 6px #0005}
 .park-map-player.is-self{z-index:2}
@@ -83,6 +83,15 @@ body.park-unified-ui .park-toolbar>#party-settings-btn:active{transform:scale(.9
 #hawk-map-navigation{font-size:12px!important}
 #hawk-map-navigation>div:last-child{gap:4px!important}
 #hawk-map-navigation output{font-size:11px;min-width:29px}
+/* In short landscape, one shallow control row leaves real space for the island.
+   Keep native-size buttons; compact the panel chrome instead of the map/HUD. */
+@media (orientation:landscape) and (max-height:480px){
+ body.park-unified-ui:not(:has(.wardrobe,.return-entry)) #hawk-map-navigation{display:grid!important;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:4px 12px;width:min(560px,calc(100vw - 24px - env(safe-area-inset-left) - env(safe-area-inset-right)));max-width:calc(100vw - 24px - env(safe-area-inset-left) - env(safe-area-inset-right))!important;padding:6px 8px!important;bottom:max(12px,env(safe-area-inset-bottom))!important;box-sizing:border-box}
+ body.park-unified-ui:not(:has(.wardrobe,.return-entry)) #hawk-map-navigation>div:first-child{grid-column:1;grid-row:1;min-width:0;margin:0!important}
+ body.park-unified-ui:not(:has(.wardrobe,.return-entry)) #hawk-map-navigation .park-map-legend{min-width:0;font-size:11px;margin:0}
+ body.park-unified-ui:not(:has(.wardrobe,.return-entry)) #hawk-map-navigation>div:nth-child(2){grid-column:1/-1;grid-row:2;font-size:11px;line-height:1.2}
+ body.park-unified-ui:not(:has(.wardrobe,.return-entry)) #hawk-map-navigation>div:last-child{grid-column:2;grid-row:1;margin:0!important}
+}
 /* The map owns the bottom area while open; never cover live drive/run buttons. */
 body:has(#hawk-map-navigation) :is(.park-stick,.park-action,#preview-hit,#party-throw,.park-pet-button,.park-hint){visibility:hidden!important;pointer-events:none!important}
 @media(max-width:359px){#hawk-map-navigation{padding:8px!important}#hawk-map-navigation button{font-size:13px!important}}

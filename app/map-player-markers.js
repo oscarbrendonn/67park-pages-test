@@ -1,11 +1,15 @@
 // Read only the active lobby roster, never the distance-culled scene avatars.
 const valid = p => p && [p.x,p.y,p.z].every(Number.isFinite);
+const awayStatuses=new Set(['loading','countdown','playing','results']);
 export function mapPlayers(state = {}) {
   const result = [];
   if (valid(state.self)) result.push({id:state.id || 'self',name:'You',self:true,p:state.self,color:'#60bea5'});
   if (!state.connected) return result;
+  const presence=Array.isArray(state.presence)?new Map(state.presence.map(p=>[p.id,p])):null;
   for (const [id,remote] of state.remotes || []) {
     if (id === state.id || result.length >= 50) continue;
+    const member=presence?.get(id)||remote;
+    if(presence&&!presence.has(id)||member.connected===false||awayStatuses.has(member.roomStatus))continue;
     const a = remote.targetP || remote.p;
     if (!Array.isArray(a) || a.length < 3 || !a.every(Number.isFinite)) continue;
     // Join packets arrive before the first actual world position.
@@ -20,8 +24,8 @@ export function projectMapPlayer(p, view, viewport, planeY = 10) {
   const distance = planeY + view.height - p.y;
   const unit = 2 * distance * Math.tan(viewport.fov * Math.PI / 360) / viewport.height;
   if (!valid(p) || !Number.isFinite(unit) || unit <= 0) return null;
-  const x = viewport.width / 2 + (p.x - view.x) / unit;
-  const y = viewport.height / 2 + (p.z - view.z) / unit;
+  const x = (viewport.centerX??viewport.width / 2) + (p.x - view.x) / unit;
+  const y = (viewport.centerY??viewport.height / 2) + (p.z - view.z) / unit;
   return {x,y,visible:x>=22 && y>=22 && x<=viewport.width-22 && y<=viewport.height-22};
 }
 
@@ -42,7 +46,7 @@ export function createMapPlayerLayer(doc) {
           const name=doc.createElement('span');name.className='park-map-player-name';
           const count=doc.createElement('span');count.className='park-map-player-count';count.setAttribute('aria-hidden','true');node.append(dot,count,name);
           // A marker is information, not a world-teleport target.
-          node.addEventListener('click',e=>{e.stopPropagation();for(const other of nodes.values())if(other!==node)other.classList.remove('is-selected');node.classList.toggle('is-selected');});
+          node.addEventListener('click',e=>{e.stopPropagation();if(e.defaultPrevented)return;for(const other of nodes.values())if(other!==node)other.classList.remove('is-selected');node.classList.toggle('is-selected');});
           layer.append(node);nodes.set(player.id,node);
         }
         const projected=projectMapPlayer(player.p,view,viewport,planeY);

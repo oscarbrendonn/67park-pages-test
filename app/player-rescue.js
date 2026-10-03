@@ -1,3 +1,5 @@
+import {rescueRoomAllowsPark,RESCUE_MATCH_MESSAGE} from './player-rescue-policy.js?v=critical-followup-20261003-1';
+
 const finitePoint=p=>Array.isArray(p)&&p.length===3&&p.every(Number.isFinite);
 
 export function createRescueController({read,send,apply,notify,now=()=>Date.now(),nonce=()=>crypto.randomUUID()}){
@@ -7,11 +9,12 @@ export function createRescueController({read,send,apply,notify,now=()=>Date.now(
   request(){
    if(pending)return false;
    const s=read();
-   if(!s.ready||s.room){notify({state:'error',message:'Return to the park and leave the mini-game room before using rescue.'});return false;}
-   if(!s.connected){notify({state:'error',message:'Reconnect to the park, then try again.'});return false;}
+   if(!s.ready){notify({state:'error',message:'Rescue is only available after your character is ready in the park.'});return false;}
+   if(!rescueRoomAllowsPark(s.room)){notify({state:'error',message:RESCUE_MATCH_MESSAGE});return false;}
+   if(!s.connected||!s.island){notify({state:'error',message:'Reconnect to the park, then try again.'});return false;}
    pending={request:nonce(),island:s.island,at:now(),destination:null};
    notify({state:'pending',message:'Finding safe ground and releasing your seat…'});
-   if(!send({t:'player.rescue',request:pending.request})){finish('error','Could not reach the server. Please reconnect and try again.');return false;}
+   if(!send({t:'player.rescue',request:pending.request,island:pending.island})){finish('error','Could not reach the server. Please reconnect and try again.');return false;}
    return true;
   },
   receive(m){
@@ -23,7 +26,9 @@ export function createRescueController({read,send,apply,notify,now=()=>Date.now(
   tick(){
    if(!pending)return;
    const s=read();
-   if(s.island!==pending.island||s.room||!s.connected){finish('error','Connection changed. Please try again after reconnecting.');return;}
+   if(s.island!==pending.island||!s.connected){finish('error','Connection changed. Please try again after reconnecting.');return;}
+   if(!s.ready){finish('error','The park is no longer ready. Try again after returning to the park.');return;}
+   if(!rescueRoomAllowsPark(s.room)){finish('error',RESCUE_MATCH_MESSAGE);return;}
    if(now()-pending.at>9000){finish('error','Recovery was not confirmed. Please try again.');return;}
    if(pending.destination&&!s.mounted&&!s.home&&!s.travel){
     try{if(apply(pending.destination)!==false)finish('success','You are back on safe ground.');else finish('error','The landing point is not clear yet. Please try again.');}

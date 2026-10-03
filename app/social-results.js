@@ -39,7 +39,7 @@ export function installSocialResults(client, win=globalThis.window) {
       navigating=true;const url=new URL(win.location.href);url.searchParams.set('round',String(room.round||0));win.location.replace(url.href);return;
     }
     if(room.status!=='results'){root?.remove();root=null;signature='';return;}
-    const card=doc.querySelector('dialog.om-result[open], #sp-result:not([hidden]) .sp-result-card, #rr-result:not([hidden]) > div, #result.cr-dialog:not([hidden]) > div');
+    const card=doc.querySelector('dialog.om-result[open], #sp-result:not([hidden]) .sp-result-card, #rr-result:not([hidden]) > div, #result.cr-dialog:not([hidden]) > div, #result.tt-result:not([hidden]) > .card');
     if(!card)return;
     if(!root?.isConnected){
       root=doc.createElement('section');root.className='social-round';root.setAttribute('aria-label','Play again together');
