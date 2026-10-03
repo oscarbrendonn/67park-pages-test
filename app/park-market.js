@@ -1,5 +1,5 @@
 import {sa as shops,ta as inventory,va as openShop,wa as closeShop,xa as buyItem,ya as equipBoard,i as board,Ba as equipment,Ha as setSlot,Ja as openWardrobe} from './chunk-G7D6MVRW.js?v=online-next-1';
-import {createMarketCatalogueView} from './market-catalogue-view.js?v=shop-wardrobe-20261003-1';
+import {createMarketCatalogueView} from './market-catalogue-view.js?v=ui-family-20261003-1';
 
 // Use the real catalogue, prices, ownership, equipment and save path. No second
 // wallet or cosmetic-only purchase state. Food/books are omitted here because
@@ -15,7 +15,7 @@ const market={id:'park-market',sign:'Park Market',items:marketCatalogue(shops)};
 let activePanel=null,returnFocus=null,view=null,styleReady=false,stylePending=false;
 function loadStyle(doc){
  if(styleReady||stylePending)return;stylePending=true;
- const link=doc.createElement('link');link.rel='stylesheet';link.href=new URL('./market-catalogue.css?v=shop-wardrobe-20261003-1',import.meta.url).href;
+ const link=doc.createElement('link');link.rel='stylesheet';link.href=new URL('./market-catalogue.css?v=ui-family-20261003-1',import.meta.url).href;
  link.onload=()=>{styleReady=true;};link.onerror=()=>{link.remove();stylePending=false;};doc.head.append(link);
 }
 export function openParkMarket(host=window){

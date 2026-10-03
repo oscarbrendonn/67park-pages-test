@@ -20,7 +20,7 @@ export function createMarketCatalogueView({doc,panel,items,state,buy,equip,remov
  const make=(tag,cls,text)=>{const e=doc.createElement(tag);if(cls)e.className=cls;if(text!==undefined)e.textContent=text;return e;};
  const button=(label,cls,action)=>{const b=make('button',cls,label);b.type='button';b.addEventListener('click',action);return b;};
  const root=make('section','market-catalogue');root.setAttribute('aria-label','Shop and wardrobe');
- const header=make('header','market-heading'),brand=make('div');brand.append(make('span','market-eyebrow','67PARK · YOUR STYLE'),make('h2','','Park Shop'));
+ const header=make('header','market-heading'),brand=make('div'),logo=make('img','market-brand-logo');logo.src=new URL('../brand/67park-logo.png',import.meta.url).href;logo.alt='67Park';brand.append(logo,make('h2','','Park Shop'));
  const wallet=make('span','market-wallet'),exit=button('×','market-close',close);exit.setAttribute('aria-label','Close market');header.append(brand,wallet,exit);
  const modes=make('nav','market-modes');modes.setAttribute('aria-label','Shop views');
  let mode='shop',category='All',selected=items[0]?.id,confirming=false,lastState='',disposed=false;
@@ -35,10 +35,14 @@ export function createMarketCatalogueView({doc,panel,items,state,buy,equip,remov
  const detail=make('footer','market-detail'),info=make('div','market-detail-info'),title=make('strong'),description=make('p'),action=button('','market-action',act),cancel=button('Cancel','market-cancel',()=>{confirming=false;render();});
  info.append(title,description);detail.append(info,cancel,action);
  const status=make('p','market-status');status.setAttribute('role','status');status.setAttribute('aria-live','polite');
- root.append(header,modes,character,filters,list,detail,status);panel.classList.add('market-catalogue-host');panel.append(root);
+ root.append(header,modes,character,filters,list,detail,status);panel.classList.add('market-catalogue-host','park-ui-panel');panel.append(root);
  function icon(item){
   const svg=doc.createElementNS('http://www.w3.org/2000/svg','svg');svg.setAttribute('viewBox','0 0 56 56');svg.setAttribute('aria-hidden','true');
-  const path=doc.createElementNS(svg.namespaceURI,'path');path.setAttribute('d',artwork[item.board?'board':item.id]||artwork.ball);svg.append(path);svg.style.setProperty('--item-color',item.color);return svg;
+  const defs=doc.createElementNS(svg.namespaceURI,'defs'),gradient=doc.createElementNS(svg.namespaceURI,'linearGradient'),id='market-art-'+item.id;
+  gradient.id=id;gradient.setAttribute('x2','0.7');gradient.setAttribute('y2','1');
+  for(const [offset,color]of [['0%','#ffffff'],['40%',item.color],['100%',item.color]]){const stop=doc.createElementNS(svg.namespaceURI,'stop');stop.setAttribute('offset',offset);stop.setAttribute('stop-color',color);gradient.append(stop);}defs.append(gradient);svg.append(defs);
+  const path=doc.createElementNS(svg.namespaceURI,'path');path.setAttribute('d',artwork[item.board?'board':item.id]||artwork.ball);
+  const depth=path.cloneNode();depth.setAttribute('transform','translate(0 2.5)');depth.setAttribute('class','market-art-depth');path.setAttribute('fill',`url(#${id})`);svg.append(depth,path);svg.style.setProperty('--item-color',item.color);return svg;
  }
  function setMode(value){mode=value;confirming=false;render();}
  function render(){
@@ -54,7 +58,7 @@ export function createMarketCatalogueView({doc,panel,items,state,buy,equip,remov
   if(!visible.length){const empty=make('div','market-empty');empty.append(make('strong','','Your next favourite is waiting'),make('p','','Items you buy will appear here. You can equip and change them whenever you like.'),button('Browse shop','',()=>{category='All';setMode('shop');}));list.append(empty);}
   for(const item of visible){
    const row=make('div');row.setAttribute('role','listitem');const card=button('','market-product',()=>{selected=item.id;confirming=false;render();});card.dataset.item=item.id;card.setAttribute('aria-label',item.name);card.setAttribute('aria-pressed',String(selected===item.id));
-   const art=make('span','market-product-art');art.style.background=item.color+'30';art.append(icon(item));
+   const art=make('span','market-product-art');art.style.setProperty('--item-tint',item.color+'30');art.append(icon(item));
    const own=marketItemState(item,s),label=make('span','market-product-state',own.equipped?'Equipped':own.owned?'Owned':`₵ ${item.price}`);
    card.append(art,make('strong','',item.name),make('small','',marketCategory(item)),label);row.append(card);list.append(row);
   }

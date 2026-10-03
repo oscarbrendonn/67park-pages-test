@@ -1,0 +1,37 @@
+/* Shared 67Park UI components. Layout and gameplay stay with each panel owner.
+   New screens use these tokens/classes instead of inventing another palette. */
+:root{
+ --park-ui-font:Nunito,ui-rounded,"SF Pro Rounded",system-ui,sans-serif;
+ --park-ui-radius:28px;--park-ui-control-radius:16px;
+ --park-ui-pink:#fbe4ee;--park-ui-pink-edge:#d7a2ba;--park-ui-pink-ink:#70465c;
+ --park-ui-mint:#d9efe2;--park-ui-mint-edge:#a3c9b5;--park-ui-mint-ink:#365e4e;
+ --park-ui-blue:#dceefb;--park-ui-blue-edge:#adcadd;
+ --park-ui-lilac:#ece4fb;--park-ui-lilac-edge:#c1b4d8;
+ --park-ui-gold:#fff0b7;--park-ui-gold-ink:#766131;
+ --park-ui-shadow:0 16px 44px #273b5226,inset 0 2px 0 #fff;
+ --park-ui-button-shadow:0 3px 0 var(--park-ui-line),inset 0 2px 0 #fff;
+ --park-ui-ease:cubic-bezier(.23,1,.32,1);
+}
+.park-ui-panel{background:var(--park-ui-surface);color:var(--park-ui-ink);border:2px solid var(--park-ui-card);border-radius:var(--park-ui-radius);box-shadow:var(--park-ui-shadow);font-family:var(--park-ui-font)}
+.park-ui-control{min-height:44px;border:2px solid var(--park-ui-card);border-radius:var(--park-ui-control-radius);background:linear-gradient(var(--park-ui-card),var(--park-ui-soft));color:var(--park-ui-ink);box-shadow:var(--park-ui-button-shadow);font-family:var(--park-ui-font);font-weight:800;touch-action:manipulation}
+.park-ui-control:focus-visible{outline:3px solid var(--park-ui-focus);outline-offset:3px}
+.park-ui-control:active:not(:disabled){transform:translateY(2px)}
+
+/* Neutralize the remaining old cream/gold panel chrome, not the gold currency,
+   item colours, team identity or the established colourful gameplay buttons. */
+body .online-dialog.online-dialog,
+body #park-player-profile.park-player-profile{background:var(--park-ui-surface);border-color:var(--park-ui-card);color:var(--park-ui-ink);box-shadow:var(--park-ui-shadow)}
+body .online-dialog.online-dialog :is(header,footer){background:var(--park-ui-surface);border-color:var(--park-ui-line)}
+body .online-dialog.online-dialog :is(.online-card,.community-person,.online-code){background:var(--park-ui-card);border-color:var(--park-ui-line);color:var(--park-ui-ink);box-shadow:0 3px 0 var(--park-ui-soft)}
+body .online-dialog.online-dialog :is(button,.community-bot-test):not([aria-pressed=true]):not([aria-selected=true]):not(.online-primary):not(.social-danger){background:linear-gradient(var(--park-ui-card),var(--park-ui-soft));border-color:var(--park-ui-card);color:var(--park-ui-ink);box-shadow:var(--park-ui-button-shadow)}
+body .online-dialog.online-dialog .online-primary{background:linear-gradient(var(--park-ui-card),var(--park-ui-pink));border-color:var(--park-ui-card);color:var(--park-ui-pink-ink);box-shadow:0 3px 0 var(--park-ui-pink-edge)}
+body .online-dialog.online-dialog :is(input,select){background:var(--park-ui-card);border-color:var(--park-ui-line);color:var(--park-ui-ink)}
+body .online-dialog.online-dialog :is(.online-caption,.community-account-note,.online-kicker){color:var(--park-ui-muted)}
+body #park-player-profile :is(.profile-name-form,.profile-close){background:var(--park-ui-soft);color:var(--park-ui-ink);border-color:var(--park-ui-line)}
+body #park-player-profile :is(.profile-header,.profile-code-section){border-color:var(--park-ui-line)}
+body #park-player-profile .profile-secondary{background:var(--park-ui-card);color:var(--park-ui-ink)}
+body :is(.park-inventory-panel,.park-shop-panel,.claude-emote-panel) :is([class~="bg-[#fffaf0]"],[class~="bg-[#fff8ec]"],[class~="bg-[#f3e4c2]"],[class~="bg-[#f8f0df]"]){background:var(--park-ui-card);color:var(--park-ui-ink);border-color:var(--park-ui-line)}
+body :is(.park-inventory-panel,.park-shop-panel,.claude-emote-panel) :is([class~="text-[#6b573a]"],[class~="text-[#8a6d1f]"],[class~="text-[#a98f6a]"]){color:var(--park-ui-muted)}
+@media(prefers-reduced-motion:reduce){.park-ui-control:active:not(:disabled){transform:none}}
+/* On the narrowest phones, keep the attached wallet clear of Bag. */
+@media(max-width:359px){body.park-minimap-ready #park-minimap-coins{left:calc(var(--mini-left) + var(--mini-size) - 68px)}}
