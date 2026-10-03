@@ -12,8 +12,10 @@ export async function installParkMinimap(host=window){
  await image.decode();
  const sheet=doc.createElement('link');sheet.rel='stylesheet';sheet.href=new URL('./park-minimap.css?v=steering-market-20261003-1',import.meta.url).href;
  await new Promise((resolve,reject)=>{sheet.onload=resolve;sheet.onerror=()=>{sheet.remove();reject(Error('Minimap style unavailable'));};doc.head.append(sheet);});
- let button=null,canvas=null,ctx=null,balance=null,frame=null,last=0,disposed=false;
- const detach=()=>{button?.classList.remove('park-minimap-button');canvas?.remove();balance?.remove();button=canvas=ctx=balance=null;doc.body.classList.remove('park-minimap-ready');};
+ let button=null,canvas=null,ctx=null,balance=null,frame=null,last=0,disposed=false,progression=null;
+ // Optional activity UI must never lock entry or disable the native map.
+ void import('./park-progression.js').then(m=>m.installParkProgression(host)).then(p=>{if(disposed)p.dispose();else progression=p}).catch(()=>console.warn('Park activities unavailable; the park remains playable.'));
+ const detach=()=>{button?.classList.remove('park-minimap-button');canvas?.remove();balance?.remove();button=canvas=ctx=balance=null;progression?.hide();doc.body.classList.remove('park-minimap-ready');};
  const tick=now=>{
   if(disposed)return;
   frame=host.requestAnimationFrame(tick);
@@ -44,6 +46,7 @@ export async function installParkMinimap(host=window){
   const size=256,rect=minimapImageRect(self,size);
   ctx.clearRect(0,0,size,size);ctx.fillStyle='#bed8e2';ctx.fillRect(0,0,size,size);
   if(rect)ctx.drawImage(image,rect.x,rect.y,rect.width,rect.height);
+  try{progression?.tick(self,ctx,size,overview)}catch{progression?.dispose();progression=null;console.warn('Park activities paused safely; the park remains playable.')}
   const players=mapPlayers({self,id:online.id,connected:online.connected,remotes:online.remotes,presence:host.__candyOnline?.data?.island?.players});
   for(const player of players){
    if(player.self)continue;const p=minimapPoint(player.p,self,size);if(!p?.visible)continue;
@@ -55,7 +58,7 @@ export async function installParkMinimap(host=window){
   ctx.font='bold 21px system-ui';ctx.textAlign='center';ctx.fillStyle='#fff';ctx.strokeStyle='#527576';ctx.lineWidth=3;ctx.strokeText('N',size/2,28);ctx.fillText('N',size/2,28);
   canvas.dataset.centerX=String(self.x);canvas.dataset.centerZ=String(self.z);
  };
- const dispose=()=>{disposed=true;host.cancelAnimationFrame(frame);detach();sheet.remove();host.removeEventListener('pagehide',leave);};
+ const dispose=()=>{disposed=true;host.cancelAnimationFrame(frame);detach();progression?.dispose();sheet.remove();host.removeEventListener('pagehide',leave);};
  const leave=e=>{if(!e.persisted)dispose();};host.addEventListener('pagehide',leave);
  frame=host.requestAnimationFrame(tick);return dispose;
 }

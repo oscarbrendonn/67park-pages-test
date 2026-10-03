@@ -18,7 +18,7 @@ function accept(profile){
 }
 export const getPlayerAccountState=()=>state.profile;
 export function subscribePlayerAccount(listener){state.listeners.add(listener);return()=>state.listeners.delete(listener)}
-export function resetPlayerAccount(){state.epoch++;state.pending=null;state.profile=null;}
+export function resetPlayerAccount(){state.epoch++;state.pending=null;state.progressionPending=null;state.profile=null;}
 function currentIdentity(){
   const guest=currentPreviewGuest();
   if(guest&&state.profile&&guest.id!==state.profile.id)resetPlayerAccount();
@@ -67,3 +67,13 @@ export async function claimPlayerName(name){await loadPlayerAccount();return (aw
 export async function purchasePlayerItem(itemId){await loadPlayerAccount();return (await request('purchase',{itemId})).profile;}
 export async function equipPlayerItem(selection){await loadPlayerAccount();return (await request('equip',selection)).profile;}
 export async function claimTestCoins(){await loadPlayerAccount();return (await request('test-coins')).profile;}
+export async function parkProgressionAction(kind,id){await loadPlayerAccount();return (await request('progression',{kind,id})).profile;}
+export function refreshPlayerProgression(){
+ currentIdentity();
+ if(state.progressionPending)return state.progressionPending;
+ // Complete the existing one-time inventory import before caching a status
+ // response; otherwise an early HUD refresh could skip legacy purchases.
+ const pending=loadPlayerAccount().then(()=>request('progression-status')).then(data=>data.profile);state.progressionPending=pending;
+ void pending.finally(()=>{if(state.progressionPending===pending)state.progressionPending=null}).catch(()=>{});
+ return pending;
+}

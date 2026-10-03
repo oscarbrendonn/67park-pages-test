@@ -1,0 +1,32 @@
+/* One native HUD; identity stays above the original profile button. */
+body.park-unified-ui.park-progression-ready:has(.park-toolbar){--mini-left:calc(var(--hud-edge-l) + 80px);--mini-size:80px;--mini-top:calc(var(--hud-top) + 30px)}
+body.park-unified-ui.park-progression-ready:has(.park-toolbar) .park-toolbar>span{visibility:hidden!important}
+body.park-unified-ui.park-progression-ready:has(.park-toolbar) .park-toolbar>button[aria-label="Profile studio"]{left:calc(var(--hud-edge-l) + 12px)!important;top:calc(var(--hud-top) + 34px)!important}
+.park-identity-title,.park-identity-name{position:fixed;z-index:72;left:var(--hud-edge-l);width:72px;text-align:center;color:var(--park-ui-ink);font:800 11px/1.2 system-ui;pointer-events:none;text-shadow:0 1px 1px #fff}
+.park-identity-title{top:var(--hud-top);font-size:12px}
+.park-identity-name{top:calc(var(--hud-top) + 83px);overflow:hidden;overflow-wrap:anywhere;max-height:24px;white-space:normal;font-size:10px}
+body.park-progression-ready #park-minimap-coins{left:calc(var(--mini-left) + var(--mini-size) - 60px);width:70px;top:calc(var(--mini-top) - 17px)}
+.park-daily{position:fixed;right:var(--hud-edge-r);top:calc(var(--hud-top) + 158px);z-index:74;color:var(--park-ui-ink);font:600 12px/1.45 system-ui}
+.park-daily>button{min-height:44px;padding:6px 12px;border-radius:18px;background:var(--park-ui-mint);font:inherit}
+.park-daily-panel{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);box-sizing:border-box;width:min(300px,calc(100vw - 32px));max-height:calc(100dvh - 40px);overflow:auto;padding:18px;border-radius:24px;box-shadow:var(--park-ui-shadow);z-index:150;overscroll-behavior:contain}
+.park-daily-panel h2{font:800 18px/1.2 system-ui;margin:0 70px 14px 0}
+.park-daily-panel>button[aria-label]{position:absolute;right:12px;top:10px}
+.park-daily-panel button{min-height:44px;padding:6px 12px;font:inherit;margin:4px 4px 0 0}
+.park-daily-panel p{margin:10px 0;font-size:11px}
+.park-daily-panel ul{padding:0;list-style:none;margin:12px 0;display:grid;gap:8px}
+.park-daily-panel li{padding:9px;border-radius:12px;background:var(--park-ui-card);border:1px solid var(--park-ui-line)}
+.park-daily-panel li.is-done{background:var(--park-ui-mint)}
+.park-daily-panel button:disabled{opacity:.55;cursor:not-allowed}
+.park-daily-status{min-height:1.5em}
+.park-earned{position:fixed;z-index:151;top:42%;left:50%;transform:translate(-50%,-50%);border-radius:14px;padding:6px 10px;background:var(--park-ui-gold);color:var(--park-ui-gold-ink);border:1px solid var(--park-ui-card);font:800 12px system-ui;pointer-events:none}
+.park-daily [hidden],.park-earned[hidden],.park-identity-title[hidden],.park-identity-name[hidden],.park-daily[hidden]{display:none!important}
+body:has(.wardrobe,.park-inventory-panel,#park-player-profile:not([hidden]),#party-settings:not([hidden]),.park-market-panel) :is(.park-daily,.park-identity-title,.park-identity-name,.park-earned){visibility:hidden}
+@media(orientation:landscape) and (min-width:500px){
+ .park-daily{left:calc(var(--hud-edge-l) + 180px);right:auto;top:calc(var(--hud-top) + 88px)}
+}
+@media(max-width:359px){
+ body.park-unified-ui.park-progression-ready:has(.park-toolbar){--mini-left:calc(var(--hud-edge-l) + 74px);--mini-size:64px;--mini-top:calc(var(--hud-top) + 42px)}
+ body.park-progression-ready #park-minimap-coins{left:calc(var(--mini-left) + var(--mini-size) - 62px);width:62px;top:calc(var(--mini-top) - 24px);padding:2px 4px;gap:3px;font-size:10px}
+ body.park-progression-ready .park-minimap-coin{width:16px;height:16px;font-size:11px}
+}
+@media(prefers-reduced-motion:reduce){.park-daily *{animation:none!important;transition:none!important}}
