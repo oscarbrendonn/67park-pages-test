@@ -1,0 +1,27 @@
+/* The identity/map cluster is separate from the right-hand utilities. No game
+   nodes are moved or replaced; removing the enhancement restores the old HUD. */
+body.park-unified-ui.park-minimap-ready:has(.park-toolbar){--mini-size:96px;--mini-left:calc(var(--hud-edge-l) + 52px);--mini-top:calc(var(--hud-top) + 24px);--park-chat-top:calc(var(--hud-top) + 170px)}
+body.park-unified-ui.park-minimap-ready:has(.park-toolbar) .park-toolbar>button[aria-label="Profile studio"]{left:var(--hud-edge-l)!important;top:var(--hud-top)!important}
+body.park-unified-ui.park-minimap-ready:has(.park-toolbar) .park-toolbar>span{left:var(--hud-edge-l)!important;top:calc(var(--hud-top) + 54px)!important;width:44px!important}
+body.park-unified-ui.park-minimap-ready:has(.park-toolbar) .park-toolbar>span img{width:44px!important;max-width:44px!important}
+body.park-unified-ui.park-minimap-ready:has(.park-toolbar) .park-toolbar>.park-minimap-button{left:var(--mini-left)!important;right:auto!important;top:var(--mini-top)!important;width:var(--mini-size)!important;height:var(--mini-size)!important;min-width:44px!important;min-height:44px!important;border-radius:50%!important;border:3px solid #fffdf5!important;background:#bed8e2!important;overflow:hidden;box-shadow:0 3px 0 #8eaea866,0 5px 12px #33565c20!important;touch-action:manipulation}
+.park-minimap-ready .park-minimap-button>*:not(.park-minimap-canvas){display:none!important}
+.park-minimap-button>.park-minimap-canvas{display:block;width:100%;height:100%;border-radius:50%;pointer-events:none}
+body:not(.park-minimap-ready) .park-minimap-canvas,#park-minimap-coins[hidden]{display:none!important}
+.park-minimap-button:focus-visible{outline:3px solid #377e78;outline-offset:3px}
+body.park-unified-ui.park-minimap-ready:has(.park-toolbar) .park-minimap-button:active{transform:scale(.97)!important}
+#park-minimap-coins{position:fixed;z-index:73;top:var(--hud-top);left:var(--mini-left);width:var(--mini-size);height:28px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;gap:5px;padding:2px 7px;border:2px solid #fffdf5;border-radius:14px;background:#fff5d8;color:#645432;box-shadow:0 2px 0 #b6a97655;font:800 12px system-ui;font-variant-numeric:tabular-nums;pointer-events:none}
+.park-minimap-coin{display:grid;place-items:center;width:19px;height:19px;flex:none;border-radius:50%;background:#f2c767;border:1px solid #d6a44b;box-shadow:inset 0 0 0 2px #ffe39d;color:#9a742d;font-size:13px}
+.park-minimap-amount{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+body.park-unified-ui.park-minimap-ready:has(.park-toolbar) .park-weather{left:var(--hud-edge-l)!important;top:calc(var(--hud-top) + 128px)!important}
+body.park-unified-ui.park-minimap-ready:has(.park-toolbar) .park-hud>div.absolute.right-4.top-4{left:calc(var(--hud-edge-l) + 118px)!important;right:auto!important;top:calc(var(--hud-top) + 128px)!important}
+@media (max-width:359px){body.park-unified-ui.park-minimap-ready:has(.park-toolbar){--mini-size:88px}}
+@media (orientation:landscape) and (min-width:500px), (min-width:900px){
+ body.park-unified-ui.park-minimap-ready:has(.park-toolbar){--mini-size:80px;--mini-top:calc(var(--hud-top) + 22px);--park-chat-top:calc(var(--hud-top) + 110px)}
+ body.park-unified-ui.park-minimap-ready:has(.park-toolbar) .park-weather{left:calc(var(--hud-edge-l) + 144px)!important;top:var(--hud-top)!important}
+ body.park-unified-ui.park-minimap-ready:has(.park-toolbar) .park-hud>div.absolute.right-4.top-4{left:calc(var(--hud-edge-l) + 266px)!important;right:auto!important;top:var(--hud-top)!important}
+ #park-minimap-coins{height:26px;font-size:11px;gap:3px;padding:2px 5px}
+}
+@media (orientation:landscape) and (min-width:500px) and (max-width:700px){
+ body.park-unified-ui.park-minimap-ready:has(.park-toolbar) .park-hud>div.absolute.right-4.top-4{left:calc(var(--hud-edge-l) + 144px)!important;top:calc(var(--hud-top) + 44px)!important}
+}
