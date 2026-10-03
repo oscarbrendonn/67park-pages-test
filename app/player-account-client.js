@@ -66,3 +66,4 @@ export const checkPlayerName=name=>request('name-check',{name});
 export async function claimPlayerName(name){await loadPlayerAccount();return (await request('name-claim',{name})).profile;}
 export async function purchasePlayerItem(itemId){await loadPlayerAccount();return (await request('purchase',{itemId})).profile;}
 export async function equipPlayerItem(selection){await loadPlayerAccount();return (await request('equip',selection)).profile;}
+export async function claimTestCoins(){await loadPlayerAccount();return (await request('test-coins')).profile;}

@@ -1,0 +1,11 @@
+// Profile-only UI. The existing account service owns balance and purchases.
+export function createProfileWallet(doc,api){
+ const el=(tag,cls,text)=>{const n=doc.createElement(tag);n.className=cls;if(text)n.textContent=text;return n};
+ const root=el('section','profile-wallet park-ui-card'),title=el('h3','','Park coins'),balance=el('strong','profile-wallet-balance','Loading…'),note=el('p','','Use coins in Shop. Purchased items stay in My items.'),claim=el('button','profile-wallet-claim'),retry=el('button','profile-wallet-retry','Retry balance'),status=el('p','profile-wallet-status');
+ root.setAttribute('aria-label','Park wallet');balance.setAttribute('aria-live','polite');status.setAttribute('role','status');claim.type=retry.type='button';claim.hidden=retry.hidden=true;root.append(title,balance,note,claim,retry,status);
+ let closed=false,pending=false,loading=false;
+ function render(){if(closed)return;const p=api.get();balance.textContent=p?`${p.inventory.coins.toLocaleString('en-US')} coins`:'Loading…';const test=p?.testCoins;claim.hidden=!test;claim.disabled=pending||test?.claimed===true;claim.textContent=pending?'Adding test coins…':test?.claimed?'Test coins received':`Get ${test?.amount?.toLocaleString('en-US')||'1,000'} test coins`;note.textContent=test?'Playtest coins only · No payment or cash value.':'Use coins in Shop. Purchased items stay in My items.';root.setAttribute('aria-busy',String(pending||loading))}
+ async function load(){if(loading||closed)return;loading=true;retry.hidden=true;status.textContent='';render();try{await api.load()}catch(e){if(!closed){status.textContent=e.message||'Your balance could not load.';retry.hidden=false}}finally{loading=false;render()}}
+ claim.addEventListener('click',async()=>{if(pending||closed||api.get()?.testCoins?.claimed)return;pending=true;status.textContent='';render();try{await api.claim();if(!closed)status.textContent='Test coins added. Open Shop to choose your items.'}catch(e){if(!closed)status.textContent=e.message||'Coins could not be added. Please retry.'}finally{pending=false;render()}});
+ retry.addEventListener('click',load);const unsubscribe=api.subscribe(render);render();void load();return{element:root,dispose(){closed=true;unsubscribe?.()}};
+}

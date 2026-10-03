@@ -1,4 +1,5 @@
 import {createPlayerNameController,renderPlayerNameFeedback} from './player-name-field.js?v=player-account-20261003-1';
+import {createProfileWallet} from './profile-wallet.js?v=profile-commerce-20261004-1';
 
 let current=null;
 const release=()=>window.dispatchEvent(new Event('park:release-controls'));
@@ -15,7 +16,7 @@ export function openPlayerProfile(api) {
   if(current?.open){current.querySelector('.profile-close').focus({preventScroll:true});return current;}
   if(!document.getElementById('park-player-profile-style')){
     const sheet=element('link');sheet.id='park-player-profile-style';sheet.rel='stylesheet';
-    sheet.href=new URL('./player-profile-panel.css?v=profile-hud-20261002-1',import.meta.url).href;document.head.append(sheet);
+    sheet.href=new URL('./player-profile-panel.css?v=profile-commerce-20261004-1',import.meta.url).href;document.head.append(sheet);
   }
   const origin=document.activeElement,dialog=element('dialog','park-player-profile');current=dialog;
   dialog.id='park-player-profile';dialog.setAttribute('aria-labelledby','profile-title');dialog.setAttribute('aria-modal','true');
@@ -38,6 +39,9 @@ export function openPlayerProfile(api) {
   formActions.append(cancel,save);form.append(label,input,hint,error,formActions);
   const change=button('Change character','profile-change',()=>navigate(()=>api.openWardrobe(true)));
   const myItems=button('My items','profile-change profile-owned-items',()=>navigate(()=>api.openMyItems?.()));
+  const shop=button('Shop','profile-change profile-shop',()=>navigate(()=>api.openShop?.()));
+  const shopping=element('div','profile-shopping');shopping.append(shop,myItems);
+  const wallet=api.wallet?createProfileWallet(document,api.wallet):null;
   const codeSection=element('section','profile-code-section'),codeHeading=element('h3','','Friend code'),codeHelp=element('p','','Share this public code so friends can find you.');
   const codeRow=element('div','profile-code-row'),code=element('input','profile-friend-code');code.readOnly=true;code.setAttribute('aria-label','Your friend code');code.autocomplete='off';
   const copy=button('Copy friend code','profile-secondary',async()=>{
@@ -51,7 +55,7 @@ export function openPlayerProfile(api) {
   links.append(button('Friends','',()=>openOnline('friends')),button('Account & privacy','',()=>openOnline('account')),button('Settings','',()=>navigate(()=>document.getElementById('party-settings-btn')?.click())));
   const status=element('p','profile-status');status.setAttribute('role','status');status.setAttribute('aria-live','polite');
   status.textContent=api.initialStatus||'';
-  body.append(hero,form,change,myItems,codeSection,links,status);dialog.append(head,body);document.body.append(dialog);
+  body.append(hero,form,change,...(wallet?[wallet.element]:[]),shopping,codeSection,links,status);dialog.append(head,body);document.body.append(dialog);
   let editing=false,closed=false,portraitBase='',unblock=null;const unsubscribers=[];
   const names=createPlayerNameController({getName:()=>api.getName?.()||'',setName:value=>api.setName(value)});
   const renderName=()=>{
@@ -80,6 +84,7 @@ export function openPlayerProfile(api) {
   function close(restore=true){
     if(closed)return;closed=true;
     names.dispose();
+    wallet?.dispose();
     for(const unsubscribe of unsubscribers)unsubscribe?.();
     window.removeEventListener('keydown',guard,true);window.removeEventListener('keyup',guard,true);
     document.documentElement.removeAttribute('data-park-profile-open');
