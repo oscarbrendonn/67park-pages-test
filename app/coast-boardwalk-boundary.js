@@ -1,4 +1,5 @@
 import * as T from 'three';
+import {prepareNorthBeachJoin} from './beach-north-join.js?v=approved-coast-20261004-1';
 
 // Beach-facing boundary of the live 6_BORDUR top, identical in both Islands.
 // The south curb's rounded terminal is traced too: do not cut the separate
@@ -11,6 +12,16 @@ const curb=[
  [238.26898,12.95844],[238.26194,12.99089],[238.26178,12.99379],
  [238.26246,12.99661],[238.26457,12.99985],[238.26774,13.00205],
  [238.29122,13.00975],[238.28487,13.06981],[238.26909,13.09049],
+];
+// Northern road-facing edge, traced on the existing curb at deck height
+// y=9.365. Keep intermediate triangle intersections: the long curb is not
+// mathematically axis-aligned. This fills the former sand wedge WITHOUT
+// moving the curb, beach-facing deck edge, beach or approved south landing.
+const northCurb=[
+ [239,-76.6926699275],[233.174183,-76.6925172],
+ [215.7068366,-76.6908138],[215.5420494,-76.5131502],
+ [215.1887238,-76.1340261],[215.0110654,-75.9692459],
+ [214.6319522,-75.6159384],[214.64015,-55],
 ];
 const cross=(a,b)=>a[0]*b[1]-a[1]*b[0];
 const xz=v=>[v.x,v.z];
@@ -64,9 +75,14 @@ function geometryFromSections(sections,approvedNormals){
   const sign=ys.every(y=>Math.abs(y-top)<1e-6)?1:ys.every(y=>Math.abs(y-bottom)<1e-6)?-1:0;
   if(sign){for(let j=0;j<3;j++)norm.setXYZ(i+j,0,sign,0);continue;}
   const a=new T.Vector3().fromBufferAttribute(pos,i),b=new T.Vector3().fromBufferAttribute(pos,i+1),c=new T.Vector3().fromBufferAttribute(pos,i+2),face=b.sub(a).cross(c.sub(a)).normalize();
+  // The north endpoint is now a straight closed cap. The old tube's rounded
+  // endpoint normals produce a dark, dent-like streak across this flat face.
+  const northEnd=[0,1,2].every(j=>Math.abs(pos.getX(i+j)-239)<.001&&pos.getZ(i+j)<-72&&pos.getZ(i+j)>-77);
+  const southEnd=[0,1,2].every(j=>Math.abs(pos.getX(i+j)-244.8)<.001&&pos.getZ(i+j)>10&&pos.getZ(i+j)<14);
   for(let j=0;j<3;j++){
    const k=i+j,original=approvedNormals.get(normalKey(pos.getX(k),pos.getY(k),pos.getZ(k)));
-   if(original)norm.setXYZ(k,...original);
+   if(northEnd||southEnd)norm.setXYZ(k,1,0,0);
+   else if(original)norm.setXYZ(k,...original);
    else norm.setXYZ(k,face.x,face.y,face.z);
   }
  }
@@ -104,22 +120,28 @@ export function repairCoastBoardwalk(source){
   left.push({bottom:read(i*6),bevel:read(i*6+1),top:read(i*6+2)});
   right.push({bottom:read(i*6+5),bevel:read(i*6+4),top:read(i*6+3)});
  }
+ // The three end-profile vertices were smoothed with the OLD tube end cap.
+ // Their -X normals leak into the adjacent shore bevel as a dark triangular
+ // stain even after the new +X cap is corrected. Continue the immediately
+ // neighbouring profile's lighting on the shore side only; geometryFromSections
+ // still assigns separate +X cap and +/-Y top/bottom normals. No vertex moves.
+ for(const profile of ['bottom','bevel','top']){
+  const endpoint=right[0][profile],neighbour=right[1][profile];
+  approvedNormals.set(normalKey(endpoint.x,endpoint.y,endpoint.z),approvedNormals.get(normalKey(neighbour.x,neighbour.y,neighbour.z)));
+ }
+ // Same authored cap-normal contamination at the separately approved SOUTH
+ // terminal. Correct its two end profiles only; all positions/indices and
+ // every normal outside the terminal remain as before.
+ for(const side of [left,right])for(const profile of ['bottom','bevel','top']){
+  const endpoint=side[420][profile],neighbour=side[419][profile];
+  approvedNormals.set(normalKey(endpoint.x,endpoint.y,endpoint.z),approvedNormals.get(normalKey(neighbour.x,neighbour.y,neighbour.z)));
+ }
  const start=left.findIndex(s=>s.bottom.z>=-60&&s.bottom.x<220);
  const end=left.findIndex(s=>s.bottom.x>238.32960&&s.bottom.z>0);
  if(start<0||end<start||end>419)throw Error('Coast boardwalk contour changed');
  const top=left[start].top.y,bottom=left[start].bottom.y;
  if(Math.abs(top-9.365)>.00001||Math.abs(bottom-8.90)>.00001)throw Error('Coast boardwalk height changed');
- const repaired=left.slice(0,start+1),from=left[start];
- // Only a short, smooth shoulder on the traced western straight changes.
- // Everything north of this original cross-section remains byte-position exact.
- for(let i=1;i<12;i++){
-  const t=i/12,s=t*t*(3-2*t),section={};
-  for(const key of ['bottom','bevel','top']){
-   const target=new T.Vector3(curb[0][0],key==='bottom'?bottom:top,curb[0][1]);
-   section[key]=from[key].clone().lerp(target,s);section[key].z=T.MathUtils.lerp(from[key].z,target.z,t);
-  }
-  repaired.push(section);
- }
+ const repaired=northCurb.map(([x,z])=>({bottom:new T.Vector3(x,bottom,z),bevel:new T.Vector3(x,top,z),top:new T.Vector3(x,top,z)}));
  for(const [x,z]of curb)repaired.push({bottom:new T.Vector3(x,bottom,z),bevel:new T.Vector3(x,top,z),top:new T.Vector3(x,top,z)});
  repaired.push(...left.slice(end));
  const sections=[...repaired,...right.toReversed()],geometry=geometryFromSections(sections,approvedNormals);
@@ -141,7 +163,9 @@ export function repairCoastBoardwalk(source){
   const next=new T.BufferGeometry();next.setAttribute('position',new T.Float32BufferAttribute(verts.flatMap(v=>v.toArray()),3));
   const n=verts[1].clone().sub(verts[0]).cross(verts[2].clone().sub(verts[0]));next.setIndex(n.y>0?[0,1,2,0,2,3]:[0,2,1,0,3,2]);next.computeVertexNormals();next.computeBoundingBox();next.computeBoundingSphere();seams.push({line,geometry:next});
  }
- const stats={revision:2,northUnchangedThroughZ:from.bottom.z,westCurb:214.65298,southCurb:12.01497,top,bottom,replacedMeshes:1,adjustedPlankJoints:seams.length,addedDrawCalls:0,triangleDelta:(geometry.index.count-old.index.count)/3,originalShoreNormals:true};
+ const beach=prepareNorthBeachJoin(source);
+ const stats={revision:3,northJoinThroughZ:-53,northCurbAtDeckHeight:true,westCurb:214.65298,southCurb:12.01497,top,bottom,replacedMeshes:1,adjustedPlankJoints:seams.length,addedDrawCalls:0,triangleDelta:(geometry.index.count-old.index.count)/3,originalShoreNormals:true,northBeachVertices:beach?.changed??0};
+ if(beach){const previous=beach.mesh.geometry;beach.mesh.geometry=beach.geometry;previous.dispose();}
  mesh.geometry=geometry;old.dispose();
  for(const {line,geometry}of seams){line.geometry.dispose();line.geometry=geometry;line.position.set(0,0,0);line.quaternion.identity();line.scale.set(1,1,1);}
  return source.userData.coastBoardwalkBoundary=stats;

@@ -31,7 +31,7 @@ export function createGrassUnderfill(grass,material,{at=[248.9,110],bottom=8.79}
 
 export function installGrassUnderfill(world){
  if(world.grassUnderfill)return world;
- const grass=world.terrain.getObjectByName('3_CIMEN_KOYU'),support=world.terrain.getObjectByName('7_KALDIRIM_TABANI');
- const mesh=createGrassUnderfill(grass,support.material);world.scene.add(mesh);world.grassUnderfill=mesh.userData.grassUnderfill;
+ const grass=world.terrain.getObjectByName('3_CIMEN_KOYU');
+ const mesh=createGrassUnderfill(grass,grass.material);world.scene.add(mesh);world.grassUnderfill=mesh.userData.grassUnderfill;
  const dispose=world.dispose;world.dispose=function(...args){mesh.removeFromParent();mesh.geometry.dispose();return dispose?.apply(this,args);};return world;
 }
