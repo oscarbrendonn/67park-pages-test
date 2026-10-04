@@ -21,8 +21,8 @@ export function createVehicleSurfaceDomain(terrain){
   else if(/^(?:9_GOLET|67D_(?:REF_MAIN_WATER|PARK_WATER_UNIFIED))/.test(mesh.name))waters.push(mesh);
  });
  if(!floors.some(m=>m.name==='5_YOL')||!floors.some(m=>m.name==='7_KALDIRIM_TABANI'))throw Error('Vehicle road/sidewalk geometry missing');
- const allowed=createCityHeightSampler58(floors);
- const wet=waters.length?createCityHeightSampler58(waters):null;
+ const allowed=createCityHeightSampler58(floors,{cacheSize:256});
+ const wet=waters.length?createCityHeightSampler58(waters,{cacheSize:256}):null;
  const skate=createVehicleSkateDomain(terrain);
  const height=(x,z)=>skate?.height(x,z)??allowed.height(x,z);
  const pavement=name=>/^(?:6_BORDUR|7_(?:KALDIRIM_TABANI|MERKEZ_KALDIRIM_TABANI|DOGU_SAHIL_KAVSAK_TABANI|DOGU_SAHIL_MEYDAN_APRON))(?:$|_)/.test(name);

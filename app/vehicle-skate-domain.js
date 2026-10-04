@@ -13,7 +13,7 @@ export function createVehicleSkateDomain(terrain){
   (rail(m.name)?rails:floors).push(m);
  });
  if(!floors.length)return null;
- const floor=createCityHeightSampler58(floors,{cellSize:2});
+ const floor=createCityHeightSampler58(floors,{cellSize:2,cacheSize:256});
  // These five rails are all authored along Z. Preserve their existing .42m
  // clearance skin, including rounded ends (axial-only probes missed corners).
  const segments=rails.map(m=>{const b=new Box3().setFromObject(m),r=(b.max.x-b.min.x)/2;return{x:(b.min.x+b.max.x)/2,z0:b.min.z+r,z1:b.max.z-r,radius:r+.42};});

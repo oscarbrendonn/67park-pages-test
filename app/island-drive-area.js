@@ -3,6 +3,7 @@ import {tunePreviewWorld} from './park-driving-tuning.js?v=beach-drive-1';
 import {applyVehicleGroundPose} from './vehicle-ground-pose.js?v=skate-drive-1';
 import {DRIVE_STEP,terrainProfile,traversableGrade} from './vehicle-terrain-grade.js?v=thumb-drive-1';
 import {installSkateRailFinish} from './party/skate-rail-finish.js?v=flush-ends-2';
+import {restoreVehicleGroundContacts} from './vehicle-contact-spec.js';
 // The same domain and complete car/bus footprint are used by prediction and
 // server authority. No widening by bounding boxes at rounded sidewalk corners.
 export function expandIslandDriveArea(area,{ground,water=()=>false,sea=()=>8.776851733454327,blocked=()=>false,domain}){
@@ -75,6 +76,7 @@ export function expandIslandDriveArea(area,{ground,water=()=>false,sea=()=>8.776
  area.check=check;area.stats={...area.stats,roadOnly:false,driveSurfaces:'dry-open-terrain',maxStep:DRIVE_STEP,terrainGrade:'local-probes-1',domain:domain?.stats};return area;
 }
 export function installIslandDriving(world){
+ for(const car of world.traffic?.cars||[])restoreVehicleGroundContacts(car);
  if(world.traffic)tunePreviewWorld(world.traffic);
  if(!world.traffic||world.traffic.freeDrive)return world;
  // The bundle used to index vehicle support before the existing rounded-end

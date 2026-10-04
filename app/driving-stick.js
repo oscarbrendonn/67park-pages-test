@@ -16,7 +16,13 @@ export function drivingStickInput(x,z){
 }
 export function resetDrivingInput(state){
  releaseDrivingStick(state);
- Object.assign(state,{gas:false,reverse:false,brake:false,steer:0,touchSteering:false,driveInterrupted:true,drivePedalOwners:Object.create(null)});
+ Object.assign(state,{gas:false,reverse:false,brake:false,steer:0,touchSteering:false,driveInterrupted:true,driveRecoveryUntil:0,drivePedalOwners:Object.create(null)});
+}
+// A server-approved dry-land recovery is not a lost pointer or a hidden tab.
+// Keep actual pedal ownership, brake while settling, then read the STILL-held
+// input. Pointer-up/cancel/blur and all ordinary interruption resets still win.
+export function pauseDrivingForRecovery(state,now=performance.now()){
+ state.driveRecoveryUntil=now+450;
 }
 // Pointer ownership survives React renders. Releasing another finger cannot
 // cancel a held pedal, and cancelled/hidden controls cannot re-arm on a move.
@@ -48,8 +54,9 @@ export function createDrivingPedalHandlers(state,key,blocked=()=>false){
   onBlur:event=>release(event,'keyboard',true),
  };
 }
-export function readVehicleInput(keys,state,enabled=true,brake=false){
+export function readVehicleInput(keys,state,enabled=true,brake=false,now=performance.now()){
  if(!enabled)return {throttle:0,steer:0,brake:true};
+ if(now<(state.driveRecoveryUntil??0))return {throttle:0,steer:0,brake:true};
  const x=clamp(finite(keys.x),-1,1),z=clamp(finite(keys.z),-1,1),keyboard=!!(x||z);
  const gas=!!state.gas,reverse=!!state.reverse;
  const steer=x||(state.driveStickActive?drivingStickInput(state.driveX,state.driveZ).steer:state.touchSteering?clamp(finite(state.steer),-1,1):0);
