@@ -1,0 +1,20 @@
+/* The same raised pastel family as the upper HUD, never the retired cream pill.
+   Keep placement, visibility and dialog ownership with the existing owners. */
+body.park-unified-ui #park-home-button.park-utility-button,
+body.park-unified-ui #park-daily>button.park-utility-button{
+ --utility-tint:var(--park-ui-mint);--utility-edge:var(--park-ui-mint-edge);
+ display:inline-flex;align-items:center;justify-content:center;gap:7px;
+ box-sizing:border-box;min-height:44px;max-width:155px;padding:6px 10px;
+ border:2px solid var(--park-ui-card);border-radius:15px;
+ background:linear-gradient(165deg,var(--park-ui-card),var(--utility-tint) 75%);
+ color:var(--park-ui-ink);box-shadow:0 3px 0 var(--utility-edge),inset 0 2px 0 var(--park-ui-card);
+ font:800 12px/1.2 var(--park-ui-font);white-space:nowrap;cursor:pointer;touch-action:manipulation;
+}
+body.park-unified-ui #park-home-button.park-utility-button{--utility-tint:var(--park-ui-lilac);--utility-edge:var(--park-ui-lilac-edge)}
+.park-utility-icon{width:23px;height:23px;flex:none;pointer-events:none}
+.park-utility-label{min-width:0;overflow:hidden;text-overflow:ellipsis;pointer-events:none}
+.park-utility-badge{flex:none;padding:4px;border-radius:8px;background:var(--park-ui-card);font-size:10px;font-variant-numeric:tabular-nums;pointer-events:none}
+body.park-unified-ui .park-utility-button:focus-visible{outline:3px solid var(--park-ui-focus);outline-offset:3px}
+body.park-unified-ui .park-utility-button:active{transform:scale(.97)}
+body.park-unified-ui .park-utility-button[hidden]{display:none!important}
+@media(prefers-reduced-motion:reduce){body.park-unified-ui .park-utility-button:active{transform:none}}

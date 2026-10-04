@@ -1,17 +1,20 @@
 import {getPlayerAccountState,subscribePlayerAccount,parkProgressionAction,refreshPlayerProgression} from './player-account-client.js';
 import {PARK_COINS,DELIVERY} from './park-progression-rules.js';
 import {minimapPoint} from './park-minimap-math.js?v=minimap-20261003-1';
+import {decorateUtilityButton,watchHomesButton} from './hud-utility-buttons.js?v=hud-utilities-20261004-1';
 
 export async function installParkProgression(host=window){
- const doc=host.document,sheet=doc.createElement('link');sheet.rel='stylesheet';sheet.href=new URL('./park-progression.css',import.meta.url).href;
+ const doc=host.document,sheet=doc.createElement('link');sheet.rel='stylesheet';sheet.href=new URL('./park-progression.css?v=hud-utilities-20261004-1',import.meta.url).href;
  await new Promise((resolve,reject)=>{sheet.onload=resolve;sheet.onerror=()=>{sheet.remove();reject(Error('Progression style unavailable'))};doc.head.append(sheet)});
  const el=(tag,cls,text)=>{const n=doc.createElement(tag);n.className=cls;if(text)n.textContent=text;return n};
- const brand=el('div','park-identity-title','Six Seven Park'),name=el('div','park-identity-name');
+ const brand=el('div','park-identity-title'),name=el('div','park-identity-name');
+ const logo=el('img','park-identity-logo');logo.src=new URL('../brand/67park-logo.png',import.meta.url).href;logo.alt='67Park';logo.width=72;logo.height=27;brand.append(logo);
  const root=el('section','park-daily'),toggle=el('button','park-ui-control','Daily · 0/3'),panel=el('div','park-daily-panel park-ui-panel');
  root.id='park-daily';panel.id='park-daily-panel';panel.hidden=true;toggle.type='button';toggle.setAttribute('aria-expanded','false');toggle.setAttribute('aria-controls',panel.id);
  const heading=el('h2','','Your park day'),close=el('button','park-ui-control','Close'),streak=el('p'),list=el('ul'),cap=el('p'),legend=el('p','','Gold dots: 5 coins each · Blue: parcel pickup · Pink: delivery'),job=el('button','park-ui-control'),cancel=el('button','park-ui-control','Cancel delivery'),retry=el('button','park-ui-control','Retry'),status=el('p','park-daily-status'),earned=el('div','park-earned');
  close.type=job.type=cancel.type=retry.type='button';close.setAttribute('aria-label','Close daily quests');status.setAttribute('role','status');earned.setAttribute('role','status');earned.hidden=true;retry.hidden=true;
  panel.append(heading,close,streak,list,cap,legend,job,cancel,retry,status);root.append(toggle,panel);doc.body.append(brand,name,root,earned);
+ const stopHomesPresentation=watchHomesButton(doc);
  let disposed=false,profile=getPlayerAccountState(),self=null,world=null,group=null,building=false,near=null,busy=false,refreshing=false,lastRefresh=0,lastLoginAttempt=0,lastAuto=0,anim=null,timer=null;
  let previousId=profile?.id,previousEarned=profile?.progression?.earned??null;
  const release=()=>host.dispatchEvent(new host.Event('park:release-controls'));
@@ -31,7 +34,7 @@ export async function installParkProgression(host=window){
  function render(){
   if(disposed)return;const p=profile?.progression;
   name.textContent=profile?.name||'Connecting…';name.title=profile?.name||'';
-  toggle.textContent=p?`Daily · ${p.quests.filter(q=>q.claimed).length}/3`:'Daily · Connecting';
+  decorateUtilityButton(toggle,'daily','Daily',p?`${p.quests.filter(q=>q.claimed).length}/3`:'…');
   streak.textContent=p?`Day ${p.streak.count} streak · ${p.streak.claimed?'Check-in received':'Check in to earn coins'}`:'Connecting to your wallet…';
   list.replaceChildren(...(p?.quests||[]).map(q=>el('li',q.claimed?'is-done':'',`${q.claimed?'✓ ':''}${q.label} · ${q.count}/${q.target} · +${q.reward}`)));
   cap.textContent=p?`Match rewards: ${p.matchCoins}/${p.matchCap} today · Resets at 00:00 UTC`:'';
@@ -91,6 +94,6 @@ export async function installParkProgression(host=window){
    if(near&&!['pickup','dropoff'].includes(near)&&!busy&&now-lastAuto>1800){lastAuto=now;void act('collect',near,{quiet:true})}
   },
   hide(){brand.hidden=name.hidden=root.hidden=earned.hidden=true;if(group)group.visible=false;doc.body.classList.remove('park-progression-ready')},
-  dispose(){disposed=true;unsubscribe();clearTimeout(timer);anim?.cancel();group?.removeFromParent();group?.userData.dispose?.();sheet.remove();brand.remove();name.remove();root.remove();earned.remove();doc.body.classList.remove('park-progression-ready')},
+  dispose(){disposed=true;unsubscribe();stopHomesPresentation();clearTimeout(timer);anim?.cancel();group?.removeFromParent();group?.userData.dispose?.();sheet.remove();brand.remove();name.remove();root.remove();earned.remove();doc.body.classList.remove('park-progression-ready')},
  };
 }

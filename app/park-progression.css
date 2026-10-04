@@ -1,9 +1,11 @@
+@import url('./hud-utility-buttons.css?v=hud-utilities-20261004-1');
 /* One native HUD; identity stays above the original profile button. */
 body.park-unified-ui.park-progression-ready:has(.park-toolbar){--mini-left:calc(var(--hud-edge-l) + 80px);--mini-size:80px;--mini-top:calc(var(--hud-top) + 30px)}
 body.park-unified-ui.park-progression-ready:has(.park-toolbar) .park-toolbar>span{visibility:hidden!important}
 body.park-unified-ui.park-progression-ready:has(.park-toolbar) .park-toolbar>button[aria-label="Profile studio"]{left:calc(var(--hud-edge-l) + 12px)!important;top:calc(var(--hud-top) + 34px)!important}
 .park-identity-title,.park-identity-name{position:fixed;z-index:72;left:var(--hud-edge-l);width:72px;text-align:center;color:var(--park-ui-ink);font:800 11px/1.2 system-ui;pointer-events:none;text-shadow:0 1px 1px #fff}
-.park-identity-title{top:var(--hud-top);font-size:12px}
+.park-identity-title{top:var(--hud-top);height:28px;display:flex;align-items:center;justify-content:center}
+.park-identity-logo{display:block;width:72px;height:27px;object-fit:contain}
 .park-identity-name{top:calc(var(--hud-top) + 83px);overflow:hidden;overflow-wrap:anywhere;max-height:24px;white-space:normal;font-size:10px}
 body.park-progression-ready #park-minimap-coins{left:calc(var(--mini-left) + var(--mini-size) - 60px);width:70px;top:calc(var(--mini-top) - 17px)}
 .park-daily{position:fixed;right:var(--hud-edge-r);top:calc(var(--hud-top) + 158px);z-index:74;color:var(--park-ui-ink);font:600 12px/1.45 system-ui}
