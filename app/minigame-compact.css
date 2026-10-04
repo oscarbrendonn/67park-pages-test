@@ -1,0 +1,279 @@
+/* Game-first HUD. All rules target standalone mini-games, never the lobby.
+   Reflow actual controls rather than scaling their touch coordinate system.
+   Existing nodes, accessible names, scores, timers and handlers stay intact. */
+html body:is(.balloon-mode,.tumble-tiles,.lane-park-ui),
+html body:has(.cr-top,.sp-top,.rr-top,.game-topbar) {
+  --mini-top:calc(var(--preview-top,0px) + max(8px,env(safe-area-inset-top)));
+  --mini-left:max(10px,env(safe-area-inset-left));
+  --mini-right:max(10px,env(safe-area-inset-right));
+  --mini-bottom:max(14px,env(safe-area-inset-bottom));
+  --mini-home-icon:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='black' stroke-width='1.8' stroke-linejoin='round' d='m3 10 9-7 9 7M5 9v12h5v-7h4v7h5V9'/%3E%3C/svg%3E");
+  --mini-map-icon:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='black' stroke-width='1.8' stroke-linejoin='round' d='m3 5 6-2 6 2 6-2v16l-6 2-6-2-6 2zm6-2v16m6-14v16'/%3E%3C/svg%3E");
+  --mini-settings-icon:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='black' stroke-width='1.8' stroke-linejoin='round'%3E%3Cpath d='m10 3 4 0 .5 2.2 2 .9 2-.6 2 3.4-1.5 1.6v2.4l1.5 1.6-2 3.4-2-.6-2 .9L14 21h-4l-.5-2.2-2-.9-2 .6-2-3.4L5 13.5v-2.4L3.5 9.5l2-3.4 2 .6 2-.9Z'/%3E%3Ccircle cx='12' cy='12' r='3'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* The same raised 44px utility buttons as the park, not large text pills.
+   Font-size only hides the visual label; original DOM text remains accessible. */
+html body:has(.cr-top,.sp-top,.rr-top,.game-topbar) :is(#running-camera-settings,.cr-view,.cr-top>a,.sp-home,.rr-actions>button,.rr-actions>a),
+html body.balloon-mode #back-park,
+html body.lane-park-ui #running-camera-settings {
+  --mini-tint:var(--park-ui-lilac);--mini-edge:var(--park-ui-lilac-edge);
+  box-sizing:border-box;width:44px!important;height:44px!important;min-width:44px;min-height:44px;
+  padding:0!important;border:2px solid var(--park-ui-card);border-radius:15px!important;
+  display:grid;place-items:center;background:linear-gradient(165deg,var(--park-ui-card),var(--mini-tint) 75%)!important;
+  box-shadow:0 3px 0 var(--mini-edge),inset 0 2px 0 var(--park-ui-card)!important;
+  color:var(--park-ui-ink);font-size:0!important;line-height:0;backdrop-filter:none!important;
+}
+html body:has(.cr-top,.sp-top,.rr-top,.game-topbar) :is(#running-camera-settings,.cr-view,.cr-top>a,.sp-home,.rr-actions>button,.rr-actions>a)::after,
+html body.balloon-mode #back-park::after,
+html body.lane-park-ui #running-camera-settings::after {
+  content:'';display:block;width:22px;height:22px;background:currentColor;
+  mask:var(--mini-icon,var(--mini-settings-icon)) center/contain no-repeat;
+  -webkit-mask:var(--mini-icon,var(--mini-settings-icon)) center/contain no-repeat;pointer-events:none;
+}
+html body :is(.cr-view,#sp-view,#rr-view) {--mini-icon:var(--mini-map-icon);--mini-tint:var(--park-ui-mint)!important;--mini-edge:var(--park-ui-mint-edge)!important}
+html body :is(.cr-top>a,#sp-home,#rr-back),html body.balloon-mode #back-park {--mini-icon:var(--mini-home-icon);--mini-tint:var(--park-ui-blue)!important;--mini-edge:var(--park-ui-blue-edge)!important}
+html body:has(.cr-top,.sp-top,.rr-top,.game-topbar) #running-camera-settings,
+html body.lane-park-ui #running-camera-settings {top:var(--mini-top)!important;left:auto!important;right:var(--mini-right)!important;z-index:90}
+html body:has(.cr-top,.sp-top,.rr-top,.game-topbar) #running-camera-dialog {
+  background:var(--park-ui-surface);color:var(--park-ui-ink);border-color:var(--park-ui-card);
+  box-shadow:var(--park-ui-shadow);font-family:var(--park-ui-font);padding:18px;border-radius:24px;
+}
+
+/* Identity is a logo and one small title, not an advertising card. */
+html body :is(.cr-top,.sp-top,.rr-top) {top:var(--mini-top)!important;left:var(--mini-left);right:var(--mini-right);gap:6px}
+html body :is(.cr-top>div,.sp-brand,.rr-brand) {
+  padding:0!important;border:0;border-radius:0;background:none!important;box-shadow:none;
+  font-family:var(--park-ui-font);max-width:150px;pointer-events:none;
+}
+html body :is(.cr-top>div,.sp-brand,.rr-brand)::before {
+  content:'';display:block;width:62px;height:23px;background:url('../brand/67park-logo.png') left center/contain no-repeat;
+}
+html body :is(.cr-top small,.sp-brand small,.sp-brand p,.rr-brand small,.rr-brand h1 span) {display:none}
+html body :is(.cr-top h1,.sp-brand h1,.rr-brand h1) {font:800 12px/1.3 var(--park-ui-font)!important;margin:3px 0 0!important;letter-spacing:0;white-space:nowrap;color:var(--park-ui-ink)}
+html body .cr-top>a {margin-right:50px}
+html body .cr-view {top:var(--mini-top)!important;left:auto;right:calc(var(--mini-right) + 100px);z-index:10}
+html body .sp-top-actions,html body .rr-actions {flex-direction:row;gap:6px}
+
+/* Compact data chips: consistent typography/edges across all games. */
+html body :is(.cr-status,.cr-score>div,.sp-score,.sp-turn,.rr-stats,.rr-standings li,.game-stats>div),
+html body.balloon-mode .bb-hud,html body.lane-park-ui :is(.race,.hint) {
+  font-family:var(--park-ui-font);color:var(--park-ui-ink);border:1px solid var(--park-ui-card);
+  border-radius:12px;background:var(--park-ui-surface);box-shadow:0 2px 0 var(--park-ui-line);
+}
+
+/* Rockets: top edge = navigation; right edge = match data; middle = play. */
+html body:has(.cr-top) .cr-status {top:calc(var(--mini-top) + 54px);left:auto;right:var(--mini-right);transform:none;min-width:0;width:166px;padding:5px 8px;text-align:right;font-size:9px}
+html body:has(.cr-top) .cr-status b {font:800 13px/1.3 var(--park-ui-font);font-variant-numeric:tabular-nums}
+html body:has(.cr-top) .cr-score {top:calc(var(--mini-top) + 100px);left:auto;right:var(--mini-right);width:130px;display:grid;grid-template-columns:1fr;gap:3px;max-height:108px;overflow-y:auto;overscroll-behavior:contain;touch-action:pan-y}
+html body:has(.cr-top) .cr-score>div {font-size:10px;line-height:15px;padding:3px 7px;border-left:3px solid var(--team);gap:8px}
+html body:has(.cr-top) .cr-score>div span {overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+html body:has(.cr-top) .cr-radar {top:calc(var(--mini-top) + 54px);left:var(--mini-left);width:72px;height:64px;border-radius:16px;border:2px solid var(--park-ui-card)}
+html body:has(.cr-top) .cr-bottom {bottom:var(--mini-bottom);width:92px;min-width:0;padding:5px 7px;left:50%;transform:translateX(-50%);border:1px solid var(--park-ui-card);border-radius:13px}
+html body:has(.cr-top) .cr-bottom meter {height:8px}
+html body:has(.cr-top) .cr-bottom b {font-size:12px;line-height:1}
+html body:has(.cr-top) .cr-bottom small {font:700 8px/1.2 var(--park-ui-font);margin-top:2px}
+html body:has(.cr-top) .cr-tools {left:50%!important;bottom:calc(var(--mini-bottom) + 112px)!important;width:min(370px,calc(100vw - 20px))!important;transform:translateX(-50%)!important;display:grid;grid-template-columns:repeat(6,minmax(44px,1fr))!important;gap:4px}
+html body:has(.cr-top) .cr-tools>div {display:contents}
+html body:has(.cr-top) .cr-tools button {grid-column:auto!important;grid-row:auto!important;min-width:44px;min-height:44px;padding:3px;font:800 9px/1.2 var(--park-ui-font);border:2px solid var(--park-ui-card);border-radius:13px;background:linear-gradient(var(--park-ui-card),var(--park-ui-soft));color:var(--park-ui-ink);box-shadow:var(--park-ui-button-shadow)}
+html body:has(.cr-top) .cr-tools button[aria-pressed=true] {background:linear-gradient(var(--park-ui-card),var(--park-ui-mint));border-color:var(--park-ui-mint-edge)}
+html body:has(.cr-top) .cr-tools #skill {background:linear-gradient(var(--park-ui-card),var(--park-ui-lilac))}
+html body:has(.cr-top) .cr-pad {width:92px;height:92px;bottom:calc(var(--mini-bottom) + 12px)}
+html body:has(.cr-top) .cr-pad span {width:44px;height:44px;left:22px;top:22px}
+html body:has(.cr-top) .cr-pad small {font:700 8px var(--park-ui-font);bottom:-17px}
+html body:has(.cr-top) .cr-move {left:var(--mini-left)}
+html body:has(.cr-top) .cr-aim {right:var(--mini-right)}
+html body:has(.cr-top) .cr-jump.party-eggy,html body:has(.cr-top) .cr-sprint.party-eggy {width:54px;height:54px;right:var(--mini-right);bottom:calc(var(--mini-bottom) + 169px)}
+html body:has(.cr-top) .cr-sprint.party-eggy {bottom:calc(var(--mini-bottom) + 231px)}
+/* The public action icons are authored for 76px buttons. Keep the complete
+   icon and label inside the smaller circle without reducing its hit target. */
+html body:has(.cr-top) :is(.cr-jump,.cr-sprint).party-eggy .party-icon {width:26px!important;height:26px!important;margin:0!important}
+html body:has(.cr-top) :is(.cr-jump,.cr-sprint).party-eggy>span {font:800 8px/10px var(--park-ui-font)!important;margin:0!important;letter-spacing:0}
+
+/* Sports: compact score + turn notice. Keep charge and both aiming sliders. */
+html body:has(.sp-top) .sp-scoreboard {top:calc(var(--mini-top) + 53px)!important;gap:5px;max-width:calc(100vw - 20px)}
+html body:has(.sp-top) .sp-score {padding:3px 10px;min-width:68px;border-bottom-width:3px}
+html body:has(.sp-top) .sp-score b {font:800 20px/1 var(--park-ui-font)}
+html body:has(.sp-top) .sp-score span {font:700 9px/1.3 var(--park-ui-font);max-width:82px}
+html body:has(.sp-top) .sp-turn {top:calc(var(--mini-top) + 104px)!important;left:var(--mini-left);transform:none;width:auto;max-width:220px;padding:5px 8px;text-align:left}
+html body:has(.sp-top) .sp-turn h2 {font:800 13px/1.3 var(--park-ui-font);margin:0}
+html body:has(.sp-top) .sp-turn p {font:600 10px/1.3 var(--park-ui-font);margin:2px 0 0}
+html body:has(.sp-top) .sp-status {top:auto!important;right:var(--mini-right)!important;left:auto!important;bottom:calc(var(--mini-bottom) + 174px)!important;padding:3px 6px;font:700 9px/1.3 var(--park-ui-font);max-width:180px;background:var(--park-ui-surface)}
+html body:has(.sp-top) .sp-controls {bottom:var(--mini-bottom);width:min(300px,calc(100vw - 20px));padding:9px 11px;border:2px solid var(--park-ui-card);border-radius:18px;box-shadow:0 3px 0 var(--park-ui-line);font-family:var(--park-ui-font)}
+html body:has(.sp-top) .sp-control-title {font-size:11px;margin:0 0 3px}
+html body:has(.sp-top) .sp-control-title small {font-size:9px}
+html body:has(.sp-top) .sp-aim-controls {gap:10px;margin:0}
+html body:has(.sp-top) .sp-aim-controls label {font-size:9px;line-height:1.2}
+html body:has(.sp-top) .sp-aim-controls input {height:28px;margin:0}
+html body:has(.sp-top) .sp-power {height:7px;margin:5px 0 6px}
+html body:has(.sp-top) .sp-shoot {min-height:44px;font:800 11px var(--park-ui-font);color:var(--park-ui-mint-ink);background:linear-gradient(var(--park-ui-card),var(--park-ui-mint));border:2px solid var(--park-ui-card);box-shadow:0 3px 0 var(--park-ui-mint-edge);border-radius:13px}
+html body:has(.sp-top) .sp-help {font-size:9px;margin:5px 0 0;line-height:1.3}
+
+/* Rally data is three small chips, not a second large header. */
+html body:has(.rr-top) .rr-stats {top:calc(var(--mini-top) + 53px)!important;padding:5px 8px;gap:2px;left:50%;transform:translateX(-50%)}
+html body:has(.rr-top) .rr-stats>div {min-width:55px;padding:0 8px}
+html body:has(.rr-top) .rr-stats small {font:800 8px var(--park-ui-font);letter-spacing:.3px}
+html body:has(.rr-top) .rr-stats b {font:800 18px var(--park-ui-font)}
+html body:has(.rr-top) .rr-stats b span {font-size:10px}
+html body:has(.rr-top) .rr-standings {top:calc(var(--mini-top) + 106px);left:var(--mini-left);width:140px}
+html body:has(.rr-top) .rr-standings h2 {font-size:8px;margin:0 0 4px 4px;letter-spacing:.5px}
+html body:has(.rr-top) .rr-standings ol {grid-template-columns:1fr;gap:3px;max-height:110px;overflow:auto;touch-action:pan-y;overscroll-behavior:contain}
+html body:has(.rr-top) .rr-standings li {padding:3px 5px;font-size:10px;gap:5px}
+html body:has(.rr-top) .rr-standings i {width:18px;height:18px;border-radius:6px}
+html body:has(.rr-top) .rr-message:not(.rr-countdown) {top:calc(var(--mini-top) + 103px);left:auto;right:var(--mini-right);max-width:140px;transform:none;padding:5px 8px;font-size:10px}
+html body:has(.rr-top) .rr-minimap {width:100px;padding:4px;border-radius:16px;left:var(--mini-left);bottom:calc(var(--mini-bottom) + 118px)}
+html body:has(.rr-top) .rr-minimap small {font-size:6px;letter-spacing:.4px}
+html body:has(.rr-top) .rr-speed {top:auto!important;right:var(--mini-right);bottom:calc(var(--mini-bottom) + 94px);width:68px;height:65px;border-radius:16px}
+html body:has(.rr-top) .rr-speed b {font-size:26px}
+html body:has(.rr-top) .rr-speed small {font-size:8px;margin-top:2px}
+
+/* Balloon: tight scoreboard, no repeated tutorial slab in the playfield. */
+html body.balloon-mode #back-park {top:var(--mini-top);right:var(--mini-right)}
+html body.balloon-mode .bb-hud {top:var(--mini-top)!important;left:var(--mini-left)!important;min-width:0!important;max-width:166px!important;width:166px;padding:7px 9px!important;border-radius:16px!important;max-height:178px;overflow:auto;touch-action:pan-y;pointer-events:auto}
+html body.balloon-mode .bb-hud>div {font:700 10px/1.6 var(--park-ui-font)!important;margin-top:1px!important;letter-spacing:0!important}
+html body.balloon-mode .bb-hud>div>span {font-size:inherit!important}
+html body.balloon-mode .bb-hud>div:nth-child(2) {display:none}
+html body.balloon-mode .bb-ability {bottom:var(--mini-bottom)!important;left:50%!important;right:auto!important;transform:translateX(-50%)!important;width:138px!important;padding:5px 8px!important;border:1px solid var(--park-ui-card);border-radius:13px!important;box-shadow:0 2px 0 var(--park-ui-line)}
+html body.balloon-mode .bb-ability-title {font:800 9px/1.3 var(--park-ui-font)}
+html body.balloon-mode .bb-ability-state {font-size:9px}
+html body.balloon-mode .bb-tutorial {bottom:calc(var(--mini-bottom) + 151px)!important;top:auto!important;max-width:220px;width:max-content!important;padding:4px 8px;font:700 9px/1.3 var(--park-ui-font);background:var(--park-ui-surface);color:var(--park-ui-ink);box-shadow:0 2px 0 var(--park-ui-line);border-radius:10px;pointer-events:none}
+html body.balloon-mode .uv-toast {top:calc(var(--mini-top) + 52px)!important;bottom:auto!important;left:auto!important;right:var(--mini-right)!important;transform:none!important;max-width:120px!important;padding:6px 8px;font:800 11px/1.3 var(--park-ui-font);border-radius:13px}
+
+/* Tumble: existing toolbar actions retain their handlers and labels. */
+html body.tumble-tiles .topbar {top:var(--mini-top);left:var(--mini-left);right:var(--mini-right);max-width:none;width:auto;height:44px;padding:0;gap:6px;background:none;border:0;box-shadow:none;border-radius:0}
+html body.tumble-tiles .topbar .logo {width:54px}
+html body.tumble-tiles .game-title small {display:none}
+html body.tumble-tiles .game-title strong {font:800 12px var(--park-ui-font)}
+html body.tumble-tiles .topbar nav {gap:5px}
+html body.tumble-tiles .topbar :is(button,a) {width:44px;min-width:44px;height:44px;min-height:44px;padding:0;border:2px solid var(--park-ui-card);border-radius:15px;font-size:19px;background:linear-gradient(var(--park-ui-card),var(--park-ui-lilac));box-shadow:0 3px 0 var(--park-ui-lilac-edge)}
+html body.tumble-tiles .topbar a {background:linear-gradient(var(--park-ui-card),var(--park-ui-blue));box-shadow:0 3px 0 var(--park-ui-blue-edge)}
+html body.tumble-tiles .topbar a span {display:none}
+html body.tumble-tiles .scorebar {top:calc(var(--mini-top) + 53px);left:var(--mini-left);right:var(--mini-right);width:auto;transform:none;display:flex;justify-content:flex-end;gap:5px}
+html body.tumble-tiles .scorebar>* {padding:4px 8px;min-height:24px;font:800 11px/1.4 var(--park-ui-font);border-radius:10px}
+html body.tumble-tiles .scorebar #status {margin-right:auto;order:0;width:auto;max-width:48%;background:var(--park-ui-surface);text-align:left}
+html body.tumble-tiles #live-leaderboard {top:calc(var(--mini-top) + 86px);left:var(--mini-left);width:calc(100vw - 20px);max-width:360px}
+html body.tumble-tiles #live-leaderboard h2 {font-size:8px;margin:0 0 3px 3px}
+html body.tumble-tiles #live-players {grid-template-columns:repeat(3,minmax(0,1fr));max-height:42px;gap:3px}
+html body.tumble-tiles #live-players li {font-size:9px;line-height:14px;padding:2px 5px;border-radius:8px;gap:3px}
+html body.tumble-tiles #live-players small {font-size:7px}
+html body.tumble-tiles .warning,html body.tumble-tiles[data-crowd=true] .warning {top:calc(var(--mini-top) + 146px);left:50%;right:auto;transform:translateX(-50%);max-width:85vw;font-size:10px;padding:4px 8px;min-height:0}
+
+/* Course games keep the same logo, utility finish and compact timer chips. */
+html body.lane-park-ui .hud {top:var(--mini-top);left:var(--mini-left);right:calc(var(--mini-right) + 50px);gap:6px}
+html body.lane-park-ui .brand {width:62px;height:44px;padding:0;background:none;border:0;box-shadow:none}
+html body.lane-park-ui .title {background:none;box-shadow:none;border:0;padding:0;min-width:0}
+html body.lane-park-ui .title small {display:none}
+html body.lane-park-ui .title strong {font:800 12px var(--park-ui-font)}
+html body.lane-park-ui .race {font:800 12px var(--park-ui-font);padding:6px 8px;gap:6px;border-radius:12px}
+html body.lane-park-ui .race span+span {padding-left:6px;border-color:var(--park-ui-line)}
+html body.lane-park-ui .hint {top:calc(var(--mini-top) + 52px);left:var(--mini-left);max-width:calc(100vw - 20px);padding:4px 8px;font:800 10px var(--park-ui-font);border-radius:10px}
+html body.lane-park-ui .preview-badge {top:calc(var(--mini-top) + 80px);left:var(--mini-left);font:700 8px var(--park-ui-font);letter-spacing:0}
+html body.lane-park-ui #punch {width:54px;height:54px;right:calc(var(--mini-right) + 62px);bottom:calc(var(--mini-bottom) + 62px)}
+html body.lane-park-ui #punch .party-icon {width:26px!important;height:26px!important;margin:0!important}
+html body.lane-park-ui #punch>span {font:800 8px/10px var(--park-ui-font)!important;margin:0!important;letter-spacing:0}
+html body.lane-park-ui .park-actions {right:var(--mini-right);bottom:var(--mini-bottom);grid-template-columns:repeat(2,54px);gap:8px}
+html body.lane-park-ui .park-action {width:54px;height:54px}
+html body.lane-park-ui .park-action .party-icon {width:26px;height:26px}
+
+html body:has(.game-topbar) .game-topbar {top:var(--mini-top)!important;left:var(--mini-left);right:calc(var(--mini-right) + 50px);height:44px!important;min-height:0;padding:0!important;border:0;border-radius:0;background:none!important;box-shadow:none;display:flex;align-items:center;justify-content:space-between}
+html body:has(.game-topbar) .game-topbar img {width:65px;height:auto}
+html body:has(.game-topbar) .game-brand-stack {gap:6px}
+html body:has(.game-topbar) .game-brand-stack :is(h1,h2,strong) {font:800 12px var(--park-ui-font)}
+html body:has(.game-topbar) .pause-button {min-width:44px;min-height:44px;font:800 10px var(--park-ui-font);padding:6px!important;border-radius:15px!important;background:linear-gradient(var(--park-ui-card),var(--park-ui-mint))!important;box-shadow:0 3px 0 var(--park-ui-mint-edge)!important;color:var(--park-ui-ink)!important}
+html body:has(.game-topbar) .game-stats {top:calc(var(--mini-top) + 53px)!important;left:var(--mini-left);gap:5px}
+html body:has(.game-topbar) .game-stats>div {min-width:0!important;padding:5px 8px!important;border-radius:12px}
+html body:has(.game-topbar) .game-stats :is(b,strong) {font:800 14px var(--park-ui-font)}
+html body:has(.game-topbar) .game-stats :is(small,span) {font-size:9px;letter-spacing:.2px}
+html body:has(.game-topbar) .game-message {top:calc(var(--mini-top) + 109px);font-size:11px;padding:5px 8px}
+html body:has(.game-topbar) .park-actions {grid-template-columns:repeat(2,58px);gap:8px;bottom:var(--mini-bottom);right:var(--mini-right)}
+html body:has(.game-topbar) .park-action {width:58px;height:58px}
+
+/* Last-mile readability and real touch targets. No action is removed. */
+html body :is(.cr-top h1,.sp-brand h1,.rr-brand h1) {display:table;background:var(--park-ui-surface);padding:2px 5px;border-radius:6px}
+html body:has(.sp-top) .sp-status {bottom:calc(var(--mini-bottom) + 160px)!important}
+html body:has(.sp-top):has(#sp-aim-controls[hidden]) .sp-status {bottom:calc(var(--mini-bottom) + 108px)!important}
+html body:has(.rr-top) .rr-controls {left:var(--mini-left);right:var(--mini-right);bottom:var(--mini-bottom)}
+html body:has(.rr-top) #rr-wheel {width:100px;height:100px}
+html body:has(.rr-top) #rr-wheel span {width:44px;height:44px;left:26px;top:26px}
+html body:has(.rr-top) .rr-pedals button {width:58px;height:58px}
+html body:has(.rr-top) .rr-foot {position:static}
+html body:has(.rr-top) .rr-foot>span {position:fixed;left:var(--mini-left);bottom:calc(var(--mini-bottom) + 109px);max-width:160px;padding:2px 5px;font-size:8px;background:var(--park-ui-surface);z-index:5}
+html body:has(.rr-top) #rr-recover {position:fixed;top:calc(var(--mini-top) + 53px);right:var(--mini-right);width:44px;height:44px;min-width:44px;min-height:44px;padding:0;font-size:0;border:2px solid var(--park-ui-card);border-radius:15px;background:linear-gradient(var(--park-ui-card),var(--park-ui-lilac));box-shadow:0 3px 0 var(--park-ui-lilac-edge);z-index:6}
+html body:has(.rr-top) #rr-recover::after {content:'↺';font:700 25px var(--park-ui-font)}
+html body:has(.rr-top) .rr-message:not(.rr-countdown) {top:calc(var(--mini-top) + 103px)}
+html body.balloon-mode #touch-buttons {grid-template-columns:54px 54px!important;gap:8px!important;right:var(--mini-right)!important;bottom:var(--mini-bottom)!important}
+html body.balloon-mode #touch-buttons :is(#btn-grab,#btn-sprint,#btn-jump) {width:54px!important;height:54px!important;min-height:44px}
+html body.balloon-mode #stick-base {width:96px!important;height:96px!important;left:var(--mini-left)!important;bottom:var(--mini-bottom)!important}
+html body.balloon-mode #stick-knob {width:44px!important;height:44px!important;left:24px!important;top:24px!important;margin:0!important}
+html body.balloon-mode .bb-ability {left:var(--mini-left)!important;bottom:calc(var(--mini-bottom) + 106px)!important;transform:none!important;width:96px!important;padding:4px 6px!important}
+html body.balloon-mode .bb-ability-title {font-size:8px!important;letter-spacing:0!important}
+html body.balloon-mode .bb-ability-state {font-size:8px!important;letter-spacing:0!important}
+html body.balloon-mode .bb-tutorial {bottom:calc(var(--mini-bottom) + 159px)!important;max-width:200px}
+html body:has(.game-topbar) .game-stats>div {display:flex;align-items:baseline;gap:5px;padding:5px 7px!important}
+html body:has(.game-topbar) .game-stats>div>* {margin:0!important}
+html body:has(.game-topbar) .park-stick,html body.lane-park-ui .park-stick {width:100px;height:100px;left:var(--mini-left);bottom:var(--mini-bottom)}
+html body:has(.game-topbar) .park-stick-knob,html body.lane-park-ui .park-stick-knob {width:44px;height:44px;left:26px;top:26px}
+html body:is(.balloon-mode,.tumble-tiles):has(.park-match-watch) .park-match-watch,
+html body:has(.cr-top,.rr-top) .park-match-watch {padding:5px;gap:5px;border-radius:18px;font:800 11px/1.3 var(--park-ui-font);box-shadow:0 3px 0 var(--park-ui-line);display:flex;width:max-content;max-width:calc(100vw - 20px)}
+html body:is(.balloon-mode,.tumble-tiles) .park-match-watch>div,
+html body:has(.cr-top,.rr-top) .park-match-watch>div {max-width:150px;flex:1;min-width:0}
+html body:is(.balloon-mode,.tumble-tiles) .park-match-watch button,
+html body:has(.cr-top,.rr-top) .park-match-watch button {padding:4px 7px;min-width:44px;min-height:44px;font-size:11px;border-radius:13px;box-shadow:var(--park-ui-button-shadow)}
+html body:is(.balloon-mode,.tumble-tiles) .park-match-watch .watch-leave,
+html body:has(.cr-top,.rr-top) .park-match-watch .watch-leave {width:44px;font-size:0;background:linear-gradient(var(--park-ui-card),var(--park-ui-blue))}
+html body:is(.balloon-mode,.tumble-tiles) .park-match-watch .watch-leave::after,
+html body:has(.cr-top,.rr-top) .park-match-watch .watch-leave::after {content:'';display:block;width:22px;height:22px;margin:auto;background:var(--park-ui-ink);mask:var(--mini-home-icon) center/contain no-repeat;-webkit-mask:var(--mini-home-icon) center/contain no-repeat}
+
+@media(orientation:portrait) {
+  html body:has(.sp-top) .sp-status,
+  html body:has(.sp-top):has(#sp-aim-controls[hidden]) .sp-status {top:calc(var(--mini-top) + 158px)!important;bottom:auto!important;left:var(--mini-left)!important;right:auto!important;max-width:250px}
+}
+/* The button already explains hold/release; mobile needs no keyboard legend. */
+@media(pointer:coarse) {html body:has(.sp-top) .sp-help {display:none}}
+
+@media(orientation:landscape) and (max-height:550px) {
+  html body:has(.cr-top) .cr-status {top:var(--mini-top);right:50%;transform:translateX(50%);width:172px;text-align:center}
+  html body:has(.cr-top) .cr-score {top:calc(var(--mini-top) + 50px);right:var(--mini-right);width:124px;max-height:52px;display:grid}
+  html body:has(.cr-top) .cr-radar {display:none}
+  html body:has(.cr-top) .cr-tools {bottom:var(--mini-bottom)!important;width:min(288px,calc(100vw - 228px))!important;grid-template-columns:repeat(3,minmax(44px,1fr))!important}
+  html body:has(.cr-top) .cr-pad {width:88px!important;height:88px!important;bottom:calc(var(--mini-bottom) + 6px)}
+  html body:has(.cr-top) .cr-pad span {left:20px!important;top:20px!important}
+  html body:has(.cr-top) .cr-bottom {left:var(--mini-left);transform:none;bottom:calc(var(--mini-bottom) + 111px);width:88px;padding:4px}
+  html body:has(.cr-top) .cr-jump.party-eggy,html body:has(.cr-top) .cr-sprint.party-eggy {width:46px!important;height:46px!important;bottom:calc(var(--mini-bottom) + 102px)!important;right:var(--mini-right)!important}
+  html body:has(.cr-top) .cr-sprint.party-eggy {right:calc(var(--mini-right) + 52px)!important}
+  html body:has(.sp-top) .sp-scoreboard {top:var(--mini-top)!important}
+  html body:has(.sp-top) .sp-turn {top:calc(var(--mini-top) + 55px)!important;max-width:170px}
+  html body:has(.sp-top) .sp-controls {width:min(250px,34vw);left:auto;right:var(--mini-right);transform:none;padding:7px 9px}
+  html body:has(.sp-top) .sp-status {left:var(--mini-left)!important;right:auto!important;bottom:var(--mini-bottom)!important;max-width:150px}
+  html body:has(.sp-top):has(#sp-aim-controls[hidden]) .sp-status {bottom:var(--mini-bottom)!important}
+  html body:has(.rr-top) .rr-stats {top:var(--mini-top)!important}
+  html body:has(.rr-top) .rr-standings {top:calc(var(--mini-top) + 53px);width:126px}
+  html body:has(.rr-top) .rr-standings ol {max-height:72px}
+  html body:has(.rr-top) .rr-minimap {width:74px;left:148px;bottom:var(--mini-bottom)}
+  html body:has(.rr-top) .rr-speed {bottom:calc(var(--mini-bottom) + 61px);width:64px;height:50px}
+  html body:has(.rr-top) .rr-message:not(.rr-countdown) {top:calc(var(--mini-top) + 103px)}
+  html body:has(.rr-top) .rr-foot {display:block}
+  html body:has(.rr-top) .rr-foot>span {display:none}
+  html body:has(.rr-top) .rr-stats {max-width:220px}
+  html body:has(.rr-top) .rr-stats>div {min-width:44px;padding:0 5px}
+  html body.balloon-mode .bb-hud {width:150px!important;max-height:128px;padding:5px 7px!important}
+  html body.balloon-mode .bb-hud>div {font-size:9px!important;line-height:1.45!important}
+  html body.balloon-mode .bb-tutorial {bottom:calc(var(--mini-bottom) + 53px)!important;max-width:220px;font-size:8px}
+  html body.balloon-mode .bb-ability {left:50%!important;bottom:var(--mini-bottom)!important;transform:translateX(-50%)!important;width:138px!important}
+  html body.balloon-mode .uv-toast {top:calc(var(--mini-top) + 53px)!important;left:50%!important;right:auto!important;transform:translateX(-50%)!important;max-width:150px!important;font-size:10px}
+  html body.tumble-tiles .topbar {right:auto;max-width:calc(100vw - 182px)}
+  html body.tumble-tiles .scorebar {top:var(--mini-top);left:auto;width:164px;flex-wrap:wrap}
+  html body.tumble-tiles .scorebar #status {order:3;width:100%;max-width:none;background:none;padding:1px 2px;text-align:right;font-size:9px}
+  html body.tumble-tiles #live-leaderboard {top:calc(var(--mini-top) + 54px);max-width:260px}
+  html body.tumble-tiles .warning,html body.tumble-tiles[data-crowd=true] .warning {top:calc(var(--mini-top) + 55px);right:var(--mini-right);left:auto;transform:none;max-width:190px}
+  html body.lane-park-ui #punch {bottom:var(--mini-bottom)!important;right:calc(var(--mini-right) + 174px)!important;width:50px!important;height:50px!important}
+}
+@media(orientation:landscape) and (min-width:740px) and (max-height:550px) {
+  html body:has(.cr-top) .cr-tools {width:330px!important;grid-template-columns:repeat(6,minmax(44px,1fr))!important}
+}
+@media(min-width:1000px) and (min-height:600px) {
+  html body:has(.cr-top) .cr-tools {bottom:calc(var(--mini-bottom) + 66px)!important}
+  html body:has(.cr-top) .cr-status {top:var(--mini-top);right:50%;transform:translateX(50%);text-align:center}
+  html body:has(.rr-top) .rr-stats,html body:has(.sp-top) .sp-scoreboard {top:var(--mini-top)!important}
+  html body:has(.sp-top) .sp-turn,html body:has(.rr-top) .rr-standings {top:calc(var(--mini-top) + 54px)!important}
+}
