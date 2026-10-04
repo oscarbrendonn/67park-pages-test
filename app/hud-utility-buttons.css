@@ -11,6 +11,11 @@ body.park-unified-ui #park-daily>button.park-utility-button{
  font:800 12px/1.2 var(--park-ui-font);white-space:nowrap;cursor:pointer;touch-action:manipulation;
 }
 body.park-unified-ui #park-home-button.park-utility-button{--utility-tint:var(--park-ui-lilac);--utility-edge:var(--park-ui-lilac-edge)}
+/* Smaller visible Daily face; preserve a full 44px touch target. */
+body.park-unified-ui #park-daily>button.park-utility-button{position:relative;isolation:isolate;padding:5px 8px;gap:5px;border:0;background:none;box-shadow:none;font-size:11px;border-radius:13px}
+body.park-unified-ui #park-daily>button.park-utility-button::before{content:'';position:absolute;z-index:-1;inset:5px 0;border:2px solid var(--park-ui-card);border-radius:13px;background:linear-gradient(165deg,var(--park-ui-card),var(--utility-tint) 75%);box-shadow:0 2px 0 var(--utility-edge),inset 0 1px 0 var(--park-ui-card);pointer-events:none}
+#park-daily .park-utility-icon{width:18px;height:18px}
+#park-daily .park-utility-badge{padding:3px;border-radius:6px;font-size:9px}
 .park-utility-icon{width:23px;height:23px;flex:none;pointer-events:none}
 .park-utility-label{min-width:0;overflow:hidden;text-overflow:ellipsis;pointer-events:none}
 .park-utility-badge{flex:none;padding:4px;border-radius:8px;background:var(--park-ui-card);font-size:10px;font-variant-numeric:tabular-nums;pointer-events:none}
