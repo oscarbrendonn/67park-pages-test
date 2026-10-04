@@ -7,8 +7,8 @@ body.park-unified-ui.park-progression-ready:has(.park-toolbar) .park-toolbar>but
 .park-identity-title{top:var(--hud-top);height:28px;display:flex;align-items:center;justify-content:center}
 .park-identity-logo{display:block;width:72px;height:27px;object-fit:contain}
 .park-identity-name{top:calc(var(--hud-top) + 83px);overflow:hidden;text-overflow:ellipsis;max-height:16px;white-space:nowrap;font-size:10px}
-body.park-progression-ready #park-minimap-coins{left:calc(var(--mini-left) + var(--mini-size) - 62px);width:70px;height:30px;top:calc(var(--mini-top) - 6px);padding:2px 3px;gap:3px;border:2px solid var(--park-ui-card);border-radius:12px;background:linear-gradient(var(--park-ui-card),var(--park-ui-gold));color:var(--park-ui-gold-ink);box-shadow:0 3px 0 var(--park-ui-line),inset 0 1px 0 var(--park-ui-card);font:800 11px/1 var(--park-ui-font)}
-body.park-progression-ready #park-minimap-coins::before{inset:-10px 0 auto;height:44px}
+body.park-progression-ready #park-minimap-coins{left:calc(var(--mini-left) + var(--mini-size) + 4px);width:70px;height:30px;top:var(--mini-top);padding:2px 3px;gap:3px;border:2px solid var(--park-ui-card);border-radius:12px;background:linear-gradient(var(--park-ui-card),var(--park-ui-gold));color:var(--park-ui-gold-ink);box-shadow:0 3px 0 var(--park-ui-line),inset 0 1px 0 var(--park-ui-card);font:800 11px/1 var(--park-ui-font)}
+body.park-progression-ready #park-minimap-coins::before{inset:-7px 0 auto;height:44px}
 body.park-progression-ready .park-minimap-coin{width:16px;height:16px;font-size:11px}
 body.park-progression-ready .park-minimap-amount{min-width:0;font-variant-numeric:tabular-nums}
 .park-daily{position:fixed;right:var(--hud-edge-r);top:calc(var(--hud-top) + 158px);z-index:74;color:var(--park-ui-ink);font:600 12px/1.45 system-ui}
@@ -31,7 +31,23 @@ body:has(.wardrobe,.park-inventory-panel,#park-player-profile:not([hidden]),#par
 }
 @media(max-width:359px){
  body.park-unified-ui.park-progression-ready:has(.park-toolbar){--mini-left:calc(var(--hud-edge-l) + 74px);--mini-size:64px;--mini-top:calc(var(--hud-top) + 24px)}
- body.park-progression-ready #park-minimap-coins{left:calc(var(--mini-left) + var(--mini-size) - 60px);width:66px}
+ body.park-progression-ready #park-minimap-coins{width:66px}
  body.park-progression-ready .park-minimap-coin{width:16px;height:16px;font-size:11px}
+}
+/* Reserve a currency lane below the top utilities on narrow phones. The
+   wallet starts outside the map circle; neither its face nor hit area masks it. */
+@media(orientation:portrait) and (max-width:430px){
+ body.park-unified-ui.park-progression-ready:has(.park-toolbar){--mini-top:calc(var(--hud-top) + 52px);--park-chat-top:calc(var(--hud-top) + 182px)}
+ body.park-unified-ui.park-progression-ready:has(.park-toolbar) .online-toggle{top:calc(var(--hud-top) + 94px)!important}
+ body.park-unified-ui.park-progression-ready:has(.park-toolbar) #park-home-button{top:calc(var(--hud-top) + 144px)!important}
+ body.park-unified-ui.park-progression-ready:has(.park-toolbar) :is(.park-weather,.park-hud>div.absolute.right-4.top-4){top:calc(var(--hud-top) + 140px)!important}
+ body.park-progression-ready .park-daily{top:calc(var(--hud-top) + 190px)}
+}
+@media(orientation:landscape) and (min-width:500px), (min-width:900px){
+ body.park-unified-ui.park-progression-ready:has(.park-toolbar) .park-weather{left:calc(var(--hud-edge-l) + 260px)!important}
+ body.park-unified-ui.park-progression-ready:has(.park-toolbar) .park-hud>div.absolute.right-4.top-4{left:calc(var(--hud-edge-l) + 382px)!important}
+}
+@media(orientation:landscape) and (min-width:500px) and (max-width:700px){
+ body.park-unified-ui.park-progression-ready:has(.park-toolbar) .park-hud>div.absolute.right-4.top-4{left:calc(var(--hud-edge-l) + 260px)!important}
 }
 @media(prefers-reduced-motion:reduce){.park-daily *{animation:none!important;transition:none!important}}

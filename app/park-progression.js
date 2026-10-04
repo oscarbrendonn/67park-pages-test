@@ -4,7 +4,7 @@ import {minimapPoint} from './park-minimap-math.js?v=minimap-20261003-1';
 import {decorateUtilityButton,watchHomesButton} from './hud-utility-buttons.js?v=hud-utilities-20261004-1';
 
 export async function installParkProgression(host=window){
- const doc=host.document,sheet=doc.createElement('link');sheet.rel='stylesheet';sheet.href=new URL('./park-progression.css?v=hud-cluster-20261004-1',import.meta.url).href;
+ const doc=host.document,sheet=doc.createElement('link');sheet.rel='stylesheet';sheet.href=new URL('./park-progression.css?v=wallet-side-20261004-1',import.meta.url).href;
  await new Promise((resolve,reject)=>{sheet.onload=resolve;sheet.onerror=()=>{sheet.remove();reject(Error('Progression style unavailable'))};doc.head.append(sheet)});
  const el=(tag,cls,text)=>{const n=doc.createElement(tag);n.className=cls;if(text)n.textContent=text;return n};
  const brand=el('div','park-identity-title'),name=el('div','park-identity-name');
