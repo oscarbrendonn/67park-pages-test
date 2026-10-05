@@ -2,16 +2,16 @@ import {getPlayerAccountState,subscribePlayerAccount,refreshPlayerProgression,eq
 
 export function ensureCareerStyle(){
  if(document.getElementById('park-career-style'))return;
- const link=document.createElement('link');link.id='park-career-style';link.rel='stylesheet';link.href=new URL('./profile-career.css',import.meta.url).href;document.head.append(link);
+ const link=document.createElement('link');link.id='park-career-style';link.rel='stylesheet';link.href=new URL('./profile-career.css?v=profile-customization-20261005-1',import.meta.url).href;document.head.append(link);
 }
-export function createProfileCareer({portrait,onTitle}){
+export function createProfileCareer({portrait,onTitle,hero}){
  ensureCareerStyle();
  const el=(tag,cls,text)=>{const n=document.createElement(tag);n.className=cls;if(text!==undefined)n.textContent=text;return n;};
  const button=(text,fn)=>{const n=el('button','park-ui-control',text);n.type='button';n.addEventListener('click',fn);return n;};
  const root=el('section','profile-career'),heading=el('h3','','Your park story'),stats=el('div','career-stats'),note=el('p','career-caption','Records start with this update. Coins do not affect your rank.');
  const actions=el('div','career-actions'),identity=el('div','career-identity'),board=el('div','career-board'),status=el('p','career-status');status.setAttribute('role','status');
  identity.id='career-identity';board.id='career-board';identity.hidden=board.hidden=true;
- const identityButton=button('Titles & frames',()=>toggle('identity')),boardButton=button('Leaderboard',()=>toggle('board'));
+ const identityButton=button('Customize profile',()=>toggle('identity')),boardButton=button('Leaderboard',()=>toggle('board'));
  for(const [b,id]of [[identityButton,identity.id],[boardButton,board.id]]){b.setAttribute('aria-controls',id);b.setAttribute('aria-expanded','false');}
  const refresh=button('Refresh rankings',()=>loadBoard());
  const boardCaption=el('p','career-caption','All parks on this server · Most wins · Equal wins share a rank.');
@@ -26,6 +26,7 @@ export function createProfileCareer({portrait,onTitle}){
  function render(){
   if(disposed)return;
   const profile=getPlayerAccountState(),career=profile?.career;
+  if(hero)hero.dataset.background=career?.background||'classic';
   if(profile?.id!==lastOwner){list.replaceChildren();mine.textContent='';lastOwner=profile?.id||'';}
   identityButton.disabled=boardButton.disabled=!career;
   if(!career){stats.textContent='Connect to load your park records.';return;}
@@ -36,11 +37,13 @@ export function createProfileCareer({portrait,onTitle}){
   for(const [label,value]of [['Wins',career.wins],['Matches finished',career.matches]]){const card=el('div','career-stat');card.append(el('strong','',String(value)),el('span','',label));stats.append(card);}
   const focused=identity.contains(document.activeElement)?document.activeElement?.dataset.choice:null;
   identity.replaceChildren();
-  for(const [slot,rows]of [['title',career.titles],['frame',career.frames]]){
-   const group=el('section','career-choice-group'),title=el('h4','',slot==='title'?'Titles':'Avatar frames'),choices=el('div','career-choices');group.append(title,choices);
+  for(const [slot,rows]of [['title',career.titles],['frame',career.frames],['background',career.backgrounds||[]]]){
+   if(!rows.length)continue;
+   const group=el('section','career-choice-group'),title=el('h4','',slot==='title'?'Titles':slot==='frame'?'Avatar frames':'Profile background'),choices=el('div','career-choices');group.append(title,choices);
    for(const row of rows){
     const selected=career[slot]===row.id,b=button('',()=>select(slot,row.id));b.dataset.choice=slot+':'+row.id;b.setAttribute('aria-pressed',String(selected));
-    b.setAttribute('aria-label',`${slot==='title'?'Title':'Frame'}: ${row.label}`);b.disabled=pending||!row.unlocked;
+    b.setAttribute('aria-label',`${slot==='title'?'Title':slot==='frame'?'Frame':'Background'}: ${row.label}`);b.disabled=pending||!row.unlocked;
+    if(slot==='background'){const swatch=el('span','profile-background-swatch');swatch.dataset.background=row.id;swatch.setAttribute('aria-hidden','true');b.append(swatch);}
     if(slot==='frame'){const swatch=el('span','career-frame-swatch');swatch.dataset.frame=row.id;swatch.setAttribute('aria-hidden','true');b.append(swatch);}
     b.append(el('strong','',row.label),el('small','',!row.unlocked?row.requirement:selected?'Equipped':'Use'));
     choices.append(b);

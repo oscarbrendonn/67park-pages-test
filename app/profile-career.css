@@ -1,4 +1,10 @@
 .profile-career{margin:16px 0;padding:14px;border:1px solid var(--park-ui-line);border-radius:20px;background:var(--park-ui-card);color:var(--park-ui-ink)}
+.profile-hero[data-background]{padding:12px;border-radius:20px;background:var(--profile-backdrop,var(--park-ui-soft));border:1px solid var(--park-ui-line)}
+.profile-background-swatch{display:block;width:44px;height:30px;border-radius:10px;border:1px solid var(--park-ui-line);background:var(--profile-backdrop,var(--park-ui-soft))}
+[data-background=mint]{--profile-backdrop:var(--park-ui-mint)}
+[data-background=sky]{--profile-backdrop:var(--park-ui-blue)}
+[data-background=pink]{--profile-backdrop:var(--park-ui-pink)}
+[data-background=lilac]{--profile-backdrop:var(--park-ui-lilac)}
 .profile-career h3{margin:0 0 10px;font-size:15px}.profile-career h4{margin:14px 0 8px;font-size:13px}
 .career-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px}.career-stat{display:flex;flex-direction:column;padding:10px;border-radius:14px;background:var(--park-ui-soft)}
 .career-stat strong{font-size:22px;font-variant-numeric:tabular-nums}.career-stat span,.career-caption{font-size:12px;color:var(--park-ui-muted)}

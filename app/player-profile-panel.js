@@ -1,6 +1,6 @@
 import {createPlayerNameController,renderPlayerNameFeedback} from './player-name-field.js?v=player-account-20261003-1';
 import {createProfileWallet} from './profile-wallet.js?v=profile-commerce-20261004-1';
-import {createProfileCareer} from './profile-career.js';
+import {createProfileCareer} from './profile-career.js?v=profile-customization-20261005-1';
 
 let current=null;
 const release=()=>window.dispatchEvent(new Event('park:release-controls'));
@@ -30,8 +30,9 @@ export function openPlayerProfile(api) {
   const portrait=element('img','profile-character-image');portrait.draggable=false;
   const identity=element('div','profile-identity'),name=element('h3','profile-player-name'),character=element('p','profile-character-name');
   const editButton=button('Edit name','profile-edit',()=>startEditing());
+  const renameNote=element('p','profile-character-name');
   const equippedTitle=element('span','profile-equipped-title');equippedTitle.hidden=true;
-  identity.append(name,character,equippedTitle,editButton);hero.append(portrait,identity);
+  identity.append(name,character,equippedTitle,editButton,renameNote);hero.append(portrait,identity);
   const form=element('form','profile-name-form');form.hidden=true;form.noValidate=true;
   const label=element('label','','Player name');label.htmlFor='profile-player-name';
   const input=element('input');input.id='profile-player-name';input.name='playerName';input.type='text';input.maxLength=16;input.required=true;input.autocomplete='nickname';input.setAttribute('aria-describedby','profile-name-hint profile-name-error');
@@ -44,7 +45,7 @@ export function openPlayerProfile(api) {
   const shop=button('Shop','profile-change profile-shop',()=>navigate(()=>api.openShop?.()));
   const shopping=element('div','profile-shopping');shopping.append(shop,myItems);
   const wallet=api.wallet?createProfileWallet(document,api.wallet):null;
-  const career=api.wallet?createProfileCareer({portrait,onTitle:text=>{equippedTitle.textContent=text;equippedTitle.hidden=!text;}}):null;
+  const career=api.wallet?createProfileCareer({portrait,hero,onTitle:text=>{equippedTitle.textContent=text;equippedTitle.hidden=!text;}}):null;
   const codeSection=element('section','profile-code-section'),codeHeading=element('h3','','Friend code'),codeHelp=element('p','','Share this public code so friends can find you.');
   const codeRow=element('div','profile-code-row'),code=element('input','profile-friend-code');code.readOnly=true;code.setAttribute('aria-label','Your friend code');code.autocomplete='off';
   const copy=button('Copy friend code','profile-secondary',async()=>{
@@ -72,6 +73,10 @@ export function openPlayerProfile(api) {
   function refresh(){
     if(closed)return;
     name.textContent=api.getName?.()||'Choose a name';
+    const policy=api.wallet?.get?.()?.rename;
+    const locked=policy?.nextAllowedAt&&Date.now()<policy.nextAllowedAt;
+    editButton.disabled=!!locked;
+    renameNote.textContent=locked?'Name change available: '+new Date(policy.nextAllowedAt).toLocaleDateString('en-GB',{timeZone:'UTC',day:'numeric',month:'short',year:'numeric'})+' (UTC)':'Name changes are limited to once every 6 months.';
     const base=api.equip.base,row=api.characters?.find(c=>c.id===base);
     character.textContent=row?.name||'Your character';
     dialog.dataset.character=base;
@@ -81,7 +86,7 @@ export function openPlayerProfile(api) {
     code.value=typeof friendCode==='string'?friendCode:'';code.placeholder='Available when connected';
     copy.disabled=!code.value;
   }
-  function startEditing(){editing=true;form.hidden=false;editButton.hidden=true;names.edit(api.getName?.()||names.getSnapshot().name);input.focus({preventScroll:true});input.select();}
+  function startEditing(){refresh();if(editButton.disabled)return;editing=true;form.hidden=false;editButton.hidden=true;names.edit(api.getName?.()||names.getSnapshot().name);input.focus({preventScroll:true});input.select();}
   function finishEditing(){if(names.getSnapshot().pending)return;editing=false;form.hidden=true;editButton.hidden=false;refresh();editButton.focus({preventScroll:true});}
   function navigate(action){close(false);action();}
   function close(restore=true){
@@ -119,7 +124,7 @@ export function openPlayerProfile(api) {
   dialog.addEventListener('click',event=>{if(event.target!==dialog)return;const r=dialog.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)close();});
   dialog.addEventListener('close',()=>{if(!closed)close();});
   release();unblock=api.beginModal?.();
-  unsubscribers.push(api.subscribeName?.(refresh),api.subscribeEquip?.(refresh),window.__candyOnline?.subscribe?.(refresh));
+  unsubscribers.push(api.subscribeName?.(refresh),api.subscribeEquip?.(refresh),api.wallet?.subscribe?.(refresh),window.__candyOnline?.subscribe?.(refresh));
   window.addEventListener('keydown',guard,true);window.addEventListener('keyup',guard,true);
   document.documentElement.setAttribute('data-park-profile-open','');refresh();dialog.showModal();closeButton.focus({preventScroll:true});
   return dialog;

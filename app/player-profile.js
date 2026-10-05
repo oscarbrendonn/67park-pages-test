@@ -1,6 +1,6 @@
 import {openPlayerProfile} from './player-profile-panel.js?v=profile-hud-20261002-1';
 import {loadPlayerAccount,getPlayerAccountState,subscribePlayerAccount,claimTestCoins} from './player-account-client.js?v=player-account-20261003-1';
-import {ensureCareerStyle} from './profile-career.js';
+import {ensureCareerStyle} from './profile-career.js?v=profile-customization-20261005-1';
 
 // A browser-local player, never an IP address. Commit only after successful entry.
 const KEY = '67park-feel-lab.player-profile.v1';
