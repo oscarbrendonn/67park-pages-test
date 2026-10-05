@@ -20,7 +20,25 @@ export function rememberTabAccess(storage){
 // Inert script tags keep WebGL, models, audio and online sessions from starting
 // behind the password form. Restore their original order, including classic
 // input setup before the module entry. Import maps are left untouched.
+export function warmAccessModules(doc){
+ // Fetch only six known boot dependencies, after access is accepted. This
+ // shortens dependency discovery without executing modules or preloading maps.
+ try{
+  if(doc.getElementById?.('park-boot-preload'))return;
+  const entry=[...doc.querySelectorAll('script[data-park-access-type]')].find(n=>/\/app\/main\.js(?:\?|$)/.test(n.getAttribute?.('src')||''));
+  if(!entry)return;
+  const base=new URL('../',new URL(entry.getAttribute('src'),doc.baseURI));
+  const imports=JSON.parse(doc.querySelector('script[type="importmap"]')?.textContent||'{}').imports||{};
+  const files=['app/chunk-N3VSSEEL.js','app/chunk-G7D6MVRW.js','app/chunk-A5QZM2VZ.js','app/chunk-OZ77422N.js','vendor/three.module.js','vendor/three.core.js'];
+  for(const [i,file]of files.entries()){
+   const fallback=new URL(file,base),mapped=Object.values(imports).find(v=>typeof v==='string'&&new URL(v,doc.baseURI).pathname===fallback.pathname);
+   const url=new URL(mapped||fallback,doc.baseURI);if(url.origin!==base.origin)continue;
+   const link=doc.createElement('link');link.rel='modulepreload';link.href=url.href;if(i===0)link.id='park-boot-preload';doc.head.append(link);
+  }
+ }catch{/* A preload hint must never prevent the normal ordered boot. */}
+}
 export async function startAccessScripts(doc=document){
+ warmAccessModules(doc);
  const errors=[];
  const record=(error,optional)=>{
   if(!optional)errors.push(error);
@@ -68,6 +86,11 @@ export function installAccessPanel(doc=document,win=window){
  const launch=async()=>{
   busy=true;submit.disabled=true;submit.textContent='Opening the park…';input.value='';input.blur();input.disabled=true;toggle.disabled=true;
   message.textContent='';doc.documentElement.dataset.parkAccess='opening';
+  const slow=setTimeout(()=>{
+   if(!panel.isConnected||doc.documentElement.dataset.parkAccess!=='opening')return;
+   message.textContent='Game files are taking longer to load. You can keep waiting or reload.';
+   submit.textContent='Reload page';submit.disabled=false;reload=true;
+  },20000);
   try{
    await startAccessScripts(doc);
    panel.remove();doc.documentElement.dataset.parkAccess='open';
@@ -79,7 +102,7 @@ export function installAccessPanel(doc=document,win=window){
    doc.documentElement.dataset.parkAccess='locked';
    message.textContent='The game could not load. Check your connection and try again.';
    submit.textContent='Reload';submit.disabled=false;reload=true;busy=false;
-  }
+  }finally{clearTimeout(slow);}
  };
  toggle.addEventListener('click',()=>{
   const show=input.type==='password';input.type=show?'text':'password';
@@ -88,7 +111,7 @@ export function installAccessPanel(doc=document,win=window){
  });
  input.addEventListener('input',()=>{input.removeAttribute('aria-invalid');message.textContent='';});
  form.addEventListener('submit',async event=>{
-  event.preventDefault();if(busy)return;if(reload){win.location.reload();return;}
+  event.preventDefault();if(reload){win.location.reload();return;}if(busy)return;
   busy=true;submit.disabled=true;
   try{
    if(!await matchesAccessPassword(input.value,win.crypto)){

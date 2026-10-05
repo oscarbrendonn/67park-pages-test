@@ -1,4 +1,4 @@
-import {assetFetch} from './entry-loading.js';
+import {downloadCharacter} from './character-download.js';
 import {itemAssetParts} from './item-assets.js?v=items-only-1';
 import {applyNativeBodyScale} from './native-character-scale.js?v=native-body-scale-20261003-1';
 
@@ -46,7 +46,7 @@ const store=createCharacterAssetStore(async url=>{
   for(const asset of assets)scene.add(clone(asset.scene));
   return {scene,scenes:[scene],animations:[]};
  }
- const [parser,bytes]=await Promise.all([loader(),assetFetch(url).then(r=>r.arrayBuffer())]);
+ const [parser,bytes]=await Promise.all([loader(),downloadCharacter(url)]);
  return applyNativeBodyScale(await parser.parseAsync(bytes,url.slice(0,url.lastIndexOf('/')+1)));
 });
 export const loadCharacterAsset=store.load;
