@@ -90,7 +90,7 @@ export function updateParkDriving(car,dt,{throttle=0,steer=0,brake=false}={}) {
       // The surface domain distinguishes dry tyre support from a bumper
       // overhang. Only real tyre/centre water entry requests this rescue;
       // dry beach sand remains drivable. Solid walls still slide.
-      if(hit.water&&!car.spec.marine&&recoverVehicleFromWater(car,dt,hit.water))return;
+      if(hit.water&&!car.spec.marine){car.speed=0;car.reason='water-edge';continue;}
       if(slideParkVehicle(car,hit,nx-car.x,nz-car.z,nyaw,d))continue;
       car.speed=0;car.reason=hit.reason;continue;
     }
