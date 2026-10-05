@@ -34,6 +34,28 @@ export function punchBurstGeometry(base='goril'){
    triangle([x-.21,y-.3],[x-.12,y+.02],[x+.31,y+.39],palette[j%2]);
    triangle([x-.21,y-.3],[x+.31,y+.39],[x+.03,y+.01],palette[j%2]);
   }
+ }else if(profile.effect==='snout'){
+  oval(0,0,.31,.22,palette[0]);for(const x of [-.12,.12])oval(x,0,.045,.08,palette[1]);
+ }else if(profile.effect==='eye'){
+  oval(0,0,.34,.19,palette[0]);oval(0,0,.09,.14,palette[1]);
+ }else if(profile.effect==='bones'){
+  for(const y of [-.12,.12]){
+   triangle([-.23,y-.035],[.23,y-.035],[.23,y+.035],palette[0]);
+   triangle([-.23,y-.035],[.23,y+.035],[-.23,y+.035],palette[0]);
+   for(const x of [-.24,.24])for(const dy of [-.035,.035])oval(x,y+dy,.055,.05,palette[1]);
+  }
+ }else if(['horns','teeth','claws','feathers','gills','drops'].includes(profile.effect)){
+  const count={horns:2,teeth:5,claws:3,feathers:3,gills:6,drops:4}[profile.effect];
+  for(let i=0;i<count;i++){
+   const a=(i+.5)*Math.PI*2/count,p=point(a,.27),color=palette[i%2];
+   if(profile.effect==='drops'){oval(p[0],p[1],.06,.095,color);triangle([p[0]-.05,p[1]+.03],[p[0]+.05,p[1]+.03],[p[0],p[1]+.18],color);}
+   else if(profile.effect==='feathers'||profile.effect==='gills'){
+    oval(p[0],p[1],profile.effect==='gills'?.055:.07,.17,color);
+   }else{
+    const x=(i-(count-1)/2)*.14;
+    triangle([x-.055,-.12],[x+.055,-.12],[x+(profile.effect==='horns'?(i? .1:-.1):.045),.29-(i%2)*.06],color);
+   }
+  }
  }else{
  for(let i=0;i<16;i++)triangle([0,0],point(i*Math.PI/8,i%2?.15:.34),point((i+1)*Math.PI/8,(i+1)%2?.15:.34),[1,.81,.38]);
  for(let i=0;i<8;i++){

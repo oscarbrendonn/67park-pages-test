@@ -1,6 +1,8 @@
 import {createNaturalAudioBank,FOLEY_CLIPS} from './natural-audio.js?v=natural-audio-1';
 import {createVehicleAudio} from './vehicle-audio.js?v=five-gears-1';
 import {createCowVoice} from './cow-voice.js?v=cow-release-1';
+import {createPunchRecordings} from './punch-recordings.js';
+import {CHARACTER_FEEDBACK,feedbackBase} from '../character-feedback.js';
 import {createInteractionAudioBank,INTERACTION_CLIPS} from './interaction-audio.js?v=interaction-foley-1';
 
 // One audio graph; bounded voices; no animation-loop ownership.
@@ -18,6 +20,15 @@ export function createPartyAudio({settings, saveSettings, gameMuted, host = wind
   const limits = {step: 90, jump: 140, double: 140, land: 100, 'character-jump':110, 'character-land':120, 'skate-ollie':110, 'skate-flip':140, 'skate-land':100, horn:120, swing: 150, hit: 100, pad: 250, grab: 150, throw: 150, click: 60, stars: 350, note:80, bell:1800, portal:500, 'water-splash':450, 'vehicle-start':500, 'vehicle-stop':250, 'vehicle-brake':300, 'ui-confirm':120, 'pet-call':240, 'pet-purr':260, 'pet-happy':220, 'pet-bark':500, 'pet-fetch':450, 'pet-pounce':180, 'pet-paw':160, 'pet-pickup':260, 'pet-drop':240, 'pet-roll':220, 'punch-cat':600, 'punch-gorilla':600, 'punch-frog':600};
   const audible = () => ctx?.state === 'running' && !host.document.hidden && !blocked && !gameMuted() && settings.sfx > 0;
   const cowVoice=createCowVoice({host,getContext:()=>ctx,getOutput:()=>master,audible,voices,onPlay:()=>{counts['punch-cow']=(counts['punch-cow']||0)+1;}});
+  const punchRecordings=createPunchRecordings({host,getContext:()=>ctx,getOutput:()=>master,audible,voices,onPlay:base=>{const key=CHARACTER_FEEDBACK[base].sound;counts[key]=(counts[key]||0)+1;}});
+  let lastPunch=-Infinity;
+  function selectedBase(base){
+    if(feedbackBase(base))return base;
+    const current=host.document.documentElement?.dataset.gameplayAvatarBase;
+    if(feedbackBase(current))return current;
+    try{return feedbackBase(JSON.parse(host.localStorage?.getItem('67park-feel-lab.character.v3')||'null')?.base);}catch{return null;}
+  }
+  if(!host.document.hidden&&!gameMuted()&&settings.sfx>0)punchRecordings.preload(selectedBase());
   function cowSelected(){
     if(host.document.documentElement?.dataset.gameplayAvatarBase==='cow67')return true;
     try{return JSON.parse(host.localStorage?.getItem('67park-feel-lab.character.v3')||'null')?.base==='cow67';}catch{return false;}
@@ -61,6 +72,7 @@ export function createPartyAudio({settings, saveSettings, gameMuted, host = wind
       recordings.load(ctx);
       interactions.load(ctx);
       if(cowSelected())cowVoice.load();
+      punchRecordings.load(selectedBase());
       return ctx;
     } catch { return null; } // Audio failure must never disable gameplay or the party pack.
   }
@@ -179,6 +191,15 @@ export function createPartyAudio({settings, saveSettings, gameMuted, host = wind
     'punch-cat'(){vocal({notes:[[0,580],[.055,760],[.14,590],[.3,340]],formants:[[0,900],[.09,1900],[.3,600]],duration:.3,gain:.075});},
     'punch-gorilla'(){vocal({notes:[[0,110],[.05,145],[.2,62]],formants:[[0,430],[.05,650],[.2,190]],duration:.2,gain:.1,pulses:2});},
     'punch-frog'(){vocal({notes:[[0,220],[.06,270],[.24,130]],formants:[[0,850],[.08,1200],[.24,420]],duration:.24,gain:.075,pulses:3});},
+    'punch-ninja'(){voice({noiseBand:'highpass',from:2800,duration:.14,gain:.12});voice({from:620,to:210,duration:.11,gain:.035});},
+    'punch-shark'(){voice({noiseBand:'lowpass',from:650,duration:.28,gain:.15});voice({noiseBand:'bandpass',from:1500,duration:.1,delay:.1,gain:.07});},
+    'punch-cyclops'(){vocal({notes:[[0,145],[.07,210],[.3,85]],formants:[[0,450],[.1,1000],[.3,350]],duration:.3,gain:.15});},
+    'punch-skeleton'(){[0,.055,.11].forEach((delay,i)=>voice({type:'triangle',from:920+i*310,to:450+i*130,duration:.045,delay,gain:.10}));},
+    'punch-zombie'(){vocal({notes:[[0,92],[.13,72],[.34,58]],formants:[[0,550],[.12,390],[.34,230]],duration:.34,gain:.14,pulses:2});},
+    'punch-chick'(){[0,.1].forEach(delay=>voice({from:2100,to:2900,duration:.08,delay,gain:.08}));},
+    'punch-sloth'(){vocal({notes:[[0,190],[.14,160],[.38,115]],formants:[[0,750],[.2,600],[.38,420]],duration:.38,gain:.11});},
+    'punch-axolotl'(){[0,.07,.14].forEach((delay,i)=>voice({from:520+i*240,to:240+i*100,duration:.075,delay,gain:.095}));},
+    'punch-pig'(){vocal({notes:[[0,210],[.04,135],[.21,95]],formants:[[0,1150],[.06,680],[.21,440]],duration:.21,gain:.16,pulses:2});},
     'pet-purr'(){return interaction('purr',{gain:.24});},
     'pet-happy'(_,p){return interaction('bark',{gain:.12,pitch:1+(p-1)*.3});},
     'pet-bark'(_,p){return interaction('bark',{gain:.22,pitch:1+(p-1)*.3});},
@@ -283,7 +304,7 @@ export function createPartyAudio({settings, saveSettings, gameMuted, host = wind
       // Cancelling a pending blur must retain its unfocused state; otherwise
       // a later volume/storage change could restart the engine in background.
       if(vehicleBlurTimer!==null){vehicleFocused=false;clearVehicleBlur();}
-      stopHorn();stopVehicleEngine();cowVoice.cancel();pendingEffects.clear();
+      stopHorn();stopVehicleEngine();cowVoice.cancel();punchRecordings.cancel();pendingEffects.clear();
     }
     if (host.document.hidden || blocked || gameMuted()) for (const source of voices) { try { source.stop(); } catch {} }
   }
@@ -311,7 +332,7 @@ export function createPartyAudio({settings, saveSettings, gameMuted, host = wind
   host.addEventListener('park:settings-change',quiet);
   host.addEventListener('park:audio-mute-change',quiet);
   host.addEventListener('blur',()=>{
-    stopHorn();cowVoice.cancel();pendingEffects.clear();clearVehicleBlur();
+    stopHorn();cowVoice.cancel();punchRecordings.cancel();pendingEffects.clear();clearVehicleBlur();
     // Release held input immediately, but do not turn an 80ms focus flicker
     // during camera/UI input into a stopped/restarted idle engine. Hiding the
     // page, leaving, muting, or zero volume still stops it immediately above.
@@ -324,7 +345,14 @@ export function createPartyAudio({settings, saveSettings, gameMuted, host = wind
     interactionReady:()=>ctx?interactions.load(ctx):Promise.resolve(false),
     vehicleReady:()=>ctx?vehicle.ready():Promise.resolve(false),
     cowReady:()=>ctx?cowVoice.load():Promise.resolve(false),
-    punch(base){play('swing');if(base==='cow67')cowVoice.play();const sound={cat67:'punch-cat',goril:'punch-gorilla',frog67:'punch-frog'}[base];if(sound)play(sound);},
+    punchReady:base=>punchRecordings.load(selectedBase(base)),
+    punch(base){
+      if(!audible()||ctx.currentTime-lastPunch<.60)return;
+      lastPunch=ctx.currentTime;base=selectedBase(base);play('swing');
+      if(base==='cow67'){cowVoice.play();return;}
+      if(punchRecordings.supported(base)){punchRecordings.play(base);return;}
+      const sound=CHARACTER_FEEDBACK[base]?.sound;if(sound)play(sound);
+    },
     state: () => ctx?.state || 'none',
     setVolume(value) { settings.sfx = Math.min(1, Math.max(0, Number(value) || 0)); quiet(); saveSettings(); },
     stats: () => ({voices:voices.size, maxVoices:24, counts:{...counts}, cowVoice:cowVoice.stats(), hornActive:!!hornVoice, engineActive:vehicle.stats().active, vehicle:vehicle.stats(), state:ctx?.state || 'none',recordings:recordings.stats(),interactions:interactions.stats()})

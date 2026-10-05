@@ -1,5 +1,14 @@
 # Natural movement and vehicle sounds
 
+## Character punch calls (2026-10-05)
+
+- `punch-gorilla-v1.wav`: J0ck0, [Gorillaschrei.wav](https://freesound.org/people/J0ck0/sounds/397054/), CC0, described by its author as a zoo recording. Public preview: `https://cdn.freesound.org/previews/397/397054_2884295-hq.mp3`. First 0.62 seconds, mono PCM16 24kHz, 70Hz high-pass / 5kHz low-pass, 12ms attack / 100ms release, peak limit 0.85 without makeup gain.
+- `punch-frog-v1.wav`: egomassive, [Frog.ogg](https://freesound.org/people/egomassive/sounds/536759/), CC0, derived from Craig Smith's CC0 "R01-47-Frog Ribbits". Public preview: `https://cdn.freesound.org/previews/536/536759_1415754-hq.mp3`. Mono PCM16 24kHz, 70Hz high-pass / 5.5kHz low-pass, 8ms attack / 50ms release, peak limit 0.85 without makeup gain.
+
+Licenses checked 2026-10-05. No game soundtrack or paid generation used.
+Other new character cues are original short procedural/cartoon effects, not
+recordings of real animals. The existing recorded cow call is retained.
+
 `natural-foley-v1.wav` contains edited **real recordings**, all released under
 [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/).
 No voice service, paid generation, runtime CDN or account is required.

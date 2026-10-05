@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import {approvedCharacter} from './approved-character-selection.js?v=approved-roster-20261001-2';
+import {CHARACTER_FEEDBACK} from './character-feedback.js';
 
 // Reuse the game's existing action cadence and contact time. The Cat's second
 // paw is cosmetic: only the original .14-second impact may apply gameplay hits.
@@ -45,7 +46,7 @@ export const CHARACTER_PUNCH_PROFILES=Object.freeze({
   HandR:sequence([-.22,0,0],[-.6,0,0],[-.3,0,0]),
  }},
 });
-export const punchProfile=base=>CHARACTER_PUNCH_PROFILES[base]||CHARACTER_PUNCH_PROFILES.goril;
+export const punchProfile=base=>CHARACTER_FEEDBACK[base]||CHARACTER_PUNCH_PROFILES.goril;
 
 // Absolute authoring against the shared idle rig; the animation controller
 // converts only this new clip to an additive upper-body layer. Never mutate the
