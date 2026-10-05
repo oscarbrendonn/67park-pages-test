@@ -15,6 +15,7 @@ export function installSocialResults(client, win=globalThis.window) {
   let round=initialParams.has('round')?Number(initialParams.get('round'))||0:null,pendingReady=null;
   const originalSend=client.send;
   if(originalSend)client.send=function(message){
+    if(this.data?.room?.spectating&&['input','race.input','rocket.input','sports.input','match.ready'].includes(message.t))return false;
     if(message.t==='match.ready'){
       if(round===null){pendingReady=message;return true;}
       message={...message,round};
@@ -22,13 +23,19 @@ export function installSocialResults(client, win=globalThis.window) {
     return originalSend.call(this,message);
   };
   if(!doc.querySelector('[data-social-features]')){
-    const css=doc.createElement('link');css.rel='stylesheet';css.href=new URL('./social-features.css?v=social-1',import.meta.url).href;css.dataset.socialFeatures='1';doc.head.append(css);
+    const css=doc.createElement('link');css.rel='stylesheet';css.href=new URL('./social-features.css?v=friends-gifts-watch-20261005-1',import.meta.url).href;css.dataset.socialFeatures='1';doc.head.append(css);
   }
-  let root,again,cancel,status,error,people,changeGame,signature='',navigating=false,scheduled=false;
+  let root,again,cancel,status,notice,error,people,changeGame,sportsWatch,signature='',navigating=false,scheduled=false;
   const update=()=>{
     scheduled=false;
     const state=client.data,room=state?.room;
-    if(!room){root?.remove();root=null;signature='';return;}
+    const watchingSport=room?.spectating&&['basket','penalty'].includes(room.mode)&&['countdown','playing'].includes(room.status);
+    if(watchingSport&&!sportsWatch){
+      sportsWatch=doc.createElement('section');sportsWatch.className='external-sports-watch park-ui-panel';sportsWatch.setAttribute('aria-label','Watch match');
+      const label=doc.createElement('span');label.textContent='Spectating · Camera follows the shot';const leave=doc.createElement('button');leave.type='button';leave.className='park-ui-control';leave.textContent='Back to lobby';leave.onclick=()=>{client.act('room.leave');returnToParty(win)};sportsWatch.append(label,leave);doc.body.append(sportsWatch);
+    }else if(!watchingSport){sportsWatch?.remove();sportsWatch=null;}
+    if(!room){doc.body.classList.remove('park-external-spectator');root?.remove();root=null;signature='';return;}
+    doc.body.classList.toggle('park-external-spectator',room.spectating===true);
     const inArena=new URLSearchParams(win.location.search).get('match')===room.code;
     if(inArena&&round===null){
       round=room.round||0;const url=new URL(win.location.href);url.searchParams.set('round',String(round));win.history.replaceState(null,'',url.href);
@@ -45,17 +52,20 @@ export function installSocialResults(client, win=globalThis.window) {
       root=doc.createElement('section');root.className='social-round';root.setAttribute('aria-label','Play again together');
       again=doc.createElement('button');again.className='social-again';again.onclick=()=>client.act('room.play-again',{});
       cancel=doc.createElement('button');cancel.textContent='Cancel ready';cancel.onclick=()=>client.act('room.play-again',{value:false});
-      status=doc.createElement('p');status.setAttribute('role','status');error=doc.createElement('p');error.setAttribute('role','alert');
+      status=doc.createElement('p');status.setAttribute('role','status');notice=doc.createElement('p');notice.setAttribute('role','status');notice.dataset.matchNotice='true';error=doc.createElement('p');error.setAttribute('role','alert');
       changeGame=doc.createElement('button');changeGame.textContent='Choose next game together';changeGame.onclick=()=>client.act('room.return',{});
       people=doc.createElement('section');people.setAttribute('aria-label','Match players');people.className='social-result-people';
-      root.append(status,again,cancel,changeGame,people,error);card.append(root);signature='';
+      const leave=doc.createElement('button');leave.textContent='Leave match · Back to lobby';leave.className='park-ui-control';
+      leave.classList.add('social-watch-leave');leave.onclick=()=>{win.dispatchEvent(new win.Event('park:release-controls'));client.act('room.leave',{});returnToParty(win);};
+      root.append(notice,status,again,cancel,changeGame,leave,people,error);card.append(root);signature='';
+      if(room.spectating){root.prepend(leave);card.prepend(root);}
     }
-    const voted=room.again?.includes(state.me?.id),text=`${room.again?.length||0}/${room.capacity} players ready for another round. Everyone must agree.`;
-    const next=JSON.stringify([voted,text,state.connected,state.error,room.host,room.members.map(p=>[p.id,p.name]),state.friendIds,state.outgoingRequests]);if(next===signature)return;signature=next;
-    status.textContent=text;again.textContent=voted?'Waiting for your team…':'Play again together';again.disabled=!state.connected||voted;
-    cancel.hidden=!voted;cancel.disabled=!state.connected;error.textContent=state.error||'';error.hidden=!state.error;
+    const voted=room.again?.includes(state.me?.id),text=`${room.again?.length||0}/${room.mode==='tumble'?room.members.length:room.capacity} players ready for another round. Everyone must agree.`;
+    const next=JSON.stringify([voted,text,state.connected,state.error,state.notice,room.host,room.members.map(p=>[p.id,p.name]),state.friendIds,state.outgoingRequests]);if(next===signature)return;signature=next;
+    status.textContent=room.spectating?'Match finished · Spectators do not receive player rewards.':text;again.textContent=voted?'Waiting for your team…':'Play again together';again.disabled=!state.connected||voted;again.hidden=room.spectating===true;
+    cancel.hidden=!voted||room.spectating===true;cancel.disabled=!state.connected;error.textContent=state.error||'';error.hidden=!state.error;notice.textContent=state.notice||'';notice.hidden=!state.notice;
     changeGame.hidden=room.host!==state.me?.id;changeGame.disabled=!state.connected;
-    people.replaceChildren();
+    root.classList.toggle('is-spectator-result',room.spectating===true);people.hidden=room.spectating===true;people.replaceChildren();
     for(const p of room.members){if(p.id===state.me?.id)continue;
       const row=doc.createElement('div'),name=doc.createElement('span'),button=doc.createElement('button');name.textContent=p.name;
       const friend=state.friendIds?.includes(p.id),sent=state.outgoingRequests?.find(q=>q.to===p.id);
@@ -66,5 +76,5 @@ export function installSocialResults(client, win=globalThis.window) {
   };
   const schedule=()=>{if(!scheduled){scheduled=true;queueMicrotask(update);}};
   const off=client.subscribe(schedule),offFrame=client.onFrame?.(frame=>{if(frame.over)schedule();});schedule();
-  return ()=>{off?.();offFrame?.();root?.remove();if(originalSend)client.send=originalSend;delete client.__socialResults;};
+  return ()=>{off?.();offFrame?.();root?.remove();sportsWatch?.remove();if(originalSend)client.send=originalSend;delete client.__socialResults;};
 }

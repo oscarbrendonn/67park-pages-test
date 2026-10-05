@@ -2,6 +2,8 @@
 import {createSocialFeatures} from './social-features.js?v=friend-lobbies-1';
 import {invitationServerNow,invitationSummary} from './invitation-summary.js';
 import {createPartyFundamentals} from './party-fundamentals.js';
+import {createFriendActions} from './friend-actions.js';
+import {applyFriendTravel} from './friend-travel.js';
 export const SOCIAL_TABS=Object.freeze(['play','friends','requests','party','account']);
 export const requestedSocialTab=detail=>SOCIAL_TABS.includes(detail?.tab)?detail.tab:null;
 export function friendLobbyAction(state,person){
@@ -22,14 +24,18 @@ export function filterFriends(friends=[],query='',onlineOnly=false){
 }
 if(typeof document!=='undefined'){
  const css=document.querySelector('link[data-social-panel]')||document.createElement('link');
- css.rel='stylesheet';css.href=new URL('./social-panel.css?v=friend-lobbies-1',import.meta.url).href;css.dataset.socialPanel='1';
+ css.rel='stylesheet';css.href=new URL('./social-panel.css?v=friends-gifts-watch-20261005-1',import.meta.url).href;css.dataset.socialPanel='1';
  if(!css.isConnected)document.head.append(css);
 }
 export function createSocialPanel(React,client){
  const h=React.createElement,{SocialSettings}=createSocialFeatures(React,null,client);
  const {PartyRequestButton,PartyRequests}=createPartyFundamentals(React,client);
+ const {FriendActions,GiftHistory}=createFriendActions(React,client);
  const labels={play:'Play',friends:'Friends',requests:'Requests',party:'Party',account:'Account'};
  function useSocialView(state,dialog){
+  const travel=React.useRef(null);
+  React.useEffect(()=>{const ticket=state.friendTravel;if(ticket&&travel.current!==ticket.id&&applyFriendTravel(client,ticket))travel.current=ticket.id;},[state.friendTravel?.id,state.island?.code]);
+  React.useEffect(()=>{const failed=e=>client.update?.({error:e.detail,notice:''});window.addEventListener('park:friend-travel-error',failed);return()=>window.removeEventListener('park:friend-travel-error',failed);},[]);
   const [view,setView]=React.useState(()=>/\/play\/(index\.html)?$/.test(location.pathname)?'play':'friends');
   const [query,setQuery]=React.useState(''),[onlineOnly,setOnlineOnly]=React.useState(false),lastRoom=React.useRef(null);
   React.useEffect(()=>{if(state.room?.code&&state.room.code!==lastRoom.current)setView('party');lastRoom.current=state.room?.code||null;},[state.room?.code]);
@@ -66,11 +72,10 @@ export function createSocialPanel(React,client){
    h('button',{ref:cancel,type:'button',onClick:()=>{setConfirm(false);queueMicrotask(()=>trigger.current?.focus());}},'Cancel'));
  }
  function FriendLobbyJoin({person,state}){
-  if(person.roomId&&person.roomStatus==='waiting')return h(PartyRequestButton,{person,state});
   const action=friendLobbyAction(state,person);
-  return h('button',{type:'button',className:'social-join-lobby',disabled:action.disabled,
+  return h(React.Fragment,null,person.roomId&&person.roomStatus==='waiting'?h(PartyRequestButton,{person,state}):h('button',{type:'button',className:'social-join-lobby',disabled:action.disabled,
    'aria-label':`${action.label} · ${person.name}`,title:person.island?`${person.island.players}/${person.island.capacity} players · Same park and games`:'Friend is offline',
-   onClick:()=>{if(!action.disabled)client.act('island.join-friend',{target:person.id});}},action.label);
+   onClick:()=>{if(!action.disabled)client.act('island.join-friend',{target:person.id});}},action.label),h(FriendActions,{person,state}));
  }
  function RequestsPanel({state,canJoin}){
   const invitations=state.invites||[],requests=state.requests||[],sent=state.sentInvites||[];
@@ -81,11 +86,12 @@ export function createSocialPanel(React,client){
   const now=invitationServerNow(serverClock.current,clock);
   return h('section',{className:'online-card social-requests-panel','aria-label':'Requests and invitations'},
    h('h2',null,'Requests & invitations'),
+   h(GiftHistory,{notice:state.notice}),
    !invitations.length&&!requests.length&&!state.partyRequests?.length&&!state.sentPartyRequests?.length&&h('p',null,'No incoming requests. New invitations will appear here.'),
    h(PartyRequests,{state}),
    ...invitations.map(i=>{const summary=invitationSummary(i,now);return h('div',{className:'online-invite',key:i.id},h('div',null,h('b',null,i.from),h('p',null,summary.label),
     summary.expiryText&&h('small',{'aria-live':'off'},summary.expiryText)),
-    h('button',{type:'button',disabled:!canJoin||summary.expired,onClick:()=>{if(canJoin&&!invitationSummary(i,invitationServerNow(serverClock.current,Date.now())).expired)client.act('invite.accept',{id:i.id});}},'Join'),
+    h('button',{type:'button',disabled:!canJoin||summary.expired,onClick:()=>{if(canJoin&&!invitationSummary(i,invitationServerNow(serverClock.current,Date.now())).expired)client.act('invite.accept',{id:i.id});}},i.kind==='summon'?'Accept summon':'Join'),
     h('button',{type:'button',disabled:!state.connected,'aria-label':`Decline invitation from ${i.from}`,onClick:()=>client.act('invite.decline',{id:i.id})},'Decline'));}),
    invitations.length>0&&!canJoin&&h('p',null,state.connected?'Finish or leave your current match before joining an invitation.':'Reconnect to respond to invitations.'),
    ...requests.map(q=>h('div',{className:'online-invite',key:q.id},h('div',null,h('b',null,q.fromPlayer?.name||'Player'),h('p',null,'Wants to be your friend.')),

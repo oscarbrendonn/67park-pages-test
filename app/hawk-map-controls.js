@@ -1,3 +1,4 @@
+import {installFriendTravelTarget} from './friend-travel.js';
 // Bird's-eye navigation; teleport uses the game's validated callback.
 import {mapPlayers,createMapPlayerLayer} from './map-player-markers.js?v=map-public-20261003-1';
 import {createMapPlayerDirectory} from './map-player-directory.js?v=park-essentials-20261002-1';
@@ -21,6 +22,7 @@ export function transformHawkView(view, from, to, scale, viewport, limits) {
 
 export function installHawkMapControls(camera, hawk, config, host = window) {
   states.get(camera)?.dispose();
+  const disposeFriendTravel=installFriendTravelTarget(config,host);
   const doc = host.document, pointers = new Map(), captures = new Map(), listeners = [];
   let canvas = null, oldTouchAction = '', panel = null, output = null, view = null, enabled = false, frame = null;
   let tap=null,lastTap=null,hint=null,playerLayer=null,legend=null,lastPlayersAt=0,directory=null,panelObserver=null;
@@ -199,7 +201,7 @@ export function installHawkMapControls(camera, hawk, config, host = window) {
   on(host,'click',e=>{if(enabled&&Date.now()<suppressMarkerClickUntil&&e.target?.closest?.('.park-map-player')){e.preventDefault();e.stopImmediatePropagation();}},true);
   on(host,'wheel',e=>{if(!enabled||e.target!==canvas||blocked())return;e.preventDefault();const p=local(e);change(p,p,Math.exp(clamp(e.deltaY,-240,240)*.003));},{passive:false});
   const unsub=hawk.sub(sync);
-  const dispose=()=>{unsub();release();if(enabled)restoreProjection();delete camera.userData.parkOverview;if(frame!==null)host.cancelAnimationFrame?.(frame);for(const remove of listeners)remove();if(canvas)canvas.style.touchAction=oldTouchAction;playerLayer?.dispose();directory?.dispose();panelObserver?.disconnect();doc.documentElement.style.removeProperty('--park-map-navigation-height');panel?.remove();states.delete(camera);};
+  const dispose=()=>{disposeFriendTravel();unsub();release();if(enabled)restoreProjection();delete camera.userData.parkOverview;if(frame!==null)host.cancelAnimationFrame?.(frame);for(const remove of listeners)remove();if(canvas)canvas.style.touchAction=oldTouchAction;playerLayer?.dispose();directory?.dispose();panelObserver?.disconnect();doc.documentElement.style.removeProperty('--park-map-navigation-height');panel?.remove();states.delete(camera);};
   states.set(camera,{render,dispose});sync();return dispose;
 }
 

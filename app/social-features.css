@@ -1,4 +1,11 @@
 .social-lobby{margin-bottom:18px;min-width:0}
+.park-external-spectator dialog.om-result{background:var(--park-ui-surface,#f5f8fb);color:var(--park-ui-ink,#344651);border:1px solid var(--park-ui-line,#dfe6ec);border-radius:26px}
+.park-external-spectator dialog.om-result>p,.park-external-spectator dialog.om-result>small{display:none}
+.park-external-spectator .rr-controls,.park-external-spectator .rr-recover,.park-external-spectator .rr-speed,.park-external-spectator .rr-stats,.park-external-spectator .cr-pad,.park-external-spectator .cr-tools,.park-external-spectator .cr-jump,.park-external-spectator .cr-sprint,.park-external-spectator .om-touch-dash,.park-external-spectator #touch-ui,.park-external-spectator #controls{visibility:hidden!important}
+.park-external-spectator #again,.park-external-spectator #rr-again,.park-external-spectator #sp-result-action,.park-external-spectator #result-lobby,.park-external-spectator .om-result>button{display:none!important}
+.is-spectator-result .social-result-people{display:none!important}.social-round.is-spectator-result{padding:8px 0;margin-top:8px;background:transparent}.social-round.is-spectator-result .social-watch-leave{display:block!important}
+.park-external-spectator .sp-controls,.park-external-spectator .sp-control,.park-external-spectator [aria-label="Shot controls"]{visibility:hidden}
+.external-sports-watch{position:fixed;z-index:65;bottom:max(12px,env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);width:max-content;max-width:calc(100vw - 24px);display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:10px;padding:12px;box-sizing:border-box;border-radius:22px;background:var(--park-ui-surface);color:var(--park-ui-ink);border:1px solid var(--park-ui-line);font:700 13px system-ui}.external-sports-watch button{min-height:44px;padding:8px 14px}
 .social-lobby h2,.social-lobby h3{margin:0 0 8px}
 .social-quick-invites,.social-phrases{display:flex;flex-wrap:wrap;gap:8px}
 .social-quick-invites button,.social-phrases button,.social-pending button{min-height:44px;padding:9px 14px;overflow-wrap:anywhere;max-width:100%}

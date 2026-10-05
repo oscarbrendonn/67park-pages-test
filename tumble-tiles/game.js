@@ -1,3 +1,4 @@
+import {installMatchWatch} from "../app/match-watch.js";
 import * as T from 'three';
 import {installGraphicsQuality} from '../app/graphics-quality.js';
 import {i as createCharacter,f as equipment} from '../balloon/chunk-U4P5F7P3.js';
@@ -81,7 +82,7 @@ function paintSound(){let muted=false;try{muted=localStorage.getItem('67park-fee
 $('sound-toggle').onclick=()=>{let muted=false;try{muted=localStorage.getItem('67park-feel-lab-muted')==='1';localStorage.setItem('67park-feel-lab-muted','0')}catch{}playerSettings.sfx=muted||playerSettings.sfx<=0?.8:0;savePlayerSettings();paintSound()};
 function leave(e){if(!practice&&client?.data.connected&&room?.status!=='results'){e.preventDefault();resetInput();client.act('room.leave');location.assign('../play/?online=1&game=tumble')}}
 for(const id of['leave','menu-lobby','result-lobby'])$(id).addEventListener('click',leave);
-$('spectate-next').onclick=()=>{spectating++;cameraPlaced=false};
+const matchWatch=installMatchWatch({root:$('spectate'),blocked:()=>modal,onChange:()=>{resetInput();cameraPlaced=false},onLeave:()=>{resetInput();if(!practice)client?.act('room.leave');location.assign('../play/?online=1&game=tumble')}});
 
 function setupScene(){
   renderer=installGraphicsQuality(new T.WebGLRenderer({canvas,antialias:true,powerPreference:'high-performance'}));renderer.setPixelRatio(Math.min(devicePixelRatio,matchMedia('(pointer:coarse)').matches?1.25:1.7));renderer.shadowMap.enabled=true;renderer.shadowMap.type=T.PCFSoftShadowMap;renderer.outputColorSpace=T.SRGBColorSpace;renderer.toneMapping=T.NeutralToneMapping;renderer.toneMappingExposure=1;
@@ -161,7 +162,7 @@ function updateAvatars(dt){
   }
 }
 function updateCamera(dt){
-  const me=frame?.players.find(p=>p.id===localId),alive=frame?.players.filter(p=>p.alive)||[],follow=me?.alive?me:alive[spectating%Math.max(1,alive.length)];
+  const me=frame?.players.find(p=>p.id===localId),alive=frame?.players.filter(p=>p.alive)||[],watched=matchWatch.update({active:!!me&&!me.alive&&!frame.over,players:alive.map(p=>({...p,name:roster.find(r=>r.id===p.id)?.name||'Player'}))}),follow=me?.alive?me:watched;
   const a=avatars.get(follow?.id);if(!a)return;
   const delta=look.poll();cameraYaw+=delta.lookYaw;cameraPitch=T.MathUtils.clamp(cameraPitch+delta.lookPitch,.3,1.12);
   target.copy(a.root.position);target.y=Math.max(-1,target.y)+1.2;
@@ -189,7 +190,7 @@ function hud(now){
   $('bomb-cooldown').textContent=armed?`${Math.ceil(armed.remaining)}s · RUN`:me?.bombCd>0?`${me.bombCd.toFixed(1)}s`:me&&!me.grounded?'LAND':'B · 3s';$('bomb').setAttribute('aria-disabled',String(!!armed||me?.bombCd>0||me&&!me.grounded));
   $('warning').textContent=frame.status==='playing'&&frame.tiles.some(t=>t.warning)?'Striped tiles are about to drop!':'';
   $('countdown').textContent=frame.status==='countdown'?String(Math.max(1,Math.ceil((practice?countdownEnd-now:frame.startAt-Date.now()-(client?.offset||0))/1000))):'';
-  const out=me&&!me.alive&&!frame.over;$('spectate').hidden=!out;$('controls').hidden=out||frame.over||phase==='unavailable';
+  const out=(room?.spectating||me&&!me.alive)&&!frame.over;$('spectate').hidden=!out;$('controls').hidden=out||frame.over||phase==='unavailable';
   $('live-leaderboard').hidden=!$('intro').hidden||modal||frame.over||phase==='unavailable';paintStandings();
 }
 function tick(now){

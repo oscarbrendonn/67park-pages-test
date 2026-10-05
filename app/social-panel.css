@@ -22,5 +22,11 @@
 .online-dialog.online-dialog .social-requests-panel .online-invite{flex-wrap:wrap;gap:8px}
 .social-requests-panel .online-invite>div{flex:1 1 140px;min-width:0;overflow-wrap:anywhere}
 .social-announcement{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.friend-actions{display:flex;flex-wrap:wrap;gap:6px;flex:1 1 100%;min-width:0}
+.friend-actions>button{min-height:44px}
+.friend-gift-panel{flex:1 1 100%;min-width:0;padding:16px;border-radius:22px;background:var(--park-ui-surface);border:1px solid var(--park-ui-line);color:var(--park-ui-ink)}
+.friend-gift-panel header{display:flex;align-items:center;justify-content:space-between;gap:8px}.friend-gift-panel h3{margin:0;font-size:16px;overflow-wrap:anywhere}
+.friend-gift-panel label{display:grid;gap:6px;margin:12px 0;font-weight:700}.friend-gift-panel select{width:100%;min-width:0;min-height:44px;border:1px solid var(--park-ui-line);border-radius:14px;padding:8px;background:var(--park-ui-card);color:var(--park-ui-ink);font:inherit}
+.friend-gift-wallet{font-weight:800}.friend-gift-history{padding:12px;border-radius:18px;background:var(--park-ui-card);border:1px solid var(--park-ui-line);overflow-wrap:anywhere}
 @media(max-width:500px){.online-dialog.online-dialog .social-tabs{padding:8px;gap:4px}.online-dialog.online-dialog .social-tabs button{font-size:11px;padding:8px 2px}.social-friend-tools{grid-template-columns:1fr}.social-friend-tools small{grid-column:auto}.social-tab-count{margin-left:2px}}
 @media(max-height:500px){.online-dialog.online-dialog .social-tabs{padding:5px 10px}.online-dialog.online-dialog .social-tabs button{min-height:44px;padding:6px}.online-dialog.online-dialog .online-connection{margin-bottom:10px}.online-dialog.online-dialog footer{padding:5px 12px}.online-dialog.online-dialog footer span{display:none}}

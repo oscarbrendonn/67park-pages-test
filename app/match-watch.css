@@ -1,0 +1,15 @@
+/* Shared 67Park finish: watch controls replace gameplay, never cover it. */
+.park-match-watch.park-match-watch{position:fixed;inset:auto auto max(16px,env(safe-area-inset-bottom)) 50%;transform:translateX(-50%);z-index:65;display:flex;align-items:center;gap:8px;box-sizing:border-box;width:max-content;max-width:calc(100vw - 24px);padding:10px;border:1px solid var(--park-ui-line);border-radius:24px;background:var(--park-ui-surface,#f5f8fb);color:var(--park-ui-ink,#344651);box-shadow:0 8px 28px #273b5226;font:700 14px/1.35 system-ui}
+.park-match-watch[hidden]{display:none!important}
+.park-match-watching .tt-controls{visibility:hidden}
+.park-match-watch>div{min-width:0;max-width:260px;text-align:center}
+.park-match-watch small{display:block;font-size:11px;font-weight:600}
+.park-match-watch strong{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.park-match-watch button{flex-shrink:0;min-width:44px;min-height:44px;margin:0;padding:8px 12px;border:2px solid var(--park-ui-card);border-radius:18px;background:var(--park-ui-accent);color:inherit;font:inherit;touch-action:manipulation;cursor:pointer}
+.park-match-watch button:disabled{opacity:.45;cursor:default}
+.park-match-watch button:focus-visible{outline:3px solid var(--park-ui-ink,#344651);outline-offset:2px}
+.park-match-watching .cr-tools,.park-match-watching .cr-sprint,.park-match-watching #jump.cr-jump,.park-match-watching #move,.park-match-watching #aim,.park-match-watching .rr-drive{visibility:hidden}
+.park-match-watching.balloon-mode #touch-ui,.park-match-watching.balloon-mode .om-touch-dash,.park-match-watching.balloon-mode .om-banner,.park-match-watching.balloon-mode .om-footer{visibility:hidden}
+.park-match-watching.balloon-mode .bb-banner,.park-match-watching.balloon-mode .bb-ability,.park-match-watching.balloon-mode .bb-tutorial{visibility:hidden}
+@media(max-width:420px){.park-match-watch.park-match-watch{width:calc(100vw - 24px);display:grid;grid-template-columns:44px minmax(0,1fr) 44px}.park-match-watch .watch-leave{grid-column:1/-1;width:100%}}
+@media(max-height:500px){.park-match-watch.park-match-watch{bottom:max(8px,env(safe-area-inset-bottom));padding:6px;font-size:12px}.park-match-watch>div{max-width:210px}}

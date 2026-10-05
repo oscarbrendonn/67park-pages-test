@@ -10,7 +10,7 @@ export function invitationServerNow(anchor,localNow=Date.now()){
 }
 
 export function invitationSummary(invite={},now=Date.now()){
- const label=invite.kind==='match'?(Object.hasOwn(modeNames,invite.mode)?modeNames[invite.mode]:'Match invitation'):'Park lobby invitation';
+ const label=invite.kind==='summon'?'Summon · travel beside your friend':invite.kind==='match'?(Object.hasOwn(modeNames,invite.mode)?modeNames[invite.mode]:'Match invitation'):'Park lobby invitation';
  const timed=typeof invite.expires==='number'&&Number.isFinite(invite.expires)&&Number.isFinite(now);
  const remaining=timed?Math.max(0,Math.ceil((invite.expires-now)/1000)):null;
  const expired=timed&&invite.expires<=now;
