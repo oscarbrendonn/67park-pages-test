@@ -6,9 +6,9 @@ import {mergeGeometries} from '../../island/utils/BufferGeometryUtils.js';
 // is surveyed separately; never regenerate terrain to make room for this prop.
 export const SWING_SITE=Object.freeze({x:200,y:9.398031234741211,z:109});
 export const SWING_RULES=Object.freeze({asset:'candy-swings',period:3.6,height:3.6,length:2.45,amplitude:.38,seats:2});
-export function swingSeat(phase,index,site=SWING_SITE){
+export function swingSeat(phase,index,site=SWING_SITE,amplitude=SWING_RULES.amplitude){
  if(!Number.isInteger(index)||index<0||index>=2)throw RangeError('Invalid swing seat');
- const angle=SWING_RULES.amplitude*Math.sin(phase+index*Math.PI*.4),l=SWING_RULES.length;
+ const angle=Math.max(0,Math.min(.7,amplitude))*Math.sin(phase+index*Math.PI*.4),l=SWING_RULES.length;
  return {position:new T.Vector3(site.x+(index?1.2:-1.2),site.y+SWING_RULES.height-l*Math.cos(angle),site.z-l*Math.sin(angle)),heading:0,kind:'swing',posture:'bench',angle};
 }
 export function swingFrameBlocked(x,y,z,site=SWING_SITE){
@@ -21,8 +21,9 @@ export function createSwingRide({site=SWING_SITE,visual=true}={}){
  const occupants=new Map(),group=new T.Group(),pivots=[],seats=[],geometries=[],materials=[];
  group.name='PARK_CANDY_SWINGS';group.position.set(site.x,site.y,site.z);
  let phase=0,network=false;
+ const boosts=[0,0],amplitudes=[SWING_RULES.amplitude,SWING_RULES.amplitude];
  const entry=new T.Vector3(site.x,site.y,site.z+3.6);
- function sync(){for(let i=0;i<pivots.length;i++){const a=swingSeat(phase,i,site).angle;pivots[i].rotation.x=a;seats[i].rotation.x=-a;}group.updateMatrixWorld(true);}
+ function sync(){for(let i=0;i<pivots.length;i++){const a=swingSeat(phase,i,site,amplitudes[i]).angle;pivots[i].rotation.x=a;seats[i].rotation.x=-a;}group.updateMatrixWorld(true);}
  if(visual){
   const palette=['#a7d5be','#e9abc6','#adcde6','#fff3db'];
   for(const color of palette)materials.push(new T.MeshStandardMaterial({color,roughness:.55,metalness:0}));
@@ -49,11 +50,14 @@ export function createSwingRide({site=SWING_SITE,visual=true}={}){
   // Preserve the grass support. This ride has no walkable moving deck;
   // mounted riders use seat(), not a fabricated floor under the whole set.
   ground:()=>null,deck:()=>null,poles:()=>[],blockers:[],
-  seat:i=>swingSeat(phase,i,site),nearestSeat:()=>0,boardingSeat:()=>[0,1].find(i=>!occupants.has(i))??-1,
+  seat:i=>swingSeat(phase,i,site,amplitudes[i]),nearestSeat:()=>0,boardingSeat:()=>[0,1].find(i=>!occupants.has(i))??-1,
+  pump(i){if(!Number.isInteger(i)||i<0||i>1)return false;boosts[i]=Math.min(.32,boosts[i]+.07);return true;},
+  swingState:()=>[...amplitudes],
+  setSwingState(values){if(!Array.isArray(values)||values.length!==2||!values.every(v=>Number.isFinite(v)&&v>=SWING_RULES.amplitude&&v<=.7))return;values.forEach((v,i)=>amplitudes[i]=v);sync();},
   claimSeat(i,id){if(!Number.isInteger(i)||i<0||i>1||typeof id!=='string'||!id)return false;if(occupants.has(i))return occupants.get(i)===id;if([...occupants.values()].includes(id))return false;occupants.set(i,id);return true;},
   releaseSeat(i,id){return occupants.get(i)===id&&occupants.delete(i);},
   seatStatus:()=>({capacity:2,occupied:[...occupants.keys()],totalOccupied:occupants.size}),
-  advance(dt){if(!network&&Number.isFinite(dt)&&dt>0){phase=(phase+Math.min(.05,dt)*Math.PI*2/SWING_RULES.period)%(Math.PI*2);sync();}},
+  advance(dt){if(!network&&Number.isFinite(dt)&&dt>0){const h=Math.min(.05,dt);phase=(phase+h*Math.PI*2/SWING_RULES.period)%(Math.PI*2);for(let i=0;i<2;i++){boosts[i]=Math.max(0,boosts[i]-h*.025);const target=SWING_RULES.amplitude+boosts[i];amplitudes[i]+=Math.max(-h*.2,Math.min(h*.2,target-amplitudes[i]));}sync();}},
   setNetworkAngle(a){if(!Number.isFinite(a))return;network=true;phase=a;sync();},get angle(){return phase;},
   state:()=>({asset:SWING_RULES.asset,angle:phase,entry:entry.toArray(),occupancy:ride.seatStatus(),seat:ride.seat(0).position.toArray()}),
   dispose(){group.removeFromParent();for(const g of geometries)g.dispose();for(const m of materials)m.dispose();occupants.clear();}

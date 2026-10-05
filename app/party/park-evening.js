@@ -1,13 +1,17 @@
 import * as T from 'three';
-import {parkClock} from '../park-clock.js';
+import {parkClock,PARK_HOUR_MS} from '../park-clock.js?v=slow-swing-20261006-1';
 import {fountainSite} from './fountain-launcher.js?v=fountain-1';
 import {createParkNightSky} from './park-night-sky.js';
+import {createNightWater} from './park-night-water.js?v=slow-swing-20261006-1';
 
 export const SHOW=Object.freeze({hour:20,duration:45,interval:3,life:3.8,particles:48,slots:2});
 export function eveningState(clock){
- const age=(clock.hour-SHOW.hour)*60;
- const sun=Math.sin((clock.dayT-.25)*Math.PI*2);
- const t=T.MathUtils.clamp((sun+.06)/.34,0,1),daylight=t*t*(3-2*t);
+ const age=(clock.hour-SHOW.hour)*PARK_HOUR_MS/1000;
+ const hour=((clock.hour%24)+24)%24;
+ // Preserve full daytime and the existing readable night endpoints. Only
+ // stretch their transition: dawn 05–08, dusk 17–21, no midday tint change.
+ const t=hour<5||hour>=21?0:hour<8?(hour-5)/3:hour<=17?1:(21-hour)/4;
+ const daylight=t*t*(3-2*t);
  return {age,active:age>=0&&age<SHOW.duration,daylight};
 }
 // Absolute-time choreography: joining mid-show or resuming a hidden tab never
@@ -57,7 +61,9 @@ export function createFireworks(scene,site){
 export function createParkEvening({world,clock=()=>parkClock.read(),syncClock=t=>parkClock.sync(t),network=()=>globalThis.window?.__candyOnline?.world,enabled=()=>true,reducedMotion=()=>false}){
  let owner=null,fx=null,sky=null,site=null,lights=[],before=null,hook=null,last=null,disposed=false,sign=null,originalSky=null,originalFog=null,lastSnapshot=null;
  const nightSky=new T.Color('#252e51'),daySky=new T.Color('#c4ccdd'),moon=new T.Color('#becfff');
+ let water=null,clouds=null,cloudVisible=true;
  function clear(){
+  water?.dispose();water=null;if(clouds)clouds.visible=cloudVisible;clouds=null;
   if(owner?.scene?.onBeforeRender===hook)owner.scene.onBeforeRender=before;
   for(const row of lights){row.light.intensity=row.intensity;row.light.color.copy(row.color);}
   if(originalSky&&owner?.scene?.background?.isColor)owner.scene.background.copy(originalSky);
@@ -72,6 +78,8 @@ export function createParkEvening({world,clock=()=>parkClock.read(),syncClock=t=
   for(const row of lights){row.light.intensity=row.intensity*(.23+.77*s.daylight);row.light.color.copy(row.color).lerp(moon,(1-s.daylight)*.55);}
   owner.scene.background?.isColor&&owner.scene.background.copy(nightSky).lerp(daySky,s.daylight);
   owner.scene.fog?.color.copy(nightSky).lerp(daySky,s.daylight);
+  water?.step(s.daylight,owner.scene.background?.isColor?owner.scene.background:null);
+  if(clouds)clouds.visible=s.daylight>.18;
   fx?.step(s.age,{active:active&&s.active,reduced:reducedMotion()});
   sky?.step(s.daylight,camera||owner.camera,active);
   if(sign)sign.visible=active&&!!owner.camera&&owner.camera.position.distanceTo(sign.position)<55;
@@ -81,6 +89,7 @@ export function createParkEvening({world,clock=()=>parkClock.read(),syncClock=t=
   const snapshot=network();if(snapshot&&snapshot!==lastSnapshot&&Number.isFinite(snapshot.now)){lastSnapshot=snapshot;syncClock(snapshot.now);}
   const w=world();if(w!==owner){clear();if(!w?.ready||!enabled())return;
    owner=w;sky=createParkNightSky(w.scene);site=fountainSite(w.scene);if(site)fx=createFireworks(w.scene,site);
+   water=createNightWater(w.scene);clouds=w.scene.getObjectByName('67PARK_WEATHER_CLOUDS');cloudVisible=clouds?.visible??true;
    originalSky=w.scene.background?.isColor?w.scene.background.clone():null;originalFog=w.scene.fog?.color.clone()??null;
    if(site&&typeof document!=='undefined'){
     const canvas=document.createElement('canvas');canvas.width=640;canvas.height=112;
