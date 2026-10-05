@@ -1,0 +1,41 @@
+/* Balloon presentation only. Shared lobby tokens; no gameplay/input rules. */
+body.balloon-mode :is(.bb-hud,.bb-ability,.bb-tutorial,.uv-toast){
+ background:var(--park-ui-surface);color:var(--park-ui-ink);
+ border:2px solid var(--park-ui-card);border-radius:18px;
+ box-shadow:var(--park-ui-button-shadow);font-family:var(--park-ui-font);
+}
+body.balloon-mode .bb-ability{background:linear-gradient(var(--park-ui-card),var(--park-ui-mint))}
+body.balloon-mode .bb-ability :is(.bb-ability-title,.bb-ability-state){color:var(--park-ui-mint-ink)}
+body.balloon-mode #back-park{
+ background:linear-gradient(var(--park-ui-card),var(--park-ui-lilac));
+ border:2px solid var(--park-ui-card);color:var(--park-ui-ink);
+ box-shadow:0 3px 0 var(--park-ui-lilac-edge);font-family:var(--park-ui-font);
+}
+/* The results owner already supplies Close and Return. Expired game chrome
+   must not cover its heading or intercept its buttons. */
+body.balloon-mode:has(.ps-result-hero) :is(#back-park,.uv-toast){visibility:hidden}
+body.balloon-mode .uv-panel:has(.ps-result-hero){
+ box-sizing:border-box;background:var(--park-ui-surface);color:var(--park-ui-ink);
+ border:2px solid var(--park-ui-card);border-radius:var(--park-ui-radius);
+ box-shadow:var(--park-ui-shadow);font-family:var(--park-ui-font);
+ max-width:calc(100vw - 20px - env(safe-area-inset-left) - env(safe-area-inset-right));
+ max-height:calc(100dvh - 32px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+ overflow:auto;overscroll-behavior:contain;scroll-padding:12px;
+}
+body.balloon-mode .uv-panel:has(.ps-result-hero) header{color:var(--park-ui-ink);border-color:var(--park-ui-line);padding-right:52px}
+body.balloon-mode .uv-panel:has(.ps-result-hero) .uv-x{
+ min-width:44px;min-height:44px;background:var(--park-ui-card);color:var(--park-ui-ink);
+ border:2px solid var(--park-ui-line);border-radius:var(--park-ui-control-radius);
+}
+body.balloon-mode :is(.ps-result-outcome,.ps-result-stat b){color:var(--park-ui-ink)}
+body.balloon-mode .ps-result-stat{background:var(--park-ui-card);border-color:var(--park-ui-line)}
+body.balloon-mode :is(.ps-result-stat span,.ps-result-summary){color:var(--park-ui-muted)}
+body.balloon-mode .ps-result-note{background:var(--park-ui-mint);color:var(--park-ui-mint-ink);border-color:var(--park-ui-mint-edge)}
+body.balloon-mode .ps-result-actions .uv-btn{
+ min-height:44px;border:2px solid var(--park-ui-card);border-radius:var(--park-ui-control-radius);
+ background:linear-gradient(var(--park-ui-card),var(--park-ui-soft));color:var(--park-ui-ink);
+ box-shadow:var(--park-ui-button-shadow);font-family:var(--park-ui-font);font-weight:800;
+}
+body.balloon-mode .ps-result-actions .uv-btn:first-child{background:linear-gradient(var(--park-ui-card),var(--park-ui-pink));color:var(--park-ui-pink-ink);box-shadow:0 3px 0 var(--park-ui-pink-edge)}
+body.balloon-mode .uv-panel:has(.ps-result-hero) button:focus-visible{outline:3px solid var(--park-ui-focus);outline-offset:2px}
+@media(max-width:360px){body.balloon-mode .ps-result-stat{padding:7px 10px}body.balloon-mode .ps-result-stats{gap:6px}}
