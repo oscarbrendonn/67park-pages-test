@@ -19,6 +19,9 @@ import {createFeatureBoundary} from '../feature-boundary.js';
 import {createVehicleHorn} from './vehicle-horn.js?v=horn-hold-1';
 import {createTargetClub} from './target-club.js?v=target-club-1';
 import {createWaterEntryFeedback} from './water-entry-feedback.js?v=water-contact-1';
+import {createFountainLauncher} from './fountain-launcher.js?v=fountain-1';
+import {createParkSwings} from './park-swings.js?v=swings-1';
+import {createParkEvening} from './park-evening.js?v=evening-1';
 
 const BASE = new URL('../../', import.meta.url).pathname.replace(/\/$/, '');
 const CFG = Object.assign({runtime: '', carry: ''}, (typeof window !== 'undefined' && window.__partyConfig) || {});
@@ -52,6 +55,11 @@ const housing = createHousing({sound:name=>sfx.play(name)});
 window.__parkHousing = housing;
 const world = () => window.__islandWorld || null;
 const scene = () => window.__eggyScene || null;
+// Do not add materials while entry-graphics is compiling its fixed warmup set.
+const swings=createParkSwings({world,scene,canInstall:()=>!document.querySelector('.wardrobe')});
+window.__parkSwings=swings;
+const evening=createParkEvening({world,reducedMotion,enabled:()=>player.map==='city'&&!document.hidden&&!world()?.homeScene?.active&&!document.querySelector('.wardrobe')});
+window.__parkEvening=evening;
 const net = () => window.__eggyNet || null;
 // This release adds local driver feedback only. Replicating a horn would need
 // a server-approved vehicle event: mounted position packets are deliberately
@@ -123,8 +131,11 @@ window.__partyStep = guard((body, input, dt, map) => {
   previousHeld = held;
   features.run('toys-step',()=>toys.step(body,input,dt,map==='city'&&!!world()&&!world()?.homeScene?.active));
   if (map !== 'city' || !world()) return;
+  features.run('swings',()=>swings.step());
+  features.run('evening',()=>evening.step());
   features.run('rails',()=>{if(world().ready&&!world().skateRailFinish)installSkateRailFinish(world());});
   features.run('launchers',()=>items.step(body,dt));
+  features.run('fountain',()=>fountain.step(body,dt));
   features.run('rings',()=>stepRings(dt));
   features.run('remote-pops',()=>remotePops.step(dt));
 });
@@ -363,6 +374,13 @@ const items = createParkLaunchers({world,scene,state,settings,reducedMotion,remo
  blocked:()=>document.hidden||!!document.querySelector('.wardrobe,dialog[open],#party-settings:not([hidden])'),
  onLaunch(){if(settings.juice&&!reducedMotion())kick(.28);sfx.play('pad');buzz([15,30,25]);}
 });
+const fountain=createFountainLauncher({world,scene,state,reducedMotion,remotes:()=>net()?.remotes,
+ enabled:()=>!!settings.pads&&!document.hidden&&!world()?.homeScene?.active,
+ blocked:()=>!!window.__candy?.state?.().mounted||!!document.querySelector('.wardrobe,dialog[open],#party-settings:not([hidden])'),
+ carried:()=>!!carryApi?.isLocalCarryActive?.(),
+ onLaunch(){sfx.play('water-splash',.7);buzz(15);}
+});
+window.__parkFountain=fountain;
 
 // ---------- controls: throw button (touch) and keyboard ----------
 function installControls() {

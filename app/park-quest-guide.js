@@ -3,7 +3,7 @@ import {DELIVERY,PARK_COINS} from './park-progression-rules.js';
 // Presentation only. Completion, time limits and every coin remain server-owned.
 export const QUEST_GUIDES=Object.freeze({
  delivery:{title:'A little help for the park',description:'Meet Pip at the entrance. Take a parcel to the East walk.',action:'Find Pip',symbol:'parcel'},
- explore:{title:'A walk worth taking',description:'Walk up to 3 gold coins around the park. Each also gives 5 coins.',action:'Find a coin',symbol:'coin'},
+ explore:{title:'A walk worth taking',description:'Collect 3 gold park tokens. Each also adds 5 to your activity rewards.',action:'Find a token',symbol:'coin'},
  match:{title:'Play a round together',description:'Open Play & Friends, join a mini-game and stay until the results.',action:'Play & Friends',symbol:'play'},
 });
 export function activeDelivery(p,now=Date.now()){

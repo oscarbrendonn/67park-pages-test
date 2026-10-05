@@ -41,7 +41,8 @@ export async function installParkMinimap(host=window){
   const overview=!!doc.getElementById('hawk-map-navigation');
   doc.body.classList.toggle('park-minimap-ready',!overview);balance.hidden=overview;
   const amount=minimapCoins(inventory.coins);
-  if(balance.lastElementChild.textContent!==amount){balance.lastElementChild.textContent=amount;balance.setAttribute('aria-label',`Open market · ${amount} coins`);}
+  if(balance.lastElementChild.textContent!==amount)balance.lastElementChild.textContent=amount;
+  balance.setAttribute('aria-label',`Open market · ${amount} Six Seven Coins · ${inventory.badges||0} Fashion Badges`);balance.title='Your wallets · Six Seven Coins and Fashion Badges';
   updateMarketAccessibility(host,balance);
   const size=256,rect=minimapImageRect(self,size);
   ctx.clearRect(0,0,size,size);ctx.fillStyle='#bed8e2';ctx.fillRect(0,0,size,size);

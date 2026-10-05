@@ -65,6 +65,13 @@ export function createLauncherFactory(){
 export function triggerLauncher(pad){
  pad.fromAngle=pad.hinge?.rotation.x||0;pad.age=0;pad.compression=-.14;pad.velocity=0;pad.launches++;
 }
+// Shared local impulse: fountain and existing pads retain the same controls.
+export function launchPlayer(body,st,velocity){
+ if(!body||!st||!velocity||![velocity.x,velocity.y,velocity.z].every(Number.isFinite))return false;
+ try{body.setLinvel({x:velocity.x,y:12.5,z:velocity.z},true);}catch{return false;}
+ Object.assign(st,{grounded:false,hover:false,airT:0,jumpsLeft:1,stretch:1,fallPeak:0,verticalVelocity:12.5});
+ return true;
+}
 export function animateLauncher(pad,dt,reduced=false){
  dt=clamp(Number.isFinite(dt)?dt:0,0,.05);pad.age=Math.min(1,pad.age+dt);
  if(pad.hinge){
@@ -122,8 +129,7 @@ export function createParkLaunchers({world,scene,state,settings,reducedMotion,re
   const p=body?.translation?.(),v=body?.linvel?.(),st=state();
   if(p&&v&&[p.x,p.y,p.z,v.x,v.y,v.z].every(Number.isFinite)&&st?.enabled&&!blocked()&&cooldown===0&&v.y<=.8){
    for(const pad of pads){const dy=p.y-pad.y;if((p.x-pad.x)**2+(p.z-pad.z)**2>=1.12**2||dy<.15||dy>1.22)continue;
-    try{body.setLinvel({x:v.x,y:12.5,z:v.z},true);}catch{continue;}
-    Object.assign(st,{grounded:false,hover:false,airT:0,jumpsLeft:1,stretch:1,fallPeak:0,verticalVelocity:12.5});
+    if(!launchPlayer(body,st,v))continue;
     triggerLauncher(pad);cooldown=.65;totalLaunches++;onLaunch(pad);break;
    }
   }

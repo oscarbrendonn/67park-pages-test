@@ -1,5 +1,6 @@
 import {createPlayerNameController,renderPlayerNameFeedback} from './player-name-field.js?v=player-account-20261003-1';
 import {createProfileWallet} from './profile-wallet.js?v=profile-commerce-20261004-1';
+import {createProfileCareer} from './profile-career.js';
 
 let current=null;
 const release=()=>window.dispatchEvent(new Event('park:release-controls'));
@@ -29,7 +30,8 @@ export function openPlayerProfile(api) {
   const portrait=element('img','profile-character-image');portrait.draggable=false;
   const identity=element('div','profile-identity'),name=element('h3','profile-player-name'),character=element('p','profile-character-name');
   const editButton=button('Edit name','profile-edit',()=>startEditing());
-  identity.append(name,character,editButton);hero.append(portrait,identity);
+  const equippedTitle=element('span','profile-equipped-title');equippedTitle.hidden=true;
+  identity.append(name,character,equippedTitle,editButton);hero.append(portrait,identity);
   const form=element('form','profile-name-form');form.hidden=true;form.noValidate=true;
   const label=element('label','','Player name');label.htmlFor='profile-player-name';
   const input=element('input');input.id='profile-player-name';input.name='playerName';input.type='text';input.maxLength=16;input.required=true;input.autocomplete='nickname';input.setAttribute('aria-describedby','profile-name-hint profile-name-error');
@@ -42,6 +44,7 @@ export function openPlayerProfile(api) {
   const shop=button('Shop','profile-change profile-shop',()=>navigate(()=>api.openShop?.()));
   const shopping=element('div','profile-shopping');shopping.append(shop,myItems);
   const wallet=api.wallet?createProfileWallet(document,api.wallet):null;
+  const career=api.wallet?createProfileCareer({portrait,onTitle:text=>{equippedTitle.textContent=text;equippedTitle.hidden=!text;}}):null;
   const codeSection=element('section','profile-code-section'),codeHeading=element('h3','','Friend code'),codeHelp=element('p','','Share this public code so friends can find you.');
   const codeRow=element('div','profile-code-row'),code=element('input','profile-friend-code');code.readOnly=true;code.setAttribute('aria-label','Your friend code');code.autocomplete='off';
   const copy=button('Copy friend code','profile-secondary',async()=>{
@@ -55,7 +58,7 @@ export function openPlayerProfile(api) {
   links.append(button('Friends','',()=>openOnline('friends')),button('Account & privacy','',()=>openOnline('account')),button('Settings','',()=>navigate(()=>document.getElementById('party-settings-btn')?.click())));
   const status=element('p','profile-status');status.setAttribute('role','status');status.setAttribute('aria-live','polite');
   status.textContent=api.initialStatus||'';
-  body.append(hero,form,change,...(wallet?[wallet.element]:[]),shopping,codeSection,links,status);dialog.append(head,body);document.body.append(dialog);
+  body.append(hero,form,...(career?[career.element]:[]),change,...(wallet?[wallet.element]:[]),shopping,codeSection,links,status);dialog.append(head,body);document.body.append(dialog);
   let editing=false,closed=false,portraitBase='',unblock=null;const unsubscribers=[];
   const names=createPlayerNameController({getName:()=>api.getName?.()||'',setName:value=>api.setName(value)});
   const renderName=()=>{
@@ -85,6 +88,7 @@ export function openPlayerProfile(api) {
     if(closed)return;closed=true;
     names.dispose();
     wallet?.dispose();
+    career?.dispose();
     for(const unsubscribe of unsubscribers)unsubscribe?.();
     window.removeEventListener('keydown',guard,true);window.removeEventListener('keyup',guard,true);
     document.documentElement.removeAttribute('data-park-profile-open');
@@ -96,7 +100,7 @@ export function openPlayerProfile(api) {
     if(event.type==='keydown'){
       if(event.key==='Escape'){event.preventDefault();editing?finishEditing():close();}
       else if(event.key==='Tab'){
-        const controls=[...dialog.querySelectorAll('button,input')].filter(n=>!n.disabled&&n.getClientRects().length);
+        const controls=[...dialog.querySelectorAll('button,input,summary')].filter(n=>!n.disabled&&n.getClientRects().length);
         const first=controls[0],last=controls.at(-1);
         if(event.shiftKey&&(document.activeElement===first||!dialog.contains(document.activeElement))){event.preventDefault();last?.focus();}
         else if(!event.shiftKey&&(document.activeElement===last||!dialog.contains(document.activeElement))){event.preventDefault();first?.focus();}

@@ -64,9 +64,32 @@ export function loadPlayerAccount(){
 }
 export const checkPlayerName=name=>request('name-check',{name});
 export async function claimPlayerName(name){await loadPlayerAccount();return (await request('name-claim',{name})).profile;}
-export async function purchasePlayerItem(itemId){await loadPlayerAccount();return (await request('purchase',{itemId})).profile;}
+export async function purchasePlayerItem(itemId,currency='coins'){
+ const profile=await loadPlayerAccount();
+ if(!['coins','badges'].includes(currency))throw Error('Choose a supported currency.');
+ // An older server ignores unknown request fields: never send it a badge
+ // purchase that it might accidentally charge to the coin balance.
+ if(currency==='badges'&&profile.economy?.revision!=='two-wallets-20261005-1')throw Error('The Badge shop is not available on this server yet. Nothing was charged.');
+ return (await request('purchase',{itemId,currency})).profile;
+}
 export async function equipPlayerItem(selection){await loadPlayerAccount();return (await request('equip',selection)).profile;}
 export async function claimTestCoins(){await loadPlayerAccount();return (await request('test-coins')).profile;}
+export async function equipProfileIdentity(slot,itemId){
+ const profile=await loadPlayerAccount();
+ if(profile.career?.revision!=='park-career-20261005-1')throw Error('Profile rewards are not available on this server yet.');
+ return (await request('profile-identity',{slot,itemId})).profile;
+}
+export async function loadCareerLeaderboard(){return (await request('leaderboard')).leaderboard;}
+export async function saveEmoteFavorite(slot,emoteId){
+ const profile=await loadPlayerAccount();
+ if(profile.emotes?.revision!=='emote-favorites-20261005-1')throw Error('Emote favorites are not available on this server yet.');
+ return (await request('emote-favorite',{slot,emoteId})).profile;
+}
+export async function sendPlayerGift(target,itemId,currency,requestId){
+ const profile=await loadPlayerAccount();
+ if(profile.gifts?.revision!=='friend-gifts-20261005-1')throw Error('Gifting is not available on this server yet. Nothing was charged.');
+ return request('gift',{target,itemId,currency,requestId});
+}
 export async function parkProgressionAction(kind,id){await loadPlayerAccount();return (await request('progression',{kind,id})).profile;}
 export function refreshPlayerProgression(){
  currentIdentity();

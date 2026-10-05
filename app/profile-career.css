@@ -1,0 +1,20 @@
+.profile-career{margin:16px 0;padding:14px;border:1px solid var(--park-ui-line);border-radius:20px;background:var(--park-ui-card);color:var(--park-ui-ink)}
+.profile-career h3{margin:0 0 10px;font-size:15px}.profile-career h4{margin:14px 0 8px;font-size:13px}
+.career-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px}.career-stat{display:flex;flex-direction:column;padding:10px;border-radius:14px;background:var(--park-ui-soft)}
+.career-stat strong{font-size:22px;font-variant-numeric:tabular-nums}.career-stat span,.career-caption{font-size:12px;color:var(--park-ui-muted)}
+.career-caption{font-weight:500;line-height:1.5;margin:10px 0}.career-actions{display:flex;gap:8px}.career-actions button{flex:1;min-width:0;font-size:12px}
+.career-choices{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.park-player-profile .career-choices button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;padding:10px 5px;overflow-wrap:normal}
+.career-choices strong{font-size:12px}.career-choices small{font-size:10px;font-weight:500;line-height:1.35}
+.park-player-profile .career-choices [aria-pressed=true],.park-player-profile .career-actions [aria-expanded=true]{background:var(--park-ui-mint);border-color:var(--park-ui-mint-edge);color:var(--park-ui-mint-ink)}
+.profile-career button{color:var(--park-ui-ink);background:var(--park-ui-soft);border-color:var(--park-ui-line)}
+.career-status,.career-mine{font-size:12px;line-height:1.5;overflow-wrap:anywhere}.career-status:empty{display:none}
+.career-ranking{padding:0;margin:10px 0;list-style:none;max-height:240px;overflow:auto;overscroll-behavior:contain}
+.career-ranking-row{display:grid;grid-template-columns:36px minmax(0,1fr) auto;gap:6px;align-items:center;padding:12px 6px;border-bottom:1px solid var(--park-ui-line);font-size:12px}
+.career-ranking-name{overflow-wrap:anywhere}.career-rank{font-variant-numeric:tabular-nums;color:var(--park-ui-muted)}.career-ranking-row[data-me=true]{background:var(--park-ui-mint);border-radius:12px}
+.profile-equipped-title{display:inline-block;margin:0 0 8px;padding:4px 9px;font-size:11px;border-radius:12px;background:var(--park-ui-lilac);color:var(--park-ui-ink)}
+.career-frame-swatch{width:36px;height:36px;display:block;border-radius:12px;background:var(--park-ui-surface);border:3px solid var(--park-ui-line)}
+.career-frame-swatch[data-frame=mint],.profile-character-image[data-frame=mint]{border:3px solid var(--park-ui-mint-edge);box-shadow:0 0 0 2px var(--park-ui-mint)}
+.career-frame-swatch[data-frame=champion],.profile-character-image[data-frame=champion]{border:3px double var(--park-ui-lilac-edge);box-shadow:0 0 0 2px var(--park-ui-lilac),0 3px 0 var(--park-ui-lilac-edge)}
+body .park-toolbar>button[aria-label="Profile studio"]:has(img[data-frame=mint]){border-color:var(--park-ui-mint-edge)!important;box-shadow:0 0 0 2px var(--park-ui-mint),0 3px 0 var(--park-ui-mint-edge)!important}
+body .park-toolbar>button[aria-label="Profile studio"]:has(img[data-frame=champion]){border-color:var(--park-ui-lilac-edge)!important;box-shadow:0 0 0 3px var(--park-ui-lilac),0 4px 0 var(--park-ui-lilac-edge)!important}
+@media(max-width:359px){.profile-career{padding:10px}.career-choices{gap:5px}.career-ranking-row{grid-template-columns:28px minmax(0,1fr) auto}}

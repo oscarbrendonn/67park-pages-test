@@ -7,13 +7,15 @@ export function createPlayerInventoryBridge({inventory,board,items,setSlot,getEq
   const pending=new Map();let hydrated=false,owner=null;
   function apply(profile){
     const owned=profile.inventory.owned.filter(id=>catalogue.has(id));
-    inventory.owned=owned;inventory.coins=profile.inventory.coins;
+    inventory.owned=owned;inventory.coins=profile.inventory.coins;inventory.badges=profile.inventory.badges||0;
     if(typeof profile.inventory.board==='string')board.kind=profile.inventory.board;
     const equipment=getEquipment();
     for(const [slot,value]of Object.entries(equipment))if(typeof value==='string'&&value.startsWith('shop:')&&!owned.includes(value.slice(5)))setSlot(slot,null);
-    if(!hydrated||owner!==profile.id)for(const [slot,value]of Object.entries(profile.equipment||{})){
+    if(!hydrated||owner!==profile.id)for(const slot of new Set(items.filter(item=>item.slot).map(item=>item.slot))){
+      const value=profile.equipment?.[slot];
       const item=typeof value==='string'&&value.startsWith('shop:')?catalogue.get(value.slice(5)):null;
       if(item?.slot===slot&&owned.includes(item.id))setSlot(slot,value);
+      else if(typeof equipment[slot]==='string'&&equipment[slot].startsWith('shop:'))setSlot(slot,null);
     }
     try{globalThis.localStorage?.setItem('67park.inventory.owner.v1',profile.id)}catch{}
     hydrated=true;owner=profile.id;save();notify();

@@ -1,0 +1,13 @@
+dialog.park-emote-menu.park-emote-menu{position:fixed;inset:0;width:min(380px,calc(100vw - 24px));max-height:calc(100dvh - 24px);margin:auto;padding:0;overflow:auto;transform:none;box-sizing:border-box;pointer-events:auto;touch-action:pan-y;overscroll-behavior:contain;background:var(--park-ui-surface);color:var(--park-ui-ink);font-family:var(--park-ui-font)}
+.park-emote-menu::backdrop{background:#24334366}.park-emote-menu *{box-sizing:border-box}.park-emote-menu [hidden]{display:none!important}
+.park-emote-menu header{position:sticky;top:0;z-index:1;display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:var(--park-ui-surface);border-bottom:1px solid var(--park-ui-line)}
+.park-emote-menu header small{font-size:10px;letter-spacing:.1em;color:var(--park-ui-muted);font-weight:800}.park-emote-menu h2{font-size:21px;margin:2px 0 0}.park-emote-menu h3{font-size:13px;margin:0}
+.park-emote-menu header button{font-size:24px;width:44px;height:44px}.emote-menu-body{padding:12px 14px}
+.park-emote-menu button{min-width:44px;min-height:44px;padding:8px;color:var(--park-ui-ink);cursor:pointer}.park-emote-menu button:disabled{opacity:.5;cursor:default}
+.emote-section-heading{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}.emote-section-heading button{font-size:11px}
+.emote-favorite-slots{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}.emote-favorite-slots button,.emote-catalogue button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;font-size:11px;line-height:1.2;overflow-wrap:anywhere}
+.emote-favorite-slots button{background:var(--park-ui-lilac);border-color:var(--park-ui-card);box-shadow:0 3px 0 var(--park-ui-lilac-edge)}.emote-favorite-slots small{align-self:flex-start;color:var(--park-ui-muted);font-size:10px}
+.park-emote-menu [aria-pressed=true]{background:var(--park-ui-mint);border-color:var(--park-ui-mint-edge)}
+.emote-help,.emote-status{font-size:12px;line-height:1.5;color:var(--park-ui-muted);margin:12px 0}.emote-status:empty{display:none}
+.emote-catalogue{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:12px 0}.emote-catalogue button{min-height:74px}
+@media(max-height:480px) and (orientation:landscape){dialog.park-emote-menu.park-emote-menu{width:min(560px,calc(100vw - 32px));max-height:calc(100dvh - 16px)}.park-emote-menu header{padding:8px 14px}.emote-catalogue{grid-template-columns:repeat(5,minmax(0,1fr))}.emote-favorite-slots button{flex-direction:row;min-height:52px}.emote-menu-body{padding:10px 14px}}

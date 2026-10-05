@@ -1,8 +1,11 @@
-import {sa as shops,ta as inventory,va as openShop,wa as closeShop,xa as buyItem,ya as equipBoard,i as board,Ba as equipment,Ha as setSlot,Ja as openWardrobe} from './chunk-G7D6MVRW.js?v=online-next-1';
+import {sa as shops,ta as inventory,va as openShop,wa as closeShop,ya as equipBoard,i as board,Ba as equipment,Ha as setSlot,Ja as openWardrobe} from './chunk-G7D6MVRW.js?v=online-next-1';
 import {createMarketCatalogueView} from './market-catalogue-view.js?v=player-account-20261003-1';
+import {getPlayerAccountState,purchasePlayerItem,equipPlayerItem} from './player-account-client.js';
+import {MARKET_SAMPLES} from './market-samples.js';
+import {createMarketTransactions} from './market-transactions.js';
 
-// Use the real catalogue, prices, ownership, equipment and save path. No second
-// wallet or cosmetic-only purchase state. Food/books are omitted here because
+// Use the real catalogue, server wallets, ownership, equipment and save path.
+// No local currency authority. Food/books are omitted here because
 // they have no usable/equippable behaviour; their existing world shops remain.
 export function marketCatalogue(catalogue){
  const seen=new Set();
@@ -11,12 +14,13 @@ export function marketCatalogue(catalogue){
   seen.add(item.id);return true;
  });
 }
-const market={id:'park-market',sign:'Park Market',items:marketCatalogue(shops)};
+const market={id:'park-market',sign:'Park Market',items:[...MARKET_SAMPLES,...marketCatalogue(shops)]};
+const transactions=createMarketTransactions({inventory,equipment,setSlot,equipBoard,purchasePlayerItem,equipPlayerItem,getPlayerAccountState});
 let activePanel=null,returnFocus=null,view=null,styleReady=false,stylePending=false,initialMode='shop';
 function loadStyle(doc){
  if(styleReady||stylePending)return;stylePending=true;
- const link=doc.createElement('link');link.rel='stylesheet';link.href=new URL('./market-catalogue.css?v=player-account-20261003-1',import.meta.url).href;
- link.onload=()=>{styleReady=true;};link.onerror=()=>{link.remove();stylePending=false;};doc.head.append(link);
+ const links=['market-catalogue.css','market-screen.css'].map(file=>{const link=doc.createElement('link');link.rel='stylesheet';link.href=new URL('./'+file+'?v=market-screen-20261005-1',import.meta.url).href;return link;});
+ let loaded=0;for(const link of links){link.onload=()=>{if(++loaded===links.length)styleReady=true;};link.onerror=()=>{for(const node of links)node.remove();stylePending=false;};doc.head.append(link);}
 }
 export function openParkMarket(host=window,options={}){
  loadStyle(host.document);
@@ -43,10 +47,8 @@ export function updateMarketAccessibility(host=window,trigger){
   activePanel=panel;returnFocus=trigger;
   panel.classList.add('park-market-panel');panel.setAttribute('role','dialog');panel.setAttribute('aria-modal','true');panel.setAttribute('aria-label','Park Market');
   view=createMarketCatalogueView({doc,panel,items:market.items,initialMode,
-   state:()=>({owned:[...inventory.owned],coins:inventory.coins,equipment:{...equipment},board:board.kind}),
-   buy:item=>buyItem(market,item),
-   equip:async item=>{if(!inventory.owned.includes(item.id))return false;if(item.board)return equipBoard(item.board);setSlot(item.slot,`shop:${item.id}`);return equipment[item.slot]===`shop:${item.id}`;},
-   remove:item=>{if(!inventory.owned.includes(item.id)||equipment[item.slot]!==`shop:${item.id}`)return false;setSlot(item.slot,null);return equipment[item.slot]===null;},
+   state:()=>({owned:[...inventory.owned],coins:inventory.coins,badges:getPlayerAccountState()?.inventory.badges||0,badgeShop:getPlayerAccountState()?.economy?.badgeShop===true,equipment:{...equipment},board:board.kind}),
+   ...transactions,
    close:closeShop,changeCharacter:()=>openWardrobe(true),
   });return;
  }

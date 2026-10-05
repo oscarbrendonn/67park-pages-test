@@ -17,9 +17,9 @@ const mix = (a, b, t) => a + (b - a) * t;
 const TAU = Math.PI * 2;
 
 /** Timed gestures end by themselves (emote.ts timer); loops run until the player moves. */
-export const EMOTE_MOTION_DURATION = Object.freeze({sixseven: 4, heart: 3.8});
-export const EMOTE_MOTION_LOOPS = Object.freeze(['club', 'wave', 'bounce', 'spin', 'robot', 'cheer']);
-export const emoteMotionHandles = id => id in EMOTE_MOTION_DURATION || EMOTE_MOTION_LOOPS.includes(id);
+export const EMOTE_MOTION_DURATION = Object.freeze({sixseven: 4, heart: 3.8, bow: 2.6});
+export const EMOTE_MOTION_LOOPS = Object.freeze(['club', 'wave', 'bounce', 'spin', 'robot', 'cheer', 'clap', 'sway']);
+export const emoteMotionHandles = id => Object.hasOwn(EMOTE_MOTION_DURATION,id) || EMOTE_MOTION_LOOPS.includes(id);
 
 /** Written by the pose driver, read by emote-fx.js: where each performer's heart and
  * hands are this frame, plus one-shot events (heart burst, "6", "7"). Keys are the
@@ -130,6 +130,33 @@ const hand = (x, y, z) => ({x, y, z});
 const TEMPO = {club: 5.4, wave: 6.2, bounce: 7, spin: 4.4, robot: 4, cheer: 6.6};
 
 const MOTIONS = {
+  // Palms meet below the face. Targets are measured from each rig's shoulders,
+  // so we do not transplant Gorilla coordinates onto a smaller character.
+  clap(t,r,fx){
+    const u=r.unit,beat=t*TAU*1.5,open=(1-Math.cos(beat))*.5;
+    const x=(.045+.28*open)*u,y=r.shL.y-.25*u,z=.5*u;
+    arms.L=hand(x,y,z);arms.R=hand(-x,y,z);
+    add('HandL',0,-.2,-.25);add('HandR',0,.2,.25);
+    add('Spine2',.025*(1-open));add('Head',.035*(1-open));
+    fx.rootBobY=-crouch(.09+.05*(1-open));return {};
+  },
+  // Relaxed side-to-side groove: no root travel, physics impulses or camera spin.
+  sway(t,r,fx){
+    const u=r.unit,sx=r.shL.x,side=Math.sin(t*TAU*.65),lift=(1-Math.cos(t*TAU*1.3))*.5;
+    arms.L=hand(sx+.27*u,r.shL.y+(-.28+.12*side)*u,.24*u);
+    arms.R=hand(-sx-.27*u,r.shL.y+(-.28-.12*side)*u,.24*u);
+    add('Spine1',0,0,.055*side);add('Spine2',0,.07*side,-.11*side);add('Head',0,-.045*side,.08*side);
+    add('HandL',0,0,.16);add('HandR',0,0,-.16);
+    fx.rootBobY=-crouch(.1+.08*lift);return {};
+  },
+  // A short thank-you bow with a held apex and a deliberate return to rest.
+  bow(t,r,fx){
+    const k=inOut((t-.2)/.65)*(1-inOut((t-1.45)/.7)),u=r.unit,sx=r.shL.x;
+    arms.L=hand(sx+.15*u,r.shL.y-.53*u,.14*u+.09*u*k);
+    arms.R=hand(-sx-.15*u,r.shL.y-.53*u,.14*u+.09*u*k);
+    add('Spine1',.12*k);add('Spine2',.25*k);add('Spine3',.08*k);add('Head',.1*k);
+    fx.rootBobY=-crouch(.13*k);return {};
+  },
   /** "6 7": palms up in front, hands trade places like scales, the torso answers
    * each swap with a twist and the knees give a small dip on every change. */
   sixseven(t, r, fx) {
@@ -249,7 +276,7 @@ const frameInv = new T.Matrix4(), leftAxis = new T.Vector3();
  * `time` is seconds since the emote started.
  */
 export function applyEmoteMotion(bones, id, time) {
-  const duration = EMOTE_MOTION_DURATION[id];
+  const duration = Object.hasOwn(EMOTE_MOTION_DURATION,id)?EMOTE_MOTION_DURATION[id]:undefined;
   if (duration === undefined && !EMOTE_MOTION_LOOPS.includes(id)) return null;
   const rig = rigOf(bones);
   if (!rig) return null;
@@ -260,6 +287,9 @@ export function applyEmoteMotion(bones, id, time) {
   const info = MOTIONS[id](t, rig, fx);
   for (const name of BODY) for (const b of bones.get(name) ?? []) b.o.rotation.set(b.rx, b.ry, b.rz);
   for (const [name, [x, y, z]] of pose) for (const b of bones.get(name) ?? []) b.o.rotation.set(b.rx + x * w, b.ry + y * w, b.rz + z * w);
+  // At a timed gesture's boundary, even a zero-distance IK solve can twist an
+  // elbow toward its pole. Return the exact rest rotations instead.
+  if(w===0){emoteFxBus.anchors.delete(bones);fx.rootBobY=0;if(fx.rootYaw!==undefined)fx.rootYaw=0;return fx;}
   rig.frame.updateWorldMatrix(true, true);
   const tips = {};
   leftAxis.set(1, 0, 0).transformDirection(rig.frame.matrixWorld); // the character's left, in world space
