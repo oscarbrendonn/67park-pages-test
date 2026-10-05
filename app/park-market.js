@@ -3,13 +3,14 @@ import {createMarketCatalogueView} from './market-catalogue-view.js?v=player-acc
 import {getPlayerAccountState,purchasePlayerItem,equipPlayerItem} from './player-account-client.js';
 import {MARKET_SAMPLES} from './market-samples.js';
 import {createMarketTransactions} from './market-transactions.js';
+import {realItemOffer} from './real-item-policy.js';
 
 // Use the real catalogue, server wallets, ownership, equipment and save path.
 // No local currency authority. Food/books are omitted here because
 // they have no usable/equippable behaviour; their existing world shops remain.
 export function marketCatalogue(catalogue){
  const seen=new Set();
- return catalogue.flatMap(shop=>shop.items).filter(item=>{
+ return catalogue.flatMap(shop=>shop.items).map(realItemOffer).filter(Boolean).filter(item=>{
   if(!item.id||seen.has(item.id)||!(item.slot||item.board)||!Number.isFinite(item.price)||item.price<0)return false;
   seen.add(item.id);return true;
  });

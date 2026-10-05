@@ -55,6 +55,8 @@ export async function loadMarketModel(item){
  if(item.board){
   if(!['neon','klasik','retro','logo'].includes(item.board))throw Error('Unknown skateboard');
   const asset=await loadCharacterAsset(new URL('../models/boards/'+item.board+'.glb',import.meta.url).href);root=snapshot(asset.scene);
+ }else if(item.id==='cap'){
+  const asset=await loadCharacterAsset(new URL('../models/items/friendsie_8/90.glb',import.meta.url).href);root=wardrobeCopy(asset.scene,false);
  }else if(item.sample&&item.asset){
   const asset=await loadCharacterAsset(item.asset);root=wardrobeCopy(asset.scene,item.clothes);
  }else if(item.sample&&item.effect){

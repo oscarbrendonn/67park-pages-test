@@ -1,6 +1,7 @@
 import * as T from 'three';
 import {parkClock} from '../park-clock.js';
 import {fountainSite} from './fountain-launcher.js?v=fountain-1';
+import {createParkNightSky} from './park-night-sky.js';
 
 export const SHOW=Object.freeze({hour:20,duration:45,interval:3,life:3.8,particles:48,slots:2});
 export function eveningState(clock){
@@ -54,7 +55,7 @@ export function createFireworks(scene,site){
 }
 
 export function createParkEvening({world,clock=()=>parkClock.read(),syncClock=t=>parkClock.sync(t),network=()=>globalThis.window?.__candyOnline?.world,enabled=()=>true,reducedMotion=()=>false}){
- let owner=null,fx=null,site=null,lights=[],before=null,hook=null,last=null,disposed=false,sign=null,originalSky=null,originalFog=null,lastSnapshot=null;
+ let owner=null,fx=null,sky=null,site=null,lights=[],before=null,hook=null,last=null,disposed=false,sign=null,originalSky=null,originalFog=null,lastSnapshot=null;
  const nightSky=new T.Color('#252e51'),daySky=new T.Color('#c4ccdd'),moon=new T.Color('#becfff');
  function clear(){
   if(owner?.scene?.onBeforeRender===hook)owner.scene.onBeforeRender=before;
@@ -62,9 +63,9 @@ export function createParkEvening({world,clock=()=>parkClock.read(),syncClock=t=
   if(originalSky&&owner?.scene?.background?.isColor)owner.scene.background.copy(originalSky);
   if(originalFog&&owner?.scene?.fog)owner.scene.fog.color.copy(originalFog);
   if(sign){sign.removeFromParent();sign.material.map.dispose();sign.material.dispose();sign=null;}
-  fx?.dispose();owner=null;fx=null;site=null;lights=[];
+  fx?.dispose();sky?.dispose();owner=null;fx=null;sky=null;site=null;lights=[];
  }
- function render(){
+ function render(camera){
   if(!owner||disposed)return;
   const time=clock(),s=eveningState(time),active=enabled();last={...time,...s,enabled:active};
   // Only the authored island sun/hemisphere, never character/shop preview rigs.
@@ -72,13 +73,14 @@ export function createParkEvening({world,clock=()=>parkClock.read(),syncClock=t=
   owner.scene.background?.isColor&&owner.scene.background.copy(nightSky).lerp(daySky,s.daylight);
   owner.scene.fog?.color.copy(nightSky).lerp(daySky,s.daylight);
   fx?.step(s.age,{active:active&&s.active,reduced:reducedMotion()});
+  sky?.step(s.daylight,camera||owner.camera,active);
   if(sign)sign.visible=active&&!!owner.camera&&owner.camera.position.distanceTo(sign.position)<55;
  }
  return {step(){
   if(disposed)return;
   const snapshot=network();if(snapshot&&snapshot!==lastSnapshot&&Number.isFinite(snapshot.now)){lastSnapshot=snapshot;syncClock(snapshot.now);}
   const w=world();if(w!==owner){clear();if(!w?.ready||!enabled())return;
-   owner=w;site=fountainSite(w.scene);if(site)fx=createFireworks(w.scene,site);
+   owner=w;sky=createParkNightSky(w.scene);site=fountainSite(w.scene);if(site)fx=createFireworks(w.scene,site);
    originalSky=w.scene.background?.isColor?w.scene.background.clone():null;originalFog=w.scene.fog?.color.clone()??null;
    if(site&&typeof document!=='undefined'){
     const canvas=document.createElement('canvas');canvas.width=640;canvas.height=112;
@@ -89,9 +91,9 @@ export function createParkEvening({world,clock=()=>parkClock.read(),syncClock=t=
     sign=new T.Sprite(new T.SpriteMaterial({map:texture,transparent:true,depthWrite:false}));sign.name='PARK_FIREWORKS_VIEWING_AREA';sign.scale.set(5.2,.91,1);sign.position.set(site.x+site.radius+3,site.top+1.3,site.z+site.radius+2);w.scene.add(sign);
    }
    w.scene.traverse(light=>{if(light.isHemisphereLight||(light.isDirectionalLight&&light.shadow?.bias===-.00002))lights.push({light,intensity:light.intensity,color:light.color.clone()});});
-   before=w.scene.onBeforeRender;hook=function(...args){before?.apply(this,args);render();};w.scene.onBeforeRender=hook;
+   before=w.scene.onBeforeRender;hook=function(...args){before?.apply(this,args);render(args[2]);};w.scene.onBeforeRender=hook;
    const original=w.dispose;w.dispose=function(...args){clear();return original?.apply(this,args);};
   }
- },debug:()=>({installed:!!owner,site,clock:last,lights:lights.length,fireworks:fx?.stats()??null}),
+ },debug:()=>({installed:!!owner,site,clock:last,lights:lights.length,fireworks:fx?.stats()??null,sky:sky?.stats()??null}),
  dispose(){disposed=true;clear();}};
 }

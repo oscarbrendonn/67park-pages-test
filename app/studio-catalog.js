@@ -1,6 +1,7 @@
 // The wardrobe, park and mini-games use the same equipment IDs. No model URLs
 // or user-supplied geometry are accepted in a saved outfit.
 import {isNativeCharacter} from './native-character.js?v=cat-character-1';
+import {realItemOffer} from './real-item-policy.js';
 export const FITTED_ITEMS = Object.freeze({
   'friendsie_3333:5': {slot:'kicks',vertices:910,name:'Mix & Match'},
   'friendsie_1:3': {slot:'kicks',vertices:659,name:'Cloud Boots'},
@@ -34,7 +35,7 @@ export function ownedShopItems(catalogue,owned=[]) {
   return catalogue.flatMap(shop=>shop.items||[]).filter(item=>{
     if(!item.id||seen.has(item.id)||!ids.has(item.id)||!(item.slot||item.board))return false;
     seen.add(item.id);return true;
-  });
+  }).map(item=>realItemOffer(item)||item);
 }
 
 export function studioSlots(equipment,baseEquipment,label,ownedItems=[]) {

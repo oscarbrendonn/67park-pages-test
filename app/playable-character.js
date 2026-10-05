@@ -1,11 +1,12 @@
 import {isNativeCharacter} from './native-character.js?v=cat-character-1';
+import {realItemEquipment} from './real-item-policy.js';
 // Donor IDs remain clothing namespaces; complete Friends characters are retired.
 export const PLAYABLE_BASE = 'goril';
 export const EQUIPMENT_KEY = '67park-feel-lab.character.v3';
 export const PREVIOUS_CHARACTER_KEY = '67park-feel-lab.character.before-gorilla-only.v1';
 const PROFILE_KEY = '67park-feel-lab.player-profile.v1';
 
-export function gorillaEquipment(equipment) {
+function playableEquipment(equipment) {
   if (isNativeCharacter(equipment?.base)) {
     if(equipment.head?.startsWith('friendsie_')&&equipment.head!=='friendsie_26:90')return {...equipment,head:null};
     return equipment;
@@ -15,8 +16,10 @@ export function gorillaEquipment(equipment) {
     head: equipment?.head === 'friendsie_26:90' ? equipment.head : null};
 }
 
+export function gorillaEquipment(equipment){return realItemEquipment(playableEquipment(equipment));}
+
 export function adoptPlayableCharacter(equipment, storage) {
-  const next = gorillaEquipment(equipment);
+  const next = playableEquipment(equipment);
   if (next === equipment) return next;
   try {
     storage ??= globalThis.localStorage;

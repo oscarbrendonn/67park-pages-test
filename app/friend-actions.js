@@ -1,5 +1,6 @@
 import {loadPlayerAccount,sendPlayerGift,subscribePlayerAccount,refreshPlayerProgression} from './player-account-client.js';
 import {itemOffer,currencyName,walletBalance} from './park-economy.js';
+import {realItemOffer} from './real-item-policy.js';
 
 export function createFriendActions(React,client){
  const h=React.createElement;
@@ -8,7 +9,7 @@ export function createFriendActions(React,client){
   const [status,setStatus]=React.useState('Loading your wallet…'),[busy,setBusy]=React.useState(false),[receipt,setReceipt]=React.useState(null),attempt=React.useRef(null),lock=React.useRef(false),close=React.useRef(null);
   React.useEffect(()=>{let live=true;close.current?.focus();const off=subscribePlayerAccount(p=>{if(live)setProfile(p)});
    Promise.all([loadPlayerAccount(),import('./chunk-G7D6MVRW.js?v=online-next-1')]).then(([p,m])=>{
-    if(!live)return;const seen=new Set(),list=m.sa.flatMap(s=>s.items).filter(i=>{if(seen.has(i.id)||!(i.slot||i.board))return false;seen.add(i.id);return true});
+    if(!live)return;const seen=new Set(),list=m.sa.flatMap(s=>s.items).map(realItemOffer).filter(Boolean).filter(i=>{if(seen.has(i.id)||!(i.slot||i.board))return false;seen.add(i.id);return true});
     setProfile(p);setItems(list);setItem(list[0]?.id||'');setStatus('Choose a gift. It goes into your friend’s wardrobe, not onto their character.');
    }).catch(e=>{if(live)setStatus(e.message)});return()=>{live=false;off()};},[]);
   const item=items.find(i=>i.id===itemId),offer=item&&itemOffer(item,currency),balance=walletBalance(profile?.inventory,currency);
