@@ -1,5 +1,5 @@
-import {createSwingRide,SWING_SITE,SWING_RULES,swingFrameBlocked} from './swing-ride.js?v=slow-swing-20261006-1';
-import {createSwingPushInput} from './swing-push-input.js?v=slow-swing-20261006-1';
+import {createSwingRide,SWING_SITE,SWING_RULES,swingFrameBlocked} from './swing-ride.js?v=swing-control-20261006-1';
+import {createSwingPushInput,swingMovement} from './swing-push-input.js?v=swing-control-20261006-1';
 
 export function validSwingSite(w,site=SWING_SITE){
  for(let dx=-4;dx<=4;dx++)for(let dz=-4;dz<=4;dz++){
@@ -12,14 +12,14 @@ export function validSwingSite(w,site=SWING_SITE){
 export function createParkSwings({world,scene,canInstall=()=>true}){
  let owner=null,ride=null,previousBlocker=null,blocker=null,rejected=false;
  const mounted=()=>{const net=globalThis.window?.__candyOnline,id=globalThis.window?.__eggyNet?.id;return net?.data?.connected&&net.world?.mounts?.[id]?.id===SWING_RULES.asset;};
- const input=createSwingPushInput({active:mounted,send(){const net=globalThis.window?.__candyOnline;if(mounted())net.send({t:'island.drive',seq:++net.seq,throttle:1,steer:0});}});
+ const input=createSwingPushInput({active:mounted,movement:swingMovement,send(){const net=globalThis.window?.__candyOnline;if(mounted())net.send({t:'island.drive',seq:++net.seq,throttle:1,steer:0});}});
  function dispose(){
   input.reset();
   if(owner&&ride){const i=owner.rides.indexOf(ride);if(i>=0)owner.rides.splice(i,1);if(owner.treeBlocked===blocker)owner.treeBlocked=previousBlocker;ride.dispose();}
   owner=ride=blocker=previousBlocker=null;rejected=false;
  }
  function step(){
-  if(!mounted())input.reset();
+  input.step();
   const snapshot=globalThis.window?.__candyOnline?.world?.rides?.find(r=>r.id===SWING_RULES.asset);if(snapshot?.swing)ride?.setSwingState(snapshot.swing);
   const w=world();if(w!==owner){dispose();owner=w;}if(!w?.ready||ride||rejected||!scene()||!canInstall())return;
   if(!validSwingSite(w)){rejected=true;return;}
@@ -27,5 +27,6 @@ export function createParkSwings({world,scene,canInstall=()=>true}){
   previousBlocker=w.treeBlocked;blocker=(x,y,z)=>previousBlocker?.(x,y,z)||swingFrameBlocked(x,y,z);w.treeBlocked=blocker;
   const old=w.dispose;w.dispose=function(...args){if(owner===w)dispose();return old?.apply(this,args);};
  }
- return {step,dispose(){input.dispose();dispose();},debug:()=>({installed:!!ride,rejected,asset:SWING_RULES.asset,site:SWING_SITE,ride:ride?.state()})};
+ const timer=globalThis.window?.setInterval(step,80);
+ return {step,dispose(){if(timer!==undefined)globalThis.window?.clearInterval(timer);input.dispose();dispose();},debug:()=>({installed:!!ride,rejected,asset:SWING_RULES.asset,site:SWING_SITE,ride:ride?.state()})};
 }

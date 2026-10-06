@@ -5,7 +5,7 @@ import {mergeGeometries} from '../../island/utils/BufferGeometryUtils.js';
 // Shared by the authoritative server and renderer. The settled grass height
 // is surveyed separately; never regenerate terrain to make room for this prop.
 export const SWING_SITE=Object.freeze({x:200,y:9.398031234741211,z:109});
-export const SWING_RULES=Object.freeze({asset:'candy-swings',period:3.6,height:3.6,length:2.45,amplitude:.38,seats:2});
+export const SWING_RULES=Object.freeze({asset:'candy-swings',period:3.6,height:3.6,length:2.45,amplitude:0,seats:2});
 export function swingSeat(phase,index,site=SWING_SITE,amplitude=SWING_RULES.amplitude){
  if(!Number.isInteger(index)||index<0||index>=2)throw RangeError('Invalid swing seat');
  const angle=Math.max(0,Math.min(.7,amplitude))*Math.sin(phase+index*Math.PI*.4),l=SWING_RULES.length;
@@ -51,13 +51,13 @@ export function createSwingRide({site=SWING_SITE,visual=true}={}){
   // mounted riders use seat(), not a fabricated floor under the whole set.
   ground:()=>null,deck:()=>null,poles:()=>[],blockers:[],
   seat:i=>swingSeat(phase,i,site,amplitudes[i]),nearestSeat:()=>0,boardingSeat:()=>[0,1].find(i=>!occupants.has(i))??-1,
-  pump(i){if(!Number.isInteger(i)||i<0||i>1)return false;boosts[i]=Math.min(.32,boosts[i]+.07);return true;},
+  pump(i){if(!Number.isInteger(i)||i<0||i>1)return false;boosts[i]=Math.min(.7,boosts[i]+.07);return true;},
   swingState:()=>[...amplitudes],
   setSwingState(values){if(!Array.isArray(values)||values.length!==2||!values.every(v=>Number.isFinite(v)&&v>=SWING_RULES.amplitude&&v<=.7))return;values.forEach((v,i)=>amplitudes[i]=v);sync();},
   claimSeat(i,id){if(!Number.isInteger(i)||i<0||i>1||typeof id!=='string'||!id)return false;if(occupants.has(i))return occupants.get(i)===id;if([...occupants.values()].includes(id))return false;occupants.set(i,id);return true;},
   releaseSeat(i,id){return occupants.get(i)===id&&occupants.delete(i);},
   seatStatus:()=>({capacity:2,occupied:[...occupants.keys()],totalOccupied:occupants.size}),
-  advance(dt){if(!network&&Number.isFinite(dt)&&dt>0){const h=Math.min(.05,dt);phase=(phase+h*Math.PI*2/SWING_RULES.period)%(Math.PI*2);for(let i=0;i<2;i++){boosts[i]=Math.max(0,boosts[i]-h*.025);const target=SWING_RULES.amplitude+boosts[i];amplitudes[i]+=Math.max(-h*.2,Math.min(h*.2,target-amplitudes[i]));}sync();}},
+  advance(dt){if(!network&&Number.isFinite(dt)&&dt>0){const h=Math.min(.05,dt);phase=(phase+h*Math.PI*2/SWING_RULES.period)%(Math.PI*2);for(let i=0;i<2;i++){boosts[i]=Math.max(0,boosts[i]-h*.04);const target=SWING_RULES.amplitude+boosts[i];amplitudes[i]+=Math.max(-h*.2,Math.min(h*.2,target-amplitudes[i]));}sync();}},
   setNetworkAngle(a){if(!Number.isFinite(a))return;network=true;phase=a;sync();},get angle(){return phase;},
   state:()=>({asset:SWING_RULES.asset,angle:phase,entry:entry.toArray(),occupancy:ride.seatStatus(),seat:ride.seat(0).position.toArray()}),
   dispose(){group.removeFromParent();for(const g of geometries)g.dispose();for(const m of materials)m.dispose();occupants.clear();}
