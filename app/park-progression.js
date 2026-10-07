@@ -39,7 +39,8 @@ export async function installParkProgression(host=window){
  // Button keyboard input must not move the avatar or trigger a park action.
  const buttonKeys=e=>{if(e.key===' '||e.key==='Enter')e.stopPropagation()};
  root.addEventListener('keydown',buttonKeys);root.addEventListener('keyup',buttonKeys);root.addEventListener('pointerdown',e=>{e.stopPropagation();release()});
- function feedback(amount){
+ function feedback(amount,collected=false){
+  host.dispatchEvent(new host.CustomEvent('candy:reward-earned',{detail:{collected}}));
   earned.textContent=`+${amount} ${currencyName(profile?.progression?.rewardCurrency||'coins')}`;earned.hidden=!panel.hidden;clearTimeout(timer);anim?.cancel();
   const reduced=host.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const wallet=doc.getElementById('park-minimap-coins');
@@ -86,7 +87,8 @@ export async function installParkProgression(host=window){
  const unsubscribe=subscribePlayerAccount(p=>{
   if(disposed)return;
   const delta=p.id===previousId&&previousEarned!==null?(p.progression?.earned||0)-previousEarned:0;
-  previousId=p.id;previousEarned=p.progression?.earned??null;profile=p;if(delta>0)feedback(delta);render();
+  const collected=p.id===previousId&&(p.progression?.collected?.length||0)>(profile?.progression?.collected?.length||0);
+  previousId=p.id;previousEarned=p.progression?.earned??null;profile=p;if(delta>0)feedback(delta,collected);render();
  });
  async function act(kind,id,{quiet=false}={}){
   if(busy||disposed)return;busy=true;retry.hidden=true;if(!quiet)status.textContent='Saving…';render();

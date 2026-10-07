@@ -1,3 +1,4 @@
+import {createSoftFeedbackBank,SOFT_CLIPS} from './soft-feedback-audio.js';
 import {createNaturalAudioBank,FOLEY_CLIPS} from './natural-audio.js?v=natural-audio-1';
 import {createVehicleAudio} from './vehicle-audio.js?v=five-gears-1';
 import {createCowVoice} from './cow-voice.js?v=cow-release-1';
@@ -13,6 +14,7 @@ export function createPartyAudio({settings, saveSettings, gameMuted, host = wind
   const recordedEffects=new Set(['jump','double','land','skate-ollie','skate-flip','skate-land','horn']);
   const recordings=createNaturalAudioBank({host,onReady:soundHeldHorn});
   const interactions=createInteractionAudioBank({host});
+  const softAudio=createSoftFeedbackBank({host});
   const interactionEffects=new Set(['throw','water-splash','pet-bark','pet-happy','pet-purr','pet-toy','toy-bounce']);
   // Warm only the 97KB file while the map prepares. No AudioContext, decoding,
   // autoplay or loading-screen dependency; muted entry allocates none of it.
@@ -71,6 +73,7 @@ export function createPartyAudio({settings, saveSettings, gameMuted, host = wind
       // Load/decode once in the existing gesture-unlocked graph; never block entry.
       recordings.load(ctx);
       interactions.load(ctx);
+      softAudio.load(ctx);
       if(cowSelected())cowVoice.load();
       punchRecordings.load(selectedBase());
       return ctx;
@@ -259,7 +262,7 @@ export function createPartyAudio({settings, saveSettings, gameMuted, host = wind
     },
     grab(_, p) { voice({from:440, to:280, duration:0.10, gain:0.18, pitch:p}); voice({from:660, to:520, duration:0.08, delay:0.04, gain:0.07, pitch:p}); },
     throw(_,p){return interaction('whoosh',{gain:.22,pitch:1+(p-1)*.35});},
-    click(_, p) { voice({from:750, to:570, duration:0.045, gain:0.10, pitch:p}); },
+    click(_, p) { return !!recording('click',{gain:.45,pitch:p,bank:softAudio,clips:SOFT_CLIPS}); },
     stars(_, p) { [880,1100,1320].forEach((f,i)=>voice({from:f,to:f*1.02,duration:0.15,delay:i*0.08,gain:0.065,pitch:p})); },
     portal() {
       voice({type:'triangle',from:260,to:520,duration:.22,gain:.08});
@@ -267,15 +270,18 @@ export function createPartyAudio({settings, saveSettings, gameMuted, host = wind
       voice({type:'sine',from:1040,to:1560,duration:.34,delay:.17,gain:.045});
     },
     'water-splash'(impact=.5,p){const strength=Math.max(0,Math.min(1,Number(impact)||0));return interaction('splash',{gain:.12+strength*.29,pitch:1.06-strength*.1+(p-1)*.3});},
-    'ui-confirm'() { voice({type:'sine',from:440,to:660,duration:.12,gain:.07}); voice({type:'sine',from:660,to:880,duration:.16,delay:.09,gain:.055}); },
+    'ui-confirm'() { return !!recording('ui-confirm',{gain:.5,bank:softAudio,clips:SOFT_CLIPS}); },
+    'coin-collect'() { return !!recording('coin-collect',{gain:.6,bank:softAudio,clips:SOFT_CLIPS}); },
+    'reward-earned'() { return !!recording('reward-earned',{gain:.55,bank:softAudio,clips:SOFT_CLIPS}); },
     'pet-call'() { voice({type:'triangle',from:520,to:760,duration:.10,gain:.06}); voice({type:'triangle',from:760,to:620,duration:.14,delay:.11,gain:.045}); }
   };
   function play(name, arg) {
+    if(settings.menuSounds===false&&(name==='click'||name==='ui-confirm'))return;
     try {
       // First touch can reach the controller a few milliseconds before Safari
       // finishes resume/decode. Preserve that one cue, but never replay it after
       // a slow load, mute, blur or page change. No timer or movement dependency.
-      const bank=interactionEffects.has(name)?interactions:recordedEffects.has(name)?recordings:null;
+      const bank=Object.hasOwn(SOFT_CLIPS,name)?softAudio:interactionEffects.has(name)?interactions:recordedEffects.has(name)?recordings:null;
       if(ctx&&bank&&!host.document.hidden&&!blocked&&!gameMuted()&&settings.sfx>0&&(!audible()||!bank.buffer)){
         if(pendingEffects.has(name))return;
         const token={at:Date.now()};pendingEffects.set(name,token);

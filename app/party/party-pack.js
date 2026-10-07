@@ -47,6 +47,7 @@ const gameMuted = () => { try { return localStorage.getItem('67park-feel-lab-mut
 // ---------- sound (shared graph, recorded vehicle and movement foley) ----------
 const sfx = createPartyAudio({settings, saveSettings, gameMuted});
 window.addEventListener('candy:portal-travel', () => sfx.play('portal'));
+window.addEventListener('candy:reward-earned', e => sfx.play(e.detail?.collected?'coin-collect':'reward-earned'));
 const buzz = pattern => { if (!settings.haptics || !isTouch) return; try { navigator.vibrate?.(pattern); } catch {} };
 
 // ---------- world access ----------
