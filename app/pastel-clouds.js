@@ -14,9 +14,9 @@ export function createPastelClouds(T) {
  field.update();const geometry=new T.BufferGeometry();
  for(const name of ['position','normal'])geometry.setAttribute(name,new T.BufferAttribute(field.geometry.attributes[name].array.slice(0,field.count*3),3));
  geometry.scale(32,16,24);geometry.computeBoundingBox();field.geometry.dispose();fieldMaterial.dispose();
- // Rounded solid puffs use the same actual sun/hemisphere as the park,
- // rather than a self-lit painted gradient that reads as paper at night.
- const material=new T.MeshStandardMaterial({color:'#eeeae4',emissive:'#c9c6c2',emissiveIntensity:.06,roughness:1,metalness:0,fog:true});
+ // A neutral fill keeps downward-facing cloud surfaces pastel rather than
+ // brown/black. Direct light still describes the rounded, unchanged geometry.
+ const material=new T.MeshStandardMaterial({color:'#eeeae4',emissive:'#eeeae4',emissiveIntensity:.65,roughness:1,metalness:0,fog:true});
  const mesh=new T.InstancedMesh(geometry,material,clusters.length);
  mesh.name='67PARK_PASTEL_CLOUD_PUFFS';mesh.castShadow=false;mesh.receiveShadow=false;
  const matrix=new T.Matrix4(),q=new T.Quaternion(),position=new T.Vector3(),scale=new T.Vector3();
@@ -30,13 +30,12 @@ export function createPastelClouds(T) {
   }
  }
  mesh.instanceMatrix.needsUpdate=true;mesh.instanceColor.needsUpdate=true;mesh.computeBoundingSphere();root.add(mesh);
- root.userData.pastelClouds={revision:'matte-clouds-2',clusters:clusters.length,lobes:lobes.length*clusters.length,drawCalls:1,triangles:geometry.attributes.position.count/3*index,textures:0,minY,animated:false};
- const night=new T.Color('#adb8d5'),day=new T.Color('#eeeae4');let disposed=false;
+ root.userData.pastelClouds={revision:'daylight-clouds-3',clusters:clusters.length,lobes:lobes.length*clusters.length,drawCalls:1,triangles:geometry.attributes.position.count/3*index,textures:0,minY,animated:false};
+ let disposed=false;
  return {root,stats:root.userData.pastelClouds,setWeather(weather){
-  const sun=Math.sin(((weather?.dayT??13/24)-.25)*Math.PI*2),light=T.MathUtils.smoothstep(sun,-.06,.28);
+  const sun=Math.sin(((weather?.dayT??13/24)-.25)*Math.PI*2);
   root.visible=sun>0;
-  material.color.copy(night).lerp(day,light);
-  // Keep a soft pastel sky even during rain; never turn these into dark smoke.
-  if(weather?.kind==='rain')material.color.multiplyScalar(.94);
+  // Weather may hide clouds at night if that optional mode is restored,
+  // but must never tint the daytime cloud material into dark smoke.
  },dispose(){if(disposed)return;disposed=true;root.removeFromParent();geometry.dispose();material.dispose();mesh.dispose();}};
 }

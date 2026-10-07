@@ -14,4 +14,6 @@ export function createParkClock({now=()=>Date.now(),fixedHour=null}={}){
   sync(serverTime){if(!Number.isFinite(serverTime))return;const next=serverTime-now();offset=synced?offset*.7+next*.3:next;synced=true;}};
 }
 const query=typeof location==='undefined'?null:new URLSearchParams(location.search).get('hour');
-export const parkClock=createParkClock({fixedHour:query!==null&&Number.isFinite(Number(query))?Number(query):null});
+// Reversible daytime-only switch; preserve the underlying clock for later use.
+export const PARK_DAY_NIGHT_ENABLED=false;
+export const parkClock=createParkClock({fixedHour:PARK_DAY_NIGHT_ENABLED?(query!==null&&Number.isFinite(Number(query))?Number(query):null):13});
