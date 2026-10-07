@@ -1,3 +1,5 @@
+import {createMatchFoley} from '../app/match-foley.js';
+export const recordedFeedback=createMatchFoley({context:()=>P,output:()=>se,muted:()=>I});
 import {itemAssetURL as __itemAssetURL} from "../app/item-assets.js?v=items-only-1";
 import {loadCharacterAsset as __loadItemAsset} from "../app/character-assets.js";
 import {gorillaEquipment as __nativeEquipment} from "../app/playable-character.js";

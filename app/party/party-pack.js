@@ -1,3 +1,4 @@
+import {footstepSurface} from './world-audio.js';
 import {DEFS,ICONS} from './action-icons.js';
 import {createParkLaunchers} from "./park-launchers.js?v=hatch-ends-1";
 import {createParkPets} from '../pets/park-pets.js?v=pet-motion-3';
@@ -87,6 +88,7 @@ window.__parkPets = pets;
   catch (e) { log('carry import failed', e); }
 })();
 const groundAt = (x, z) => { const w = world(); let y = null; try { y = w?.ground?.(x, z); } catch {} return finite(y) ? y : null; };
+const currentFootSurface=()=>{try{const p=player.body?.translation?.();return footstepSurface(p&&world()?.sample?.(p.x,p.z));}catch{return 'stone';}};
 const heldId = () => { try { return carryApi?.carryPacket?.() || ''; } catch { return ''; } };
 
 // ---------- springy scale (jump, land, hits) ----------
@@ -131,12 +133,16 @@ window.__partyStep = guard((body, input, dt, map) => {
   if (held && !previousHeld) sfx.play('grab');
   previousHeld = held;
   features.run('toys-step',()=>toys.step(body,input,dt,map==='city'&&!!world()&&!world()?.homeScene?.active));
-  if (map !== 'city' || !world()) return;
+  if (map !== 'city' || !world()) {sfx.updateFountain();return;}
   features.run('swings',()=>swings.step());
   features.run('evening',()=>evening.step());
   features.run('rails',()=>{if(world().ready&&!world().skateRailFinish)installSkateRailFinish(world());});
   features.run('launchers',()=>items.step(body,dt));
   features.run('fountain',()=>fountain.step(body,dt));
+  features.run('fountain-audio',()=>{
+    const site=fountain.debug().site,p=body?.translation?.();
+    sfx.updateFountain(site&&p&&!world()?.homeScene?.active&&!document.querySelector('.wardrobe')?Math.hypot(p.x-site.x,p.z-site.z,p.y-(site.waterY??site.top)):Infinity);
+  });
   features.run('rings',()=>stepRings(dt));
   features.run('remote-pops',()=>remotePops.step(dt));
 });
@@ -158,7 +164,7 @@ window.__partyVisual = guard((group, dt) => {
     const base=document.documentElement.dataset.gameplayAvatarBase;
     if (st.jumped === 1) { sfx.play('jump'); sfx.play('character-jump', base); buzz(8); }
     else if (st.jumped === 2) { sfx.play('double'); sfx.play('character-jump', base); buzz([8, 30, 8]); }
-    if (st.landed) { const hard=st.landed>9; sfx.play('land', hard); sfx.play('character-land', {hard,base}); buzz(hard ? 22 : 10); }
+    if (st.landed) { const hard=st.landed>9; sfx.play('land', {hard,surface:currentFootSurface()}); sfx.play('character-land', {hard,base}); buzz(hard ? 22 : 10); }
     if (punchStarted) sfx.punch(document.documentElement.dataset.gameplayAvatarBase);
   }
   prevPunchT = st?.punchT || 0;
@@ -268,7 +274,7 @@ function footsteps(st, dt) {
   if (sp < 1.2) { stepPhase = 0; return; }
   const cadence = sp > 7 ? 4.6 : sp > 4 ? 3.6 : 2.6; // steps per second
   stepPhase += cadence * dt;
-  if (stepPhase >= 1) { stepPhase -= 1; stepLeft = !stepLeft; sfx.play('step', stepLeft); }
+  if (stepPhase >= 1) { stepPhase -= 1; stepLeft = !stepLeft; sfx.play('step', {left:stepLeft,surface:currentFootSurface()}); }
 }
 let knockState = null;
 function knockStep(dt) {
@@ -379,7 +385,7 @@ const fountain=createFountainLauncher({world,scene,state,reducedMotion,remotes:(
  enabled:()=>!!settings.pads&&!document.hidden&&!world()?.homeScene?.active,
  blocked:()=>!!window.__candy?.state?.().mounted||!!document.querySelector('.wardrobe,dialog[open],#party-settings:not([hidden])'),
  carried:()=>!!carryApi?.isLocalCarryActive?.(),
- onLaunch(){sfx.play('water-splash',.7);buzz(15);}
+ onLaunch(){sfx.play('fountain-launch');buzz(15);}
 });
 window.__parkFountain=fountain;
 

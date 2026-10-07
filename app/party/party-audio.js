@@ -1,10 +1,12 @@
-import {createSoftFeedbackBank,SOFT_CLIPS} from './soft-feedback-audio.js';
 import {createNaturalAudioBank,FOLEY_CLIPS} from './natural-audio.js?v=natural-audio-1';
 import {createVehicleAudio} from './vehicle-audio.js?v=five-gears-1';
 import {createCowVoice} from './cow-voice.js?v=cow-release-1';
 import {createPunchRecordings} from './punch-recordings.js';
 import {CHARACTER_FEEDBACK,feedbackBase} from '../character-feedback.js';
 import {createInteractionAudioBank,INTERACTION_CLIPS} from './interaction-audio.js?v=interaction-foley-1';
+import {createWorldAudioBank,WORLD_CLIPS} from './world-audio.js';
+import {createFountainAudioBank,FOUNTAIN_CLIPS} from './fountain-audio.js';
+import {createSoftFeedbackBank,SOFT_CLIPS} from './soft-feedback-audio.js';
 
 // One audio graph; bounded voices; no animation-loop ownership.
 export function createPartyAudio({settings, saveSettings, gameMuted, host = window}) {
@@ -14,8 +16,11 @@ export function createPartyAudio({settings, saveSettings, gameMuted, host = wind
   const recordedEffects=new Set(['jump','double','land','skate-ollie','skate-flip','skate-land','horn']);
   const recordings=createNaturalAudioBank({host,onReady:soundHeldHorn});
   const interactions=createInteractionAudioBank({host});
+  const worldAudio=createWorldAudioBank({host});
+  const fountainAudio=createFountainAudioBank({host});
   const softAudio=createSoftFeedbackBank({host});
-  const interactionEffects=new Set(['throw','water-splash','pet-bark','pet-happy','pet-purr','pet-toy','toy-bounce']);
+  let fountainVoice=null,footVariant=0;
+  const interactionEffects=new Set(['throw','swing','hit','water-splash','pet-bark','pet-happy','pet-purr','pet-toy','toy-bounce']);
   // Warm only the 97KB file while the map prepares. No AudioContext, decoding,
   // autoplay or loading-screen dependency; muted entry allocates none of it.
   if(!host.document.hidden&&!gameMuted()&&settings.sfx>0)recordings.preload();
@@ -73,6 +78,8 @@ export function createPartyAudio({settings, saveSettings, gameMuted, host = wind
       // Load/decode once in the existing gesture-unlocked graph; never block entry.
       recordings.load(ctx);
       interactions.load(ctx);
+      worldAudio.load(ctx);
+      fountainAudio.load(ctx);
       softAudio.load(ctx);
       if(cowSelected())cowVoice.load();
       punchRecordings.load(selectedBase());
@@ -127,7 +134,7 @@ export function createPartyAudio({settings, saveSettings, gameMuted, host = wind
         envelope.gain.linearRampToValueAtTime(0,start+length);
       }
       source.connect(envelope);envelope.connect(master);voices.add(source);
-      source.onended=()=>{voices.delete(source);source.disconnect();envelope.disconnect();if(hornVoice===v)hornVoice=null;};
+      source.onended=()=>{voices.delete(source);source.disconnect();envelope.disconnect();if(hornVoice===v)hornVoice=null;if(fountainVoice===v)fountainVoice=null;};
       if(loop)source.start(start,clip.offset);
       else source.start(start,clip.offset,clip.duration);
       if(length!==null)source.stop(start+length+.005);
@@ -139,6 +146,15 @@ export function createPartyAudio({settings, saveSettings, gameMuted, host = wind
     }
   }
   const interaction=(name,options)=>!!recording(name,{...options,bank:interactions,clips:INTERACTION_CLIPS});
+  const worldRecording=(name,options)=>recording(name,{...options,bank:worldAudio,clips:WORLD_CLIPS});
+  function stopFountain(){const v=fountainVoice;fountainVoice=null;if(v)try{v.source.stop();}catch{}}
+  function updateFountain(distance=Infinity){
+    if(!audible()||!Number.isFinite(distance)||distance>=20){stopFountain();return;}
+    if(!worldAudio.buffer){void worldAudio.load(ctx);return;}
+    const gain=.16*Math.pow(Math.max(0,1-Math.max(0,distance-2)/18),2);
+    if(!fountainVoice){fountainVoice=worldRecording('fountain',{loop:true,gain:0});}
+    fountainVoice?.envelope.gain.setTargetAtTime(gain,ctx.currentTime,.18);
+  }
   function voice({noiseBand, type = 'sine', from = 400, to = 200, duration = 0.09, gain = 0.15, delay = 0, pitch = 1}) {
     if (!audible() || voices.size >= 24) return;
     const start = ctx.currentTime + delay, end = start + duration;
@@ -191,6 +207,8 @@ export function createPartyAudio({settings, saveSettings, gameMuted, host = wind
     source.start(start);source.stop(start+duration+.01);
   }
   const recipes = {
+    // Explicitly rejected by the user. Keep legacy callers harmless.
+    'swing-creak'(){return false;},
     'punch-cat'(){vocal({notes:[[0,580],[.055,760],[.14,590],[.3,340]],formants:[[0,900],[.09,1900],[.3,600]],duration:.3,gain:.075});},
     'punch-gorilla'(){vocal({notes:[[0,110],[.05,145],[.2,62]],formants:[[0,430],[.05,650],[.2,190]],duration:.2,gain:.1,pulses:2});},
     'punch-frog'(){vocal({notes:[[0,220],[.06,270],[.24,130]],formants:[[0,850],[.08,1200],[.24,420]],duration:.24,gain:.075,pulses:3});},
@@ -224,13 +242,19 @@ export function createPartyAudio({settings, saveSettings, gameMuted, host = wind
       voice({type:'sine',from:f,to:f,duration:.42,gain:.16});
       voice({type:'sine',from:f*2,to:f*2,duration:.20,gain:.025});
     },
-    step(left, p) {
-      voice({noiseBand:'lowpass', from:left ? 750 : 640, duration:0.065, gain:0.13, pitch:p});
-      voice({from:left ? 145 : 130, to:65, duration:0.055, gain:0.08, pitch:p});
+    step(arg, p) {
+      const surface=['grass','sand'].includes(arg?.surface)?arg.surface:'stone';
+      const left=typeof arg==='boolean'?arg:arg?.left;
+      const variant=1+(footVariant++%3);
+      return !!worldRecording(surface+(left?'L':'R')+variant,{gain:surface==='grass'?.16:.20,pitch:1+(p-1)*.4});
     },
     jump(_,p){return !!recording('takeoff',{gain:.19,pitch:1+(p-1)*.5});},
     double(_,p){return !!recording('flick',{gain:.085,pitch:1+(p-1)*.5});},
-    land(hard,p){return !!recording('landing',{gain:hard?.48:.32,pitch:1+(p-1)*.5});},
+    land(arg,p){
+      const hard=typeof arg==='object'?arg?.hard:arg;
+      if(arg?.surface==='grass'||arg?.surface==='sand')return !!worldRecording(arg.surface+'L'+(1+footVariant++%3),{gain:hard?.35:.23,pitch:.88+(p-1)*.4});
+      return !!recording('landing',{gain:hard?.48:.32,pitch:1+(p-1)*.5});
+    },
     // The recordings carry the physical action. These quiet character cues
     // make the jump belong to the selected rig instead of sounding generic.
     'character-jump'(base){
@@ -249,12 +273,8 @@ export function createPartyAudio({settings, saveSettings, gameMuted, host = wind
     'skate-ollie'(_,p){return !!recording('ollie',{gain:.36,pitch:1+(p-1)*.5});},
     'skate-flip'(_,p){return !!recording('flick',{gain:.16,pitch:1+(p-1)*.5});},
     'skate-land'(hard,p){return !!recording('skateLanding',{gain:hard?.5:.36,pitch:1+(p-1)*.5});},
-    swing(_, p) { voice({noiseBand:'bandpass', from:1100, duration:0.15, gain:0.17, pitch:p}); },
-    hit(_, p) {
-      voice({noiseBand:'lowpass', from:950, duration:0.09, gain:0.28, pitch:p});
-      voice({type:'triangle', from:230, to:65, duration:0.12, gain:0.25, pitch:p});
-      voice({from:620, to:280, duration:0.07, gain:0.08, pitch:p});
-    },
+    swing(_,p){return interaction('whoosh',{gain:.18,pitch:1+(p-1)*.4});},
+    hit(_,p){return interaction('ball',{gain:.26,pitch:.8+(p-1)*.3});},
     pad(_, p) {
       voice({from:160, to:85, duration:0.09, gain:0.21, pitch:p});
       voice({type:'triangle', from:220, to:1150, duration:0.28, delay:0.06, gain:0.16, pitch:p});
@@ -269,6 +289,8 @@ export function createPartyAudio({settings, saveSettings, gameMuted, host = wind
       voice({type:'sine',from:520,to:1040,duration:.28,delay:.08,gain:.075});
       voice({type:'sine',from:1040,to:1560,duration:.34,delay:.17,gain:.045});
     },
+    'fountain-launch'(){return !!recording('launch',{gain:.9,pitch:1,bank:fountainAudio,clips:FOUNTAIN_CLIPS});},
+    'fountain-warning'(){return !!recording('launch',{gain:.18,pitch:.8,bank:fountainAudio,clips:FOUNTAIN_CLIPS});},
     'water-splash'(impact=.5,p){const strength=Math.max(0,Math.min(1,Number(impact)||0));return interaction('splash',{gain:.12+strength*.29,pitch:1.06-strength*.1+(p-1)*.3});},
     'ui-confirm'() { return !!recording('ui-confirm',{gain:.5,bank:softAudio,clips:SOFT_CLIPS}); },
     'coin-collect'() { return !!recording('coin-collect',{gain:.6,bank:softAudio,clips:SOFT_CLIPS}); },
@@ -276,12 +298,12 @@ export function createPartyAudio({settings, saveSettings, gameMuted, host = wind
     'pet-call'() { voice({type:'triangle',from:520,to:760,duration:.10,gain:.06}); voice({type:'triangle',from:760,to:620,duration:.14,delay:.11,gain:.045}); }
   };
   function play(name, arg) {
-    if(settings.menuSounds===false&&(name==='click'||name==='ui-confirm'))return;
     try {
+      if(settings.menuSounds===false&&(name==='click'||name==='ui-confirm'))return;
       // First touch can reach the controller a few milliseconds before Safari
       // finishes resume/decode. Preserve that one cue, but never replay it after
       // a slow load, mute, blur or page change. No timer or movement dependency.
-      const bank=Object.hasOwn(SOFT_CLIPS,name)?softAudio:interactionEffects.has(name)?interactions:recordedEffects.has(name)?recordings:null;
+      const bank=Object.hasOwn(SOFT_CLIPS,name)?softAudio:name==='step'||name==='land'&&['grass','sand'].includes(arg?.surface)?worldAudio:name.startsWith('fountain-')?fountainAudio:interactionEffects.has(name)?interactions:recordedEffects.has(name)?recordings:null;
       if(ctx&&bank&&!host.document.hidden&&!blocked&&!gameMuted()&&settings.sfx>0&&(!audible()||!bank.buffer)){
         if(pendingEffects.has(name))return;
         const token={at:Date.now()};pendingEffects.set(name,token);
@@ -310,7 +332,7 @@ export function createPartyAudio({settings, saveSettings, gameMuted, host = wind
       // Cancelling a pending blur must retain its unfocused state; otherwise
       // a later volume/storage change could restart the engine in background.
       if(vehicleBlurTimer!==null){vehicleFocused=false;clearVehicleBlur();}
-      stopHorn();stopVehicleEngine();cowVoice.cancel();punchRecordings.cancel();pendingEffects.clear();
+      stopFountain();stopHorn();stopVehicleEngine();cowVoice.cancel();punchRecordings.cancel();pendingEffects.clear();
     }
     if (host.document.hidden || blocked || gameMuted()) for (const source of voices) { try { source.stop(); } catch {} }
   }
@@ -346,7 +368,9 @@ export function createPartyAudio({settings, saveSettings, gameMuted, host = wind
   });
   host.addEventListener('focus',()=>{clearVehicleBlur();vehicleFocused=true;});
   return {
-    ensure, play, startHorn, stopHorn, updateVehicleEngine, stopVehicleEngine,
+    ensure, play, startHorn, stopHorn, updateVehicleEngine, stopVehicleEngine, updateFountain,
+    worldReady:()=>ctx?worldAudio.load(ctx):Promise.resolve(false),
+    fountainReady:()=>ctx?fountainAudio.load(ctx):Promise.resolve(false),
     ready:()=>ctx?recordings.load(ctx):Promise.resolve(false),
     interactionReady:()=>ctx?interactions.load(ctx):Promise.resolve(false),
     vehicleReady:()=>ctx?vehicle.ready():Promise.resolve(false),

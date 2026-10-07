@@ -11,7 +11,7 @@ export const FOLEY_CLIPS=Object.freeze({
 export const FOLEY_BYTES=97282;
 export const FOLEY_URL=new URL('../../assets/audio/natural-foley-v1.wav',import.meta.url);
 
-export function createNaturalAudioBank({host,onReady}){
+export function createNaturalAudioBank({host,onReady=()=>{}}){
  let buffer=null,encoded=null,download=null,pending=null,state='idle',retryAt=0;
  function preload(){
   if(buffer||encoded)return Promise.resolve(true);

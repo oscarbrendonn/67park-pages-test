@@ -202,6 +202,8 @@ function move(r,dt){
  else if(matchMode&&r.y>floor+.001)r.grounded=false;
  if(toyPreview&&r.y< -9){if(matchMode&&roundNumber===4){release(r);if(r.carriedBy)release(r.carriedBy);r.eliminated=true;r.root.visible=false;r.label.hidden=true;}else respawn(r);return;}
  r.root.position.y=r.y+.15;
+ if(r===player&&r.grounded){const travel=Math.hypot(r.root.position.x-previousX,r.root.position.z-previousZ);r.soundTravel=(r.soundTravel||0)+(travel<2?travel:0);if(r.soundTravel>.9){r.soundTravel%=.9;r.soundLeft=!r.soundLeft;feelFeedback.play('step',{left:r.soundLeft,surface:'stone'});}}
+ else if(r===player)r.soundTravel=0;
  r.avatar.animator.update(dt,{speed:Math.hypot(r.vx,r.vz),grounded:r.grounded,verticalVelocity:r.vy,punchT:r.punchT});
  // Rotate about the torso, never about the feet or through the floor.
  r.pivot.rotation.x=r.stun>0?(reduced?-.18:Math.sin((.58-r.stun)/.58*Math.PI)*-.85):0;

@@ -1,0 +1,113 @@
+{
+  "license": "CC0",
+  "sampleRate": 24000,
+  "channels": 1,
+  "bytes": 778168,
+  "duration": 16.210916666666666,
+  "sha256": "91cdf2275135df2a36e4afda56eaf6483351055ea9d5cc9928e7bfb9ec140775",
+  "clips": {
+    "grassL1": {
+      "offset": 0,
+      "duration": 0.42
+    },
+    "grassL2": {
+      "offset": 0.445,
+      "duration": 0.31958333333333333
+    },
+    "grassL3": {
+      "offset": 0.7895833333333333,
+      "duration": 0.29954166666666665
+    },
+    "grassR1": {
+      "offset": 1.114125,
+      "duration": 0.40575
+    },
+    "grassR2": {
+      "offset": 1.544875,
+      "duration": 0.34020833333333333
+    },
+    "grassR3": {
+      "offset": 1.9100833333333334,
+      "duration": 0.32945833333333335
+    },
+    "stoneL1": {
+      "offset": 2.2645416666666667,
+      "duration": 0.3729166666666667
+    },
+    "stoneL2": {
+      "offset": 2.6624583333333334,
+      "duration": 0.331625
+    },
+    "stoneL3": {
+      "offset": 3.019083333333333,
+      "duration": 0.3309166666666667
+    },
+    "stoneR1": {
+      "offset": 3.375,
+      "duration": 0.3566666666666667
+    },
+    "stoneR2": {
+      "offset": 3.756666666666667,
+      "duration": 0.322625
+    },
+    "stoneR3": {
+      "offset": 4.104291666666667,
+      "duration": 0.34208333333333335
+    },
+    "sandL1": {
+      "offset": 4.471375,
+      "duration": 0.42
+    },
+    "sandL2": {
+      "offset": 4.916375,
+      "duration": 0.31958333333333333
+    },
+    "sandL3": {
+      "offset": 5.260958333333333,
+      "duration": 0.29954166666666665
+    },
+    "sandR1": {
+      "offset": 5.5855,
+      "duration": 0.40575
+    },
+    "sandR2": {
+      "offset": 6.01625,
+      "duration": 0.34020833333333333
+    },
+    "sandR3": {
+      "offset": 6.381458333333334,
+      "duration": 0.32945833333333335
+    },
+    "creak1": {
+      "offset": 6.735916666666666,
+      "duration": 0.7
+    },
+    "creak2": {
+      "offset": 7.460916666666667,
+      "duration": 0.7
+    },
+    "fountain": {
+      "offset": 8.185916666666667,
+      "duration": 8,
+      "loopStart": 0,
+      "loopEnd": 8
+    }
+  },
+  "sources": [
+    {
+      "author": "Fantozzi; sliced by qubodup",
+      "url": "https://opengameart.org/content/fantozzis-footsteps-grasssand-stone",
+      "use": "18 stone/sand/soft-grass variants; grass is filtered sand, as described by author"
+    },
+    {
+      "author": "Joseph SARDIN",
+      "url": "https://bigsoundbank.com/swing-lightly-loaded-s1094.html",
+      "use": "Two 0.7-second squeaks at 5s and 8s"
+    },
+    {
+      "author": "Olivier du Japon",
+      "url": "https://bigsoundbank.com/fontaine-de-temple-japonais-s0913.html",
+      "use": "12s to 20.3s; mono, filtered, crossfaded 8-second loop"
+    }
+  ]
+}
