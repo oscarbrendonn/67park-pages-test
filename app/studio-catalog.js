@@ -3,6 +3,7 @@
 import {isNativeCharacter} from './native-character.js?v=cat-character-1';
 import {realItemOffer} from './real-item-policy.js';
 export const FITTED_ITEMS = Object.freeze({
+  'friendsie_1:2': {slot:'held',vertices:1614,name:'Friends Flower'},
   'friendsie_3333:5': {slot:'kicks',vertices:910,name:'Mix & Match'},
   'friendsie_1:3': {slot:'kicks',vertices:659,name:'Cloud Boots'},
   'friendsie_2:5': {slot:'kicks',vertices:4176,name:'Candy Steps'},
@@ -46,7 +47,7 @@ export function studioSlots(equipment,baseEquipment,label,ownedItems=[]) {
     ['body','Outfit','top','#ffe4a6',[original.body,'friendsie_2:2']],
     ['sprout','Headwear','hat','#ffd7e3',native?[null,'friendsie_8:90','friendsie_2:1',...(gorilla?['goril:TAC']:[])]:[null,original.sprout,'spr-flower','spr-leaf','spr-cherry']],
     ...(native?[['head','Eyewear','glasses','#d5ecc4',[null,'friendsie_26:90']]]:[]),
-    ['held','Held item','hand','#ffe1cd',[null,original.held,...(native&&!gorilla?[]:['goril:CICEK'])]],
+    ['held','Held item','hand','#ffe1cd',[null,original.held,'friendsie_1:2',...(native&&!gorilla?[]:['goril:CICEK'])]],
     ['power','Effect','star','#fff0a9',[null,'pwr-stars','pwr-hearts','pwr-bolts']],
     ['vibe','Glow','ring','#d5eafa',[null,'vibe-pink','vibe-mint','vibe-gold','vibe-sky']],
   ];

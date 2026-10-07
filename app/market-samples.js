@@ -8,6 +8,7 @@ const fitted=(id,equipmentId,category,color)=>Object.freeze({
  asset:new URL('../models/items/'+equipmentId.replace(':','/')+'.glb',import.meta.url).href,
 });
 export const MARKET_SAMPLES=Object.freeze([
+ fitted('studio-handheld','friendsie_1:2','Handheld','#b9dfce'),
  fitted('studio-glasses','friendsie_26:90','Eyewear','#b3ddaf'),
  fitted('studio-playtime-cap','friendsie_8:90','Headwear','#ff9fc6'),
  fitted('studio-sweater','friendsie_2:2','Outfits','#c8b7ed'),
