@@ -41,11 +41,11 @@ export function createMatchFoley({context,output,muted,host=globalThis}){
   else stop();
   if(p&&previous&&mode==='race'&&p.wallHit&&!previous.wallHit)play('landing',{gain:.19,pitch:.8,key:'wall'});
   if(p&&previous&&mode!=='race'){
-   if(p.grounded===false&&previous.grounded===true&&(p.vy??p.v?.[1])>0)play('takeoff',{gain:.19});
-   if(p.grounded===true&&previous.grounded===false)play('landing',{gain:.25});
+   if(p.grounded===false&&previous.grounded===true&&(p.vy??p.v?.[1])>0)play('takeoff',{gain:.32});
+   if(p.grounded===true&&previous.grounded===false)play('landing',{gain:.38});
    const x=p.x??p.p?.[0],z=p.z??p.p?.[2],px=previous.x??previous.p?.[0],pz=previous.z??previous.p?.[2];
    const distance=Math.hypot(x-px,z-pz);
-   if(p.grounded&&Number.isFinite(distance)&&distance<2){step+=distance;if(step>.9){step%=.9;const n=variant++;play('stone'+(n%2?'L':'R')+(1+n%3),{gain:.14,key:'step'});}}
+   if(p.grounded&&Number.isFinite(distance)&&distance<2){step+=distance;if(step>.9){step%=.9;const n=variant++;play('stone'+(n%2?'L':'R')+(1+n%3),{gain:.29,key:'step'});}}
    else step=0;
   }
   // Snapshot primitive fields: simulation often mutates the frame in place.

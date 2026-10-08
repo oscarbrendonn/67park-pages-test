@@ -246,14 +246,18 @@ export function createPartyAudio({settings, saveSettings, gameMuted, host = wind
       const surface=['grass','sand'].includes(arg?.surface)?arg.surface:'stone';
       const left=typeof arg==='boolean'?arg:arg?.left;
       const variant=1+(footVariant++%3);
-      return !!worldRecording(surface+(left?'L':'R')+variant,{gain:surface==='grass'?.16:.20,pitch:1+(p-1)*.4});
+      return !!worldRecording(surface+(left?'L':'R')+variant,{gain:surface==='grass'?.29:.34,pitch:1+(p-1)*.4});
     },
-    jump(_,p){return !!recording('takeoff',{gain:.19,pitch:1+(p-1)*.5});},
+    jump(_,p){
+      const played=!!recording('takeoff',{gain:.32,pitch:1+(p-1)*.5});
+      if(played){voice({from:380,to:680,duration:.16,gain:.095,pitch:p});voice({from:760,to:900,duration:.09,delay:.025,gain:.023,pitch:p});}
+      return played;
+    },
     double(_,p){return !!recording('flick',{gain:.085,pitch:1+(p-1)*.5});},
     land(arg,p){
       const hard=typeof arg==='object'?arg?.hard:arg;
-      if(arg?.surface==='grass'||arg?.surface==='sand')return !!worldRecording(arg.surface+'L'+(1+footVariant++%3),{gain:hard?.35:.23,pitch:.88+(p-1)*.4});
-      return !!recording('landing',{gain:hard?.48:.32,pitch:1+(p-1)*.5});
+      if(arg?.surface==='grass'||arg?.surface==='sand')return !!worldRecording(arg.surface+'L'+(1+footVariant++%3),{gain:hard?.43:.32,pitch:.88+(p-1)*.4});
+      return !!recording('landing',{gain:hard?.52:.40,pitch:1+(p-1)*.5});
     },
     // The recordings carry the physical action. These quiet character cues
     // make the jump belong to the selected rig instead of sounding generic.
