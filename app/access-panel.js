@@ -1,3 +1,4 @@
+import {beginAccessLoading} from './access-loading.js';
 // A lightweight playtest entrance, NOT server-side authentication. Pages and
 // game assets remain public on GitHub Pages. Never store the submitted password.
 import {GAME_LOAD_TIMEOUT_MS} from './startup-budget.js';
@@ -86,6 +87,7 @@ export function installAccessPanel(doc=document,win=window){
  const launch=async()=>{
   busy=true;submit.disabled=true;submit.textContent='Opening the park…';input.value='';input.blur();input.disabled=true;toggle.disabled=true;
   message.textContent='';doc.documentElement.dataset.parkAccess='opening';
+  const loading=beginAccessLoading(doc,win);
   const slow=setTimeout(()=>{
    if(!panel.isConnected||doc.documentElement.dataset.parkAccess!=='opening')return;
    message.textContent='Game files are taking longer to load. You can keep waiting or reload.';
@@ -95,6 +97,7 @@ export function installAccessPanel(doc=document,win=window){
    await startAccessScripts(doc);
    panel.remove();doc.documentElement.dataset.parkAccess='open';
   }catch{
+   loading.cancel();
    const recovery=doc.getElementById('park-connection-recovery');
    if(recovery&&!recovery.hidden){panel.remove();doc.documentElement.dataset.parkAccess='open';return;}
    // Do not leave a half-booted game interactive or automatically reload it.

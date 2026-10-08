@@ -114,3 +114,6 @@ Gentle DC removal, 55 Hz high-pass / 9.5 kHz low-pass, peak headroom and short e
 ## Real coin and basketball contacts (2026-10-09)
 
 BasketballBounce.wav by Blankened: https://freesound.org/people/Blankened/sounds/505628/ (CC0). Coin recording by keatonmarek: https://freesound.org/people/keatonmarek/sounds/533770/ (CC0). Public listening previews downloaded; mono PCM16 24kHz, filtered and short fade-out. Basketball 0.254s; coin 0.35s with leading silence removed. Existing sound banks unchanged.
+
+## Loading music (2026-10-09)
+Friendly NPC music [LOOP] by DAN2008, CC0: https://freesound.org/people/DAN2008/sounds/848504/ . Public preview saved unchanged as loading-party-v1.mp3. Low-volume loading-only playback with fade and mute handling.
