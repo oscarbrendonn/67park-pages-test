@@ -1,3 +1,4 @@
+import {createContactBank,CONTACT_CLIPS} from './contact-recordings.js';
 import {createSkateRollAudio} from './skate-roll-audio.js';
 import {createNaturalAudioBank,FOLEY_CLIPS} from './natural-audio.js?v=natural-audio-1';
 import {createVehicleAudio} from './vehicle-audio.js?v=five-gears-1';
@@ -20,6 +21,7 @@ export function createPartyAudio({settings, saveSettings, gameMuted, host = wind
   const worldAudio=createWorldAudioBank({host});
   const fountainAudio=createFountainAudioBank({host});
   const softAudio=createSoftFeedbackBank({host});
+  const coinAudio=createContactBank('coin-collect',{host});
   let fountainVoice=null,footVariant=0;
   const interactionEffects=new Set(['throw','swing','hit','water-splash','pet-bark','pet-happy','pet-purr','pet-toy','toy-bounce']);
   // Warm only the 97KB file while the map prepares. No AudioContext, decoding,
@@ -83,6 +85,7 @@ export function createPartyAudio({settings, saveSettings, gameMuted, host = wind
       worldAudio.load(ctx);
       fountainAudio.load(ctx);
       softAudio.load(ctx);
+      coinAudio.load(ctx);
       void skateRoll.load();
       if(cowSelected())cowVoice.load();
       punchRecordings.load(selectedBase());
@@ -300,7 +303,7 @@ export function createPartyAudio({settings, saveSettings, gameMuted, host = wind
     'fountain-warning'(){return !!recording('launch',{gain:.18,pitch:.8,bank:fountainAudio,clips:FOUNTAIN_CLIPS});},
     'water-splash'(impact=.5,p){const strength=Math.max(0,Math.min(1,Number(impact)||0));return interaction('splash',{gain:.12+strength*.29,pitch:1.06-strength*.1+(p-1)*.3});},
     'ui-confirm'() { return !!recording('ui-confirm',{gain:.5,bank:softAudio,clips:SOFT_CLIPS}); },
-    'coin-collect'() { return !!recording('coin-collect',{gain:.6,bank:softAudio,clips:SOFT_CLIPS}); },
+    'coin-collect'() { return !!recording('coin-collect',{gain:.5,bank:coinAudio,clips:CONTACT_CLIPS}); },
     'reward-earned'() { return !!recording('reward-earned',{gain:.55,bank:softAudio,clips:SOFT_CLIPS}); },
     'pet-call'() { voice({type:'triangle',from:520,to:760,duration:.10,gain:.06}); voice({type:'triangle',from:760,to:620,duration:.14,delay:.11,gain:.045}); }
   };
@@ -310,7 +313,7 @@ export function createPartyAudio({settings, saveSettings, gameMuted, host = wind
       // First touch can reach the controller a few milliseconds before Safari
       // finishes resume/decode. Preserve that one cue, but never replay it after
       // a slow load, mute, blur or page change. No timer or movement dependency.
-      const bank=Object.hasOwn(SOFT_CLIPS,name)?softAudio:name==='step'||name==='land'&&['grass','sand'].includes(arg?.surface)?worldAudio:name.startsWith('fountain-')?fountainAudio:interactionEffects.has(name)?interactions:recordedEffects.has(name)?recordings:null;
+      const bank=name==='coin-collect'?coinAudio:Object.hasOwn(SOFT_CLIPS,name)?softAudio:name==='step'||name==='land'&&['grass','sand'].includes(arg?.surface)?worldAudio:name.startsWith('fountain-')?fountainAudio:interactionEffects.has(name)?interactions:recordedEffects.has(name)?recordings:null;
       if(ctx&&bank&&!host.document.hidden&&!blocked&&!gameMuted()&&settings.sfx>0&&(!audible()||!bank.buffer)){
         if(pendingEffects.has(name))return;
         const token={at:Date.now()};pendingEffects.set(name,token);

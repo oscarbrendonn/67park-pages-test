@@ -110,3 +110,7 @@ Gentle DC removal, 55 Hz high-pass / 9.5 kHz low-pass, peak headroom and short e
 
 `skate-roll-v1.wav`: Lanterr, [SkateRolling.wav](https://freesound.org/people/Lanterr/sounds/688733/), CC0 (verified 2026-10-09). Author describes this as a looped rolling skateboard. Source preview: https://cdn.freesound.org/previews/688/688733_14949144-lq.mp3. Converted to mono PCM16 24kHz, high-pass 100Hz / low-pass 4500Hz, gain 4 with 0.85 peak limiter (no makeup). Playback pitch and volume follow actual speed; stopped and airborne boards are silent. No existing recordings replaced.
 
+
+## Real coin and basketball contacts (2026-10-09)
+
+BasketballBounce.wav by Blankened: https://freesound.org/people/Blankened/sounds/505628/ (CC0). Coin recording by keatonmarek: https://freesound.org/people/keatonmarek/sounds/533770/ (CC0). Public listening previews downloaded; mono PCM16 24kHz, filtered and short fade-out. Basketball 0.254s; coin 0.35s with leading silence removed. Existing sound banks unchanged.
