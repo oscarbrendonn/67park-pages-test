@@ -87,3 +87,6 @@ body:has(.wardrobe,.park-inventory-panel,#park-player-profile:not([hidden]),#par
  .park-quest-card-bottom{flex-wrap:wrap}.park-quest-card-bottom button{width:100%;padding:5px}
  .park-daily>.park-quest-tracker{left:0;right:auto;width:164px}
 }
+
+/* Keep the active chat composer touch target unobstructed. */
+body:has(.park-chat input) .park-daily{visibility:hidden;pointer-events:none}

@@ -6,7 +6,7 @@ import {QUEST_GUIDES,activeDelivery,questTarget,distance,timeLeft,compassTo,guid
 import {currencyName} from './park-economy.js';
 
 export async function installParkProgression(host=window){
- const doc=host.document,sheet=doc.createElement('link');sheet.rel='stylesheet';sheet.href=new URL('./park-progression.css?v=quest-guide-20261005-1',import.meta.url).href;
+ const doc=host.document,sheet=doc.createElement('link');sheet.rel='stylesheet';sheet.href=new URL('./park-progression.css?v=bugfix-only-20261008-1',import.meta.url).href;
  await new Promise((resolve,reject)=>{sheet.onload=resolve;sheet.onerror=()=>{sheet.remove();reject(Error('Progression style unavailable'))};doc.head.append(sheet)});
  const el=(tag,cls,text)=>{const n=doc.createElement(tag);n.className=cls;if(text)n.textContent=text;return n};
  const brand=el('div','park-identity-title'),name=el('div','park-identity-name');

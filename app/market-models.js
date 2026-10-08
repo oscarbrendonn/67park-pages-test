@@ -1,3 +1,4 @@
+import {prepareSkateVisual} from './skate-model-contract.js';
 import * as T from 'three';
 import {clone} from 'three/addons/utils/SkeletonUtils.js';
 import {loadCharacterAsset} from './character-assets.js?v=entry-light-1';
@@ -54,7 +55,7 @@ export async function loadMarketModel(item){
  let root;
  if(item.board){
   if(!['neon','klasik','retro','logo'].includes(item.board))throw Error('Unknown skateboard');
-  const asset=await loadCharacterAsset(new URL('../models/boards/'+item.board+'.glb',import.meta.url).href);root=snapshot(asset.scene);
+  const asset=await loadCharacterAsset(new URL('../models/boards/'+item.board+'.glb',import.meta.url).href);root=snapshot(prepareSkateVisual(asset.scene,item.board).root);
  }else if(item.id==='cap'){
   const asset=await loadCharacterAsset(new URL('../models/items/friendsie_8/90.glb',import.meta.url).href);root=wardrobeCopy(asset.scene,false);
  }else if(item.sample&&item.asset){
