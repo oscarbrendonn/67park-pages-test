@@ -1,6 +1,8 @@
 // Publish the trick actually accepted by the shared rider, not a raw button
 // press. Mobile and keyboard therefore use the same sound/landing FX timing.
 export function publishSkateFeedback(events, position, host = globalThis) {
+  const ride=host.__skateState;
+  if(ride)host.dispatchEvent(new host.CustomEvent('candy:skate-roll',{detail:{riding:ride.riding,grounded:ride.grounded,speed:ride.speed}}));
   for (const trick of events) {
     if (trick === 'ollie' || trick === 'kickflip') {
       host.dispatchEvent(new host.CustomEvent('candy:skate-trick', {detail: {trick}}));

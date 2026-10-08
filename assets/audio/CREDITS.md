@@ -105,3 +105,8 @@ All recordings below are CC0. Original public preview checksums, precise trims, 
 - Toy-ball contact: **basketball**, noamp2003 — https://freesound.org/people/noamp2003/sounds/460649/ (single contact, 0.195–0.43 seconds, quietly mixed for the small toy).
 
 Gentle DC removal, 55 Hz high-pass / 9.5 kHz low-pass, peak headroom and short edge fades; no synthetic tones added to these recordings. Technical sample/envelope checks are not a substitute for listening approval on the player's speakers.
+
+## Skate rolling (2026-10-09)
+
+`skate-roll-v1.wav`: Lanterr, [SkateRolling.wav](https://freesound.org/people/Lanterr/sounds/688733/), CC0 (verified 2026-10-09). Author describes this as a looped rolling skateboard. Source preview: https://cdn.freesound.org/previews/688/688733_14949144-lq.mp3. Converted to mono PCM16 24kHz, high-pass 100Hz / low-pass 4500Hz, gain 4 with 0.85 peak limiter (no makeup). Playback pitch and volume follow actual speed; stopped and airborne boards are silent. No existing recordings replaced.
+

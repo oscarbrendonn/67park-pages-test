@@ -1,3 +1,4 @@
+import {createSkateRollAudio} from './skate-roll-audio.js';
 import {createNaturalAudioBank,FOLEY_CLIPS} from './natural-audio.js?v=natural-audio-1';
 import {createVehicleAudio} from './vehicle-audio.js?v=five-gears-1';
 import {createCowVoice} from './cow-voice.js?v=cow-release-1';
@@ -26,6 +27,7 @@ export function createPartyAudio({settings, saveSettings, gameMuted, host = wind
   if(!host.document.hidden&&!gameMuted()&&settings.sfx>0)recordings.preload();
   const limits = {step: 90, jump: 140, double: 140, land: 100, 'character-jump':110, 'character-land':120, 'skate-ollie':110, 'skate-flip':140, 'skate-land':100, horn:120, swing: 150, hit: 100, pad: 250, grab: 150, throw: 150, click: 60, stars: 350, note:80, bell:1800, portal:500, 'water-splash':450, 'vehicle-start':500, 'vehicle-stop':250, 'vehicle-brake':300, 'ui-confirm':120, 'pet-call':240, 'pet-purr':260, 'pet-happy':220, 'pet-bark':500, 'pet-fetch':450, 'pet-pounce':180, 'pet-paw':160, 'pet-pickup':260, 'pet-drop':240, 'pet-roll':220, 'punch-cat':600, 'punch-gorilla':600, 'punch-frog':600};
   const audible = () => ctx?.state === 'running' && !host.document.hidden && !blocked && !gameMuted() && settings.sfx > 0;
+  const skateRoll=createSkateRollAudio({host,getContext:()=>ctx,getOutput:()=>master,audible:()=>audible()&&vehicleFocused});
   const cowVoice=createCowVoice({host,getContext:()=>ctx,getOutput:()=>master,audible,voices,onPlay:()=>{counts['punch-cow']=(counts['punch-cow']||0)+1;}});
   const punchRecordings=createPunchRecordings({host,getContext:()=>ctx,getOutput:()=>master,audible,voices,onPlay:base=>{const key=CHARACTER_FEEDBACK[base].sound;counts[key]=(counts[key]||0)+1;}});
   let lastPunch=-Infinity;
@@ -81,6 +83,7 @@ export function createPartyAudio({settings, saveSettings, gameMuted, host = wind
       worldAudio.load(ctx);
       fountainAudio.load(ctx);
       softAudio.load(ctx);
+      void skateRoll.load();
       if(cowSelected())cowVoice.load();
       punchRecordings.load(selectedBase());
       return ctx;
@@ -336,12 +339,13 @@ export function createPartyAudio({settings, saveSettings, gameMuted, host = wind
       // Cancelling a pending blur must retain its unfocused state; otherwise
       // a later volume/storage change could restart the engine in background.
       if(vehicleBlurTimer!==null){vehicleFocused=false;clearVehicleBlur();}
-      stopFountain();stopHorn();stopVehicleEngine();cowVoice.cancel();punchRecordings.cancel();pendingEffects.clear();
+      skateRoll.stop();stopFountain();stopHorn();stopVehicleEngine();cowVoice.cancel();punchRecordings.cancel();pendingEffects.clear();
     }
     if (host.document.hidden || blocked || gameMuted()) for (const source of voices) { try { source.stop(); } catch {} }
   }
   // Board mode bypasses the walking controller used by __partyVisual. Listen
   // to its accepted trick events instead; never add polling or another graph.
+  host.addEventListener('candy:skate-roll',event=>skateRoll.update(event.detail));
   host.addEventListener('candy:skate-trick', event => {
     if (event.detail?.trick === 'ollie') play('skate-ollie');
     else if (event.detail?.trick === 'kickflip') play('skate-flip');
@@ -364,6 +368,7 @@ export function createPartyAudio({settings, saveSettings, gameMuted, host = wind
   host.addEventListener('park:settings-change',quiet);
   host.addEventListener('park:audio-mute-change',quiet);
   host.addEventListener('blur',()=>{
+    skateRoll.stop();
     stopHorn();cowVoice.cancel();punchRecordings.cancel();pendingEffects.clear();clearVehicleBlur();
     // Release held input immediately, but do not turn an 80ms focus flicker
     // during camera/UI input into a stopped/restarted idle engine. Hiding the

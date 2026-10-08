@@ -90,7 +90,7 @@ export function createSkateTricks(config = {}, out = skateState) {
       time = riding ? time + dt : 0;
       roll = damp(roll, riding && grounded ? clamp(speed / 6, 0, 1) : 0, 4, dt); if (roll < .002) roll = 0;
       const crouch = clamp(squash * .9 + pop * .55 + (pushing ? .22 : 0), 0, 1);
-      Object.assign(out, {riding, stance, stanceYaw: SKATE_STANCE_YAW * stance, pop, flip, squash, lean, tuck, crouch, push: pushPhase, pushing, air, time, roll});
+      Object.assign(out, {riding, grounded, speed, stance, stanceYaw: SKATE_STANCE_YAW * stance, pop, flip, squash, lean, tuck, crouch, push: pushPhase, pushing, air, time, roll});
       return {...out, events};
     }
   };
