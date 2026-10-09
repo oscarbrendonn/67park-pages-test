@@ -1,7 +1,7 @@
-import {beginAccessLoading} from './access-loading.js';
 // A lightweight playtest entrance, NOT server-side authentication. Pages and
 // game assets remain public on GitHub Pages. Never store the submitted password.
 import {GAME_LOAD_TIMEOUT_MS} from './startup-budget.js';
+import {beginAccessLoading,paintAccessLoading} from './access-loading.js';
 export const ACCESS_KEY='67park.access.v1';
 export const ACCESS_REVISION='access-panel-1';
 const digest='84c103c457dd89d26735175de81fb54fb4a06063b9573082a38441863ead0be3';
@@ -94,6 +94,8 @@ export function installAccessPanel(doc=document,win=window){
    submit.textContent='Reload page';submit.disabled=false;reload=true;
   },20000);
   try{
+   // Music starts in beginAccessLoading, before this bounded paint yield.
+   await paintAccessLoading(doc,win);
    await startAccessScripts(doc);
    panel.remove();doc.documentElement.dataset.parkAccess='open';
   }catch{

@@ -117,3 +117,24 @@ BasketballBounce.wav by Blankened: https://freesound.org/people/Blankened/sounds
 
 ## Loading music (2026-10-09)
 Friendly NPC music [LOOP] by DAN2008, CC0: https://freesound.org/people/DAN2008/sounds/848504/ . Public preview saved unchanged as loading-party-v1.mp3. Low-volume loading-only playback with fade and mute handling.
+
+
+## Approved opening music: playful cartoon (2026-10-10)
+
+`loading-cartoon-v1.m4a`: user-approved option 1, generated from an original
+text-only brief through Higgsfield's `sonilo_music` model. Job:
+`da52831a-2c54-469f-b5a0-8098f20974f1`. No Eggy Party recording or other audio
+reference was supplied to this generation. Original generated file retained
+without musical edits; approximately 25 seconds, stereo AAC.
+
+Source: https://d8j0ntlcm91z4.cloudfront.net/user_3FVypUMNfm8RMLxxImph530IKqd/hf_20261009_205356_da52831a-2c54-469f-b5a0-8098f20974f1.m4a
+
+Commercial-use basis reviewed: https://higgsfield.ai/terms-of-use-agreement
+(section 4.4; third-party policies also apply). This is not a public-domain,
+exclusive-rights or non-infringement certification. No independent similarity
+clearance has been performed. Do not label this asset CC0.
+
+Only the opening loading controller uses this track. Existing volume, mute
+and visibility settings remain respected. The previous `loading-party-v1.mp3`
+is archived outside the project, not shipped or downloaded by the game.
+
