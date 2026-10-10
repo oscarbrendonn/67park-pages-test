@@ -13,13 +13,45 @@ export function vehicleBones(bones,driver=false,steer=0){
  return {};
 }
 const cache=new WeakMap(),a=new T.Vector3(),b=new T.Vector3(),delta=new T.Vector3();
+const seatFits=new WeakMap();
 function belongsTo(root,node){for(let current=node;current;current=current.parent)if(current===root)return true;return false;}
-export function alignVehicleHip(root,seat){
+export function alignVehicleHip(root,seat,car=null,index=0){
  let hips=cache.get(root);if(!hips||!belongsTo(root,hips[0])){hips=[];root.traverse(o=>{if(o.isBone&&/^(ThighL|ThighR|LeftUpLeg|RightUpLeg|mixamorigLeftUpLeg|mixamorigRightUpLeg)$/.test(o.name))hips.push(o);});if(!hips.length)return;cache.set(root,hips.slice(0,2));hips=cache.get(root);}
+ const align=()=>{
  root.updateWorldMatrix(true,true);hips[0].getWorldPosition(a);if(hips[1])a.add(hips[1].getWorldPosition(b)).multiplyScalar(.5);
  delta.set(seat.x,seat.y+.12,seat.z);
  if(root.parent){root.parent.worldToLocal(a);root.parent.worldToLocal(delta);}
  root.position.add(delta.sub(a));root.updateMatrixWorld(true);
+ };
+ align();
+ const slot=car?.kind!=='boat'&&car?.seats?.[index];
+ if(!slot?.group||!Number.isFinite(car.roofUnderside))return;
+ let fit=seatFits.get(slot);if(fit?.hip===hips[0])return;
+ // The old offline rig had an adjustable cushion; online characters missed
+ // it and short drivers disappeared behind the window sill. Lift the REAL
+ // cushion and footrest with the rider, never scale the body or equipment.
+ const shift=amount=>{
+  const before=car.group.localToWorld(slot.position.clone());
+  slot.position.y+=amount;slot.base.y+=amount;slot.group.position.y+=amount/car.spec.scale;
+  if(slot.footRest)slot.footRest.position.y+=amount/car.spec.scale;
+  const after=car.group.localToWorld(slot.position.clone());seat.x+=after.x-before.x;seat.y+=after.y-before.y;seat.z+=after.z-before.z;
+  car.group.updateMatrixWorld(true);align();
+ };
+ if(fit?.lift)shift(-fit.lift);
+ // One exact skinned-bound measurement per occupant/rig, not per frame.
+ let top=-Infinity;const point=new T.Vector3();
+ root.traverse(mesh=>{
+  if(!mesh.isMesh||!mesh.geometry?.attributes.position)return;
+  for(let n=mesh;n;n=n.parent)if(!n.visible)return;
+  if(mesh.isSkinnedMesh)mesh.skeleton.update();
+  for(let i=0;i<mesh.geometry.attributes.position.count;i++){
+   if(mesh.isSkinnedMesh)mesh.getVertexPosition(i,point);else point.fromBufferAttribute(mesh.geometry.attributes.position,i);
+   point.applyMatrix4(mesh.matrixWorld);top=Math.max(top,point.y);
+  }
+ });
+ const roof=car.group.localToWorld(point.set(0,car.roofUnderside,0)).y;
+ const lift=Number.isFinite(top)?Math.max(0,Math.min(.28,roof-.10-top)):0;
+ fit={hip:hips[0],lift};seatFits.set(slot,fit);if(lift)shift(lift);
 }
 const armCache=new WeakMap(),jointP=new T.Vector3(),handP=new T.Vector3(),goal=new T.Vector3(),from=new T.Vector3(),to=new T.Vector3(),q=new T.Quaternion(),parentQ=new T.Quaternion(),worldQ=new T.Quaternion();
 // A small bounded reach correction, not a full-body IK solver. The initial

@@ -1,4 +1,5 @@
 import {chatVerdict,validSafetyId,SAFETY_LIMIT} from './chat-policy.js';
+import {recentParkChat,pruneParkChat} from './park-chat-history.js';
 const KEY='67park.feel-lab.safety.v1';
 const state=globalThis[Symbol.for(KEY)]??={blocked:new Set(),muted:new Set(),names:{},sockets:new Set(),pending:new Map(),loaded:false,feedback:null};
 if(!state.loaded){state.loaded=true;try{const s=JSON.parse(globalThis.localStorage?.getItem(KEY)||'{}');for(const k of ['blocked','muted'])state[k]=new Set((s[k]||[]).filter(validSafetyId).slice(0,SAFETY_LIMIT));state.names=s.names||{};}catch{}}
@@ -34,6 +35,11 @@ export function setPlayerSafety(kind,id,value,name='Guest'){
 }
 export function protectParkSocket(ws,channel){
  const owned={ws,channel};state.sockets.add(owned);const replayed=new WeakSet();
+ let serverOffset=0;
+ const expire=()=>pruneParkChat(globalThis.__eggyNet,Date.now()+serverOffset);
+ const expiryTimer=channel==='ws'?setInterval(expire,15000):null;
+ expiryTimer?.unref?.();
+ if(channel==='ws')globalThis.document?.addEventListener('visibilitychange',expire);
  const receive=event=>{
   if(replayed.has(event)||typeof event.data!=='string')return;
   let m;try{m=JSON.parse(event.data);}catch{return;}
@@ -55,12 +61,13 @@ export function protectParkSocket(ws,channel){
   }
   if(m.t==='chat'&&(hidesPlayerChat(m.id)||!chatVerdict(m.text).ok)){event.stopImmediatePropagation();return;}
   if(m.t==='welcome'){
-   const chat=(m.chat||[]).filter(q=>!hidesPlayerChat(q.id)&&chatVerdict(q.text).ok);
+   if(Number.isFinite(m.now))serverOffset=m.now-Date.now();
+   const chat=recentParkChat(m.chat,Date.now()+serverOffset).filter(q=>!hidesPlayerChat(q.id)&&chatVerdict(q.text).ok);
    if(chat.length!==(m.chat||[]).length){event.stopImmediatePropagation();const filtered=new MessageEvent('message',{data:JSON.stringify({...m,chat})});replayed.add(filtered);ws.dispatchEvent(filtered);}
   }
  };
  ws.addEventListener('message',receive);
- ws.addEventListener('close',()=>{state.sockets.delete(owned);ws.removeEventListener('message',receive);if(channel==='online'){state.pending.clear();changed();}},{once:true});
+ ws.addEventListener('close',()=>{clearInterval(expiryTimer);globalThis.document?.removeEventListener('visibilitychange',expire);state.sockets.delete(owned);ws.removeEventListener('message',receive);if(channel==='online'){state.pending.clear();changed();}},{once:true});
  return ws;
 }
 export function installSafetyControls(container){

@@ -8,7 +8,7 @@ import {finishCoasterRails} from '../app/coaster-rail-finish.js?v=coaster-rail-f
 import {addLighthouseSupport} from './lighthouse-support.js?v=lighthouse-steps-1';
 export const layout77=[
  ['ferris',173,-173.7,0],['carousel',192.7,-161.5,0],['carouselSmall',188.845,-135.693,0],
- ['coaster',181,-103.5,0],['kiosk',168,-143,Math.PI/2],['van',196.7,-119,Math.PI/2],
+ ['coaster',181,-103.5,0],['kiosk',168,-143,Math.PI/2],
  ['lighthouse',241,-83,Math.PI/2],
  ['umbrellaYellow',210,-174,0],['umbrellaBlue',210,-156,0],['umbrellaRose',210,-137,0],['umbrellaYellow',210,-126.8,0],
  ['boatYellow',222,-165.4,0,true],['boatRose',229,-165,0,true],['boatBlue',234,-141.8,0,true],

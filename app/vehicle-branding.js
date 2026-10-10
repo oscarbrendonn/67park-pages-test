@@ -1,6 +1,7 @@
 import * as T from 'three';
 import {RoundedBoxGeometry} from '../island/utils/RoundedBoxGeometry.js';
 import {mergeGeometries} from '../island/utils/BufferGeometryUtils.js';
+import {useParkingBody} from './parking-car-body.js';
 let logo=null,logoMaterial=null;
 export function parkLogoMaterial(){
  if(!logoMaterial){
@@ -33,7 +34,15 @@ export function styleParkBus(car){
  car.mats.paint.color.set('#83b9b6');car.mats.roof.color.set('#f0e5cf');car.mats.cream.color.set('#e8ddc4');
  car.mats.recess.color.set('#65928f');car.mats.rubber.color.set('#414a4b');
  car.mats.glass.opacity=.28;car.mats.glass.color.set('#829fa2');
- // The rounded factory minibus has real side-window openings and a cream belt.
+ // Restore the drivable exterior replaced by fleet-38, not an entire old world.
+ // The factory still owns seats, input, physics and the collision envelope.
+ useParkingBody(car);
+ // Keep the existing live head/brake light materials on the restored lamps.
+ car.parkingExterior.traverse(o=>{
+  if(!o.isMesh)return;
+  if(o.material.name==='parking-SPORTS97_warm')o.material=car.mats.light;
+  else if(o.material.name==='parking-SPORTS97_rose')o.material=car.mats.red;
+ });
  const retired=[];car.model.traverse(o=>{if(o.isMesh&&o.material===car.mats.label)retired.push(o);});
  for(const old of retired){
   const badge=new T.Mesh(new T.PlaneGeometry(1.23,.39),parkLogoMaterial());
@@ -52,7 +61,7 @@ export function styleParkBus(car){
  // Three small radial vents merge into the existing rubber batch (no draw).
  let triangles=0;
  for(const wheel of car.wheels){
-  const rubber=wheel.roll.children.find(m=>m.isMesh&&m.material===car.mats.rubber);
+  const rubber=wheel.roll.children.find(m=>m.isMesh&&(m.material===car.mats.rubber||m.material.name==='parking-SPORTS97_tyre'));
   if(!rubber)continue;
   const pieces=[rubber.geometry.index?rubber.geometry.toNonIndexed():rubber.geometry.clone()];
   for(const side of [-1,1])for(let i=0;i<3;i++){
@@ -71,7 +80,7 @@ export function styleParkBus(car){
   car.steering.rotation.z=-turn*2.2;
  };
  car.busWheelFeedback={vents:3,addedDraws:0,addedTriangles:triangles,retiredTextureBytes};
- car.style='67park-rounded-mint-minibus';addParkPlates(car,{bus:true});
+ car.style='sports97-family-school-bus';addParkPlates(car,{bus:true});
  car.stats={draws:0,triangles:0};car.group.traverseVisible(o=>{if(o.isMesh){car.stats.draws++;car.stats.triangles+=(o.geometry.index?.count??o.geometry.attributes.position.count)/3;}});
  return car;
 }
