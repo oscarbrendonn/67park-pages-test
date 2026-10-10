@@ -1,3 +1,4 @@
+import {currentParkMapPoints,drawMinimapVehicles} from './park-map-point-layer.js';
 import {Ka as online,ta as inventory} from './chunk-G7D6MVRW.js?v=online-next-1';
 import {mapPlayers} from './map-player-markers.js?v=entry-map-recovery-20261003-1';
 import {minimapPoint,minimapImageRect,minimapCoins} from './park-minimap-math.js?v=minimap-20261003-1';
@@ -48,6 +49,7 @@ export async function installParkMinimap(host=window){
   ctx.clearRect(0,0,size,size);ctx.fillStyle='#bed8e2';ctx.fillRect(0,0,size,size);
   if(rect)ctx.drawImage(image,rect.x,rect.y,rect.width,rect.height);
   try{progression?.tick(self,ctx,size,overview)}catch{progression?.dispose();progression=null;console.warn('Park activities paused safely; the park remains playable.')}
+  if(!overview)canvas.dataset.visibleVehicles=String(drawMinimapVehicles(ctx,currentParkMapPoints(host),self,size));
   const players=mapPlayers({self,id:online.id,connected:online.connected,remotes:online.remotes,presence:host.__candyOnline?.data?.island?.players});
   for(const player of players){
    if(player.self)continue;const p=minimapPoint(player.p,self,size);if(!p?.visible)continue;
