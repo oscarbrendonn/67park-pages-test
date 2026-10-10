@@ -31,7 +31,9 @@ export function createSkateRollAudio({host,getContext,getOutput,audible}){
    if(!riding||!grounded||!Number.isFinite(speed)||Math.abs(speed)<.15||!audible()){stop();return;}
    lastFrame=Date.now();
    if(!buffer){void load();return;}
-   const ctx=getContext(),s=Math.min(1,Math.abs(speed)/9);
+   // Actual board cruise is 10.875 m/s and Sprint is 15.225 m/s. The old
+   // 9 m/s ceiling flattened both into one sound; leave headroom above Sprint.
+   const ctx=getContext(),s=Math.min(1,Math.abs(speed)/18);
    if(!voice){
     const source=ctx.createBufferSource(),gain=ctx.createGain();
     source.buffer=buffer;source.loop=true;source.loopStart=0;source.loopEnd=buffer.duration;
