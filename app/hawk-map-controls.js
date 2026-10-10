@@ -49,7 +49,7 @@ export function installHawkMapControls(camera, hawk, config, host = window) {
     if(!canvas||!panel)return;
     lastLayoutAt=host.performance?.now()??Date.now();
     const vp=canvas.getBoundingClientRect(),obstacles=[];
-    for(const el of doc.querySelectorAll('#hawk-map-navigation,.park-toolbar>button,.park-toolbar>span,.online-toggle,#park-home-button,.park-weather,.park-hud>div.absolute.right-4.top-4,.park-chat,.park-first-guide')){
+    for(const el of doc.querySelectorAll('#hawk-map-navigation,.park-toolbar>button,.park-toolbar>span,#park-minimap-coins,.online-toggle,#park-home-button,.park-weather,.park-hud>div.absolute.right-4.top-4,.park-chat,.park-first-guide')){
       if(el.hidden||!el.getClientRects().length)continue;
       const style=host.getComputedStyle(el);if(style.visibility==='hidden'||style.display==='none')continue;
       const r=el.getBoundingClientRect();obstacles.push({left:r.left-vp.left,right:r.right-vp.left,top:r.top-vp.top,bottom:r.bottom-vp.top});

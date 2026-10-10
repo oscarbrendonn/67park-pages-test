@@ -83,7 +83,7 @@ export function createParkMapPointLayer({doc,container,onLocate}){
     }
    }
    const groups=clusterMapPoints(points,view,viewport,planeY),kept=new Set();
-   const obstacles=[...doc.querySelectorAll('#hawk-map-navigation,.park-toolbar>button,.park-toolbar>span,.online-toggle,#park-home-button,.park-weather,.park-chat')].filter(el=>el.getClientRects().length).map(el=>el.getBoundingClientRect());
+   const obstacles=[...doc.querySelectorAll('#hawk-map-navigation,.park-toolbar>button,.park-toolbar>span,#park-minimap-coins,.online-toggle,#park-home-button,.park-weather,.park-hud>div.absolute.right-4.top-4,.park-chat')].filter(el=>el.getClientRects().length).map(el=>el.getBoundingClientRect());
    for(const group of groups){
     const point=group.points.find(p=>p.id===selected)||group.points[0],key=group.points[0].id;kept.add(key);let node=nodes.get(key);
     if(!node){node=doc.createElement('button');node.type='button';node.className='park-map-point';node.addEventListener('click',event=>{event.stopPropagation();if(event.defaultPrevented)return;const g=node.mapGroup;if(!g)return;if(node.mapCanZoom){onLocate(g.points[0].p,Math.max(24,node.mapHeight*.4));}else selected=selected===g.points[0].id?null:g.points[0].id;});layer.append(node);nodes.set(key,node);}

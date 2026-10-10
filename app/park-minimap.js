@@ -37,10 +37,10 @@ export async function installParkMinimap(host=window){
    const amount=doc.createElement('span');amount.className='park-minimap-amount';balance.append(coin,amount);doc.body.append(balance);
    button.append(canvas);button.classList.add('park-minimap-button');doc.body.classList.add('park-minimap-ready');
   }
-  // Overview owns the whole map viewport. Restore its existing compact chrome
-  // so the additional mini-map footprint cannot shrink the full-map fit area.
+  // Overview changes the camera, not the HUD layout. Keep the same anchors
+  // until detach; reverting this class restores the legacy mobile positions.
   const overview=!!doc.getElementById('hawk-map-navigation');
-  doc.body.classList.toggle('park-minimap-ready',!overview);balance.hidden=overview;
+  doc.body.classList.add('park-minimap-ready');balance.hidden=false;
   const amount=minimapCoins(inventory.coins);
   if(balance.lastElementChild.textContent!==amount)balance.lastElementChild.textContent=amount;
   balance.setAttribute('aria-label',`Open market · ${amount} Six Seven Coins · ${inventory.badges||0} Fashion Badges`);balance.title='Your wallets · Six Seven Coins and Fashion Badges';
