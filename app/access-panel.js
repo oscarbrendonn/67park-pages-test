@@ -3,6 +3,7 @@
 import {GAME_LOAD_TIMEOUT_MS} from './startup-budget.js';
 import {createEntryDeadline} from './entry-active-time.js';
 import {beginAccessLoading,paintAccessLoading} from './access-loading.js';
+import {beginAccessOpening} from './access-opening.js';
 export const ACCESS_KEY='67park.access.v1';
 export const ACCESS_REVISION='access-panel-1';
 const digest='84c103c457dd89d26735175de81fb54fb4a06063b9573082a38441863ead0be3';
@@ -88,9 +89,11 @@ export function installAccessPanel(doc=document,win=window){
  const launch=async()=>{
   busy=true;submit.disabled=true;submit.textContent='Opening the park…';input.value='';input.blur();input.disabled=true;toggle.disabled=true;
   message.textContent='';doc.documentElement.dataset.parkAccess='opening';
+  const opening=beginAccessOpening(doc,win);
   const loading=beginAccessLoading(doc,win);
   const slow=setTimeout(()=>{
    if(!panel.isConnected||doc.documentElement.dataset.parkAccess!=='opening')return;
+   opening?.showRecovery();
    message.textContent='Game files are taking longer to load. You can keep waiting or reload.';
    submit.textContent='Reload page';submit.disabled=false;reload=true;
   },20000);
@@ -98,10 +101,12 @@ export function installAccessPanel(doc=document,win=window){
    // Music starts in beginAccessLoading, before this bounded paint yield.
    await paintAccessLoading(doc,win);
    await startAccessScripts(doc);
+   if(opening){opening.scriptsReady();await opening.ready;}
    panel.remove();doc.documentElement.dataset.parkAccess='open';
   }catch{
+   opening?.fail();
    const recovery=doc.getElementById('park-connection-recovery');
-   if(recovery&&!recovery.hidden){panel.remove();doc.documentElement.dataset.parkAccess='open';return;}
+   if(recovery&&!recovery.hidden){opening?.cancel();panel.remove();doc.documentElement.dataset.parkAccess='open';return;}
    // Keep the accepted entrance and its music controls in place. A failed
    // module graph cannot be safely executed again in this document: only the
    // explicit Reload action restarts it. Never send an accepted player back

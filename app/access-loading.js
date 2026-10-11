@@ -74,7 +74,7 @@ export function beginAccessLoading(doc=document,win=window){
   const recovery=doc.querySelector('#park-connection-recovery:not([hidden]) button:not([hidden])');
   const returning=doc.querySelector('.wardrobe-returning .return-entry progress');
   const headerTarget=!opening&&!recovery&&!returning?header:null;
-  const anchor=opening?doc.querySelector('#park-access [type="submit"]'):
+  const anchor=opening?(doc.querySelector('#park-access [data-park-opening-anchor]')||doc.querySelector('#park-access [type="submit"]')):
    recovery||
    returning||
    (entering?doc.querySelector('.wardrobe [data-entry-status]'):null)||
@@ -85,7 +85,7 @@ export function beginAccessLoading(doc=document,win=window){
     // Appending only on ownership change avoids a self-anchor/100ms DOM loop.
     headerTarget.append(sound);
   }}else if(anchor?.parentNode){if(sound.nextSibling!==anchor){
-    sound.style.cssText=opening?accessStyle:loadingStyle;
+    sound.style.cssText=opening&&!access?.dataset?.parkOpening?accessStyle:loadingStyle;
     if(sound.hidden)sound.style.display='none';
     anchor.parentNode.insertBefore(sound,anchor);
     // On mobile the wardrobe options already scroll. Reveal the newly added
