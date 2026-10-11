@@ -29,7 +29,7 @@ export function beginAccessLoading(doc=document,win=window){
  const accessStyle=headerStyle+';position:fixed;top:max(12px,env(safe-area-inset-top));right:max(12px,env(safe-area-inset-right));z-index:1';
  let audio;try{audio=new win.Audio(new URL('../assets/audio/loading-cartoon-v1.m4a',import.meta.url).href);}catch{audio={play:()=>Promise.reject(),pause(){},removeAttribute(){},load(){}};sound.hidden=true;sound.style.display='none';}
  audio.loop=true;audio.preload='none';audio.volume=.07;
- let ended=false,muted=false,timer=null,playing=false,blocked=false,playAttempt=0;
+ let ended=false,muted=false,timer=null,playing=false,blocked=false,playAttempt=0,pageSuspended=false;
  // The original Access card still owns input during deferred startup. A
  // wardrobe mounting underneath must not disable its music/reload buttons.
  const access=doc.querySelector('#park-access');
@@ -39,18 +39,20 @@ export function beginAccessLoading(doc=document,win=window){
  ownership?.observe(access,{attributes:true,attributeFilter:['inert']});
  function allowed(){try{const settings=JSON.parse(win.localStorage.getItem('67park.feel-lab.player-settings.v1')||'{}');return !muted&&win.localStorage.getItem('67park-feel-lab-muted')!=='1'&&settings.ambience!==0&&settings.sfx!==0;}catch{return !muted;}}
  function music(){
-  if(ended||doc.hidden||!allowed()){playing=false;playAttempt++;audio.pause();sound.textContent='Music off';sound.setAttribute('aria-pressed','false');return;}
+  if(ended||pageSuspended||doc.hidden||!allowed()){playing=false;playAttempt++;audio.pause();sound.textContent='Music off';sound.setAttribute('aria-pressed','false');return;}
   sound.textContent=blocked?'Tap for music':'Music on';sound.setAttribute('aria-pressed',String(!blocked));
   if(playing||blocked)return;
   playing=true;const attempt=++playAttempt;
-  try{Promise.resolve(audio.play()).then(()=>{if(ended||doc.hidden||!allowed())audio.pause();}).catch(()=>{if(ended||attempt!==playAttempt)return;playing=false;blocked=true;sound.textContent='Tap for music';sound.setAttribute('aria-pressed','false');});}
+  try{Promise.resolve(audio.play()).then(()=>{if(ended||pageSuspended||doc.hidden||!allowed())audio.pause();}).catch(()=>{if(ended||attempt!==playAttempt)return;playing=false;blocked=true;sound.textContent='Tap for music';sound.setAttribute('aria-pressed','false');});}
   catch{if(!ended){playing=false;blocked=true;sound.textContent='Tap for music';sound.setAttribute('aria-pressed','false');}}
  }
  // Safari may reject the first play after asynchronous password verification.
  // Retry on the next real gesture, never repeatedly from the polling timer.
  function gesture(event){if(event.isTrusted===false||event.target===sound||!blocked||!allowed())return;blocked=false;music();}
- function cleanup(){if(ended)return;ended=true;ownership?.disconnect();win.clearInterval(timer);doc.removeEventListener('visibilitychange',music);doc.removeEventListener('pointerdown',gesture);doc.removeEventListener('keydown',gesture);win.removeEventListener('park:audio-mute-change',music);win.removeEventListener('park:settings-change',music);win.removeEventListener('pagehide',cancel);sound.remove();if(win[controllerKey]?.controller===controller)delete win[controllerKey];}
+ function cleanup(){if(ended)return;ended=true;ownership?.disconnect();win.clearInterval(timer);doc.removeEventListener('visibilitychange',music);doc.removeEventListener('pointerdown',gesture);doc.removeEventListener('keydown',gesture);win.removeEventListener('park:audio-mute-change',music);win.removeEventListener('park:settings-change',music);win.removeEventListener('pagehide',pagehide);win.removeEventListener('pageshow',pageshow);sound.remove();if(win[controllerKey]?.controller===controller)delete win[controllerKey];}
  function cancel(){cleanup();audio.pause();audio.removeAttribute('src');audio.load();}
+ function pagehide(event){if(!event.persisted){cancel();return;}pageSuspended=true;music();}
+ function pageshow(){if(ended)return;pageSuspended=false;update();}
  sound.onclick=()=>{if(blocked)muted=false;else muted=!muted;blocked=false;music();};
  function update(){
   if(ended)return;
@@ -95,6 +97,6 @@ export function beginAccessLoading(doc=document,win=window){
  }
  const controller={cancel};win[controllerKey]={doc,controller};
  timer=win.setInterval(update,100);
- doc.addEventListener('visibilitychange',music);doc.addEventListener('pointerdown',gesture);doc.addEventListener('keydown',gesture);win.addEventListener('park:audio-mute-change',music);win.addEventListener('park:settings-change',music);win.addEventListener('pagehide',cancel);
+ doc.addEventListener('visibilitychange',music);doc.addEventListener('pointerdown',gesture);doc.addEventListener('keydown',gesture);win.addEventListener('park:audio-mute-change',music);win.addEventListener('park:settings-change',music);win.addEventListener('pagehide',pagehide);win.addEventListener('pageshow',pageshow);
  update();return controller;
 }

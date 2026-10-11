@@ -1,4 +1,5 @@
 import {startEntryWatchdog} from './entry-watchdog.js';
+import {createEntryDeadline} from './entry-active-time.js';
 import {requestEntryRetry} from './entry-retry.js';
 // Shared by the React bundle and the separately imported Island runtime.
 const key=Symbol.for('67park.entry.v1'),manifestKey=Symbol.for('67park.entry.downloads.v1');
@@ -95,11 +96,12 @@ export async function assetFetch(url,options={},config={}){
  const generation=shared.generation,identity=assetKey(url);let attemptBytes=0;
  // Island preload queue reads this so it never re-requests a URL whose real request already started.
  if(identity&&(shared.requested??=new Set()).size<512)shared.requested.add(identity);
- let timer,reader,closed=false;
- const reset=()=>{clearTimeout(timer);timer=setTimeout(()=>controller.abort(new Error('Download stalled')),idleMs);};
+ let reader,closed=false;
+ const deadline=createEntryDeadline(()=>controller.abort(new Error('Download stalled')),idleMs,config.deadlineOptions);
+ const reset=()=>deadline.reset();
  const external=()=>controller.abort(options.signal?.reason);
  options.signal?.addEventListener('abort',external,{once:true});if(options.signal?.aborted)external();
- const cleanup=()=>{if(closed)return;closed=true;clearTimeout(timer);options.signal?.removeEventListener('abort',external);};
+ const cleanup=()=>{if(closed)return;closed=true;deadline.stop();options.signal?.removeEventListener('abort',external);};
  const observe=(bytes,complete=false)=>{
   if(generation!==shared.generation||shared.value.status!=='loading')return;
   attemptBytes+=bytes;

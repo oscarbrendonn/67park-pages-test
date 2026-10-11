@@ -1,6 +1,7 @@
 // A lightweight playtest entrance, NOT server-side authentication. Pages and
 // game assets remain public on GitHub Pages. Never store the submitted password.
 import {GAME_LOAD_TIMEOUT_MS} from './startup-budget.js';
+import {createEntryDeadline} from './entry-active-time.js';
 import {beginAccessLoading,paintAccessLoading} from './access-loading.js';
 export const ACCESS_KEY='67park.access.v1';
 export const ACCESS_REVISION='access-panel-1';
@@ -58,8 +59,8 @@ export async function startAccessScripts(doc=document){
    // execution queue even without awaiting it here. Critical order stays intact.
    if(optional)script.async=true;
    let settled=false,timer;
-   const finish=error=>{if(settled)return;settled=true;clearTimeout(timer);script.onload=script.onerror=null;error?reject(error):resolve();};
-   timer=setTimeout(()=>finish(Error('Game startup timed out')),GAME_LOAD_TIMEOUT_MS);
+   const finish=error=>{if(settled)return;settled=true;timer?.stop();script.onload=script.onerror=null;error?reject(error):resolve();};
+   timer=createEntryDeadline(()=>finish(Error('Game startup timed out')),GAME_LOAD_TIMEOUT_MS);
    script.onload=()=>finish();script.onerror=()=>finish(Error('Game script could not load'));
    script.textContent=parked.textContent;
    // Sports rebuilds body.innerHTML while its module loads. Remaining parked
