@@ -16,7 +16,7 @@ export function createMarketCatalogueView({doc,panel,items,state,buy,equip,remov
  const wallet=make('span','market-wallet'),exit=button('←','market-close',close);exit.setAttribute('aria-label','Close market');exit.title='Back to park';header.append(exit,brand,wallet);
  const modes=make('nav','market-modes');modes.setAttribute('aria-label','Shop views');
  let mode=initialMode==='owned'?'owned':items.some(i=>i.sample)?'samples':'shop',category='All',selected=items[0]?.id,confirming=false,lastState='',disposed=false,pending=false;
- const samples=button('Friends picks','',()=>setMode('samples')),shop=button('67 Coins shop','',()=>setMode('shop')),badgeShop=button('Badge shop','',()=>setMode('badges')),boards=button('Skateboards','',()=>setMode('boards')),wardrobe=button('My items','',()=>setMode('owned'));modes.append(samples,shop,badgeShop,boards,wardrobe);
+ const samples=button('67 picks','',()=>setMode('samples')),shop=button('67 Coins shop','',()=>setMode('shop')),badgeShop=button('Badge shop','',()=>setMode('badges')),boards=button('Skateboards','',()=>setMode('boards')),wardrobe=button('My items','',()=>setMode('owned'));modes.append(samples,shop,badgeShop,boards,wardrobe);
  const character=make('section','market-character'),portrait=make('img');portrait.alt='Current character';portrait.draggable=false;
  const characterInfo=make('div'),wearing=make('p','market-wearing');characterInfo.append(make('strong','','Your character'),wearing);
  const change=button('Change character','market-change',()=>{close();changeCharacter();});character.append(portrait,characterInfo,change);
@@ -43,8 +43,8 @@ export function createMarketCatalogueView({doc,panel,items,state,buy,equip,remov
  const offer=item=>itemOffer(item,mode==='badges'?'badges':'coins');
  function setMode(value){if(pending)return;mode=['owned','badges','boards','samples'].includes(value)?value:'shop';category='All';confirming=false;status.textContent='';render();}
  function render(){
-  if(disposed)return;const s=state();lastState=JSON.stringify(s);wallet.textContent=`67 ${s.coins} · FB ${s.badges||0}`;wallet.setAttribute('aria-label',`${s.coins} Six Seven Coins, ${s.badges||0} Fashion Badges`);wallet.title='67: Six Seven Coins · FB: Fashion Badges';root.setAttribute('aria-busy',String(pending));samples.disabled=shop.disabled=badgeShop.disabled=boards.disabled=wardrobe.disabled=change.disabled=cancel.disabled=pending;
-  if(!status.textContent)status.textContent=mode==='samples'?'One pick per type · Already included in your wardrobe.':mode==='badges'?(s.badgeShop?'Earn Fashion Badges in Daily tasks and Parcel post. No Coins will be spent.':'Badge purchases are not available on this server yet.'):'Six Seven Coins shop · No real-money top-up. Existing items stay yours.';
+  if(disposed)return;const s=state();lastState=JSON.stringify(s);wallet.textContent=`67 ${s.coins} · FB ${s.badges||0}`;wallet.setAttribute('aria-label',`${s.coins} 67 Coins, ${s.badges||0} Fashion Badges`);wallet.title='67 Coins · FB: Fashion Badges';root.setAttribute('aria-busy',String(pending));samples.disabled=shop.disabled=badgeShop.disabled=boards.disabled=wardrobe.disabled=change.disabled=cancel.disabled=pending;
+  if(!status.textContent)status.textContent=mode==='samples'?'One pick per type · Already included in your wardrobe.':mode==='badges'?(s.badgeShop?'Earn Fashion Badges in Daily tasks and Parcel post. No Coins will be spent.':'Badge purchases are not available on this server yet.'):'67 Coins shop · No real-money top-up. Existing items stay yours.';
   const src=new URL(`./profile-portraits/${s.equipment.base}.png?v=profile-hud-20261002-1`,import.meta.url).href;
   if(portrait.src!==src)portrait.src=src;
   wearing.textContent=items.filter(i=>marketItemState(i,s).equipped&&!i.board).map(i=>i.name).join(' · ')||'Original look';

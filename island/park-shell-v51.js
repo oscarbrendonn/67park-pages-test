@@ -57,10 +57,10 @@ export function installParkControls({jump,sprint,isGame,controller,chooseCharact
   host.resetGesture=()=>resets.forEach(f=>f());
   on(window,'blur',host.resetGesture);on(document,'visibilitychange',()=>{if(document.hidden)host.resetGesture();});
 
-  const nav=document.createElement('nav');nav.id='parkNav51';nav.setAttribute('aria-label','Six Seven Park');
+  const nav=document.createElement('nav');nav.id='parkNav51';nav.setAttribute('aria-label','67 Park');
   const brand=document.createElement('div');brand.className='parkBrand51';
-  brand.innerHTML='<img src="./park-brand-v51.png" alt="Six Seven Park"><div><strong>Six Seven Park</strong><small></small></div>';
-  brand.querySelector('small').textContent=(variant==='kimi'?'Kimi':'Codex')+' Island · exploring';
+  brand.innerHTML='<img src="./park-brand-v51.png" alt="67 Park"><div><strong>67 Park</strong><small></small></div>';
+  brand.querySelector('small').textContent='67 Island · exploring';
   const navActions=document.createElement('div');navActions.className='parkNavActions51';
   const profileButton=button('Character','character'),bagButton=button('Bag','bag'),mapsButton=button('Maps','maps'),emotesButton=button('Emotes','emotes');
   for(const b of [profileButton,bagButton,mapsButton,emotesButton]){b.setAttribute('aria-haspopup','dialog');navActions.append(b);}
@@ -69,7 +69,7 @@ export function installParkControls({jump,sprint,isGame,controller,chooseCharact
   on(mapReturn,'click',()=>document.getElementById('oyunaDon').click());
   const originalProfile=document.getElementById('tamEggyOyun');originalProfile.removeAttribute('href');originalProfile.tabIndex=-1;
   const dialog=document.createElement('dialog');dialog.id='parkMenu51';dialog.className='parkDialog51';dialog.setAttribute('aria-labelledby','parkTitle51');
-  dialog.innerHTML='<header class="parkDialogHead51"><div><small>SIX SEVEN PARK</small><h1 id="parkTitle51">Your character</h1></div></header><div class="parkPanel51" data-panel="character"><div class="parkCharacterGrid51"><section class="parkCharacterVisual51"><div class="parkCharacterName51"><div><h2></h2><p></p></div><span class="parkRarity51"></span></div><div class="parkStage51" aria-label="Interactive character preview"></div><p class="parkStageHint51">Drag to turn · your exact equipped model</p><label class="parkNameField51"><span>Player name</span><input placeholder="Your name…" maxlength="16" autocomplete="nickname"></label><p class="parkCharacterNote51"></p></section><section class="parkTraits51" aria-label="Character traits"><div class="parkTraitsHeading51"><h2>Mix & match</h2><span>9 independent slots</span></div><div class="parkSlots51"></div></section></div></div><div class="parkPanel51" data-panel="inventory" hidden><p class="parkIntro51">Choose your board. Your character and equipment stay with you when you switch islands.</p><div class="parkBoards51"></div><h2>Your loadout</h2><dl class="parkLoadout51"></dl></div><div class="parkPanel51" data-panel="maps" hidden><p class="parkIntro51">One park. Two islands. The same character and controls.</p><div class="parkMaps51"></div><h2>Explore this island</h2><div class="parkMapViews51"></div></div><div class="parkPanel51" data-panel="emotes" hidden><p class="parkIntro51">The original Six Seven Park emotes. Move to stop.</p><div class="parkEmotes51"></div></div><div class="parkPanel51" data-panel="help" hidden><dl class="parkHelp51"><dt>Move</dt><dd>WASD / arrows · left joystick</dd><dt>Camera</dt><dd>Drag on the right · mouse</dd><dt>Jump / sprint</dt><dd>Space / Shift</dd><dt>Board / slam</dt><dd>V / Q</dd><dt>Emotes / bag</dt><dd>B / I</dd><dt>Bird’s eye / home</dt><dd>M / R</dd></dl><p class="parkServiceNote51">Island build · local play.<br>The original collectible IDs and traits are preserved. NFT ownership, wallet actions and online services are not connected in this local build.</p></div><footer class="parkDialogFoot51"><p class="parkStatus51" role="status" aria-live="polite"></p><div class="parkFooterActions51"></div></footer>';
+  dialog.innerHTML='<header class="parkDialogHead51"><div><small>67 PARK</small><h1 id="parkTitle51">Your character</h1></div></header><div class="parkPanel51" data-panel="character"><div class="parkCharacterGrid51"><section class="parkCharacterVisual51"><div class="parkCharacterName51"><div><h2></h2><p></p></div><span class="parkRarity51"></span></div><div class="parkStage51" aria-label="Interactive character preview"></div><p class="parkStageHint51">Drag to turn · your exact equipped model</p><label class="parkNameField51"><span>Player name</span><input placeholder="Your name…" maxlength="16" autocomplete="nickname"></label><p class="parkCharacterNote51"></p></section><section class="parkTraits51" aria-label="Character traits"><div class="parkTraitsHeading51"><h2>Mix & match</h2><span>9 independent slots</span></div><div class="parkSlots51"></div></section></div></div><div class="parkPanel51" data-panel="inventory" hidden><p class="parkIntro51">Choose your board. Your character and equipment stay with you when you switch islands.</p><div class="parkBoards51"></div><h2>Your loadout</h2><dl class="parkLoadout51"></dl></div><div class="parkPanel51" data-panel="maps" hidden><p class="parkIntro51">One park. Two islands. The same character and controls.</p><div class="parkMaps51"></div><h2>Explore this island</h2><div class="parkMapViews51"></div></div><div class="parkPanel51" data-panel="emotes" hidden><p class="parkIntro51">The original 67 Park emotes. Move to stop.</p><div class="parkEmotes51"></div></div><div class="parkPanel51" data-panel="help" hidden><dl class="parkHelp51"><dt>Move</dt><dd>WASD / arrows · left joystick</dd><dt>Camera</dt><dd>Drag on the right · mouse</dd><dt>Jump / sprint</dt><dd>Space / Shift</dd><dt>Board / slam</dt><dd>V / Q</dd><dt>Emotes / bag</dt><dd>B / I</dd><dt>Bird’s eye / home</dt><dd>M / R</dd></dl><p class="parkServiceNote51">Island build · local play.<br>The original collectible IDs and traits are preserved. NFT ownership, wallet actions and online services are not connected in this local build.</p></div><footer class="parkDialogFoot51"><p class="parkStatus51" role="status" aria-live="polite"></p><div class="parkFooterActions51"></div></footer>';
   document.body.append(dialog);
   const close=button('','close','parkClose51');close.setAttribute('aria-label','Close menu');dialog.querySelector('header').append(close);
   const info=button('Controls & services','help','parkHelpButton51');dialog.querySelector('footer').prepend(info);
@@ -89,7 +89,7 @@ export function installParkControls({jump,sprint,isGame,controller,chooseCharact
     dialog.querySelector('.parkCharacterName51 h2').textContent=def.name;
     dialog.querySelector('.parkCharacterName51 p').textContent=`Garden No. ${def.no} of ${CHARACTERS.length-1}`;
     const badge=dialog.querySelector('.parkRarity51');badge.textContent=rarity.label;badge.style.background=rarity.bg;badge.style.color=rarity.fg;
-    dialog.querySelector('.parkCharacterNote51').textContent=def.rarityNote+' · original Six Seven Park collection';
+    dialog.querySelector('.parkCharacterNote51').textContent=def.rarityNote+' · original 67 Park collection';
     for(const [slot,row] of slotRows){row.value.textContent=slot==='base'?def.name:partLabel(draft[slot]);
       const supported=slotOptions(slot,draft).length>1;for(const b of row.row.querySelectorAll('button')){b.disabled=!supported;b.title=supported?'':'Not used by this base';}}
     const request=++stageRequest;previewBusy=true;previewReady=false;showStatus('Preparing your character…');enter.disabled=true;
@@ -162,7 +162,7 @@ export function installParkControls({jump,sprint,isGame,controller,chooseCharact
     on(b,'click',()=>{const c=controller();if(!c||busy)return;if(c.swimming||!c.grounded||c.slam.active){showStatus('Return to the ground to use an emote.');return;}c.playEmote(em.id);closeMenu();});
     dialog.querySelector('.parkEmotes51').append(b);
   }
-  for(const [id,label] of [['codex','Codex Island'],['kimi','Kimi Island']]){
+  for(const [id,label] of [['codex','67 Island'],['kimi','67 Island']]){
     const b=button(label,'maps','parkMapCard51');const caption=document.createElement('small');caption.textContent=id===variant?'You are here':'Explore with this loadout';b.append(caption);b.setAttribute('aria-current',id===variant?'location':'false');
     on(b,'click',()=>{if(busy)return;if(id===variant){closeMenu();return;}
       const url=new URL(location.href);url.port=id==='codex'?'8015':'8016';url.pathname='/calisma.html';url.search='';url.searchParams.set('view','play');url.searchParams.set('v','islands84');url.searchParams.set('loadout',JSON.stringify(profile));location.assign(url.href);});
@@ -174,7 +174,7 @@ export function installParkControls({jump,sprint,isGame,controller,chooseCharact
     on(original,'click',()=>closeMenu());views.append(original);
   }
   const home=button('Return to small island',null,'parkView51');on(home,'click',()=>{if(!ready()||busy)return;resetSpawn?.();closeMenu();});views.append(home);
-  const bas=document.getElementById('bas');bas.innerHTML='<div class="parkBoot51"><img src="./park-brand-v51.png" alt="Six Seven Park"><strong>Preparing your island</strong><p>The park will open when the map is ready.</p></div>';
+  const bas=document.getElementById('bas');bas.innerHTML='<div class="parkBoot51"><img src="./park-brand-v51.png" alt="67 Park"><strong>Preparing your island</strong><p>The park will open when the map is ready.</p></div>';
   on(window,'keydown',e=>{if(dialog.open||e.repeat||e.ctrlKey||e.metaKey||e.altKey||!ready())return;
     if(e.target.closest?.('input,textarea,select,[contenteditable=true]'))return;
     const next={KeyB:'emotes',KeyI:'inventory',KeyC:'character'}[e.code];if(next){e.preventDefault();openPanel(next,next==='inventory'?bagButton:next==='emotes'?emotesButton:profileButton);}

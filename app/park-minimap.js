@@ -43,7 +43,7 @@ export async function installParkMinimap(host=window){
   doc.body.classList.add('park-minimap-ready');balance.hidden=false;
   const amount=minimapCoins(inventory.coins);
   if(balance.lastElementChild.textContent!==amount)balance.lastElementChild.textContent=amount;
-  balance.setAttribute('aria-label',`Open market · ${amount} Six Seven Coins · ${inventory.badges||0} Fashion Badges`);balance.title='Your wallets · Six Seven Coins and Fashion Badges';
+  balance.setAttribute('aria-label',`Open market · ${amount} 67 Coins · ${inventory.badges||0} Fashion Badges`);balance.title='Your wallets · 67 Coins and Fashion Badges';
   updateMarketAccessibility(host,balance);
   const size=256,rect=minimapImageRect(self,size);
   ctx.clearRect(0,0,size,size);ctx.fillStyle='#bed8e2';ctx.fillRect(0,0,size,size);

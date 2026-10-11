@@ -25,7 +25,7 @@ export function installParkControls({jump,sprint,isGame,controller,chooseCharact
   const resets=[bind(board,()=>controller()?.toggleBoard()),bind(power,()=>controller()?.queuePower())];
   const oldReset=host.resetGesture;host.resetGesture=()=>{oldReset();resets.forEach(f=>f());};
   const dialog=document.createElement('dialog');dialog.id='parkWardrobe';dialog.setAttribute('aria-labelledby','parkWardrobeTitle');
-  dialog.innerHTML='<header><div><small>SIX SEVEN PARK</small><h2 id="parkWardrobeTitle">Karakter & kaykay</h2></div><button type="button" data-close aria-label="Kapat">✕</button></header><p class="parkMenuStatus" role="status">21 karakter · 4 kaykay · yalnız seçilen model yüklenir</p><h3>Karakterler</h3><div class="parkRoster"></div><h3>Kaykay</h3><div class="parkBoards"></div><h3>Hareketler</h3><div class="parkEmotes"></div><p class="parkKeys">WASD hareket · Shift koş · Boşluk zıpla<br>V kaykay · Q yeşil darbe · M harita · R başlangıç</p>';
+  dialog.innerHTML='<header><div><small>67 PARK</small><h2 id="parkWardrobeTitle">Karakter & kaykay</h2></div><button type="button" data-close aria-label="Kapat">✕</button></header><p class="parkMenuStatus" role="status">21 karakter · 4 kaykay · yalnız seçilen model yüklenir</p><h3>Karakterler</h3><div class="parkRoster"></div><h3>Kaykay</h3><div class="parkBoards"></div><h3>Hareketler</h3><div class="parkEmotes"></div><p class="parkKeys">WASD hareket · Shift koş · Boşluk zıpla<br>V kaykay · Q yeşil darbe · M harita · R başlangıç</p>';
   document.body.append(dialog);const status=dialog.querySelector('[role=status]');
   const profile=document.getElementById('tamEggyOyun');
   profile.textContent='Karakter';profile.removeAttribute('href');profile.setAttribute('role','button');profile.tabIndex=0;

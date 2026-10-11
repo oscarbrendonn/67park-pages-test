@@ -18,6 +18,7 @@ const reduced=matchMedia('(prefers-reduced-motion: reduce)');
 const loader=new GLTFLoader();
 const status=text=>{$('save-status').textContent=text;};
 const safeName=item=>item.id.replace(/:/g,'-');
+const displayId=id=>String(id).replace(/^friendsie_/i,'67_');
 
 function disposeTree(root){
   const geometries=new Set(),materials=new Set(),textures=new Set(),skeletons=new Set(),images=new Set();
@@ -78,16 +79,16 @@ function initializeRenderer(){
 }
 function renderLibrary(){
   const query=$('search').value.trim().toLowerCase();
-  filtered=catalog.filter(item=>(category==='All'||item.category===category)&&(`${item.name} ${item.id} ${item.category}`).toLowerCase().includes(query));
+  filtered=catalog.filter(item=>(category==='All'||item.category===category)&&(`${item.name} ${item.id} ${displayId(item.id)} ${item.category}`).toLowerCase().includes(query));
   if(isThumb)return;
   $('list-summary').textContent=`${filtered.length} ${filtered.length===1?'item':'items'} · ${category==='All'?'Entire collection':category}`;
   $('empty').hidden=!!filtered.length;$('item-grid').replaceChildren();
   for(const item of filtered){
-    const button=document.createElement('button');button.type='button';button.className='item-card';button.dataset.id=item.id;button.setAttribute('aria-pressed',String(selected?.id===item.id));button.setAttribute('aria-label',`Preview ${item.name} (${item.id})`);
+    const button=document.createElement('button');button.type='button';button.className='item-card';button.dataset.id=item.id;button.setAttribute('aria-pressed',String(selected?.id===item.id));button.setAttribute('aria-label',`Preview ${item.name} (${displayId(item.id)})`);
     const img=document.createElement('img');img.src=`previews/${safeName(item)}.png`;img.loading='lazy';img.decoding='async';img.alt=item.name;img.width=240;img.height=220;
     // A failed thumbnail must not prevent loading the real 3D item.
     img.addEventListener('error',()=>{if(!img.dataset.retried){img.dataset.retried='1';img.src=`previews/${safeName(item)}.png?retry=1`;}else img.alt='3D preview available';});
-    const copy=document.createElement('span');copy.className='card-copy';const name=document.createElement('strong');name.textContent=item.name;const id=document.createElement('small');id.textContent=item.id;copy.append(name,id);button.append(img,copy);
+    const copy=document.createElement('span');copy.className='card-copy';const name=document.createElement('strong');name.textContent=item.name;const id=document.createElement('small');id.textContent=displayId(item.id);copy.append(name,id);button.append(img,copy);
     if(drafts[item.id]){const dot=document.createElement('span');dot.className='dot';dot.textContent='Edited';button.append(dot);}
     button.addEventListener('click',()=>select(item.id));$('item-grid').append(button);
   }
@@ -141,10 +142,10 @@ async function select(id){
     current={root,edit,display,materials,span,normalization:2/span,effect};selected=item;settings=cleanSettings(drafts[id]);committed=cleanSettings(settings);materialIndex=0;effectTime=0;
     floor.position.y=-size.y/span-.13;
     $('material').replaceChildren(...materials.map(({material},i)=>new Option(`${i+1}. ${material.name||'Surface'}`,String(i))));
-    $('item-name').textContent=item.name;$('item-category').textContent=item.category.toUpperCase();$('item-id').textContent=id;$('item-size').textContent=item.kind==='effect'?'Procedural · live preview':`${(item.bytes/1024).toFixed(0)} KB · GLB`;
+    $('item-name').textContent=item.name;$('item-category').textContent=item.category.toUpperCase();$('item-id').textContent=displayId(id);$('item-size').textContent=item.kind==='effect'?'Procedural · live preview':`${(item.bytes/1024).toFixed(0)} KB · GLB`;
     all('.effect-only').forEach(e=>e.hidden=item.kind!=='effect');all('.model-only').forEach(e=>e.hidden=item.kind==='effect');
     $('original').hidden=item.kind==='effect';if(item.url){$('original').href=item.url;$('original').download=safeName(item)+'.glb';}
-    $('kind-note').textContent=item.kind==='effect'?'A 67Park procedural effect, not an extracted Friends model. Edit it here and export its settings.':'Edits are saved on this browser only. Original files stay untouched.';
+    $('kind-note').textContent=item.kind==='effect'?'A 67Park procedural effect, not an extracted 3D model. Edit it here and export its settings.':'Edits are saved on this browser only. Original files stay untouched.';
     $('export').textContent=item.kind==='effect'?'Export effect JSON ↓':'Export edited GLB ↓';
     $('export-note').textContent=item.kind==='effect'?'JSON stores color, transform and speed. Use it with the downloadable effect runtime and Three.js; it is not an animated GLB.':"GLB keeps the item's materials and skinning. The editor's floor and lights are not exported.";
     $('editing').disabled=$('export').disabled=$('snapshot').disabled=false;$('loading').hidden=true;

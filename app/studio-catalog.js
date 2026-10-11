@@ -3,7 +3,7 @@
 import {isNativeCharacter} from './native-character.js?v=cat-character-1';
 import {realItemOffer} from './real-item-policy.js';
 export const FITTED_ITEMS = Object.freeze({
-  'friendsie_1:2': {slot:'held',vertices:1614,name:'Friends Flower'},
+  'friendsie_1:2': {slot:'held',vertices:1614,name:'67 Flower'},
   'friendsie_3333:5': {slot:'kicks',vertices:910,name:'Mix & Match'},
   'friendsie_1:3': {slot:'kicks',vertices:659,name:'Cloud Boots'},
   'friendsie_2:5': {slot:'kicks',vertices:4176,name:'Candy Steps'},
