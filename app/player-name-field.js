@@ -10,7 +10,10 @@ ensurePlayerNameStyles();
 
 const suggestionsFrom=value=>Array.isArray(value)?[...new Set(value.filter(name=>typeof name==='string'&&hasPlayerName(name)&&name.length<=16))].slice(0,3):[];
 export function nameRequestMessage(error){
-  return error?.code==='NAME_TAKEN'?PLAYER_NAME_TAKEN:(error?.message||'Could not check your name. Please try again.');
+  if(error?.code==='NAME_TAKEN')return PLAYER_NAME_TAKEN;
+  const message=String(error?.message||'');
+  if(error?.name==='AbortError'||error?.name==='TimeoutError'||/^(?:Failed to fetch|Load failed|NetworkError.*|fetch failed|Network request failed|The Internet connection appears to be offline\.?|The network connection was lost\.?)$/i.test(message))return 'Could not reach the name service. Check your connection and try again.';
+  return message||'Could not check your name. Please try again.';
 }
 
 // UI drafts never use the network-backed legacy setter until a claim succeeds.

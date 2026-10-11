@@ -8,8 +8,10 @@ const paths={shoe:'M3 16v-6l5 1 3 4 8 2c2 0 3 2 2 4H3v-5Zm0 2h17M9 13l-2 2',back
 
 export function createStudioPanel(React){
   const h=React.createElement,StudioEntryRecovery=createStudioEntryRecovery(React),StudioOwnedItems=createStudioOwnedItems(React),NameFeedback=createPlayerNameFeedback(React);
-  return function StudioPanel({eq,name,nameError='',nameSuggestions=[],namePending=false,onName,setSlot,baseEquipment,partLabel,Stage,onEnter,onBack,onCancel,onReload,busy,error,entry={},avatar={},entryStatus,dialog}){
+  return function StudioPanel({collectionLayout,eq,name,nameError='',nameSuggestions=[],namePending=false,onName,setSlot,baseEquipment,partLabel,Stage,onEnter,onBack,onCancel,onReload,busy,error,entry={},avatar={},entryStatus,dialog}){
     const [,setInventoryRevision]=React.useState(0),refreshInventory=React.useRef(()=>setInventoryRevision(n=>n+1)).current;
+    // Keep this component and its keyed live stage mounted in both layouts.
+    if(collectionLayout)return collectionLayout;
     const rows=studioSlots(eq,baseEquipment,partLabel,getOwnedStudioItems());
     return h('div',{ref:dialog,className:'wardrobe wardrobe-studio',role:'dialog','aria-modal':true,'aria-label':'Style Studio',tabIndex:-1,'data-selected-base':eq.base,onKeyUp:e=>e.stopPropagation(),onKeyDown:e=>{
       e.stopPropagation();
@@ -20,8 +22,8 @@ export function createStudioPanel(React){
       }
     }},
       h('header',{className:'studio-topbar'},h('div',{className:'studio-brand'},h('img',{src:new URL('../brand/67park-logo-full-v2.png',import.meta.url).href,alt:'67Park'}),h('span',null,'STYLE STUDIO')),h('button',{type:'button',className:'studio-back',onClick:()=>{if(!busy&&!namePending)onBack?.()},disabled:busy||namePending},'‹ Characters')),
-      h('main',{className:'studio-layout'},
-        h('section',{className:'wardrobe-stage studio-view','aria-label':'Your character'},h(Stage,{eq}),h('p',{className:'studio-preview-note'},'Your character · Your style')),
+      h('main',{key:'wardrobe-layout',className:'studio-layout'},
+        h('section',{key:'wardrobe-preview',className:'wardrobe-stage studio-view','aria-label':'Your character'},h(Stage,{key:'wardrobe-live-stage',layout:'studio',eq}),h('p',{className:'studio-preview-note'},'Your character · Your style')),
         h('section',{className:'studio-options','aria-label':'Dress your character'},
           h('div',{className:'studio-heading'},h('p',null,'STEP 2 · DRESS UP'),h('h1',null,'Make it yours'),h('span',null,'Tap an arrow. Try something new.')),
           h(StudioOwnedItems,{eq,setSlot,busy:busy||namePending,onInventoryChange:refreshInventory}),
