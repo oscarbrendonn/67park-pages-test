@@ -24,9 +24,12 @@ function downloadState(){
  let bytes=0,total=0,files=0;
  for(const [url,expected]of shared.manifest){const seen=shared.observed.get(url);total+=expected;bytes+=Math.min(expected,seen?.bytes||0);if(seen?.complete)files++;}
  const fraction=total?bytes/total:shared.manifest.size?files/shared.manifest.size:0;
- // Prerequisite downloads occupy the first setup unit. No timer-based fill,
- // and the final setup unit is reserved for the explicit ready signal.
- const progress=shared.value.status==='ready'?1:Math.min((shared.value.total-1)/shared.value.total,Math.max(shared.value.step,fraction)/shared.value.total);
+ // Most cold entry work is real prerequisite transfer. Setup still owns its
+ // own share; a late manifest must not pull an already visible bar backwards.
+ // No elapsed-time fill, and only entryReady is allowed to show completion.
+ const setup=Math.max(0,shared.value.step)/shared.value.total;
+ const measured=shared.manifest.size?fraction*.7+setup*.3:setup;
+ const progress=shared.value.status==='ready'?1:Math.min(.99,Math.max(0,Number(shared.value.progress)||0,measured));
  return {downloadBytes:bytes,downloadTotal:total,downloadFiles:files,downloadExpectedFiles:shared.manifest.size,progress};
 }
 function reportDownload(){
