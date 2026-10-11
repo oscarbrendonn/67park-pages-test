@@ -16,7 +16,7 @@ export function createMarketCatalogueView({doc,panel,items,state,buy,equip,remov
  const wallet=make('span','market-wallet'),exit=button('←','market-close',close);exit.setAttribute('aria-label','Close market');exit.title='Back to park';header.append(exit,brand,wallet);
  const modes=make('nav','market-modes');modes.setAttribute('aria-label','Shop views');
  let mode=initialMode==='owned'?'owned':items.some(i=>i.sample)?'samples':'shop',category='All',selected=items[0]?.id,confirming=false,lastState='',disposed=false,pending=false;
- const samples=button('67 picks','',()=>setMode('samples')),shop=button('67 Coins shop','',()=>setMode('shop')),badgeShop=button('Badge shop','',()=>setMode('badges')),boards=button('Skateboards','',()=>setMode('boards')),wardrobe=button('My items','',()=>setMode('owned'));modes.append(samples,shop,badgeShop,boards,wardrobe);
+ const samples=button('67park Items','',()=>setMode('samples')),shop=button('67 Coins shop','',()=>setMode('shop')),badgeShop=button('Badge shop','',()=>setMode('badges')),boards=button('Skateboards','',()=>setMode('boards')),wardrobe=button('My items','',()=>setMode('owned'));modes.append(samples,shop,badgeShop,boards,wardrobe);
  const character=make('section','market-character'),portrait=make('img');portrait.alt='Current character';portrait.draggable=false;
  const characterInfo=make('div'),wearing=make('p','market-wearing');characterInfo.append(make('strong','','Your character'),wearing);
  const change=button('Change character','market-change',()=>{close();changeCharacter();});character.append(portrait,characterInfo,change);

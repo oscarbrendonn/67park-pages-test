@@ -1,3 +1,5 @@
+import {startEntryWatchdog} from './entry-watchdog.js';
+import {requestEntryRetry} from './entry-retry.js';
 // Shared by the React bundle and the separately imported Island runtime.
 const key=Symbol.for('67park.entry.v1'),manifestKey=Symbol.for('67park.entry.downloads.v1');
 const now=()=>globalThis.performance?.now()??Date.now();
@@ -82,15 +84,10 @@ export function entryFailed(error){if(shared.value.status!=='loading')return;pub
 export function entryTelemetryAttributes(value=shared.value){
  return {'data-entry-started':value.entryStarted,'data-entry-elapsed-ms':value.elapsedMs,'data-entry-ready-at':value.readyAt??'','data-entry-stage':value.step,'data-entry-files':value.files,'data-entry-bytes':value.bytes,'data-entry-download-bytes':value.downloadBytes,'data-entry-download-total':value.downloadTotal,'data-entry-download-files':value.downloadFiles,'data-entry-download-expected-files':value.downloadExpectedFiles,'data-entry-stage-events':JSON.stringify(value.stageEvents),'data-entry-milestones':JSON.stringify(value.milestones)};
 }
-export function watchEntry({slowMs=20000,deadlineMs=180000}={}){
- const timer=setInterval(()=>{
-  if(shared.value.status!=='loading')return;
-  if(elapsed()>deadlineMs)entryFailed('Loading took too long. Retry with your saved character.');
-  else if(Date.now()-shared.last>slowMs&&!shared.value.slow){shared.value={...shared.value,slow:true,elapsedMs:elapsed()};notify();}
- },1000);
- return()=>clearInterval(timer);
+export function watchEntry(options={}){
+ return startEntryWatchdog({snapshot:entrySnapshot,fail:entryFailed,slow:()=>{shared.value={...shared.value,slow:true,elapsedMs:elapsed()};notify();}},options);
 }
-export function retryEntry(){location.reload();}
+export function retryEntry(selection){return requestEntryRetry(selection);}
 // Idle deadline also covers the response body, not just HTTP headers.
 // No global fetch override, no cache deletion, no unbounded retries.
 export async function assetFetch(url,options={},config={}){

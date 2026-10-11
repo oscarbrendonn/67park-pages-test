@@ -1,5 +1,6 @@
 import {playerSettings} from './player-settings.js';
 import {createMobileViewportFraming} from './mobile-viewport-framing.js';
+import {entryRetryLowGraphics} from './entry-retry.js';
 
 export const GRAPHICS_LEVELS=Object.freeze({
  auto:{label:'Automatic',dpr:null,shadowSize:null,shadows:true},
@@ -41,7 +42,7 @@ export function installGraphicsQuality(renderer,{settings=playerSettings,host=gl
  const resetMap=shadow=>{shadow.map?.dispose();shadow.mapPass?.dispose();shadow.map=null;shadow.mapPass=null;shadow.needsUpdate=true;};
  const apply=nextScene=>{
   if(dead)return;
-  const next=Object.hasOwn(GRAPHICS_LEVELS,settings.graphics)?settings.graphics:'auto';
+  const next=entryRetryLowGraphics()?'low':Object.hasOwn(GRAPHICS_LEVELS,settings.graphics)?settings.graphics:'auto';
   if(next!==level){level=next;dirty=true;setRatio.call(renderer,qualityPixelRatio(level,requested,host.devicePixelRatio||1));}
   const profile=GRAPHICS_LEVELS[level];
   if(originalShadows===undefined)originalShadows=!!renderer.shadowMap?.enabled;
@@ -79,7 +80,7 @@ export function installGraphicsQuality(renderer,{settings=playerSettings,host=gl
   }
  };
  const changed=()=>{framing.refresh();dirty=true;level=null;if(scene)safeApply(scene);};
- renderer.setPixelRatio=function(value){requested=value;return setRatio.call(this,degraded?.8:qualityPixelRatio(settings.graphics,value,host.devicePixelRatio||1));};
+ renderer.setPixelRatio=function(value){requested=value;return setRatio.call(this,degraded?.8:qualityPixelRatio(entryRetryLowGraphics()?'low':settings.graphics,value,host.devicePixelRatio||1));};
  renderer.render=function(nextScene,camera,...args){framing.apply(camera);safeApply(nextScene);return render.call(this,nextScene,camera,...args);};
  renderer.dispose=function(...args){
   if(!dead){dead=true;host.removeEventListener?.('park:settings-change',changed);host.removeEventListener?.('resize',changed);framing.dispose();lights.clear();}

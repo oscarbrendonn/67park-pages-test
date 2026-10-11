@@ -18,7 +18,8 @@ const reduced=matchMedia('(prefers-reduced-motion: reduce)');
 const loader=new GLTFLoader();
 const status=text=>{$('save-status').textContent=text;};
 const safeName=item=>item.id.replace(/:/g,'-');
-const displayId=id=>String(id).replace(/^friendsie_/i,'67_');
+const displayId=id=>'67park_item_'+String(id).replace(/^friendsie_/i,'');
+const downloadName=item=>displayId(item.id).replace(/:/g,'-');
 
 function disposeTree(root){
   const geometries=new Set(),materials=new Set(),textures=new Set(),skeletons=new Set(),images=new Set();
@@ -144,7 +145,7 @@ async function select(id){
     $('material').replaceChildren(...materials.map(({material},i)=>new Option(`${i+1}. ${material.name||'Surface'}`,String(i))));
     $('item-name').textContent=item.name;$('item-category').textContent=item.category.toUpperCase();$('item-id').textContent=displayId(id);$('item-size').textContent=item.kind==='effect'?'Procedural · live preview':`${(item.bytes/1024).toFixed(0)} KB · GLB`;
     all('.effect-only').forEach(e=>e.hidden=item.kind!=='effect');all('.model-only').forEach(e=>e.hidden=item.kind==='effect');
-    $('original').hidden=item.kind==='effect';if(item.url){$('original').href=item.url;$('original').download=safeName(item)+'.glb';}
+    $('original').hidden=item.kind==='effect';if(item.url){$('original').href=item.url;$('original').download=downloadName(item)+'.glb';}
     $('kind-note').textContent=item.kind==='effect'?'A 67Park procedural effect, not an extracted 3D model. Edit it here and export its settings.':'Edits are saved on this browser only. Original files stay untouched.';
     $('export').textContent=item.kind==='effect'?'Export effect JSON ↓':'Export edited GLB ↓';
     $('export-note').textContent=item.kind==='effect'?'JSON stores color, transform and speed. Use it with the downloadable effect runtime and Three.js; it is not an animated GLB.':"GLB keeps the item's materials and skinning. The editor's floor and lights are not exported.";
@@ -161,8 +162,8 @@ async function exportItem(){
   if(!current||exporting)return;commit();exporting=true;$('export').disabled=$('editing').disabled=true;
   const item=selected;status('Preparing your export…');
   try{
-    if(item.kind==='effect')download(JSON.stringify({schema:'67park-effect-preset-v1',id:item.id,name:item.name,settings:cleanSettings(settings),runtime:'effect-runtime.js',note:'Call createEffect(id, settings), then update(elapsedSeconds * settings.speed). Respect reduced-motion preferences.'},null,2),'application/json',safeName(item)+'-edited.json');
-    else{current.display.updateMatrixWorld(true);const exporter=new GLTFExporter();const glb=await exporter.parseAsync(current.edit,{binary:true,onlyVisible:true});download(glb,'model/gltf-binary',safeName(item)+'-edited.glb');}
+    if(item.kind==='effect')download(JSON.stringify({schema:'67park-effect-preset-v1',id:item.id,name:item.name,settings:cleanSettings(settings),runtime:'effect-runtime.js',note:'Call createEffect(id, settings), then update(elapsedSeconds * settings.speed). Respect reduced-motion preferences.'},null,2),'application/json',downloadName(item)+'-edited.json');
+    else{current.display.updateMatrixWorld(true);const exporter=new GLTFExporter();const glb=await exporter.parseAsync(current.edit,{binary:true,onlyVisible:true});download(glb,'model/gltf-binary',downloadName(item)+'-edited.glb');}
     status('Export ready. Your original item is unchanged.');
   }catch(error){status('Export failed: '+error.message+'. Your draft is still saved.');console.error(error);}
   finally{exporting=false;$('export').disabled=$('editing').disabled=false;}
@@ -188,7 +189,7 @@ function wireUI(){
   $('reset').onclick=()=>{if(!current||exporting)return;settings=cleanSettings();applySettings();commit();view();};
   for(const key of ['undo','redo'])$(key).onclick=()=>{if(!current||exporting)return;commit();const h=histories.get(selected.id);if(!h?.[key].length)return;h[key==='undo'?'redo':'undo'].push(cleanSettings(settings));settings=h[key].pop();committed=cleanSettings(settings);applySettings();persist();};
   $('export').onclick=exportItem;
-  $('snapshot').onclick=()=>{if(!current)return;renderer.render(scene,camera);renderer.domElement.toBlob(blob=>{if(blob)download(blob,'image/png',safeName(selected)+'-preview.png');},'image/png');};
+  $('snapshot').onclick=()=>{if(!current)return;renderer.render(scene,camera);renderer.domElement.toBlob(blob=>{if(blob)download(blob,'image/png',downloadName(selected)+'-preview.png');},'image/png');};
   document.addEventListener('visibilitychange',()=>{if(document.hidden){commit();cancelAnimationFrame(frameId);frameId=0;}else{lastTime=performance.now()/1000;requestFrame();}});
   reduced.addEventListener('change',requestFrame);addEventListener('pagehide',commit);
 }

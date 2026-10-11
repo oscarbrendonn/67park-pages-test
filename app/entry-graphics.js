@@ -39,7 +39,7 @@ export async function compileEntryGraphics(renderer,scene,camera,{timeoutMs=6000
 // Rendering/upload calls enqueue GPU work; returning from render() does not
 // mean it has completed. Yield while the real entry fence is pending instead
 // of handing that queue to the first player-controlled frame.
-export async function waitForEntryGPU(renderer,{timeoutMs=15000,yieldTask=()=>new Promise(r=>setTimeout(r,8)),now=()=>performance.now()}={}){
+export async function waitForEntryGPU(renderer,{timeoutMs=60000,yieldTask=()=>new Promise(r=>setTimeout(r,8)),now=()=>performance.now()}={}){
  const gl=renderer.getContext();if(gl.isContextLost())throw Error('Graphics memory was interrupted. Retry loading.');
  if(typeof gl.fenceSync!=='function')return;
  const sync=gl.fenceSync(gl.SYNC_GPU_COMMANDS_COMPLETE,0);if(!sync)throw Error('Graphics preparation could not finish. Retry loading.');

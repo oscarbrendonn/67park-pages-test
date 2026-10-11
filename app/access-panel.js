@@ -99,13 +99,16 @@ export function installAccessPanel(doc=document,win=window){
    await startAccessScripts(doc);
    panel.remove();doc.documentElement.dataset.parkAccess='open';
   }catch{
-   loading.cancel();
    const recovery=doc.getElementById('park-connection-recovery');
    if(recovery&&!recovery.hidden){panel.remove();doc.documentElement.dataset.parkAccess='open';return;}
-   // Do not leave a half-booted game interactive or automatically reload it.
+   // Keep the accepted entrance and its music controls in place. A failed
+   // module graph cannot be safely executed again in this document: only the
+   // explicit Reload action restarts it. Never send an accepted player back
+   // to the password screen while the world is still preparing behind it.
    if(!panel.isConnected)doc.body.append(panel);
-   doc.documentElement.dataset.parkAccess='locked';
-   message.textContent='The game could not load. Check your connection and try again.';
+   doc.documentElement.dataset.parkAccess='opening';
+   panel.inert=false;
+   message.textContent='A game file could not load. Your access is saved. Check your connection, then reload to try again.';
    submit.textContent='Reload';submit.disabled=false;reload=true;busy=false;
   }finally{clearTimeout(slow);}
  };
