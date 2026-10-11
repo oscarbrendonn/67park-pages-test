@@ -47,7 +47,7 @@ html body :is(.cr-top>div,.sp-brand,.rr-brand) {
   font-family:var(--park-ui-font);max-width:150px;pointer-events:none;
 }
 html body :is(.cr-top>div,.sp-brand,.rr-brand)::before {
-  content:'';display:block;width:62px;height:23px;background:url('../brand/67park-logo.png') left center/contain no-repeat;
+  content:'';display:block;width:62px;height:23px;background:url('../brand/67park-logo-full-v2.png') left center/contain no-repeat;
 }
 html body :is(.cr-top small,.sp-brand small,.sp-brand p,.rr-brand small,.rr-brand h1 span) {display:none}
 html body :is(.cr-top h1,.sp-brand h1,.rr-brand h1) {font:800 12px/1.3 var(--park-ui-font)!important;margin:3px 0 0!important;letter-spacing:0;white-space:nowrap;color:var(--park-ui-ink)}

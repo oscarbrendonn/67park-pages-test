@@ -6,7 +6,7 @@ let logo=null,logoMaterial=null;
 export function parkLogoMaterial(){
  if(!logoMaterial){
   if(typeof document!=='undefined'){
-   logo=new T.TextureLoader().load('/67park-pages-test/brand/67park-logo.png');
+   logo=new T.TextureLoader().load('/67park-pages-test/brand/67park-logo-full-v2.png');
    logo.colorSpace=T.SRGBColorSpace;
   }
   logoMaterial=new T.MeshBasicMaterial({name:'67park-colour-logo',map:logo,color:'#ffffff',transparent:true,depthWrite:false,side:T.FrontSide,toneMapped:false});
@@ -24,7 +24,7 @@ export function addParkPlates(car,{bus=false}={}){
    backing.position.set(0,.89,side*3.544);group.add(backing);
   }
  }
- car.model.add(group);car.plates={text:'67park',source:'brand/67park-logo.png',coloured:true,front:true,rear:true};
+ car.model.add(group);car.plates={text:'67park',source:'brand/67park-logo-full-v2.png',coloured:true,front:true,rear:true};
  return car;
 }
 // Keep the original factory seats, wheel axes and collision envelope intact.

@@ -10,7 +10,7 @@ export async function installParkProgression(host=window){
  await new Promise((resolve,reject)=>{sheet.onload=resolve;sheet.onerror=()=>{sheet.remove();reject(Error('Progression style unavailable'))};doc.head.append(sheet)});
  const el=(tag,cls,text)=>{const n=doc.createElement(tag);n.className=cls;if(text)n.textContent=text;return n};
  const brand=el('div','park-identity-title'),name=el('div','park-identity-name');
- const logo=el('img','park-identity-logo');logo.src=new URL('../brand/67park-logo.png',import.meta.url).href;logo.alt='67Park';logo.width=72;logo.height=27;brand.append(logo);
+ const logo=el('img','park-identity-logo');logo.src=new URL('../brand/67park-logo-full-v2.png',import.meta.url).href;logo.alt='67Park';logo.width=72;logo.height=27;brand.append(logo);
  const root=el('section','park-daily'),toggle=el('button','park-ui-control','Daily · 0/3'),panel=el('div','park-daily-panel park-ui-panel');
  root.id='park-daily';panel.id='park-daily-panel';panel.hidden=true;toggle.type='button';toggle.setAttribute('aria-expanded','false');toggle.setAttribute('aria-controls',panel.id);
  const heading=el('h2','','Your park day'),close=el('button','park-ui-control','Close'),streak=el('p'),list=el('ul'),cap=el('p'),legend=el('p','','Gold dots: 5 coins each · Blue: parcel pickup · Pink: delivery'),job=el('button','park-ui-control'),cancel=el('button','park-ui-control','Cancel delivery'),retry=el('button','park-ui-control','Retry'),status=el('p','park-daily-status'),earned=el('div','park-earned');

@@ -19,7 +19,7 @@ export function createStudioPanel(React){
         else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first?.focus()}
       }
     }},
-      h('header',{className:'studio-topbar'},h('div',{className:'studio-brand'},h('img',{src:new URL('../brand/67park-logo.png',import.meta.url).href,alt:'67Park'}),h('span',null,'STYLE STUDIO')),h('button',{type:'button',className:'studio-back',onClick:()=>{if(!busy&&!namePending)onBack?.()},disabled:busy||namePending},'‹ Characters')),
+      h('header',{className:'studio-topbar'},h('div',{className:'studio-brand'},h('img',{src:new URL('../brand/67park-logo-full-v2.png',import.meta.url).href,alt:'67Park'}),h('span',null,'STYLE STUDIO')),h('button',{type:'button',className:'studio-back',onClick:()=>{if(!busy&&!namePending)onBack?.()},disabled:busy||namePending},'‹ Characters')),
       h('main',{className:'studio-layout'},
         h('section',{className:'wardrobe-stage studio-view','aria-label':'Your character'},h(Stage,{eq}),h('p',{className:'studio-preview-note'},'Your character · Your style')),
         h('section',{className:'studio-options','aria-label':'Dress your character'},

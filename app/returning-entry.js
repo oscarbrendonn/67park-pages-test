@@ -17,7 +17,7 @@ export function createReturningEntry(React){
   React.useEffect(()=>{const timer=setInterval(()=>setNow(Date.now()),1000);return()=>clearInterval(timer)},[]);
   const s=returningEntryView(entry,avatar,now),h=React.createElement;
   return h('section',{className:'return-entry','aria-label':'Returning player loading','data-return-entry':s.failed?'error':s.timedOut?'timeout':'loading'},
-   h('img',{className:'return-entry-logo',src:new URL('../brand/67park-logo.png',import.meta.url).href,alt:'67Park'}),
+   h('img',{className:'return-entry-logo',src:new URL('../brand/67park-logo-full-v2.png',import.meta.url).href,alt:'67Park'}),
    h('h1',null,s.title),
    h('p',{className:'return-entry-stage',role:'status','aria-live':'polite'},s.stage),
    h('progress',{max:1,value:s.progress,'aria-label':'Park preparation progress'}),

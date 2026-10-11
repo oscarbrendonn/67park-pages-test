@@ -12,7 +12,7 @@ export function createMarketCatalogueView({doc,panel,items,state,buy,equip,remov
  const make=(tag,cls,text)=>{const e=doc.createElement(tag);if(cls)e.className=cls;if(text!==undefined)e.textContent=text;return e;};
  const button=(label,cls,action)=>{const b=make('button',cls,label);b.type='button';b.addEventListener('click',action);return b;};
  const root=make('section','market-catalogue');root.setAttribute('aria-label','Shop and wardrobe');
- const header=make('header','market-heading'),brand=make('div'),logo=make('img','market-brand-logo');logo.src=new URL('../brand/67park-logo.png',import.meta.url).href;logo.alt='67Park';brand.append(logo,make('h2','','Park Shop'));
+ const header=make('header','market-heading'),brand=make('div'),logo=make('img','market-brand-logo');logo.src=new URL('../brand/67park-logo-full-v2.png',import.meta.url).href;logo.alt='67Park';brand.append(logo,make('h2','','Park Shop'));
  const wallet=make('span','market-wallet'),exit=button('←','market-close',close);exit.setAttribute('aria-label','Close market');exit.title='Back to park';header.append(exit,brand,wallet);
  const modes=make('nav','market-modes');modes.setAttribute('aria-label','Shop views');
  let mode=initialMode==='owned'?'owned':items.some(i=>i.sample)?'samples':'shop',category='All',selected=items[0]?.id,confirming=false,lastState='',disposed=false,pending=false;
