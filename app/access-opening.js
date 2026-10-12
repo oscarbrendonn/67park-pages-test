@@ -20,20 +20,19 @@ export function beginAccessOpening(doc=document,win=window){
  const card=panel.querySelector('form'),logo=panel.querySelector('.access-logo'),submit=panel.querySelector('[type="submit"]'),message=doc.getElementById('park-access-message');
  if(!card||!logo||!submit||!message)return null;
  const make=(tag,className,text)=>{const node=doc.createElement(tag);node.className=className;if(text!==undefined)node.textContent=text;return node;};
- // These are the native Al loader's exact label, bar, colours and logo sizing.
- // The existing form and recovery controls remain the same event-owning nodes.
+ // Reuse the approved returning-entry card and measured download detail. The
+ // existing Access host and recovery controls remain the event-owning nodes.
  for(const child of card.children)if(child!==logo&&child!==submit&&child!==message){child.hidden=true;child.style.display='none';}
- panel.style.background='#f6efe4';
- card.style.cssText='display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;max-width:none;margin:auto;padding:0;border:0;border-radius:0;background:transparent;box-shadow:none;text-align:center';
- logo.classList.add('h-24','w-auto','animate-bounce','drop-shadow-md');
- logo.style.cssText='width:auto;height:96px;max-width:100%;margin:0;object-fit:contain';
- const label=make('div','mt-3 text-[11px] font-black uppercase tracking-[0.3em] text-[#a98f6a]','loading');
- label.dataset.parkOpeningAnchor='';
- const track=make('div','mt-4 h-3 w-56 overflow-hidden rounded-full border border-black/5 bg-white/80 shadow-inner');
- const fill=make('div','h-full rounded-full bg-gradient-to-r from-[#ffd23f] via-[#ffb26b] to-[#ff9fc6] transition-[width] duration-300 ease-out');
- fill.style.width='0%';track.append(fill);track.dataset.parkOpeningProgress='';track.setAttribute('role','progressbar');track.setAttribute('aria-label','Opening the park');track.setAttribute('aria-valuemin','0');track.setAttribute('aria-valuemax','100');
- const percent=make('div','mt-1.5 text-[11px] font-black tabular-nums text-[#a98f6a]','0%');percent.dataset.parkOpeningPercent='';
- card.insertBefore(label,message);card.insertBefore(track,message);card.insertBefore(percent,message);
+ panel.style.background='var(--park-ui-surface)';
+ card.classList.add('return-entry','park-ui-panel');
+ card.style.cssText='width:100%;max-width:480px;margin:auto;text-align:center';
+ logo.classList.add('return-entry-logo');
+ logo.style.cssText='display:block;width:148px;height:48px;max-width:100%;margin:0 auto 24px;object-fit:contain';
+ const title=make('h1','','Opening the park');
+ const stage=make('p','return-entry-stage','Opening the park');stage.setAttribute('role','status');stage.setAttribute('aria-live','polite');
+ const track=make('progress','');track.max=1;track.value=0;track.dataset.parkOpeningAnchor='';track.dataset.parkOpeningProgress='';track.setAttribute('aria-label','Park preparation progress');track.setAttribute('aria-valuemin','0');track.setAttribute('aria-valuemax','100');
+ const percent=make('p','return-entry-detail','0% · Preparing your park');percent.dataset.parkOpeningPercent='';
+ card.insertBefore(title,message);card.insertBefore(stage,message);card.insertBefore(track,message);card.insertBefore(percent,message);
  submit.hidden=true;message.hidden=true;submit.style.display='none';message.style.display='none';
  submit.style.maxWidth='320px';message.style.maxWidth='400px';
  panel.dataset.parkOpening='loading';panel.removeAttribute?.('aria-labelledby');panel.setAttribute('aria-label','Opening the park');doc.documentElement.dataset.parkOpeningPhase='loading';
@@ -56,7 +55,13 @@ export function beginAccessOpening(doc=document,win=window){
   paintTimer=win.setTimeout(done,100);
   if(!doc.hidden&&win.requestAnimationFrame)frame=win.requestAnimationFrame(()=>{frame=win.requestAnimationFrame(done);});
  }
- function paint(value){progress=Math.max(progress,Math.min(1,Number(value)||0));const n=Math.round(progress*100);fill.style.width=n+'%';percent.textContent=n+'%';track.setAttribute('aria-valuenow',String(n));}
+ function paint(value,entry=win[Symbol.for('67park.entry.v1')]?.value){
+  progress=Math.max(progress,Math.min(1,Number(value)||0));const n=Math.round(progress*100);track.value=progress;track.setAttribute('aria-valuenow',String(n));
+  stage.textContent=entry?.stage||'Opening the park';
+  const total=Number(entry?.downloadTotal),bytes=Math.min(total,Math.max(0,Number(entry?.downloadBytes)||0));
+  const detail=Number.isFinite(total)&&total>0?'Map files: '+(bytes/1048576).toFixed(1)+' / '+(total/1048576).toFixed(1)+' MiB':'Preparing your park';
+  percent.textContent=n+'% · '+detail;
+ }
  function showRecovery(){if(ended)return;panel.dataset.parkOpening=failed?'error':'slow';submit.hidden=false;message.hidden=false;submit.style.display='block';message.style.display='block';panel.inert=false;}
  function decision(){
   const entry=win[Symbol.for('67park.entry.v1')]?.value;
