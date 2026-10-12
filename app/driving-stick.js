@@ -16,7 +16,7 @@ export function drivingStickInput(x,z){
 }
 export function resetDrivingInput(state){
  releaseDrivingStick(state);
- Object.assign(state,{gas:false,reverse:false,brake:false,steer:0,touchSteering:false,driveInterrupted:true,driveRecoveryUntil:0,drivePedalOwners:Object.create(null)});
+ Object.assign(state,{gas:false,reverse:false,brake:false,steer:0,touchSteering:false,driveInterrupted:true,driveRecoveryUntil:0,drivePedalOwners:Object.create(null),drivePedalTargets:Object.create(null)});
 }
 // A server-approved dry-land recovery is not a lost pointer or a hidden tab.
 // Keep actual pedal ownership, brake while settling, then read the STILL-held
@@ -29,15 +29,26 @@ export function pauseDrivingForRecovery(state,now=performance.now()){
 export function createDrivingPedalHandlers(state,key,blocked=()=>false){
  if(!['gas','reverse','brake'].includes(key))throw Error('Unknown driving pedal');
  const owners=()=>state.drivePedalOwners??=Object.create(null);
+ const targets=()=>state.drivePedalTargets??=Object.create(null);
  const press=(event,owner)=>{
-  if(blocked()||owners()[key]!=null)return;
+  if(blocked())return;
+  // Recover a missed pointer-up/cancel only on a deliberate new press. Never
+  // clear another finger that still owns capture, or resume gas on a timer.
+  for(const pedal of ['gas','reverse','brake']){
+   const previous=owners()[pedal],target=targets()[pedal];
+   if(previous==null||previous==='keyboard'||!target?.hasPointerCapture)continue;
+   if(!target.hasPointerCapture(previous)){
+    delete owners()[pedal];delete targets()[pedal];state[pedal]=false;
+   }
+  }
+  if(owners()[key]!=null)return;
   event.preventDefault();
   if(owner!=='keyboard')try{event.currentTarget.setPointerCapture(event.pointerId);}catch{}
-  owners()[key]=owner;state[key]=true;state.touchDriving=true;state.driveInterrupted=false;
+  owners()[key]=owner;targets()[key]=event.currentTarget;state[key]=true;state.touchDriving=true;state.driveInterrupted=false;
  };
  const release=(event,owner,cancelled=false)=>{
   if(owners()[key]!==owner)return;
-  delete owners()[key];state[key]=false;
+  delete owners()[key];delete targets()[key];state[key]=false;
   if(cancelled)state.driveInterrupted=true;
  };
  const keyEvent=(event,down)=>{
