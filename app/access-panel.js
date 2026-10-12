@@ -91,12 +91,12 @@ export function installAccessPanel(doc=document,win=window){
   message.textContent='';doc.documentElement.dataset.parkAccess='opening';
   const opening=beginAccessOpening(doc,win);
   const loading=beginAccessLoading(doc,win);
-  const slow=setTimeout(()=>{
+  const slow=createEntryDeadline(()=>{
    if(!panel.isConnected||doc.documentElement.dataset.parkAccess!=='opening')return;
    opening?.showRecovery();
    message.textContent='Game files are taking longer to load. You can keep waiting or reload.';
    submit.textContent='Reload page';submit.disabled=false;reload=true;
-  },20000);
+  },20000,{documentRef:doc,pageTarget:win});
   try{
    // Music starts in beginAccessLoading, before this bounded paint yield.
    await paintAccessLoading(doc,win);
@@ -116,7 +116,7 @@ export function installAccessPanel(doc=document,win=window){
    panel.inert=false;
    message.textContent='A game file could not load. Your access is saved. Check your connection, then reload to try again.';
    submit.textContent='Reload';submit.disabled=false;reload=true;busy=false;
-  }finally{clearTimeout(slow);}
+  }finally{slow.stop();}
  };
  toggle.addEventListener('click',()=>{
   const show=input.type==='password';input.type=show?'text':'password';
